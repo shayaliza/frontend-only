@@ -1,0 +1,215 @@
+.assesment_card_section {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.sideMenu p {
+  color: white;
+}
+.goals_DropDown::after,
+.power_dropDown::after,
+.coin_dropDown::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  position: absolute;
+  top: -10px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 45%;
+}
+
+.notification_dropdown::after,
+.profile_dropDown::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  position: absolute;
+  top: -10px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  right: 12%;
+}
+.ham #ham_icon {
+  width: 20px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  margin-right: 10px;
+  display: none;
+  cursor: pointer;
+  z-index: 555;
+}
+
+@media (max-width: 800px) {
+  .ham #ham_icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+header .sub_header .Header_icon {
+  margin-left: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+header .sub_header .Header_icon img {
+  -o-object-fit: contain;
+  object-fit: contain;
+  width: 150px;
+}
+
+@media (max-width: 800px) {
+  header .sub_header .Header_icon img {
+    display: none;
+  }
+  aside .sideMenu {
+    display: none;
+  }
+}
+aside,
+.max_width_holder {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  height: calc(100vh - 60px);
+}
+
+@media (max-width: 1000px) {
+  aside {
+    z-index: 21;
+    left: -250px;
+    top: 60px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+}
+
+.banner .yellow_tag {
+  height: 50px;
+  width: 40%;
+  background: #f3c60c;
+  bottom: -25px;
+  left: 0;
+  cursor: pointer;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .banner .yellow_tag {
+    width: 100vw;
+  }
+}
+
+.banner .yellow_tag p {
+  font-size: 0.9rem;
+  padding-left: 20px;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .banner .yellow_tag p {
+    font-size: 0.8rem;
+    padding-left: 10px;
+  }
+}
+
+.banner .yellow_tag .hide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-bottom: 50px solid transparent;
+  border-left: 50px solid transparent;
+}
+
+.goals_DropDown::after,
+.power_dropDown::after,
+.coin_dropDown::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  position: absolute;
+  top: -10px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 45%;
+}
+
+.notification_dropdown::after,
+.profile_dropDown::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  position: absolute;
+  top: -10px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  right: 12%;
+}
+.swiper-button-next,
+.swiper-button-prev,
+.swiper-button-next2,
+.swiper-button-prev2 {
+  /* border: solid 1px rgba(0, 0, 0, 0.6);
+          background-color: rgb(218, 213, 213); */
+  border-radius: 50%;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after,
+.swiper-button-next2,
+.swiper-button-prev2 {
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+}
+.sideMenu {
+  display: none; /* Hide by default */
+}
+
+.sideMenu.open {
+  display: block;
+}
+
+@media (min-width: 900) {
+  .sideMenu {
+    display: none; /* Always show on large screens */
+  }
+}
+/* Header.css */
+
+/* For larger screens (laptop and above) */
+.sideMenu {
+  display: block;
+}
+
+/* For smaller screens (mobile) */
+@media (max-width: 900px) {
+  .sideMenu {
+    display: none; /* Hide sidebar in mobile view by default */
+  }
+}
+
+/* When the menu is open in mobile view */
+.sideMenu.open {
+  display: block; /* Show sidebar when the menu is open */
+}
+
+/* Other styling as needed */

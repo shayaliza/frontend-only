@@ -1,0 +1,18 @@
+
+.dragging {
+    opacity: 0.5;
+    transform: scale(1.05);
+    z-index: 1000; 
+  }
+  
+ 
+  .droppable-hover {
+    border: 2px dashed #4a90e2; 
+    background-color: #f0f9ff;
+  }
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+

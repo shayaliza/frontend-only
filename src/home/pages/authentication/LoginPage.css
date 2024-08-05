@@ -1,0 +1,318 @@
+.logo {
+  text-align: right;
+  display: grid;
+}
+
+.logo img {
+  width: 25%;
+  object-fit: contain;
+  justify-self: center;
+}
+
+.close-img {
+  text-align: right;
+}
+
+.close-img img {
+  width: 8%;
+  margin: 4%;
+}
+.close-text {
+  margin-right: 2%;
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.bg {
+  background-image: url("https://www.techsnap.in/media/storage/Group_218.png");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+body {
+  height: 100%;
+}
+
+.contact-us-section {
+  width: 100%;
+  max-height: auto;
+  margin-bottom: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.contact-us-right {
+  width: 45%;
+  height: auto;
+  color: #ffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.contact-us-right-bottom {
+  margin-bottom: 4%;
+}
+
+.contact-us-form-holder {
+  background-color: #ffffff;
+  border: 1px solid #e5e1da;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 15%);
+  max-width: 450px;
+  min-width: 450px;
+  height: auto;
+  padding: 10px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.contact-us-form-holder form {
+  width: 95%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.contact-us-form-holder input {
+  font-size: 14px;
+  height: 48px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background: white;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 2px rgb(229 225 218);
+  box-sizing: border-box;
+  margin: 0;
+  color: rgb(5, 25, 45);
+  width: 100%;
+}
+
+.contact-us-form-holder input:focus {
+  box-shadow: inset 0 0 0 2px rgb(0, 0, 0);
+}
+.contact-us-form-holder label {
+  width: 100%;
+  color: rgb(5, 25, 45);
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 400;
+  color: #05192d;
+  font-weight: 500;
+  white-space: nowrap;
+  float: left;
+}
+.contact-us-form-holder button {
+  outline: none;
+  border: none;
+  width: 100%;
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 5px;
+  transition: all 0.7s ease;
+  cursor: pointer;
+  color: #fffefe;
+  background-color: #fc00bd;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.contact-us-accounts {
+  width: 100%;
+  height: 20%;
+  color: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contact-us-social-media-buttons {
+  width: 30%;
+  height: 48px;
+  padding: 1.5%;
+  display: flex;
+  text-align: center;
+  text-decoration: none !important;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px #e5e1da;
+  border-radius: 5px;
+  color: #000;
+}
+
+.contact-us-or-line {
+  margin-top: 5%;
+  width: 95%;
+  height: 20px;
+  position: relative;
+}
+
+.contact-us-footer {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+  color: #000;
+  letter-spacing: 1px;
+}
+
+.contact-us-footer a {
+  font-weight: 500;
+  text-decoration: none;
+  color: rgb(252, 0, 210);
+}
+
+@media (max-width: 900px) {
+  .contact-us-section {
+    flex-direction: column;
+    height: auto;
+  }
+  .logo {
+    text-align: center;
+  }
+
+  .logo-img {
+    text-align: center;
+    width: 40%;
+  }
+
+  .contact-us-right {
+    width: 450px;
+    height: 75%;
+  }
+  .contact-us-form-holder {
+    max-width: 95%;
+    min-width: 95%;
+  }
+  .contact-us-accounts img {
+    width: 20px;
+    height: 20px;
+  }
+  .contact-us-accounts p {
+    margin-left: 5px;
+  }
+}
+
+@media (max-width: 500px) {
+  .contact-us-right {
+    width: 95vw;
+    height: auto;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+  }
+
+  #forget_pass {
+    text-decoration: none;
+    float: right;
+  }
+  .bg {
+    background-image: url("https://www.techsnap.in/media/storage/Mobile-view.png");
+    height: 100vh;
+  }
+  .logo {
+    text-align: center;
+  }
+
+  .close-img {
+    margin-top: -22%;
+  }
+
+  .logo img {
+    width: 40%;
+    margin-top: 8%;
+  }
+
+  .heading {
+    font-size: 18px;
+  }
+
+  .contact-us-form-holder input {
+    font-size: 16px;
+  }
+  .contact-us-form-holder label {
+    font-size: 16px;
+  }
+
+  .terms {
+    font-size: 10px;
+  }
+  .close-text {
+    display: none;
+  }
+
+  #linkedin {
+    height: 70%;
+    width: 70%;
+  }
+}
+
+.heading {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.divide {
+  text-align: center;
+  border-bottom: 1px solid black;
+  line-height: 0;
+  padding: 0;
+}
+
+.divide span {
+  background: #fff;
+  padding: 0 15px;
+}
+
+input[type="text/email"] {
+  margin-bottom: 2%;
+}
+
+input[type="password"] {
+  margin-bottom: 4%;
+}
+
+#forget_pass {
+  text-decoration: none;
+  color: black;
+  margin-bottom: 3%;
+  font-size: 16px;
+}
+.terms {
+  font-size: 12px;
+  margin-top: 5%;
+}
+
+.icons-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 10px;
+  margin-top: 18px;
+}
+
+#facebook {
+  height: 55%;
+  width: 20%;
+}
+
+#google {
+  height: 70%;
+  margin-top: 4%;
+}
