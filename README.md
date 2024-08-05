@@ -8,6 +8,3 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 
-everything ok but for existing when i giving input it should show me the filtered data of lastnames below search bar in a dropdown like a search bar works rightand if i select any one of them it should add in that search field witha x to delete it
-
-
