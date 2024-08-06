@@ -21,8 +21,10 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tanstack/react-table": "^8.20.1",
     "alertifyjs": "^1.14.0",
+    "axios": "^1.7.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "formik": "^2.4.6",
     "framer-motion": "^11.3.21",
     "lucide-react": "^0.424.0",
     "quill": "^2.0.2",
@@ -42,7 +44,8 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "tanviproject": "file:",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.1.0",
