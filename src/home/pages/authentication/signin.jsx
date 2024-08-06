@@ -54,7 +54,7 @@ const SignIn = () => {
     await RegisterFetch(values.username, values.email, values.password).then(
       (res) => {
         console.log(res);
-        console.log(res.details);
+        console.log(res.data);
 
         if (res.status === 201) {
           dispatch(
@@ -62,21 +62,24 @@ const SignIn = () => {
               username: values.username,
               email: values.email,
               password: values.password,
-              reduxAccessToken: res.refresh,
-              reduxRefreshToken: res.access,
+              reduxAccessToken: res.data.refresh,
+              reduxRefreshToken: res.data.access,
             })
           );
           dispatch(login());
           alertify.success("Registration successful!");
+        }
+        if (res.status === 400) {
+          alertify.error("User Already Exists");
         }
       }
     );
   };
 
   return (
-    <div className="container-fluid bg h-screen flex items-center justify-center">
+    <div className=" ">
       <div className="row">
-        <div className="col-lg-7 col-md-7">
+        <div className="">
           <div className="logo">
             <img src={logo} alt="logo" className="img" />
           </div>

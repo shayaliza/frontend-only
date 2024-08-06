@@ -8,6 +8,7 @@ const initialState = {
     reduxAccessToken: "",
   },
   loggedIn: false,
+  verified: false,
 };
 
 const userData = createSlice({
@@ -33,9 +34,12 @@ const userData = createSlice({
       };
       state.loggedIn = false;
     },
+    setVerified: (state, action) => {
+      state.verified = action.payload;
+    },
   },
 });
 
-export const { setUserData, login, logout } = userData.actions;
+export const { setUserData, login, logout, setVerified } = userData.actions;
 
 export default userData.reducer;

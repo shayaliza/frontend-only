@@ -55,6 +55,8 @@ import PracticeText from "./components/CoursesFolder/PracticeText";
 import CourseTestimonial from "./components/CoursesFolder/CourseTestimonials";
 import { FaSpinner } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
+import SendMail from "./home/pages/authentication/sendMail";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 
 function AppRoutes() {
@@ -65,122 +67,76 @@ function AppRoutes() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/verify-email" element={<VerifyEmailToken />} />
+        <Route path="/resendmail" element={<SendMail />} />
 
-        {loggedIn ? (
-          <>
+        {/* {loggedIn ? ( */}
+        <>
+          <Route path="/dashboard" element={<MainLayout />}>
+            <Route path="progress" index element={<MyProgress />} />
+            <Route path="myfeed" element={<MyFeed />} />
+            <Route path="topics" element={<Topics />} />
+            <Route path="competitions" element={<Competitors />} />
+            <Route path="leaderboard" element={<LeaderBoard />} />
+            <Route path="courses" element={<Courses />}>
+              <Route path="details" element={<CourseDetails />} />
+            </Route>
+            <Route path="career" element={<CareerPath />}>
+              <Route path="details" element={<CareerDetails />} />
+            </Route>
+            <Route path="skill" element={<SkillPath />}>
+              <Route path="details" element={<SkillPathDetails />} />
+            </Route>
+            <Route path="projects" element={<Projects />}>
+              <Route path="details" element={<ProjectDetails />} />
+            </Route>
+            <Route path="learningmodule" element={<LearnModule />} />
+            <Route path="assessment" element={<Assement />}>
+              <Route path="details" element={<AssementDetails />} />
+            </Route>
+            <Route path="catalog" element={<Catalog />} />
+            <Route path="editprofile" element={<ProfilePage />} />
+            <Route path="profile" element={<SecondProfilePage />} />
+          </Route>
+
+          {/* CreateSnap Routes */}
+          <Route path="/createsnap" element={<Layout />}>
             <Route
-              path="/"
-              element={
-                <Suspense
-                  fallback={
-                    <>
-                      <div className="flex justify-center items-center h-screen">
-                        <FaSpinner className="animate-spin text-4xl text-blue-500" />
-                      </div>
-                    </>
-                  }
-                >
-                  <MainLayout />
-                </Suspense>
-              }
-            >
-              <Route index element={<MyProgress />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="myfeed" element={<MyFeed />} />
-              <Route path="topics" element={<Topics />} />
-              <Route path="competitions" element={<Competitors />} />
-              <Route path="leaderboard" element={<LeaderBoard />} />
-              <Route path="courses" element={<Courses />}>
-                <Route path="details" element={<CourseDetails />} />
-              </Route>
-              <Route path="career" element={<CareerPath />}>
-                <Route path="details" element={<CareerDetails />} />
-              </Route>
-              <Route path="skill" element={<SkillPath />}>
-                <Route path="details" element={<SkillPathDetails />} />
-              </Route>
-              <Route path="projects" element={<Projects />}>
-                <Route path="details" element={<ProjectDetails />} />
-              </Route>
-              <Route path="learningmodule" element={<LearnModule />} />
-              <Route path="assessment" element={<Assement />}>
-                <Route path="details" element={<AssementDetails />} />
-              </Route>
-              <Route path="catalog" element={<Catalog />} />
-              <Route path="editprofile" element={<ProfilePage />} />
-              <Route path="profile" element={<SecondProfilePage />} />
+              index
+              element={<Navigate to="/createsnap/analytics" replace />}
+            />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="career-path" element={<Careerpath />} />
+            <Route path="course" element={<Course />} />
+          </Route>
+          <Route path="/createsnap/career-path/preview" element={<CPLayout />}>
+            <Route index element={<Info />} />
+            <Route path="info" element={<Info />} />
+            <Route path="addtimeline" element={<AddTimeline />} />
+            <Route path="viewtimeline" element={<Viewtimeline />} />
+            <Route path="html" element={<Html />} />
+          </Route>
+          <Route path="/createsnap/course/started" element={<CourseLayout />}>
+            <Route index element={<CourseInfo />} />
+            <Route path="info" element={<CourseInfo />} />
+            <Route path="users" element={<Users />} />
+            <Route path="banner" element={<CourseBanner />} />
+            <Route path="coursesetting" element={<CourseSetting />} />
+            <Route path="addproject" element={<AddProject />} />
+            <Route path="addassessment" element={<AttachAssessment />} />
+            <Route path="coursestructure" element={<CourseStructure />} />
+            <Route path="testimonial" element={<CourseTestimonial />} />
+            <Route path="html/introduction" element={<Introduction />}>
+              <Route path="quiz" element={<Quiz />} />
+              <Route path="video" element={<Video />} />
+              <Route path="test" element={<Test />} />
+              <Route path="text" element={<Text />} />
+              <Route path="practicetext" element={<PracticeText />} />
             </Route>
-            {/* CreateSnap Routes */}
-            <Route path="/createsnap" element={<Layout />}>
-              <Route
-                index
-                element={<Navigate to="/createsnap/analytics" replace />}
-              />
-              <Route path="analytics" element={<Analytics />} />
-              <Route path="career-path" element={<Careerpath />} />
-              <Route path="course" element={<Course />} />
-            </Route>
-            <Route
-              path="/createsnap/career-path/preview"
-              element={<CPLayout />}
-            >
-              <Route index element={<Info />} />
-              <Route path="info" element={<Info />} />
-              <Route path="addtimeline" element={<AddTimeline />} />
-              <Route path="viewtimeline" element={<Viewtimeline />} />
-              <Route path="html" element={<Html />} />
-            </Route>
-            <Route path="/createsnap/course/started" element={<CourseLayout />}>
-              <Route index element={<CourseInfo />} />
-              <Route path="info" element={<CourseInfo />} />
-              <Route path="users" element={<Users />} />
-              <Route path="banner" element={<CourseBanner />} />
-              <Route path="coursesetting" element={<CourseSetting />} />
-              <Route path="addproject" element={<AddProject />} />
-              <Route path="addassessment" element={<AttachAssessment />} />
-              <Route path="coursestructure" element={<CourseStructure />} />
-              <Route path="testimonial" element={<CourseTestimonial />} />
-              <Route path="html/introduction" element={<Introduction />}>
-                <Route path="quiz" element={<Quiz />} />
-                <Route path="video" element={<Video />} />
-                <Route path="test" element={<Test />} />
-                <Route path="text" element={<Text />} />
-                <Route path="practicetext" element={<PracticeText />} />
-              </Route>
-            </Route>
-          </>
-        ) : (
-          <>
-            <Route
-              path="/"
-              element={
-                <Suspense
-                  fallback={
-                    <>
-                      <div className="flex justify-center items-center h-screen">
-                        <FaSpinner className="animate-spin text-4xl text-blue-500" />
-                      </div>
-                    </>
-                  }
-                >
-                  <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-                    <div className="text-xl mb-4">
-                      Please Login to check Dashboard
-                    </div>
-                    <Link
-                      to={"/signin"}
-                      className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                    >
-                      Login
-                    </Link>
-                  </div>
-                </Suspense>
-              }
-            >
-              <Route index element={<MyProgress />} />
-            </Route>
-          </>
-        )}
+          </Route>
+        </>
+
+        {/* )} */}
 
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>

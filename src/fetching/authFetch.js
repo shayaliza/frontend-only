@@ -26,4 +26,26 @@ const RegisterFetch = async (username, email, password) => {
   }
 };
 
-export { RegisterFetch };
+const verifyEmailTokenFetch = async (token) => {
+  try {
+    const response = await axios.post(`${URL}api/auth/verify-email/`, {
+      token: token,
+    });
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// Issue in This what i have to send is token
+const reqVerificationEmailFetch = async () => {
+  try {
+    const response = await axios.post(
+      `${URL}api/auth/request-verification-email/`
+    );
+    return response;
+  } catch (error) {
+    return error.response;
+  }
+};
+export { RegisterFetch, verifyEmailTokenFetch, reqVerificationEmailFetch };
