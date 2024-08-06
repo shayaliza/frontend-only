@@ -1,12 +1,11 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import "./header.css";
-import Post from "./../assets/bottomNav/post.png";
-import Jobs from "./../assets/bottomNav/jobs.png";
-import Surprize from "./../assets/bottomNav/surprice.png";
-import Catelogue from "./../assets/bottomNav/catelog.png";
-import home from "./../assets/bottomNav/home.png";
+import Post from "./../../assets/bottomNav/post.png";
+import Jobs from "./../../assets/bottomNav/jobs.png";
+import Surprize from "./../../assets/bottomNav/surprice.png";
+import Catelogue from "./../../assets/bottomNav/catelog.png";
+import home from "./../../assets/bottomNav/home.png";
 
 function BottomBar() {
   const location = useLocation();
