@@ -1,7 +1,11 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Dashboard from "./home/pages/dashboard";
-import Navbar from "./home/component/navbar";
 import Courses from "./home/pages/courses/courses";
 import SignIn from "./home/pages/authentication/signin";
 import SignUp from "./home/pages/authentication/signup";
@@ -33,7 +37,7 @@ import Html from "./components/CareerPathFolder/Html";
 import Viewtimeline from "./components/CareerPathFolder/Viewtimeline";
 import Quiz from "./components/CoursesFolder/Quiz";
 import Course from "./components/Courses";
-import CourseLayout from "./components/CoursesFolder/CourseLayout"
+import CourseLayout from "./components/CoursesFolder/CourseLayout";
 import CourseInfo from "./components/CoursesFolder/CourseInfo";
 import CourseBanner from "./components/CoursesFolder/Banner";
 import CourseSetting from "./components/CoursesFolder/CourseSetting";
@@ -47,16 +51,33 @@ import Video from "./components/CoursesFolder/Video";
 import Test from "./components/CoursesFolder/Test";
 import Text from "./components/CoursesFolder/Text";
 import PracticeText from "./components/CoursesFolder/PracticeText";
-import CourseTestimonial from "./components/CoursesFolder/CourseTestimonials"
+import CourseTestimonial from "./components/CoursesFolder/CourseTestimonials";
+import { FaSpinner } from "react-icons/fa";
+const MainLayout = React.lazy(() => import("./home/pages/layout"));
 
-function AppRoutes() { 
+function AppRoutes() {
   return (
     <Router>
       <Routes>
-      <Route path="/signin" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route element={<Navbar />}>
+        <Route
+          path="/"
+          element={
+            <Suspense
+              fallback={
+                <>
+                  <div className="flex justify-center items-center h-screen">
+                    <FaSpinner className="animate-spin text-4xl text-blue-500" />
+                  </div>
+                </>
+              }
+            >
+              <MainLayout />
+            </Suspense>
+          }
+        >
           <Route index element={<MyProgress />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="myfeed" element={<MyFeed />} />
@@ -83,8 +104,13 @@ function AppRoutes() {
           <Route path="editprofile" element={<ProfilePage />} />
           <Route path="profile" element={<SecondProfilePage />} />
         </Route>
+
+        {/* CreateSnap Routes */}
         <Route path="/createsnap" element={<Layout />}>
-          <Route index element={<Navigate to="/createsnap/analytics" replace />} />
+          <Route
+            index
+            element={<Navigate to="/createsnap/analytics" replace />}
+          />
           <Route path="analytics" element={<Analytics />} />
           <Route path="career-path" element={<Careerpath />} />
           <Route path="course" element={<Course />} />
