@@ -37,9 +37,13 @@ const userData = createSlice({
     setVerified: (state, action) => {
       state.verified = action.payload;
     },
+    updateAccessToken: (state, action) => {
+      state.userData.reduxAccessToken = action.payload;
+    },
   },
 });
 
-export const { setUserData, login, logout, setVerified } = userData.actions;
+export const { setUserData, login, logout, setVerified, updateAccessToken } =
+  userData.actions;
 
 export default userData.reducer;

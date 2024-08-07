@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { reqVerificationEmailFetch } from "../../../fetching/authFetch";
+import { useNavigate } from "react-router-dom";
 
 const SendMail = () => {
+  const navigate = useNavigate();
   const [canResend, setCanResend] = useState(false);
   const [timer, setTimer] = useState(0);
   const [resendAttempts, setResendAttempts] = useState(0);
 
+  // Get the token from the Redux store
+  const reduxAccessToken = useSelector(
+    (state) => state.user.userData.reduxAccessToken
+  );
+
   useEffect(() => {
+    //@ Decoding and checking if email is already verified if verified redirect to dashboard
+    if (reduxAccessToken) {
+      console.log("Decoding token...");
+      const decodedToken = jwtDecode(reduxAccessToken);
+      if (decodedToken.is_email_verified) {
+        console.log("Email already verified, redirecting to dashboard...");
+        navigate("/dashboard");
+      }
+    }
+    //@ Check Done
     // Load resend attempts and timer from local storage
     const storedAttempts = parseInt(
       localStorage.getItem("resendAttempts") || "0",
@@ -48,14 +68,24 @@ const SendMail = () => {
     }
   }, []);
 
-  const handleResend = () => {
+  const handleResend = async () => {
     if (resendAttempts >= 3) {
       alert("You can only send 3 mails per day.");
       return;
     }
 
-    // Example logic to handle resend mail
-    console.log("Resend mail logic here.");
+    // Make the API call to resend the verification email
+    try {
+      const response = await reqVerificationEmailFetch(reduxAccessToken);
+      console.log(response);
+      if (response.status === 200) {
+        console.log("Verification email sent successfully.");
+      } else {
+        console.error("Failed to send verification email.", response.data);
+      }
+    } catch (error) {
+      console.error("Error sending verification email.", error);
+    }
 
     // Update resend attempts
     const newAttempts = resendAttempts + 1;
@@ -106,9 +136,9 @@ const SendMail = () => {
         >
           {canResend
             ? "Resend Mail"
-            : `Resend in ${Math.floor(timer / 60)}:${
-                timer % (60).toString().padStart(2, "0")
-              }`}
+            : `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
+                .toString()
+                .padStart(2, "0")}`}
         </button>
       </div>
     </div>

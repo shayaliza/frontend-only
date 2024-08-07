@@ -58,6 +58,9 @@ import { useSelector } from "react-redux";
 import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
 import SendMail from "./home/pages/authentication/sendMail";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
+const SetNewPassword = React.lazy(() =>
+  import("./home/pages/authentication/setNewpass")
+);
 
 function AppRoutes() {
   const loggedIn = useSelector((state) => state.user.userData.loggedIn);
@@ -69,6 +72,7 @@ function AppRoutes() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmailToken />} />
         <Route path="/resendmail" element={<SendMail />} />
+        <Route path="/reset-password/" element={<SetNewPassword />} />
 
         {/* {loggedIn ? ( */}
         <>
