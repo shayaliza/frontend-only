@@ -5,38 +5,48 @@ import Sidebar from "../component/layoutComp/sidebar";
 import MobileMenu from "../component/layoutComp/mobileSidebar";
 import BottomBar from "../component/layoutComp/bottomBar";
 import refreshTokenFetch from "../../fetching/refresh.js";
-import getTokenExpiration from "../../fetching/getExpiration.js";
+import { getTokenExpiration } from "../../fetching/getExpiration.js";
 import { useSelector } from "react-redux";
-
-const TOKEN_REFRESH_INTERVAL = 5 * 60 * 1000;
+import {
+  logout,
+  setUserData,
+  updateAccessToken,
+} from "../../features/user/userSlice.js";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Layout() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { reduxAccessToken, reduxRefreshToken } = useSelector(
     (state) => state.user.userData
   );
 
   useEffect(() => {
-    console.log("use effect called");
-    const checkTokenExpiration = async () => {
-      console.log("checking expiration");
-      if (reduxAccessToken) {
-        const expTime = getTokenExpiration(reduxAccessToken) * 1000;
-        const currentTime = new Date().getTime();
-        console.log("current time", currentTime, "exp time", expTime);
-        const timeRemaining = expTime - currentTime;
-        console.log("time remaining", timeRemaining);
+    const checkTokens = async () => {
+      console.log("checking tokens");
+      try {
+        const refreshTokenExpiry = getTokenExpiration(reduxRefreshToken);
+        const accessTokenExpiry = getTokenExpiration(reduxAccessToken);
+        const currentTime = Math.floor(Date.now() / 1000);
 
-        if (timeRemaining < TOKEN_REFRESH_INTERVAL) {
-          console.log("refreshing token started");
-          await refreshTokenFetch(reduxRefreshToken);
+        if (refreshTokenExpiry < currentTime) {
+          dispatch(logout());
+          navigate("/signin");
+        } else if (accessTokenExpiry - currentTime < 1800) {
+          const newTokens = await refreshTokenFetch(reduxRefreshToken);
+          console.log("new tokens", newTokens);
+          dispatch(updateAccessToken(newTokens));
         }
+      } catch (error) {
+        console.error("Error refreshing token", error);
+        dispatch(logoutUser());
+        navigate("/signin");
       }
     };
 
-    const interval = setInterval(checkTokenExpiration, TOKEN_REFRESH_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [reduxAccessToken, reduxRefreshToken]);
+    checkTokens();
+  }, [reduxAccessToken, reduxRefreshToken, dispatch, navigate]);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

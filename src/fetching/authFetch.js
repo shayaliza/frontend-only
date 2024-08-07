@@ -88,9 +88,6 @@ const refreshTokenFetch = async (refreshToken) => {
 // token and email
 const forgotPasswordFetch = async (email) => {
   const token = getToken();
-  if (!token) {
-    return { error: "No token found" };
-  }
   try {
     const response = await axios.post(
       `${URL}api/auth/forgot-password/`,

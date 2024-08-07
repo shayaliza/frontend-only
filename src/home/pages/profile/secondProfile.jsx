@@ -1,26 +1,31 @@
 import React, { useState } from "react";
-import PersonalInfoForm from "./component/personalinfoform";
-import ResumeSection from "./component/resumeSection";
-import SkillsSection from "./component/skillSection";
-import ConnectInfoSection from "./component/connectinfor";
 import ExperienceCard from "./secondComp/expeData";
 import EducationCard from "./secondComp/education";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { CiGlobe } from "react-icons/ci";
 import { FaUser, FaTrophy, FaMedal, FaStar, FaCrown } from "react-icons/fa";
+import { getProfile } from "../../../fetching/profileFetch";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getUserId } from "../../../fetching/getExpiration";
 
 const SecondProfilePage = () => {
-  const [profileImage, setProfileImage] = useState(
-    "https://via.placeholder.com/80"
+  const reduxAccessToken = useSelector(
+    (state) => state.user.userData.reduxAccessToken
   );
-  const [bannerImage, setBannerImage] = useState(
-    "https://via.placeholder.com/1500x300"
-  );
+  const [data, setData] = useState({});
 
-  const handleImageChange = (e, setImage) => {
-    const reader = new FileReader();
-    reader.onload = () => setImage(reader.result);
-    reader.readAsDataURL(e.target.files[0]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const id = await getUserId(reduxAccessToken);
+    await getProfile(id).then((res) => {
+      console.log(res);
+      setData(res);
+      console.log(data);
+    });
   };
 
   return (
@@ -31,43 +36,52 @@ const SecondProfilePage = () => {
             <div className=" mx-auto ">
               <div className="relative">
                 <img
-                  src={bannerImage}
+                  src={"https://via.placeholder.com/1500x300"}
                   alt="Banner"
                   className="w-full h-48 object-cover rounded-lg"
                 />
-                <input
+                {/* <input
                   type="file"
                   className="hidden"
                   id="uploadBanner"
                   onChange={(e) => handleImageChange(e, setBannerImage)}
-                />
-                <button
+                /> */}
+                {/* <button
                   onClick={() =>
                     document.getElementById("uploadBanner").click()
                   }
                   className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
                 >
                   Edit banner
-                </button>
+                </button> */}
               </div>
               <div className="bg-white rounded-lg shadow-xl p-9 mr-9 left-5 relative -mt-12">
                 <div className="flex flex-row">
                   <div className="flex mb-4 w-full">
-                    <img
-                      className="w-16 h-16 rounded-full"
-                      src="https://placehold.co/64x64"
-                      alt="Profile Picture"
-                    />
+                    {data?.profile_pic ? (
+                      <img
+                        className="w-16 h-16 rounded-full"
+                        src={data?.profile_pic}
+                        alt="Profile Picture"
+                      />
+                    ) : (
+                      <img
+                        className="w-16 h-16 rounded-full"
+                        src="https://placehold.co/64x64"
+                        alt="Profile Picture"
+                      />
+                    )}
+
                     <div className="ml-4">
                       <h2 className="text-lg font-semibold text-foreground">
-                        Sai Pavan Saketh
+                        {data?.full_name}
                       </h2>
                       <p className="text-muted-foreground">@saketh33</p>
+                      <p className="text-muted-foreground">{data?.bio}</p>
                       <p className="text-muted-foreground">
-                        Devops | Backend Developer @techsnap
-                      </p>
-                      <p className="text-muted-foreground">
-                        Andhra Pradesh, India
+                        {data?.city}
+                        {data?.state}
+                        {data?.country}
                       </p>
                     </div>
                   </div>

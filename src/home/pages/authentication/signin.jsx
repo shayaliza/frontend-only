@@ -16,11 +16,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const validationSchema = Yup.object({
     username: Yup.string().required("Please choose a username."),
-    password: Yup.string()
-      .required("Please provide a password.")
-      .min(8, "Password must be at least 8 characters long")
-      .matches(/\d/, "Password must contain at least one number")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter"),
+    password: Yup.string().required("Please provide a password."),
   });
 
   const formik = useFormik({
@@ -64,7 +60,7 @@ const SignIn = () => {
         navigate("/resendmail");
       }
       if (res.status === 400) {
-        alertify.error("User Already Exists");
+        alertify.error("Invalid Credentials");
       }
     });
   };
@@ -128,6 +124,10 @@ const SignIn = () => {
                   </p>
                   <p className="switch-text mt-3">
                     Dont have an accounr? <Link to="/signup">SignUp Here</Link>
+                  </p>
+                  <p className="switch-text mt-3">
+                    Forgot Password?{" "}
+                    <Link to="/forgotpassword">Click here</Link>
                   </p>
                 </form>
               </div>

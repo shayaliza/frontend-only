@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { createOrUpdateProfile } from "./../../../../fetching/profileFetch";
 
 const ResumeSection = () => {
+  const [resumeFile, setResumeFile] = useState(null);
+
   const handleResumeChange = (e) => {
-    // Handle resume file change
+    setResumeFile(e.target.files[0]);
+  };
+
+  const handleSaveChanges = async () => {
+    if (resumeFile) {
+      console.log("Resume file:", resumeFile);
+    }
+    if (resumeFile) {
+      resumeFile;
+      try {
+        const response = await createOrUpdateProfile({}, null, resumeFile);
+        console.log("Resume uploaded successfully:", response.data);
+      } catch (error) {
+        console.error("Error uploading resume:", error);
+      }
+    }
   };
 
   return (
@@ -34,6 +52,7 @@ const ResumeSection = () => {
         </button>
         <button
           type="button"
+          onClick={handleSaveChanges}
           className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Save changes

@@ -5,4 +5,9 @@ const getTokenExpiration = (token) => {
   return decoded.exp;
 };
 
-export default getTokenExpiration;
+const getUserId = (token) => {
+  const decoded = jwtDecode(token);
+  return decoded.user_id;
+};
+
+export { getTokenExpiration, getUserId };

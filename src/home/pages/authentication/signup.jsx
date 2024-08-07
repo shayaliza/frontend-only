@@ -20,11 +20,7 @@ const SignUp = () => {
     email: Yup.string()
       .email("Invalid email address")
       .required("Please provide an email."),
-    password: Yup.string()
-      .required("Please provide a password.")
-      .min(8, "Password must be at least 8 characters long")
-      .matches(/\d/, "Password must contain at least one number")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter"),
+    password: Yup.string().required("Please provide a password."),
   });
 
   const formik = useFormik({
