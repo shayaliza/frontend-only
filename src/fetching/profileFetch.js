@@ -36,7 +36,7 @@ const createOrUpdateProfile = (profileData, profilePic, resume) => {
     formData.append("resume_file", resume);
   }
   // console.log(formData.get(""), "forrmdat");
-  return axiosInstance.put(` ${URL}api/auth/profile/`, formData, {
+  return axiosInstance.put(`${URL}api/auth/profile/`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",

@@ -40,20 +40,6 @@ const SecondProfilePage = () => {
                   alt="Banner"
                   className="w-full h-48 object-cover rounded-lg"
                 />
-                {/* <input
-                  type="file"
-                  className="hidden"
-                  id="uploadBanner"
-                  onChange={(e) => handleImageChange(e, setBannerImage)}
-                /> */}
-                {/* <button
-                  onClick={() =>
-                    document.getElementById("uploadBanner").click()
-                  }
-                  className="absolute top-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Edit banner
-                </button> */}
               </div>
               <div className="bg-white rounded-lg shadow-xl p-9 mr-9 left-5 relative -mt-12">
                 <div className="flex flex-row">
@@ -77,10 +63,10 @@ const SecondProfilePage = () => {
                         {data?.full_name}
                       </h2>
                       <p className="text-muted-foreground">@saketh33</p>
-                      <p className="text-muted-foreground">{data?.bio}</p>
+                      {/* <p className="text-muted-foreground">{data?.bio}</p> */}
                       <p className="text-muted-foreground">
-                        {data?.city}
-                        {data?.state}
+                        {data?.city} {data?.state}
+                        {""}
                         {data?.country}
                       </p>
                     </div>
@@ -114,22 +100,12 @@ const SecondProfilePage = () => {
                     <h2 className={"text-lg font-bold text-foreground"}>
                       About
                     </h2>
-                    <p className={"text-muted-foreground flex flex-col"}>
-                      <div>
-                        {" "}
-                        A racer of life without a race. Innovation & Venturing
-                        ignited in me at a much younger age. 3 years of
-                        Entrepreneurial Expeditions that I have sailed through
-                        secondarily to shatter my experiential limits and
-                        primarily to have and make a cause, before diving to
-                        impact the World from a Corporate Role. I am a decisive
-                        Product Manager, Business Specialist, and Structured
-                        strategist........
-                      </div>
-                      <span className="text-primary hover:underline">
+                    <div className={"text-muted-foreground flex flex-col"}>
+                      <div>{data?.bio}</div>
+                      {/* <span className="text-primary hover:underline">
                         SEE MORE
-                      </span>
-                    </p>
+                      </span> */}
+                    </div>
                   </div>
                   <div className={"p-4 bg-background rounded-lg shadow-md"}>
                     <h2 className="text-lg font-semibold">Resume</h2>
@@ -142,17 +118,18 @@ const SecondProfilePage = () => {
                         "inline-flex items-center mt-2 bg-primary text-primary-foreground hover:bg-primary/80 px-4 py-2 rounded-lg"
                       }
                     >
+                      <div>{data?.resume_file}</div>
                       Download{" "}
-                      <img
+                      {/* <img
                         aria-hidden="true"
                         alt="download-icon"
                         src="https://openui.fly.dev/openui/24x24.svg?text=⬇️"
                         className="ml-2"
-                      />
+                      /> */}
                     </a>
                   </div>
                   <div className="mt-4">
-                    <ExperienceCard />
+                    <ExperienceCard expData={data?.experiences} />
                   </div>
                   <div className="mt04">
                     <EducationCard />
@@ -162,42 +139,66 @@ const SecondProfilePage = () => {
                     <h2 className={"text-lg font-bold text-foreground"}>
                       Proof of Word
                     </h2>
-                    <div className=" h-[300px]"></div>
+                    <div className=" h-auto">
+                      {data.proofs_of_work &&
+                        data.proofs_of_work.map((proof) => (
+                          <div
+                            key={proof.id}
+                            className="flex items-center justify-between p-4 border-b border-gray-200"
+                          >
+                            <div>
+                              <a
+                                href={proof.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 hover:text-blue-700 font-medium"
+                              >
+                                {proof.title}
+                              </a>
+                            </div>
+                            <div>
+                              <a
+                                href={proof.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-600 hover:text-gray-800"
+                              >
+                                {proof.link}
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
                   </div>
                   {/* Skills */}
                   <div className="p-4 bg-white rounded-lg shadow-md mt-4 ">
                     <h2 className="text-lg font-semibold mb-2">Skills</h2>
                     <div className="flex flex-wrap gap-2">
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        Mobile Application
-                      </span>
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        Problem-Solving
-                      </span>
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        Team-Working
-                      </span>
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        PHP
-                      </span>
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        Javascript
-                      </span>
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        HTML / CSS
-                      </span>
-                      <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
-                        SwiftUI
-                      </span>
+                      {data.skills &&
+                        data.skills.map((proof) => (
+                          <div key={proof.id} className="">
+                            <div className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
+                              {proof.name}
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
                   {/* Language Info */}
                   <div className="p-4 bg-card rounded-lg shadow-md">
-                    <h2 className="text-lg font-semibold text-foreground">
+                    <h2 className="text-lg font-semibold text-foreground mb-2">
                       Language
                     </h2>
-                    <div className="flex space-x-4 mt-2">
-                      <div className="bg-secondary text-secondary-foreground rounded-full px-3 py-1">
+                    <div className="flex flex-wrap gap-2">
+                      {data.talking_languages &&
+                        data.talking_languages.map((proof) => (
+                          <div key={proof.id} className="">
+                            <div className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm">
+                              {proof.title}
+                            </div>
+                          </div>
+                        ))}
+                      {/* <div className="bg-secondary text-secondary-foreground rounded-full px-3 py-1">
                         <span className="font-bold">TR</span> Turkish
                         <div className="text-sm text-muted-foreground">
                           Native Language
@@ -214,7 +215,7 @@ const SecondProfilePage = () => {
                         <div className="text-sm text-muted-foreground">
                           Intermediate
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -248,7 +249,7 @@ const SecondProfilePage = () => {
                         className="flex items-center text-muted-foreground hover:text-primary"
                       >
                         <CiGlobe className="mr-2" />
-                        about me/skjfi
+                        {data.social_accounts[0].link}
                       </a>
                       <a
                         href="https://facebook.com"
