@@ -110,11 +110,78 @@ const deleteExperianceFetch = async (id) => {
     throw error;
   }
 };
+const addSkillFetch = async (data) => {
+  const token = getToken();
 
+  const formData = new FormData();
+
+  formData.append("name", data.name);
+  formData.append("skill_type", data.skill_type);
+
+  try {
+    const response = await axiosInstance.post(
+      `${URL}api/auth/skills/`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateSkillFetch = async (data, id) => {
+  const token = getToken();
+  const formData = new FormData();
+
+  formData.append("name", data.name);
+  formData.append("skill_type", data.skill_type);
+
+  try {
+    const response = await axiosInstance.put(
+      `${URL}api/auth/skills/${id}/`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteSkillFetch = async (id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.delete(
+      `${URL}api/auth/skills/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 export {
   createOrUpdateProfile,
   getProfile,
   addExperianceFetch,
   updateExperianceFetch,
   deleteExperianceFetch,
+  addSkillFetch,
+  updateSkillFetch,
+  deleteSkillFetch,
 };

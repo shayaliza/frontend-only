@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect } from "react";
 import { getUserId } from "../../../fetching/decodingJwt";
 import { useSelector } from "react-redux";
+import SkillForm from "./component/skillForm";
 
 const ProfilePage = () => {
   const reduxAccessToken = useSelector(
@@ -51,7 +52,7 @@ const ProfilePage = () => {
   const fetchData = async () => {
     const id = await getUserId(reduxAccessToken);
     await getProfile(id).then((res) => {
-      console.log(res.experiences);
+      console.log(res);
       setData(res);
     });
   };
@@ -123,6 +124,7 @@ const ProfilePage = () => {
               <TabsList className=" mt-4">
                 <TabsTrigger value="personal">Account</TabsTrigger>
                 <TabsTrigger value="experiance">Experiance</TabsTrigger>
+                <TabsTrigger value="skill">Skill</TabsTrigger>
                 <TabsTrigger value="education">Education</TabsTrigger>
                 <TabsTrigger value="work">Work</TabsTrigger>
               </TabsList>
@@ -139,6 +141,11 @@ const ProfilePage = () => {
               <TabsContent value="experiance">
                 <div className="gap-6">
                   <ExperienceForm expData={data.experiences} />
+                </div>
+              </TabsContent>
+              <TabsContent value="skill">
+                <div className="gap-6">
+                  <SkillForm expData={data.skills} />
                 </div>
               </TabsContent>
               <TabsContent value="education">
