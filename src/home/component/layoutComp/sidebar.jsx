@@ -11,9 +11,18 @@ import deadline from "./../../assets/deadline.png";
 import account from "./../../assets/account (1).png";
 import user from "./../../assets/user (1).png";
 import edit from "./../../assets/edit (1).png";
-import logout from "./../../assets/logout (1).png";
+import logoutImage from "./../../assets/logout (1).png";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ isActive }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
   return (
     <aside className="fixed top-14 pt-1 left-0 h-full mb-24 bg-[#0a182e] min-w-[220px] flex flex-col max-[900px]:hidden lg:flex transition-all duration-300 z-40 max-w-[220px] w-[250px] overflow-x-hidden overflow-y-scroll">
       <div className="myMenu flex flex-col justify-center mb-4 mt-2">
@@ -245,15 +254,15 @@ const Sidebar = ({ isActive }) => {
             Account Settings
           </p>
         </Link>
-        <Link
-          to="#"
-          className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
+        <div
+          onClick={() => handleLogout()}
+          className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:bg-red-500 bg-red-600 transition-colors duration-300"
         >
-          <img src={logout} alt="logout" className="w-4 h-4" />
+          <img src={logoutImage} alt="logout" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Logout
           </p>
-        </Link>
+        </div>
       </div>
       <button className="bg-[#7933ff] text-white rounded-lg py-2 px-4 mb-4 w-4/5 mx-auto">
         Contact Us

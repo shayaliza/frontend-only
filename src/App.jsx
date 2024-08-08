@@ -67,6 +67,7 @@ const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
 setupInterceptors();
 function AppRoutes() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
+
   return (
     <Router>
       <Routes>
