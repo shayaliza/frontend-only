@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import alertify from "alertifyjs";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/themes/default.min.css";
-import "./LoginPage.css"; // Create this CSS file for custom styles
+import "./LoginPage.css";
 import logo from "../../assets/logo-black.png";
 import { Link } from "react-router-dom";
 import { RegisterFetch } from "../../../fetching/authFetch";

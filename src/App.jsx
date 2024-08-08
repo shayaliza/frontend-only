@@ -74,34 +74,35 @@ function AppRoutes() {
         <Route path="/resendmail" element={<SendMail />} />
         <Route path="/reset-password/" element={<SetNewPassword />} />
 
-        {/* {loggedIn ? ( */}
         <>
-          <Route path="/dashboard" element={<MainLayout />}>
-            <Route path="progress" index element={<MyProgress />} />
-            <Route path="myfeed" element={<MyFeed />} />
-            <Route path="topics" element={<Topics />} />
-            <Route path="competitions" element={<Competitors />} />
-            <Route path="leaderboard" element={<LeaderBoard />} />
-            <Route path="courses" element={<Courses />}>
-              <Route path="details" element={<CourseDetails />} />
+          {loggedIn && (
+            <Route path="/dashboard" element={<MainLayout />}>
+              <Route path="progress" index element={<MyProgress />} />
+              <Route path="myfeed" element={<MyFeed />} />
+              <Route path="topics" element={<Topics />} />
+              <Route path="competitions" element={<Competitors />} />
+              <Route path="leaderboard" element={<LeaderBoard />} />
+              <Route path="courses" element={<Courses />}>
+                <Route path="details" element={<CourseDetails />} />
+              </Route>
+              <Route path="career" element={<CareerPath />}>
+                <Route path="details" element={<CareerDetails />} />
+              </Route>
+              <Route path="skill" element={<SkillPath />}>
+                <Route path="details" element={<SkillPathDetails />} />
+              </Route>
+              <Route path="projects" element={<Projects />}>
+                <Route path="details" element={<ProjectDetails />} />
+              </Route>
+              <Route path="learningmodule" element={<LearnModule />} />
+              <Route path="assessment" element={<Assement />}>
+                <Route path="details" element={<AssementDetails />} />
+              </Route>
+              <Route path="catalog" element={<Catalog />} />
+              <Route path="editprofile" element={<ProfilePage />} />
+              <Route path="profile" element={<SecondProfilePage />} />
             </Route>
-            <Route path="career" element={<CareerPath />}>
-              <Route path="details" element={<CareerDetails />} />
-            </Route>
-            <Route path="skill" element={<SkillPath />}>
-              <Route path="details" element={<SkillPathDetails />} />
-            </Route>
-            <Route path="projects" element={<Projects />}>
-              <Route path="details" element={<ProjectDetails />} />
-            </Route>
-            <Route path="learningmodule" element={<LearnModule />} />
-            <Route path="assessment" element={<Assement />}>
-              <Route path="details" element={<AssementDetails />} />
-            </Route>
-            <Route path="catalog" element={<Catalog />} />
-            <Route path="editprofile" element={<ProfilePage />} />
-            <Route path="profile" element={<SecondProfilePage />} />
-          </Route>
+          )}
 
           {/* CreateSnap Routes */}
           <Route path="/createsnap" element={<Layout />}>
@@ -139,8 +140,6 @@ function AppRoutes() {
             </Route>
           </Route>
         </>
-
-        {/* )} */}
 
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
