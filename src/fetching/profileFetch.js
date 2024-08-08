@@ -1,5 +1,5 @@
-import axios from "axios";
 import axiosInstance from "./Interceptor/axiosInstance";
+import { getUserId } from "./decodingJwt";
 const URL = "https://moviesnap.in/";
 
 const getToken = () => {
@@ -7,6 +7,11 @@ const getToken = () => {
   if (!storedData) return null;
   const parsedData = JSON.parse(storedData);
   return parsedData.user?.userData?.reduxAccessToken || null;
+};
+
+const user_id = async () => {
+  const token = await getToken();
+  return getUserId(token);
 };
 /**
  * Function to create or update profile.
@@ -71,4 +76,45 @@ const addExperianceFetch = async (data) => {
   }
 };
 
-export { createOrUpdateProfile, getProfile, addExperianceFetch };
+// Here the Id will be the experiance id
+const updateExperianceFetch = async (data, id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.put(
+      `${URL}api/auth/experiences/${id}/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+const deleteExperianceFetch = async (id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.delete(
+      `${URL}api/auth/experiences/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  createOrUpdateProfile,
+  getProfile,
+  addExperianceFetch,
+  updateExperianceFetch,
+  deleteExperianceFetch,
+};

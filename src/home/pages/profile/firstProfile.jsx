@@ -4,11 +4,20 @@ import ResumeSection from "./component/resumeSection";
 import SkillsSection from "./component/skillSection";
 import ConnectInfoSection from "./component/connectinfor";
 import ExperienceForm from "./component/expForm";
-import { createOrUpdateProfile } from "../../../fetching/profileFetch";
+import {
+  createOrUpdateProfile,
+  getProfile,
+} from "../../../fetching/profileFetch";
 // Shadcn
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect } from "react";
+import { getUserId } from "../../../fetching/decodingJwt";
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
+  const reduxAccessToken = useSelector(
+    (state) => state.user.userData.reduxAccessToken
+  );
   const [profileImage, setProfileImage] = useState(
     "https://via.placeholder.com/80"
   );
@@ -16,6 +25,7 @@ const ProfilePage = () => {
     "https://via.placeholder.com/1500x300"
   );
   const [profileFile, setProfileFile] = useState(null);
+  const [data, setData] = useState({});
 
   const handleImageChange = (e) => {
     setProfileFile(e.target.files[0]);
@@ -34,7 +44,17 @@ const ProfilePage = () => {
       }
     }
   };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const fetchData = async () => {
+    const id = await getUserId(reduxAccessToken);
+    await getProfile(id).then((res) => {
+      console.log(res.experiences);
+      setData(res);
+    });
+  };
   return (
     <div className="flex flex-col">
       <div className="flex bg-gray-100 flex-row ">
@@ -118,7 +138,7 @@ const ProfilePage = () => {
               </TabsContent>
               <TabsContent value="experiance">
                 <div className="gap-6">
-                  <ExperienceForm />
+                  <ExperienceForm expData={data.experiences} />
                 </div>
               </TabsContent>
               <TabsContent value="education">
