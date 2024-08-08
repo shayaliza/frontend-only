@@ -53,4 +53,22 @@ const getProfile = async (id) => {
   }
 };
 
-export { createOrUpdateProfile, getProfile };
+const addExperianceFetch = async (data) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.post(
+      `${URL}api/auth/experiences/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { createOrUpdateProfile, getProfile, addExperianceFetch };

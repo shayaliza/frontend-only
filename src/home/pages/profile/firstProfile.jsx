@@ -3,7 +3,10 @@ import PersonalInfoForm from "./component/personalinfoform";
 import ResumeSection from "./component/resumeSection";
 import SkillsSection from "./component/skillSection";
 import ConnectInfoSection from "./component/connectinfor";
+import ExperienceForm from "./component/expForm";
 import { createOrUpdateProfile } from "../../../fetching/profileFetch";
+// Shadcn
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ProfilePage = () => {
   const [profileImage, setProfileImage] = useState(
@@ -96,28 +99,39 @@ const ProfilePage = () => {
                 </div>
               </div>
             </div>
-
-            <div className="mt-9 p-2">
-              <div className="flex justify-between items-center border-2 p-4 pb-4 mb-4 rounded-lg shadow-md">
-                <div>
-                  <button className="mr-2 text-blue-500 border-b-2 border-blue-500">
-                    Profile
-                  </button>
-                  <button className="mr-2">Experience</button>
-                  <button className="mr-2">Education</button>
-                  <button>Work profile</button>
+            <Tabs defaultValue="personal" className="">
+              <TabsList className=" mt-4">
+                <TabsTrigger value="personal">Account</TabsTrigger>
+                <TabsTrigger value="experiance">Experiance</TabsTrigger>
+                <TabsTrigger value="education">Education</TabsTrigger>
+                <TabsTrigger value="work">Work</TabsTrigger>
+              </TabsList>
+              <TabsContent value="personal">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <PersonalInfoForm />
+                  <div className="space-y-6">
+                    <ResumeSection />
+                    <SkillsSection />
+                    <ConnectInfoSection />
+                  </div>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <PersonalInfoForm />
-                <div className="space-y-6">
-                  <ResumeSection />
-                  <SkillsSection />
-                  <ConnectInfoSection />
+              </TabsContent>
+              <TabsContent value="experiance">
+                <div className="gap-6">
+                  <ExperienceForm />
                 </div>
-              </div>
-            </div>
+              </TabsContent>
+              <TabsContent value="education">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <PersonalInfoForm />
+                  <div className="space-y-6">
+                    <ResumeSection />
+                    <SkillsSection />
+                    <ConnectInfoSection />
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>

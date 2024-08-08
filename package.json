@@ -17,6 +17,8 @@
     "@mui/material": "^5.16.6",
     "@radix-ui/react-select": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tanstack/react-table": "^8.20.1",
