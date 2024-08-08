@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { reqVerificationEmailFetch } from "../../../fetching/authFetch";
 import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa6";
 
 const SendMail = () => {
   const navigate = useNavigate();
   const [canResend, setCanResend] = useState(false);
   const [timer, setTimer] = useState(0);
   const [resendAttempts, setResendAttempts] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
   // Get the token from the Redux store
   const reduxAccessToken = useSelector(
@@ -16,14 +18,16 @@ const SendMail = () => {
   );
 
   useEffect(() => {
-    //@ Decoding and checking if email is already verified if verified redirect to dashboard
+    //@ Decoding and checking if email is already verified if verified redirecting to dashboard
     if (reduxAccessToken) {
+      setLoaded(true);
       console.log("Decoding token...");
       const decodedToken = jwtDecode(reduxAccessToken);
       if (decodedToken.is_email_verified) {
         console.log("Email already verified, redirecting to dashboard...");
-        navigate("/dashboard");
+        navigate("/dashboard/profile");
       }
+      setLoaded(false);
     }
     //@ Check Done
     // Load resend attempts and timer from local storage
@@ -121,26 +125,32 @@ const SendMail = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-      <div className="text-center bg-white p-8 rounded-lg shadow-lg">
-        <p className="text-lg font-semibold text-gray-800 mb-6">
-          Check your mail for verification.
-        </p>
-        <button
-          onClick={handleResend}
-          disabled={!canResend}
-          className={`w-full py-2 px-4 rounded-lg font-semibold text-white transition duration-300 ${
-            canResend
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-gray-400 cursor-not-allowed"
-          }`}
-        >
-          {canResend
-            ? "Resend Mail"
-            : `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
-                .toString()
-                .padStart(2, "0")}`}
-        </button>
-      </div>
+      {loaded ? (
+        <div>
+          <FaSpinner className="animate-spin" />
+        </div>
+      ) : (
+        <div className="text-center bg-white p-8 rounded-lg shadow-lg">
+          <p className="text-lg font-semibold text-gray-800 mb-6">
+            Check your mail for verification.
+          </p>
+          <button
+            onClick={handleResend}
+            disabled={!canResend}
+            className={`w-full py-2 px-4 rounded-lg font-semibold text-white transition duration-300 ${
+              canResend
+                ? "bg-blue-600 hover:bg-blue-700"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+          >
+            {canResend
+              ? "Resend Mail"
+              : `Resend in ${Math.floor(timer / 60)}:${(timer % 60)
+                  .toString()
+                  .padStart(2, "0")}`}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
