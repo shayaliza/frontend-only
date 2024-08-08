@@ -6,7 +6,6 @@ import {
   Navigate,
   Link,
 } from "react-router-dom";
-import Dashboard from "./home/pages/dashboard";
 import Courses from "./home/pages/courses/courses";
 import SignIn from "./home/pages/authentication/signin";
 import SignUp from "./home/pages/authentication/signup";
@@ -61,12 +60,13 @@ const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
 );
-
+const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
 function AppRoutes() {
   const loggedIn = useSelector((state) => state.user.userData.loggedIn);
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
