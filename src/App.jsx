@@ -62,7 +62,8 @@ const SetNewPassword = React.lazy(() =>
 );
 const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
 function AppRoutes() {
-  const loggedIn = useSelector((state) => state.user.userData.loggedIn);
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+  console.log(loggedIn);
   return (
     <Router>
       <Routes>
