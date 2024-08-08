@@ -3,6 +3,7 @@ import PersonalInfoForm from "./component/personalinfoform";
 import ResumeSection from "./component/resumeSection";
 import SkillsSection from "./component/skillSection";
 import ConnectInfoSection from "./component/connectinfor";
+import { createOrUpdateProfile } from "../../../fetching/profileFetch";
 
 const ProfilePage = () => {
   const [profileImage, setProfileImage] = useState(
@@ -11,11 +12,24 @@ const ProfilePage = () => {
   const [bannerImage, setBannerImage] = useState(
     "https://via.placeholder.com/1500x300"
   );
+  const [profileFile, setProfileFile] = useState(null);
 
-  const handleImageChange = (e, setImage) => {
-    const reader = new FileReader();
-    reader.onload = () => setImage(reader.result);
-    reader.readAsDataURL(e.target.files[0]);
+  const handleImageChange = (e) => {
+    setProfileFile(e.target.files[0]);
+  };
+
+  const handleSaveChanges = async () => {
+    if (profileFile) {
+      console.log("Resume file:", profileFile);
+    }
+    if (profileFile) {
+      try {
+        const response = await createOrUpdateProfile({}, profileFile, null);
+        console.log("Profile uploaded successfully:", response.data);
+      } catch (error) {
+        console.error("Error uploading resume:", error);
+      }
+    }
   };
 
   return (
@@ -34,7 +48,7 @@ const ProfilePage = () => {
                   type="file"
                   className="hidden"
                   id="uploadBanner"
-                  onChange={(e) => handleImageChange(e, setBannerImage)}
+                  // onChange={(e) => handleImageChange(e, setBannerImage)}
                 />
                 <button
                   onClick={() =>
@@ -57,7 +71,7 @@ const ProfilePage = () => {
                       type="file"
                       className="hidden"
                       id="uploadProfile"
-                      onChange={(e) => handleImageChange(e, setProfileImage)}
+                      onChange={handleImageChange}
                     />
                     <button
                       onClick={() =>
@@ -72,7 +86,10 @@ const ProfilePage = () => {
                     <button className="bg-gray-200 text-gray-700 rounded-lg py-2 px-4 mr-2">
                       Cancel changes
                     </button>
-                    <button className="bg-blue-500 text-white rounded-lg py-2 px-4">
+                    <button
+                      onClick={handleSaveChanges}
+                      className="bg-blue-500 text-white rounded-lg py-2 px-4"
+                    >
                       Save changes
                     </button>
                   </div>

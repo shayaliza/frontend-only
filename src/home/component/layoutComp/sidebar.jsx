@@ -1,84 +1,88 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import selfGrowth from "./../../assets/self-growth3.png";
+import stage from "./../../assets/stage.png";
+import leaderboard from "./../../assets/leaderboard.png";
+import careerchoice from "./../../assets/career-choice.png";
+import onlineCourse from "./../../assets/online-course2.png";
+import productmanagement from "./../../assets/project-management (2).png";
+import clipboard from "./../../assets/clipboard.png";
+import deadline from "./../../assets/deadline.png";
+import account from "./../../assets/account (1).png";
+import user from "./../../assets/user (1).png";
+import edit from "./../../assets/edit (1).png";
+import logout from "./../../assets/logout (1).png";
 
 const Sidebar = ({ isActive }) => {
   return (
     <aside className="fixed top-14 pt-1 left-0 h-full mb-24 bg-[#0a182e] min-w-[220px] flex flex-col max-[900px]:hidden lg:flex transition-all duration-300 z-40 max-w-[220px] w-[250px] overflow-x-hidden overflow-y-scroll">
       <div className="myMenu flex flex-col justify-center mb-4 mt-2">
         <Link
-          to="/"
+          to="/dashboard/progress"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-                ${isActive("/") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+                ${
+                  isActive("/dashboard/progress")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
+                }`}
         >
-          <img
-            src="/src/assets/self-growth3.png"
-            alt="progress"
-            className="w-4 h-4"
-          />
+          <img src={selfGrowth} alt="progress" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             My Progress
           </p>
         </Link>
         <Link
-          to="/myfeed"
+          to="/dashboard/myfeed"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-                ${isActive("/myfeed") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+                ${
+                  isActive("/dashboard/myfeed")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
+                }`}
         >
-          <img
-            src="/src/assets/self-growth3.png"
-            alt="feed"
-            className="w-4 h-4"
-          />
+          <img src={selfGrowth} alt="feed" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             My Feed
           </p>
         </Link>
         <Link
-          to="/topics"
+          to="/dashboard/topics"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-                ${isActive("/topics") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+                ${
+                  isActive("/dashboard/topics")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
+                }`}
         >
-          <img
-            src="/src/assets/self-growth3.png"
-            alt="topics"
-            className="w-4 h-4"
-          />
+          <img src={selfGrowth} alt="topics" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Topics
           </p>
         </Link>
         <Link
-          to="/competitions"
+          to="/dashboard/competitions"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
                 ${
-                  isActive("/competitions")
+                  isActive("/dashboard/competitions")
                     ? "bg-gray-500 "
                     : "hover:bg-gray-700"
                 }`}
         >
-          <img
-            src="/src/assets/stage.png"
-            alt="competitions"
-            className="w-4 h-4"
-          />
+          <img src={stage} alt="competitions" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Competitions
           </p>
         </Link>
         <Link
-          to="/leaderboard"
+          to="/dashboard/leaderboard"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
                 ${
-                  isActive("/leaderboard")
+                  isActive("/dashboard/leaderboard")
                     ? "bg-gray-500 "
                     : "hover:bg-gray-700"
                 }`}
         >
-          <img
-            src="/src/assets/leaderboard.png"
-            alt="leaderboard"
-            className="w-4 h-4"
-          />
+          <img src={leaderboard} alt="leaderboard" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Leaderboard
           </p>
@@ -95,61 +99,59 @@ const Sidebar = ({ isActive }) => {
           </h4>
         </div>
         <Link
-          to="/career"
+          to="/dashboard/career"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-                ${isActive("/career") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+                ${
+                  isActive("/dashboard/career")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
+                }`}
           // className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
         >
-          <img
-            src="/src/assets/career-choice.png"
-            alt="career"
-            className="w-4 h-4"
-          />
+          <img src={careerchoice} alt="career" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Career Paths
           </p>
         </Link>
         <Link
-          to="/skill"
+          to="/dashboard/skill"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-                ${isActive("/skill") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+                ${
+                  isActive("/dashboard/skill")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
+                }`}
           // className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
         >
-          <img
-            src="/src/assets/career-choice.png"
-            alt="career"
-            className="w-4 h-4"
-          />
+          <img src={careerchoice} alt="career" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Skill Paths
           </p>
         </Link>
         <Link
-          to="/courses"
+          to="/dashboard/courses"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-              ${isActive("/courses") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+              ${
+                isActive("/dashboard/courses")
+                  ? "bg-gray-500 "
+                  : "hover:bg-gray-700"
+              }`}
         >
-          <img
-            src="/src/assets/online-course2.png"
-            alt="courses"
-            className="w-4 h-4"
-          />
+          <img src={onlineCourse} alt="courses" className="w-4 h-4" />
           <p className={"w-[70%] ml-[10px] "} style={{ fontFamily: "Nunito" }}>
             Courses
           </p>
         </Link>
         <Link
-          to="/projects"
+          to="/dashboard/projects"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
                 ${
-                  isActive("/projects") ? "bg-gray-500 " : "hover:bg-gray-700"
+                  isActive("/dashboard/projects")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
                 }`}
         >
-          <img
-            src="/src/assets/project-management (2).png"
-            alt="projects"
-            className="w-4 h-4"
-          />
+          <img src={productmanagement} alt="projects" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Projects
           </p>
@@ -173,17 +175,15 @@ const Sidebar = ({ isActive }) => {
               </p>
             </Link> */}
         <Link
-          to="/assesment"
+          to="/dashboard/assesment"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
                 ${
-                  isActive("/assesment") ? "bg-gray-500 " : "hover:bg-gray-700"
+                  isActive("/dashboard/assesment")
+                    ? "bg-gray-500 "
+                    : "hover:bg-gray-700"
                 }`}
         >
-          <img
-            src="/src/assets/clipboard.png"
-            alt="assessment"
-            className="w-4 h-4"
-          />
+          <img src={clipboard} alt="assessment" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Assessments
           </p>
@@ -192,11 +192,7 @@ const Sidebar = ({ isActive }) => {
           to="#"
           className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
         >
-          <img
-            src="/src/assets/deadline.png"
-            alt="live events"
-            className="w-4 h-4"
-          />
+          <img src={deadline} alt="live events" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Live Events
           </p>
@@ -213,33 +209,29 @@ const Sidebar = ({ isActive }) => {
           </h4>
         </div>
         <Link
-          to="/profile"
+          to="/dashboard/profile"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
-               ${isActive("/profile") ? "bg-gray-500 " : "hover:bg-gray-700"}`}
+               ${
+                 isActive("/dashboard/profile")
+                   ? "bg-gray-500 "
+                   : "hover:bg-gray-700"
+               }`}
         >
-          <img
-            src="/src/assets/account (1).png"
-            alt="my profile"
-            className="w-4 h-4"
-          />
+          <img src={account} alt="my profile" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             My Profile
           </p>
         </Link>
         <Link
-          to="/editprofile"
+          to="/dashboard/editprofile"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
                 ${
-                  isActive("/editprofile")
+                  isActive("/dashboard/editprofile")
                     ? "bg-gray-500 "
                     : "hover:bg-gray-700"
                 }`}
         >
-          <img
-            src="/src/assets/edit (1).png"
-            alt="edit profile"
-            className="w-4 h-4"
-          />
+          <img src={edit} alt="edit profile" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Edit Profile
           </p>
@@ -248,11 +240,7 @@ const Sidebar = ({ isActive }) => {
           to="#"
           className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
         >
-          <img
-            src="/src/assets/user (1).png"
-            alt="account settings"
-            className="w-4 h-4"
-          />
+          <img src={user} alt="account settings" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Account Settings
           </p>
@@ -261,11 +249,7 @@ const Sidebar = ({ isActive }) => {
           to="#"
           className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
         >
-          <img
-            src="/src/assets/logout (1).png"
-            alt="logout"
-            className="w-4 h-4"
-          />
+          <img src={logout} alt="logout" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
             Logout
           </p>

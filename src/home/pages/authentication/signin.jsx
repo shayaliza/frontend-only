@@ -6,29 +6,22 @@ import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/themes/default.min.css";
 import "./LoginPage.css"; // Create this CSS file for custom styles
 import logo from "../../assets/logo-black.png";
-import { Link } from "react-router-dom";
-import { RegisterFetch } from "../../../fetching/authFetch";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginFetch, RegisterFetch } from "../../../fetching/authFetch";
 import { useDispatch } from "react-redux";
 import { login, setUserData } from "../../../features/user/userSlice";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const validationSchema = Yup.object({
     username: Yup.string().required("Please choose a username."),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Please provide an email."),
-    password: Yup.string()
-      .required("Please provide a password.")
-      .min(8, "Password must be at least 8 characters long")
-      .matches(/\d/, "Password must contain at least one number")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter"),
+    password: Yup.string().required("Please provide a password."),
   });
 
   const formik = useFormik({
     initialValues: {
       username: "",
-      email: "",
       password: "",
     },
     validationSchema,
@@ -51,41 +44,40 @@ const SignIn = () => {
     });
   };
   const FinalSummit = async (values) => {
-    await RegisterFetch(values.username, values.email, values.password).then(
-      (res) => {
-        console.log(res);
-        console.log(res.details);
-
-        if (res.status === 201) {
-          dispatch(
-            setUserData({
-              username: values.username,
-              email: values.email,
-              password: values.password,
-              reduxAccessToken: res.refresh,
-              reduxRefreshToken: res.access,
-            })
-          );
-          dispatch(login());
-          alertify.success("Registration successful!");
-        }
+    await LoginFetch(values.username, values.password).then((res) => {
+      console.log(res);
+      console.log(res.data);
+      if (res.status === 200) {
+        dispatch(
+          setUserData({
+            username: values.username,
+            reduxAccessToken: res.data.access,
+            reduxRefreshToken: res.data.refresh,
+          })
+        );
+        dispatch(login());
+        alertify.success("Login successful!");
+        navigate("/resendmail");
       }
-    );
+      if (res.status === 400) {
+        alertify.error("Invalid Credentials");
+      }
+    });
   };
 
   return (
-    <div className="container-fluid bg h-screen flex items-center justify-center">
+    <div className=" ">
       <div className="row">
-        <div className="col-lg-7 col-md-7">
+        <div className="">
           <div className="logo">
             <img src={logo} alt="logo" className="img" />
           </div>
         </div>
         <div className="col-md-12">
           <section className="contact-us-section">
-            <div className="contact-us-right">
+            <div className="">
               <div className="contact-us-form-holder">
-                <p className="heading">Create Your Free Account</p>
+                <p className="heading">Login To Your Account</p>
                 <form
                   onSubmit={formik.handleSubmit}
                   className="needs-validation"
@@ -100,19 +92,6 @@ const SignIn = () => {
                     placeholder="Username"
                     name="username"
                     value={formik.values.username}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-
-                  <label htmlFor="email" className="form-label">
-                    Email Address
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
@@ -144,7 +123,11 @@ const SignIn = () => {
                     are an authorized Classrooms user).
                   </p>
                   <p className="switch-text mt-3">
-                    Already have an account? <Link to="/login">Login Here</Link>
+                    Dont have an accounr? <Link to="/signup">SignUp Here</Link>
+                  </p>
+                  <p className="switch-text mt-3">
+                    Forgot Password?{" "}
+                    <Link to="/forgotpassword">Click here</Link>
                   </p>
                 </form>
               </div>

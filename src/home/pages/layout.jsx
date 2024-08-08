@@ -1,11 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../component/layoutComp/header";
 import Sidebar from "../component/layoutComp/sidebar";
 import MobileMenu from "../component/layoutComp/mobileSidebar";
 import BottomBar from "../component/layoutComp/bottomBar";
+import refreshTokenFetch from "../../fetching/refresh.js";
+import { getTokenExpiration } from "../../fetching/getExpiration.js";
+import { useSelector } from "react-redux";
+import {
+  logout,
+  setUserData,
+  updateAccessToken,
+} from "../../features/user/userSlice.js";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Layout() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { reduxAccessToken, reduxRefreshToken } = useSelector(
+    (state) => state.user.userData
+  );
+
+  useEffect(() => {
+    const checkTokens = async () => {
+      console.log("checking tokens");
+      try {
+        const refreshTokenExpiry = getTokenExpiration(reduxRefreshToken);
+        const accessTokenExpiry = getTokenExpiration(reduxAccessToken);
+        const currentTime = Math.floor(Date.now() / 1000);
+
+        if (refreshTokenExpiry < currentTime) {
+          dispatch(logout());
+          navigate("/signin");
+        } else if (accessTokenExpiry - currentTime < 1800) {
+          const newTokens = await refreshTokenFetch(reduxRefreshToken);
+          console.log("new tokens", newTokens);
+          dispatch(updateAccessToken(newTokens));
+        }
+      } catch (error) {
+        console.error("Error refreshing token", error);
+        dispatch(logoutUser());
+        navigate("/signin");
+      }
+    };
+
+    checkTokens();
+  }, [reduxAccessToken, reduxRefreshToken, dispatch, navigate]);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {

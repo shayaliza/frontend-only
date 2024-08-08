@@ -1,117 +1,162 @@
-import React, { useState } from "react";
-import { FaGoogle, FaApple, FaEye, FaEyeSlash } from "react-icons/fa";
-import { GoLock } from "react-icons/go";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import alertify from "alertifyjs";
+import "alertifyjs/build/css/alertify.min.css";
+import "alertifyjs/build/css/themes/default.min.css";
+import "./LoginPage.css"; // Create this CSS file for custom styles
 import logo from "../../assets/logo-black.png";
+import { Link } from "react-router-dom";
+import { RegisterFetch } from "../../../fetching/authFetch";
+import { useDispatch } from "react-redux";
+import { login, setUserData } from "../../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
-function SignUp() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Please choose a username."),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Please provide an email."),
+    password: Yup.string().required("Please provide a password."),
+  });
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      console.log("Form Data:", values);
+      FinalSummit(values);
+    },
+  });
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    formik.validateForm().then((errors) => {
+      if (Object.keys(errors).length === 0) {
+        formik.submitForm();
+      } else {
+        Object.keys(errors).forEach((key) => {
+          alertify.error(errors[key]);
+        });
+      }
+    });
+  };
+  const FinalSummit = async (values) => {
+    await RegisterFetch(values.username, values.email, values.password).then(
+      (res) => {
+        console.log(res);
+        console.log(res.data);
+
+        if (res.status === 201) {
+          dispatch(
+            setUserData({
+              username: values.username,
+              email: values.email,
+              password: values.password,
+              reduxAccessToken: res.data.refresh,
+              reduxRefreshToken: res.data.access,
+            })
+          );
+          dispatch(login());
+          alertify.success("Registration successful!");
+          navigate("/resendmail");
+        }
+        if (res.status === 400) {
+          alertify.error("User Already Exists");
+        }
+      }
+    );
   };
 
   return (
-    <div>
-      <div className="flex ">
-        <img src={logo} height={200} width={200} />
-      </div>
-      <div className="w-11/12 sm:w-1/2 md:w-1/2 flex justify-center flex-col m-auto text-center mt-0">
-        <div className="text-3xl font-bold text-[#000B18]">Register</div>
-        <div className="text-md text-[#000B18] pt-2 font-semibold">
-          Create Your Free Account
-        </div>
-        {/* //#Different Login Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center mt-14 w-11/12 sm:w-9/12 m-auto gap-4">
-          <div className="bg-[#f285da9f] px-4 py-2 rounded-md text-[#000B18] text-sm font-medium flex flex-row gap-2 items-center justify-center">
-            <FaGoogle />
-            <button>Login with Google</button>
-          </div>
-          {/* <div className="bg-[#f285da9f] px-4 py-2 rounded-md text-[#000B18] text-sm font-medium flex flex-row gap-2 items-center justify-center">
-            <FaApple size={20} />
-            <button>Login with Apple</button>
-          </div> */}
-        </div>
-        <div className="relative mt-12">
-          <div className="border-b-2 border-gray-300"></div>
-          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-white px-4 text-sm font-medium">
-            OR
+    <div className=" ">
+      <div className="row">
+        <div className="">
+          <div className="logo">
+            <img src={logo} alt="logo" className="img" />
           </div>
         </div>
-        {/* //#Form */}
-        <form
-          className="flex flex-col gap-4 mt-12"
-          // onSubmit={handleSubmit(onSubmit)}
-        >
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#77045f]">
-              @
-            </span>
-            <input
-              type="email"
-              placeholder="Your UserName"
-              // {...register("email")}
-              className="pl-8 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#77045f]"
-            />
-          </div>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#77045f]">
-              @
-            </span>
-            <input
-              type="email"
-              placeholder="Your Email"
-              // {...register("email")}
-              className="pl-8 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#77045f]"
-            />
-          </div>
+        <div className="col-md-12">
+          <section className="contact-us-section">
+            <div className="">
+              <div className="contact-us-form-holder">
+                <p className="heading">Create Your Free Account</p>
+                <form
+                  onSubmit={formik.handleSubmit}
+                  className="needs-validation"
+                  id="post_form"
+                >
+                  <label htmlFor="username" className="form-label">
+                    Username
+                  </label>
+                  <input
+                    id="username"
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
 
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#77045f]">
-              <GoLock />
-            </span>
-            <span
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#77045f] cursor-pointer"
-              onClick={togglePasswordVisibility}
-            >
-              {passwordVisible ? <FaEye /> : <FaEyeSlash />}
-            </span>
-            <input
-              type={passwordVisible ? "text" : "password"}
-              placeholder="Create Password"
-              className="pl-8 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#77045f]"
-            />
-          </div>
+                  <label htmlFor="email" className="form-label">
+                    Email Address
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
 
-          <div className="flex flex-col sm:flex-row justify-start text-sm mt-2">
-            <div className="flex text-left">
-              <input type="checkbox" className="mr-2 p-" /> By continuing, you
-              accept our Terms of Use, our Privacy Policy. You confirm you are
-              at least 16 years old (13 if you are an authorized Classrooms
-              user).
+                  <label htmlFor="password" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+
+                  <button
+                    type="button"
+                    id="registerBtn"
+                    className="btn btn-primary mt-3"
+                    onClick={handleFormSubmit}
+                  >
+                    Start Learning For Free
+                  </button>
+                  <p className="mt-3">
+                    By continuing, you accept our Terms of Use, our Privacy
+                    Policy. You confirm you are at least 16 years old (13 if you
+                    are an authorized Classrooms user).
+                  </p>
+                  <p className=" mt-3">
+                    Already have an account?{" "}
+                    <Link to="/signin">Login Here</Link>
+                  </p>
+                </form>
+              </div>
             </div>
-          </div>
-          <div
-            type="submit"
-            className="text-white bg-[#77045f] p-2 rounded-md mt-4 cursor-pointer"
-          >
-            Sign In
-          </div>
-          <div className="mt-3">
-            <div>
-              Already have an account?
-              <Link
-                to={"/signin"}
-                className="text-[#77045f] cursor-pointer ml-2"
-              >
-                Log In
-              </Link>
-            </div>
-          </div>
-        </form>
+          </section>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default SignUp;
