@@ -87,19 +87,10 @@ const refreshTokenFetch = async (refreshToken) => {
 
 // token and email
 const forgotPasswordFetch = async (email) => {
-  const token = getToken();
   try {
-    const response = await axios.post(
-      `${URL}api/auth/forgot-password/`,
-      {
-        email: email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${URL}api/auth/forgot-password/`, {
+      email: email,
+    });
     return response;
   } catch (error) {
     return error.response;
