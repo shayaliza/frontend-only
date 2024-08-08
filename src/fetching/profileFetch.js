@@ -110,6 +110,8 @@ const deleteExperianceFetch = async (id) => {
     throw error;
   }
 };
+
+//@Skills Section
 const addSkillFetch = async (data) => {
   const token = getToken();
 
@@ -175,6 +177,114 @@ const deleteSkillFetch = async (id) => {
     throw error;
   }
 };
+
+//@Proof of Work
+
+const addWorkProofFetch = async (data) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.post(
+      `${URL}api/auth/proofs-of-work/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateWorkProofFetch = async (data, id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.put(
+      `${URL}api/auth/proofs-of-work/${id}/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteWorkProofFetch = async (id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.delete(
+      `${URL}api/auth/proofs-of-work/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+// @Give Recommendation
+
+const addRecommendationFetch = async (data) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.post(
+      `${URL}api/auth/recommendations/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+const updateRecommendationFetch = async (data, id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.put(
+      `${URL}api/auth/recommendations/${id}/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteRecommendationFetch = async (id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.delete(
+      `${URL}api/auth/recommendations/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 export {
   createOrUpdateProfile,
   getProfile,
@@ -184,4 +294,10 @@ export {
   addSkillFetch,
   updateSkillFetch,
   deleteSkillFetch,
+  addWorkProofFetch,
+  updateWorkProofFetch,
+  deleteWorkProofFetch,
+  addRecommendationFetch,
+  updateRecommendationFetch,
+  deleteRecommendationFetch,
 };

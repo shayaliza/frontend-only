@@ -14,6 +14,8 @@ import { useEffect } from "react";
 import { getUserId } from "../../../fetching/decodingJwt";
 import { useSelector } from "react-redux";
 import SkillForm from "./component/skillForm";
+import WorkProofForm from "./component/workProof";
+import RecommendationForm from "./component/recommendationForm";
 
 const ProfilePage = () => {
   const reduxAccessToken = useSelector(
@@ -125,8 +127,8 @@ const ProfilePage = () => {
                 <TabsTrigger value="personal">Account</TabsTrigger>
                 <TabsTrigger value="experiance">Experiance</TabsTrigger>
                 <TabsTrigger value="skill">Skill</TabsTrigger>
-                <TabsTrigger value="education">Education</TabsTrigger>
-                <TabsTrigger value="work">Work</TabsTrigger>
+                <TabsTrigger value="work">Work Proof</TabsTrigger>
+                <TabsTrigger value="recommendation">Recommendation</TabsTrigger>
               </TabsList>
               <TabsContent value="personal">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -148,14 +150,14 @@ const ProfilePage = () => {
                   <SkillForm expData={data.skills} />
                 </div>
               </TabsContent>
-              <TabsContent value="education">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <PersonalInfoForm />
-                  <div className="space-y-6">
-                    <ResumeSection />
-                    <SkillsSection />
-                    <ConnectInfoSection />
-                  </div>
+              <TabsContent value="work">
+                <div className="gap-6">
+                  <WorkProofForm expData={data.proofs_of_work} />
+                </div>
+              </TabsContent>
+              <TabsContent value="recommendation">
+                <div className="gap-6">
+                  <RecommendationForm expData={data.recommendations_given} />
                 </div>
               </TabsContent>
             </Tabs>
