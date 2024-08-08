@@ -249,7 +249,7 @@ const SecondProfilePage = () => {
                         className="flex items-center text-muted-foreground hover:text-primary"
                       >
                         <CiGlobe className="mr-2" />
-                        {data.social_accounts[0].link}
+                        {data?.social_accounts?.[0]?.link}
                       </a>
                       <a
                         href="https://facebook.com"

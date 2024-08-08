@@ -136,10 +136,10 @@ const ProfilePage = () => {
               </TabsList>
               <TabsContent value="personal">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <PersonalInfoForm />
+                  <PersonalInfoForm profileData={data} />
                   <div className="space-y-6">
                     <ResumeSection />
-                    <SkillsSection />
+                    <SkillsSection skills={data.skills} />
                     <ConnectInfoSection />
                   </div>
                 </div>
