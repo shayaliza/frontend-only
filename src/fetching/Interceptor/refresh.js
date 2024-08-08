@@ -1,12 +1,10 @@
-import axios from "axios";
-import store from "../store";
-import { updateAccessToken } from "../features/user/userSlice";
-
-const URL = "https://moviesnap.in/";
+import axiosInstance from "./axiosInstance";
+import store from "./../../store";
+import { updateAccessToken } from "../../features/user/userSlice";
 
 const refreshTokenFetch = async (refreshToken) => {
   try {
-    const response = await axios.post(`${URL}api/auth/token/refresh/`, {
+    const response = await axiosInstance.post("api/auth/token/refresh/", {
       refresh: refreshToken,
     });
     if (response.status === 200) {
@@ -15,6 +13,7 @@ const refreshTokenFetch = async (refreshToken) => {
     }
   } catch (error) {
     console.error("Failed to refresh token", error);
+    throw error;
   }
 };
 

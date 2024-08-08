@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./Interceptor/axiosInstance";
 const URL = "https://moviesnap.in/";
 
 const getToken = () => {
@@ -18,15 +19,11 @@ const RegisterFetch = async (username, email, password) => {
       "password: ",
       password
     );
-    const response = await axios.post(`${URL}api/auth/register/`, {
+    const response = await axiosInstance.post(`${URL}api/auth/register/`, {
       username: username,
       email: email,
       password: password,
     });
-    // const data = response.data;
-    // console.log("data: ", data);
-    // console.log("response: ", response);
-    // 201 for created
     return response;
   } catch (error) {
     return error.response;
@@ -35,7 +32,7 @@ const RegisterFetch = async (username, email, password) => {
 
 const verifyEmailTokenFetch = async (token) => {
   try {
-    const response = await axios.post(`${URL}api/auth/verify-email/`, {
+    const response = await axiosInstance.post(`${URL}api/auth/verify-email/`, {
       token: token,
     });
     return response;
@@ -47,7 +44,7 @@ const verifyEmailTokenFetch = async (token) => {
 // done
 const reqVerificationEmailFetch = async (token) => {
   try {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       `${URL}api/auth/request-verification-email/`,
       {},
       {
@@ -64,7 +61,7 @@ const reqVerificationEmailFetch = async (token) => {
 
 const LoginFetch = async (username, password) => {
   try {
-    const response = await axios.post(`${URL}api/auth/login/`, {
+    const response = await axiosInstance.post(`${URL}api/auth/login/`, {
       username: username,
       password: password,
     });
@@ -76,7 +73,7 @@ const LoginFetch = async (username, password) => {
 
 const refreshTokenFetch = async (refreshToken) => {
   try {
-    const response = await axios.post(`${URL}api/auth/token/refresh/`, {
+    const response = await axiosInstance.post(`${URL}api/auth/token/refresh/`, {
       refresh: refreshToken,
     });
     return response;
@@ -88,9 +85,12 @@ const refreshTokenFetch = async (refreshToken) => {
 // token and email
 const forgotPasswordFetch = async (email) => {
   try {
-    const response = await axios.post(`${URL}api/auth/forgot-password/`, {
-      email: email,
-    });
+    const response = await axiosInstance.post(
+      `${URL}api/auth/forgot-password/`,
+      {
+        email: email,
+      }
+    );
     return response;
   } catch (error) {
     return error.response;
@@ -103,7 +103,7 @@ const ResetPasswordFetch = async (token1, password) => {
   console.log(token1, "password token check");
   console.log(token, password);
   try {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       `${URL}api/auth/reset-password/`,
       {
         token: token1,

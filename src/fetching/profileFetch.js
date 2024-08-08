@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosInstance from "./Interceptor/axiosInstance";
 const URL = "https://moviesnap.in/";
 
 const getToken = () => {
@@ -16,7 +17,6 @@ const getToken = () => {
  */
 const createOrUpdateProfile = (profileData, profilePic, resume) => {
   const token = getToken();
-  console.log(profileData, "her");
   const formData = new FormData();
 
   Object.keys(profileData).forEach((key) => {
@@ -31,7 +31,7 @@ const createOrUpdateProfile = (profileData, profilePic, resume) => {
     formData.append("resume_file", resume);
   }
   // console.log(formData.get(""), "forrmdat");
-  return axios.put(` ${URL}api/auth/profile/`, formData, {
+  return axiosInstance.put(` ${URL}api/auth/profile/`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
@@ -42,7 +42,7 @@ const createOrUpdateProfile = (profileData, profilePic, resume) => {
 const getProfile = async (id) => {
   const token = getToken();
   try {
-    const response = await axios.get(`${URL}api/auth/profile/${id}/`, {
+    const response = await axiosInstance.get(`${URL}api/auth/profile/${id}/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

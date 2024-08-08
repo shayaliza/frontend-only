@@ -56,14 +56,17 @@ import { FaSpinner } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
 import SendMail from "./home/pages/authentication/sendMail";
+import setupInterceptors from "./fetching/Interceptor/interceptors";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
 );
 const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
+
+// Interceptor
+setupInterceptors();
 function AppRoutes() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
-  console.log(loggedIn);
   return (
     <Router>
       <Routes>
