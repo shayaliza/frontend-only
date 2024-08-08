@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import {
-  addExperianceFetch,
   addLanguageFetch,
-  addSkillFetch,
-  deleteExperianceFetch,
   deleteLanguageFetch,
-  deleteSkillFetch,
-  updateExperianceFetch,
   updateLanguageFetch,
-  updateSkillFetch,
 } from "../../../../fetching/profileFetch";
 import { useToast } from "@/components/ui/use-toast";
 import {

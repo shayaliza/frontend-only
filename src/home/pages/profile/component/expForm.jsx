@@ -51,11 +51,13 @@ const ExperienceForm = ({ expData }) => {
     };
 
     await addExperianceFetch(experienceData).then((res) => {
-      if (res) {
+      if (res.status === 201) {
         console.log(res);
+        const newData = res.data;
+
         resetForm();
         toast({ title: "Experience Added" });
-        setExperiences([...experiences, experienceData]);
+        setExperiences([...experiences, newData]);
       }
     });
   };
@@ -73,12 +75,14 @@ const ExperienceForm = ({ expData }) => {
 
     await updateExperianceFetch(experienceData, id).then((res) => {
       console.log(res);
-      if (res) {
-        toast({ title: "Experience Updated" });
+      if (res.status === 200) {
+        const newData = res.data;
+
         const updatedExperiences = experiences.map((exp) =>
-          exp.id === currentExperienceId ? { ...exp, ...experienceData } : exp
+          exp.id === currentExperienceId ? { ...exp, ...newData } : exp
         );
         setExperiences(updatedExperiences);
+        toast({ title: "Experience Updated" });
       }
     });
 
@@ -100,7 +104,9 @@ const ExperienceForm = ({ expData }) => {
 
   const handleDelete = async (id) => {
     await deleteExperianceFetch(id).then(() => {
-      toast({ title: "Experience Deleted" });
+      if (res.status === 204) {
+        toast({ title: "Experience Deleted" });
+      }
     });
 
     console.log(id);

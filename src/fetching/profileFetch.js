@@ -70,7 +70,7 @@ const addExperianceFetch = async (data) => {
         },
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }
@@ -89,7 +89,7 @@ const updateExperianceFetch = async (data, id) => {
         },
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }
@@ -105,7 +105,7 @@ const deleteExperianceFetch = async (id) => {
         },
       }
     );
-    return response.data;
+    return response;
   } catch (error) {
     throw error;
   }

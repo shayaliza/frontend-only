@@ -35,10 +35,10 @@ const WorkProofForm = ({ expData }) => {
       console.log(res);
       if (res.status === 201) {
         console.log(res);
+        const newData = res.data;
+        setWork([...work, newData]);
         resetForm();
         toast({ title: "Skill Added" });
-        setWork([...work, workData]);
-        // setSkills([...skills, skillData]);
       }
     });
   };
@@ -53,11 +53,13 @@ const WorkProofForm = ({ expData }) => {
     await updateWorkProofFetch(workData, id).then((res) => {
       console.log(res);
       if (res.status === 200) {
-        toast({ title: "Work Proof Updated" });
+        const newData = res.data;
+
         const updateSkill = work.map((exp) =>
-          exp.id === currentExperienceId ? { ...exp, ...workData } : exp
+          exp.id === currentExperienceId ? { ...exp, ...newData } : exp
         );
         setWork(updateSkill);
+        toast({ title: "Work Proof Updated" });
       }
     });
 

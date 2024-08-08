@@ -41,9 +41,10 @@ const SkillForm = ({ expData }) => {
       console.log(res);
       if (res.status === 201) {
         console.log(res);
+        const newData = res.data;
         resetForm();
         toast({ title: "Skill Added" });
-        setSkills([...skills, skillData]);
+        setSkills([...skills, newData]);
       }
     });
   };
@@ -59,8 +60,9 @@ const SkillForm = ({ expData }) => {
       console.log(res);
       if (res.status === 200) {
         toast({ title: "Skill Updated" });
+        const newData = res.data;
         const updateSkill = skills.map((exp) =>
-          exp.id === currentExperienceId ? { ...exp, ...skillData } : exp
+          exp.id === currentExperienceId ? { ...exp, ...newData } : exp
         );
         setSkills(updateSkill);
       }
