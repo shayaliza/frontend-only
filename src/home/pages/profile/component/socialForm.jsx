@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {
-  addWorkProofFetch,
-  deleteWorkProofFetch,
-  updateWorkProofFetch,
+  addSocialFetch,
+  deleteSocialFetch,
+  updateSocialFetch,
 } from "../../../../fetching/profileFetch";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -11,7 +11,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 
-const WorkProofForm = ({ expData }) => {
+const SocialAccountForm = ({ expData }) => {
   const { toast } = useToast();
 
   const [work, setWork] = useState(expData || []);
@@ -25,20 +25,28 @@ const WorkProofForm = ({ expData }) => {
     setLink("");
   };
 
+  const socialOption = [
+    { value: "instagram", label: "instagram" },
+    { value: "linkedin", label: "linkedin" },
+    { value: "twitter", label: "twitter" },
+    { value: "github", label: "github" },
+    { value: "other", label: "other" },
+  ];
+
   const handleAddExperience = async () => {
     const workData = {
       title,
       link,
     };
 
-    await addWorkProofFetch(workData).then((res) => {
+    await addSocialFetch(workData).then((res) => {
       console.log(res);
       if (res.status === 201) {
         console.log(res);
         const newData = res.data;
         setWork([...work, newData]);
         resetForm();
-        toast({ title: "Skill Added" });
+        toast({ title: "Social Account Added" });
       }
     });
   };
@@ -50,7 +58,7 @@ const WorkProofForm = ({ expData }) => {
     };
     console.log(id);
 
-    await updateWorkProofFetch(workData, id).then((res) => {
+    await updateSocialFetch(workData, id).then((res) => {
       console.log(res);
       if (res.status === 200) {
         const newData = res.data;
@@ -59,7 +67,7 @@ const WorkProofForm = ({ expData }) => {
           exp.id === currentExperienceId ? { ...exp, ...newData } : exp
         );
         setWork(updateSkill);
-        toast({ title: "Work Proof Updated" });
+        toast({ title: "Social Account Updated" });
       }
     });
 
@@ -76,9 +84,9 @@ const WorkProofForm = ({ expData }) => {
   };
 
   const handleDelete = async (id) => {
-    await deleteWorkProofFetch(id).then((res) => {
+    await deleteSocialFetch(id).then((res) => {
       if (res.status === 204) {
-        toast({ title: "Experience Deleted" });
+        toast({ title: "Social Account Deleted" });
       }
     });
 
@@ -88,13 +96,13 @@ const WorkProofForm = ({ expData }) => {
 
   return (
     <div className="final mx-auto bg-white shadow-lg rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-4">Proof of Work</h2>
+      <h2 className="text-xl font-semibold mb-4">Social Links</h2>
 
       <div className="mt-6 text-right ">
         <Popover>
           <PopoverTrigger>
             <div className=" bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600">
-              Add Work Proof
+              Add New Social Account
             </div>
           </PopoverTrigger>
           <PopoverContent className={"w-full  border-2 border-black"}>
@@ -104,12 +112,20 @@ const WorkProofForm = ({ expData }) => {
                   <label className="font-medium text-gray-700 mb-1">
                     Tittle:
                   </label>
-                  <input
-                    type="text"
+                  <select
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="border border-gray-300 rounded-lg p-2"
-                  />
+                  >
+                    <option value="" disabled>
+                      Select Account
+                    </option>
+                    {socialOption.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex flex-col">
                   <label className="font-medium text-gray-700 mb-1">
@@ -127,7 +143,7 @@ const WorkProofForm = ({ expData }) => {
                 onClick={handleAddExperience}
                 className="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 mt-4"
               >
-                Create New Skill
+                Create New Social Account
               </div>
             </div>
           </PopoverContent>
@@ -172,16 +188,24 @@ const WorkProofForm = ({ expData }) => {
                         <label className="font-medium text-gray-700 mb-1">
                           Tittle:
                         </label>
-                        <input
-                          type="text"
+                        <select
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
                           className="border border-gray-300 rounded-lg p-2"
-                        />
+                        >
+                          <option value="" disabled>
+                            Select Account
+                          </option>
+                          {socialOption.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                       <div className="flex flex-col">
                         <label className="font-medium text-gray-700 mb-1">
-                          Link
+                          Link:
                         </label>
                         <input
                           type="text"
@@ -195,7 +219,7 @@ const WorkProofForm = ({ expData }) => {
                       onClick={() => handleEditExperience(exp.id)}
                       className="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 mt-4"
                     >
-                      Edit Proof of Work
+                      Edit Social Account
                     </div>
                   </div>
                 </PopoverContent>
@@ -208,4 +232,4 @@ const WorkProofForm = ({ expData }) => {
   );
 };
 
-export default WorkProofForm;
+export default SocialAccountForm;

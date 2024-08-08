@@ -338,7 +338,59 @@ const deleteLanguageFetch = async (id) => {
     throw error;
   }
 };
+//@ Social Form
 
+const addSocialFetch = async (data) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.post(
+      `${URL}api/auth/social-accounts/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+const updateSocialFetch = async (data, id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.put(
+      `${URL}api/auth/social-accounts/${id}/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteSocialFetch = async (id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.delete(
+      `${URL}api/auth/social-accounts/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 export {
   createOrUpdateProfile,
   getProfile,
@@ -357,4 +409,7 @@ export {
   addLanguageFetch,
   updateLanguageFetch,
   deleteLanguageFetch,
+  addSocialFetch,
+  updateSocialFetch,
+  deleteSocialFetch,
 };

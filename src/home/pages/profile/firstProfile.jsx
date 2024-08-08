@@ -17,6 +17,7 @@ import SkillForm from "./component/skillForm";
 import WorkProofForm from "./component/workProof";
 import RecommendationForm from "./component/recommendationForm";
 import LangForm from "./component/languageForm";
+import SocialAccountForm from "./component/socialForm";
 
 const ProfilePage = () => {
   const reduxAccessToken = useSelector(
@@ -131,6 +132,7 @@ const ProfilePage = () => {
                 <TabsTrigger value="work">Work Proof</TabsTrigger>
                 <TabsTrigger value="recommendation">Recommendation</TabsTrigger>
                 <TabsTrigger value="language">Language</TabsTrigger>
+                <TabsTrigger value="social">Socials</TabsTrigger>
               </TabsList>
               <TabsContent value="personal">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -165,6 +167,11 @@ const ProfilePage = () => {
               <TabsContent value="language">
                 <div className="gap-6">
                   <LangForm expData={data.talking_languages} />
+                </div>
+              </TabsContent>
+              <TabsContent value="social">
+                <div className="gap-6">
+                  <SocialAccountForm expData={data.social_accounts} />
                 </div>
               </TabsContent>
             </Tabs>
