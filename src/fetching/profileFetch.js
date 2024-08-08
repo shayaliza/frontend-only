@@ -285,6 +285,60 @@ const deleteRecommendationFetch = async (id) => {
     throw error;
   }
 };
+
+// @Language
+const addLanguageFetch = async (data) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.post(
+      `${URL}api/auth/languages/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+const updateLanguageFetch = async (data, id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.put(
+      `${URL}api/auth/languages/${id}/`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteLanguageFetch = async (id) => {
+  const token = getToken();
+  try {
+    const response = await axiosInstance.delete(
+      `${URL}api/auth/languages/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   createOrUpdateProfile,
   getProfile,
@@ -300,4 +354,7 @@ export {
   addRecommendationFetch,
   updateRecommendationFetch,
   deleteRecommendationFetch,
+  addLanguageFetch,
+  updateLanguageFetch,
+  deleteLanguageFetch,
 };
