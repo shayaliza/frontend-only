@@ -7,15 +7,12 @@ import { useToast } from "@/components/ui/use-toast";
 
 const SkillsSection = ({ skills: initialSkills = [] }) => {
   const { toast } = useToast();
-  const [skillList, setSkillList] = useState([]);
+  const [skillList, setSkillList] = useState(initialSkills);
+  const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
     setSkillList(initialSkills);
   }, [initialSkills]);
-
-  const [newSkill, setNewSkill] = useState("");
-
-  // console.log(initialSkills, "initialSkills", skillList, "skillList");
 
   const addSkill = async () => {
     if (newSkill.trim()) {
@@ -24,7 +21,8 @@ const SkillsSection = ({ skills: initialSkills = [] }) => {
       try {
         const response = await addSkillFetch(skillData);
         if (response.status === 201) {
-          setSkillList([...skillList, response.data]);
+          // Directly add the new skill to the skillList
+          setSkillList((prevSkillList) => [...prevSkillList, response.data]);
           toast({ title: "Skill Added" });
         }
       } catch (error) {
@@ -40,7 +38,9 @@ const SkillsSection = ({ skills: initialSkills = [] }) => {
     try {
       const response = await deleteSkillFetch(skillId);
       if (response.status === 204) {
-        setSkillList(skillList.filter((skill) => skill.id !== skillId));
+        setSkillList((prevSkillList) =>
+          prevSkillList.filter((skill) => skill.id !== skillId)
+        );
         toast({ title: "Skill Deleted" });
       }
     } catch (error) {
