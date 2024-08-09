@@ -6,7 +6,7 @@ const setupInterceptors = () => {
   axiosInstance.interceptors.request.use(
     (config) => {
       const state = store.getState();
-      const token = state.user.accessToken;
+      const token = state.user.userData.reduxAccessToken;
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -26,7 +26,9 @@ const setupInterceptors = () => {
       ) {
         originalRequest._retry = true;
         const state = store.getState();
-        const newAccessToken = await refreshTokenFetch(state.user.refreshToken);
+        const newAccessToken = await refreshTokenFetch(
+          state.user.userData.reduxRefreshToken
+        );
         axiosInstance.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${newAccessToken}`;
