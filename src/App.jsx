@@ -69,86 +69,91 @@ function AppRoutes() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/verify-email" element={<VerifyEmailToken />} />
-        <Route path="/resendmail" element={<SendMail />} />
-        <Route path="/reset-password/" element={<SetNewPassword />} />
+    <Suspense fallback={<FaSpinner className="animate-spin" />}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/verify-email" element={<VerifyEmailToken />} />
+          <Route path="/resendmail" element={<SendMail />} />
+          <Route path="/reset-password/" element={<SetNewPassword />} />
 
-        <>
-          {loggedIn && (
-            <Route path="/dashboard" element={<MainLayout />}>
-              <Route path="progress" index element={<MyProgress />} />
-              <Route path="myfeed" element={<MyFeed />} />
-              <Route path="topics" element={<Topics />} />
-              <Route path="competitions" element={<Competitors />} />
-              <Route path="leaderboard" element={<LeaderBoard />} />
-              <Route path="courses" element={<Courses />}>
-                <Route path="details" element={<CourseDetails />} />
+          <>
+            {loggedIn && (
+              <Route path="/dashboard" element={<MainLayout />}>
+                <Route path="progress" index element={<MyProgress />} />
+                <Route path="myfeed" element={<MyFeed />} />
+                <Route path="topics" element={<Topics />} />
+                <Route path="competitions" element={<Competitors />} />
+                <Route path="leaderboard" element={<LeaderBoard />} />
+                <Route path="courses" element={<Courses />}>
+                  <Route path="details" element={<CourseDetails />} />
+                </Route>
+                <Route path="career" element={<CareerPath />}>
+                  <Route path="details" element={<CareerDetails />} />
+                </Route>
+                <Route path="skill" element={<SkillPath />}>
+                  <Route path="details" element={<SkillPathDetails />} />
+                </Route>
+                <Route path="projects" element={<Projects />}>
+                  <Route path="details" element={<ProjectDetails />} />
+                </Route>
+                <Route path="learningmodule" element={<LearnModule />} />
+                <Route path="assessment" element={<Assement />}>
+                  <Route path="details" element={<AssementDetails />} />
+                </Route>
+                <Route path="catalog" element={<Catalog />} />
+                <Route path="editprofile" element={<ProfilePage />} />
+                <Route path="profile" element={<SecondProfilePage />} />
               </Route>
-              <Route path="career" element={<CareerPath />}>
-                <Route path="details" element={<CareerDetails />} />
-              </Route>
-              <Route path="skill" element={<SkillPath />}>
-                <Route path="details" element={<SkillPathDetails />} />
-              </Route>
-              <Route path="projects" element={<Projects />}>
-                <Route path="details" element={<ProjectDetails />} />
-              </Route>
-              <Route path="learningmodule" element={<LearnModule />} />
-              <Route path="assessment" element={<Assement />}>
-                <Route path="details" element={<AssementDetails />} />
-              </Route>
-              <Route path="catalog" element={<Catalog />} />
-              <Route path="editprofile" element={<ProfilePage />} />
-              <Route path="profile" element={<SecondProfilePage />} />
+            )}
+
+            {/* CreateSnap Routes */}
+            <Route path="/createsnap" element={<Layout />}>
+              <Route
+                index
+                element={<Navigate to="/createsnap/analytics" replace />}
+              />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="career-path" element={<Careerpath />} />
+              <Route path="course" element={<Course />} />
             </Route>
-          )}
-
-          {/* CreateSnap Routes */}
-          <Route path="/createsnap" element={<Layout />}>
             <Route
-              index
-              element={<Navigate to="/createsnap/analytics" replace />}
-            />
-            <Route path="analytics" element={<Analytics />} />
-            <Route path="career-path" element={<Careerpath />} />
-            <Route path="course" element={<Course />} />
-          </Route>
-          <Route path="/createsnap/career-path/preview" element={<CPLayout />}>
-            <Route index element={<Info />} />
-            <Route path="info" element={<Info />} />
-            <Route path="addtimeline" element={<AddTimeline />} />
-            <Route path="viewtimeline" element={<Viewtimeline />} />
-            <Route path="html" element={<Html />} />
-          </Route>
-          <Route path="/createsnap/course/started" element={<CourseLayout />}>
-            <Route index element={<CourseInfo />} />
-            <Route path="info" element={<CourseInfo />} />
-            <Route path="users" element={<Users />} />
-            <Route path="banner" element={<CourseBanner />} />
-            <Route path="coursesetting" element={<CourseSetting />} />
-            <Route path="addproject" element={<AddProject />} />
-            <Route path="addassessment" element={<AttachAssessment />} />
-            <Route path="coursestructure" element={<CourseStructure />} />
-            <Route path="testimonial" element={<CourseTestimonial />} />
-            <Route path="html/introduction" element={<Introduction />}>
-              <Route path="quiz" element={<Quiz />} />
-              <Route path="video" element={<Video />} />
-              <Route path="test" element={<Test />} />
-              <Route path="text" element={<Text />} />
-              <Route path="practicetext" element={<PracticeText />} />
+              path="/createsnap/career-path/preview"
+              element={<CPLayout />}
+            >
+              <Route index element={<Info />} />
+              <Route path="info" element={<Info />} />
+              <Route path="addtimeline" element={<AddTimeline />} />
+              <Route path="viewtimeline" element={<Viewtimeline />} />
+              <Route path="html" element={<Html />} />
             </Route>
-          </Route>
-        </>
+            <Route path="/createsnap/course/started" element={<CourseLayout />}>
+              <Route index element={<CourseInfo />} />
+              <Route path="info" element={<CourseInfo />} />
+              <Route path="users" element={<Users />} />
+              <Route path="banner" element={<CourseBanner />} />
+              <Route path="coursesetting" element={<CourseSetting />} />
+              <Route path="addproject" element={<AddProject />} />
+              <Route path="addassessment" element={<AttachAssessment />} />
+              <Route path="coursestructure" element={<CourseStructure />} />
+              <Route path="testimonial" element={<CourseTestimonial />} />
+              <Route path="html/introduction" element={<Introduction />}>
+                <Route path="quiz" element={<Quiz />} />
+                <Route path="video" element={<Video />} />
+                <Route path="test" element={<Test />} />
+                <Route path="text" element={<Text />} />
+                <Route path="practicetext" element={<PracticeText />} />
+              </Route>
+            </Route>
+          </>
 
-        <Route path="*" element={<h1>Page Not Found</h1>} />
-      </Routes>
-    </Router>
+          <Route path="*" element={<h1>Page Not Found</h1>} />
+        </Routes>
+      </Router>
+    </Suspense>
   );
 }
 
