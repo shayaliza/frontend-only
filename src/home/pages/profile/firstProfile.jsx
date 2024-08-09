@@ -1,112 +1,3 @@
-// import React, { useState } from "react";
-// import PersonalInfoForm from "./component/personalinfoform";
-// import ResumeSection from "./component/resumeSection";
-// import SkillsSection from "./component/skillSection";
-// import ConnectInfoSection from "./component/connectinfor";
-// import ExperienceForm from "./component/expForm";
-// import {
-//   createOrUpdateProfile,
-//   getProfile,
-// } from "../../../fetching/profileFetch";
-// // Shadcn
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { useEffect } from "react";
-// import { getUserId } from "../../../fetching/decodingJwt";
-// import { useSelector } from "react-redux";
-// import SkillForm from "./component/skillForm";
-// import WorkProofForm from "./component/workProof";
-// import RecommendationForm from "./component/recommendationForm";
-// import LangForm from "./component/languageForm";
-// import SocialAccountForm from "./component/socialForm";
-// import BannerEditProfile from "./component/banner";
-
-// const ProfilePage = () => {
-//   const reduxAccessToken = useSelector(
-//     (state) => state.user.userData.reduxAccessToken
-//   );
-
-//   const [data, setData] = useState({});
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const fetchData = async () => {
-//     const id = await getUserId(reduxAccessToken);
-//     await getProfile(id).then((res) => {
-//       console.log(res);
-//       setData(res);
-//     });
-//   };
-//   return (
-//     <div className="flex flex-col">
-//       <div className="flex bg-gray-100 flex-row ">
-//         <div className="max-w-holder w-full mx-auto max_width_holder max-w-[1400px] max-[1500px]:max-w-[1100px] overflow-x-hidden overflow-y-scroll">
-//           <div className="max-w-7xl mx-auto p-4">
-//             <BannerEditProfile
-//               // profileImg={`https://moviesnap.in/${data.profile_pic}`}
-//               profileImg={`${data.profile_pic}`}
-//             />
-//             <Tabs defaultValue="personal" className="">
-//               <TabsList className=" mt-4">
-//                 <TabsTrigger value="personal">Account</TabsTrigger>
-//                 <TabsTrigger value="experiance">Experiance</TabsTrigger>
-//                 <TabsTrigger value="skill">Skill</TabsTrigger>
-//                 <TabsTrigger value="work">Work Proof</TabsTrigger>
-//                 {/* <TabsTrigger value="recommendation">Recommendation</TabsTrigger> */}
-//                 <TabsTrigger value="language">Language</TabsTrigger>
-//                 <TabsTrigger value="social">Socials</TabsTrigger>
-//               </TabsList>
-//               <TabsContent value="personal">
-//                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//                   <PersonalInfoForm profileData={data} />
-//                   <div className="space-y-6">
-//                     <ResumeSection currentResume={data.resume_file} />
-//                     <SkillsSection skills={data.skills} />
-//                     <ConnectInfoSection />
-//                   </div>
-//                 </div>
-//               </TabsContent>
-//               <TabsContent value="experiance">
-//                 <div className="gap-6">
-//                   <ExperienceForm expData={data.experiences} />
-//                 </div>
-//               </TabsContent>
-//               <TabsContent value="skill">
-//                 <div className="gap-6">
-//                   <SkillForm expData={data.skills} />
-//                 </div>
-//               </TabsContent>
-//               <TabsContent value="work">
-//                 <div className="gap-6">
-//                   <WorkProofForm expData={data.proofs_of_work} />
-//                 </div>
-//               </TabsContent>
-//               {/* <TabsContent value="recommendation">
-//                 <div className="gap-6">
-//                   <RecommendationForm expData={data.recommendations_given} />
-//                 </div>
-//               </TabsContent> */}
-//               <TabsContent value="language">
-//                 <div className="gap-6">
-//                   <LangForm expData={data.talking_languages} />
-//                 </div>
-//               </TabsContent>
-//               <TabsContent value="social">
-//                 <div className="gap-6">
-//                   <SocialAccountForm expData={data.social_accounts} />
-//                 </div>
-//               </TabsContent>
-//             </Tabs>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProfilePage;
-
 import React, { useState, useEffect } from "react";
 import PersonalInfoForm from "./component/personalinfoform";
 import ResumeSection from "./component/resumeSection";
@@ -114,8 +5,20 @@ import SkillsSection from "./component/skillSection";
 import ConnectInfoSection from "./component/connectinfor";
 import ExperienceForm from "./component/expForm";
 import {
+  addExperianceFetch,
+  addLanguageFetch,
+  addSocialFetch,
+  addWorkProofFetch,
   createOrUpdateProfile,
+  deleteExperianceFetch,
+  deleteLanguageFetch,
+  deleteSocialFetch,
+  deleteWorkProofFetch,
   getProfile,
+  updateExperianceFetch,
+  updateLanguageFetch,
+  updateSocialFetch,
+  updateWorkProofFetch,
 } from "../../../fetching/profileFetch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserId } from "../../../fetching/decodingJwt";
@@ -133,7 +36,12 @@ const ProfilePage = () => {
   );
 
   const [data, setData] = useState({});
-  const [skills, setSkills] = useState([]); // Move skills state here
+  //Children Components
+  const [skills, setSkills] = useState([]);
+  const [experiences, setExperiences] = useState([]);
+  const [workProofs, setWorkProofs] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [socialData, setSocialData] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -144,8 +52,117 @@ const ProfilePage = () => {
     await getProfile(id).then((res) => {
       console.log(res);
       setData(res);
-      setSkills(res.skills || []); // Set initial skills
+      setSkills(res.skills || []);
+      setExperiences(res.experiences || []);
+      setWorkProofs(res.proofs_of_work || []);
+      setLanguages(res.talking_languages || []);
+      setSocialData(res.social_accounts);
     });
+  };
+  // @Experiance
+  const handleAddExperience = async (experienceData) => {
+    await addExperianceFetch(experienceData).then((res) => {
+      if (res.status === 201) {
+        setExperiences([...experiences, res.data]);
+      }
+    });
+  };
+
+  const handleEditExperience = async (id, experienceData) => {
+    await updateExperianceFetch(experienceData, id).then((res) => {
+      if (res.status === 200) {
+        setExperiences(
+          experiences.map((exp) => (exp.id === id ? res.data : exp))
+        );
+      }
+    });
+  };
+
+  const handleDeleteExperience = async (id) => {
+    await deleteExperianceFetch(id).then((res) => {
+      if (res.status === 204) {
+        setExperiences(experiences.filter((exp) => exp.id !== id));
+      }
+    });
+  };
+
+  //@Work Proof
+
+  const handleAddWorkProof = async (workData) => {
+    const res = await addWorkProofFetch(workData);
+    if (res.status === 201) {
+      setWorkProofs([...workProofs, res.data]);
+    }
+  };
+
+  const handleEditWorkProof = async (id, workData) => {
+    const res = await updateWorkProofFetch(workData, id);
+    if (res.status === 200) {
+      setWorkProofs(
+        workProofs.map((work) =>
+          work.id === id ? { ...work, ...res.data } : work
+        )
+      );
+    }
+  };
+
+  const handleDeleteWorkProof = async (id) => {
+    const res = await deleteWorkProofFetch(id);
+    if (res.status === 204) {
+      setWorkProofs(workProofs.filter((work) => work.id !== id));
+    }
+  };
+
+  // @Language
+
+  const handleAddLanguage = async (languageData) => {
+    const res = await addLanguageFetch(languageData);
+    if (res.status === 201) {
+      setLanguages([...languages, res.data]);
+    }
+  };
+
+  const handleEditLanguage = async (id, languageData) => {
+    const res = await updateLanguageFetch(languageData, id);
+    if (res.status === 200) {
+      setLanguages(
+        languages.map((lang) =>
+          lang.id === id ? { ...lang, ...res.data } : lang
+        )
+      );
+    }
+  };
+
+  const handleDeleteLanguage = async (id) => {
+    const res = await deleteLanguageFetch(id);
+    if (res.status === 204) {
+      setLanguages(languages.filter((lang) => lang.id !== id));
+    }
+  };
+  // @Social
+  const handleAddSocial = async (newSocial) => {
+    const res = await addSocialFetch(newSocial);
+    if (res.status === 201) {
+      setSocialData([...socialData, res.data]);
+    }
+  };
+
+  const handleEditSocial = async (id, updatedSocial) => {
+    const res = await updateSocialFetch(updatedSocial, id);
+    if (res.status === 200) {
+      setSocialData(
+        socialData.map((social) =>
+          social.id === id ? { ...social, ...res.data } : social
+        )
+      );
+    }
+  };
+
+  const handleDeleteSocial = async (id) => {
+    const res = await deleteSocialFetch(id);
+    if (res.status === 204) {
+      setSocialData(socialData.filter((social) => social.id !== id));
+    }
   };
 
   return (
@@ -175,7 +192,12 @@ const ProfilePage = () => {
               </TabsContent>
               <TabsContent value="experiance">
                 <div className="gap-6">
-                  <ExperienceForm expData={data.experiences} />
+                  <ExperienceForm
+                    expData={experiences}
+                    onAddExperience={handleAddExperience}
+                    onEditExperience={handleEditExperience}
+                    onDeleteExperience={handleDeleteExperience}
+                  />
                 </div>
               </TabsContent>
               <TabsContent value="skill">
@@ -185,17 +207,32 @@ const ProfilePage = () => {
               </TabsContent>
               <TabsContent value="work">
                 <div className="gap-6">
-                  <WorkProofForm expData={data.proofs_of_work} />
+                  <WorkProofForm
+                    workData={workProofs}
+                    onAddWorkProof={handleAddWorkProof}
+                    onEditWorkProof={handleEditWorkProof}
+                    onDeleteWorkProof={handleDeleteWorkProof}
+                  />
                 </div>
               </TabsContent>
               <TabsContent value="language">
                 <div className="gap-6">
-                  <LangForm expData={data.talking_languages} />
+                  <LangForm
+                    languageData={languages}
+                    onAddLanguage={handleAddLanguage}
+                    onEditLanguage={handleEditLanguage}
+                    onDeleteLanguage={handleDeleteLanguage}
+                  />
                 </div>
               </TabsContent>
               <TabsContent value="social">
                 <div className="gap-6">
-                  <SocialAccountForm expData={data.social_accounts} />
+                  <SocialAccountForm
+                    socialData={socialData}
+                    onAddSocial={handleAddSocial}
+                    onEditSocial={handleEditSocial}
+                    onDeleteSocial={handleDeleteSocial}
+                  />
                 </div>
               </TabsContent>
             </Tabs>
