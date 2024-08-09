@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createOrUpdateProfile } from "./../../../../fetching/profileFetch";
-
-const PersonalInfoForm = (profileData) => {
+import { useToast } from "@/components/ui/use-toast";
+const PersonalInfoForm = ({ profileData }) => {
+  const { toast } = useToast();
   const [personalInfo, setPersonalInfo] = useState({
     fullName: "",
     headline: "",
@@ -11,21 +12,22 @@ const PersonalInfoForm = (profileData) => {
     visibility: false,
     about: "",
   });
-  // console.log(profileData, "do i get here");
 
-  // console.log(profileData.profileData.full_name, "do i get here");
+  const [initialInfo, setInitialInfo] = useState(personalInfo);
 
   useEffect(() => {
     if (profileData) {
-      setPersonalInfo({
-        fullName: profileData.profileData.full_name || "",
-        headline: profileData.profileData.headline || "",
-        country: profileData.profileData.country || "",
-        state: profileData.profileData.state || "",
-        phoneNumber: profileData.profileData.phone_number || "",
-        visibility: profileData.profileData.is_profile_public || false,
-        about: profileData.profileData.bio || "",
-      });
+      const initialProfile = {
+        fullName: profileData.full_name || "",
+        headline: profileData.headline || "",
+        country: profileData.country || "",
+        state: profileData.state || "",
+        phoneNumber: profileData.phone_number || "",
+        visibility: profileData.is_profile_public || false,
+        about: profileData.bio || "",
+      };
+      setPersonalInfo(initialProfile);
+      setInitialInfo(initialProfile); // Store the initial data
     }
   }, [profileData]);
 
@@ -48,15 +50,22 @@ const PersonalInfoForm = (profileData) => {
       bio: personalInfo.about,
     };
     try {
-      const response = await createOrUpdateProfile(profileData).then((res) => {
-        // console.log("Profile updated successfully:", res.data);
-        alert("Profile updated successfully");
+      await createOrUpdateProfile(profileData);
+      // alert("Profile updated successfully");
+      toast({
+        title: "Profile Updated",
       });
-      // console.log("Profile updated successfully:", response.data);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
+
+  const handleCancel = () => {
+    setPersonalInfo(initialInfo); // Reset to initial data
+  };
+
+  const isFormChanged =
+    JSON.stringify(personalInfo) !== JSON.stringify(initialInfo);
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-md">
@@ -128,13 +137,24 @@ const PersonalInfoForm = (profileData) => {
         <div className="flex justify-end">
           <button
             type="button"
-            className="bg-gray-300 text-black px-4 py-2 rounded mr-2"
+            className={`px-4 py-2 rounded mr-2 ${
+              isFormChanged
+                ? "bg-gray-300 text-black"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }`}
+            onClick={handleCancel}
+            disabled={!isFormChanged}
           >
             Cancel changes
           </button>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className={`px-4 py-2 rounded ${
+              isFormChanged
+                ? "bg-blue-500 text-white"
+                : "bg-blue-200 text-blue-400 cursor-not-allowed"
+            }`}
+            disabled={!isFormChanged}
           >
             Save changes
           </button>
