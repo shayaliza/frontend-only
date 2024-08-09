@@ -4,12 +4,15 @@ import * as Yup from "yup";
 import alertify from "alertifyjs";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/themes/default.min.css";
-import "./LoginPage.css"; // Create this CSS file for custom styles
+import "./LoginPage.css";
 import logo from "../../assets/logo-black.png";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginFetch, RegisterFetch } from "../../../fetching/authFetch";
 import { useDispatch } from "react-redux";
 import { login, setUserData } from "../../../features/user/userSlice";
+import { getUserVerified } from "../../../fetching/decodingJwt";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -31,6 +34,12 @@ const SignIn = () => {
     },
   });
 
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/dashboard/profile");
+    }
+  });
   const handleFormSubmit = (e) => {
     e.preventDefault();
     formik.validateForm().then((errors) => {
@@ -43,26 +52,42 @@ const SignIn = () => {
       }
     });
   };
+
   const FinalSummit = async (values) => {
-    await LoginFetch(values.username, values.password).then((res) => {
+    try {
+      const res = await LoginFetch(values.username, values.password);
+
       console.log(res);
       console.log(res.data);
+
       if (res.status === 200) {
+        const { access, refresh } = res.data;
+
         dispatch(
           setUserData({
             username: values.username,
-            reduxAccessToken: res.data.access,
-            reduxRefreshToken: res.data.refresh,
+            reduxAccessToken: access,
+            reduxRefreshToken: refresh,
           })
         );
-        dispatch(login());
-        alertify.success("Login successful!");
-        navigate("/resendmail");
-      }
-      if (res.status === 400) {
+
+        const userVerification = await getUserVerified(access);
+        console.log(userVerification, "userVerification");
+        if (userVerification) {
+          alertify.success("Login successful!");
+          dispatch(login());
+          navigate("/dashboard/profile");
+        } else {
+          alertify.error("Please verify your email!");
+          navigate("/resendmail");
+        }
+      } else if (res.status === 400) {
         alertify.error("Invalid Credentials");
       }
-    });
+    } catch (error) {
+      console.error("An error occurred during login:", error);
+      alertify.error("Something went wrong, please try again later.");
+    }
   };
 
   return (

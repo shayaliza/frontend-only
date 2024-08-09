@@ -5,4 +5,9 @@ const getUserId = (token) => {
   return decoded.user_id;
 };
 
-export { getUserId };
+const getUserVerified = (token) => {
+  const decoded = jwtDecode(token);
+  return decoded.is_email_verified;
+};
+
+export { getUserId, getUserVerified };
