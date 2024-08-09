@@ -7,11 +7,13 @@ import ExperienceForm from "./component/expForm";
 import {
   addExperianceFetch,
   addLanguageFetch,
+  addSkillFetch,
   addSocialFetch,
   addWorkProofFetch,
   createOrUpdateProfile,
   deleteExperianceFetch,
   deleteLanguageFetch,
+  deleteSkillFetch,
   deleteSocialFetch,
   deleteWorkProofFetch,
   getProfile,
@@ -58,6 +60,36 @@ const ProfilePage = () => {
       setLanguages(res.talking_languages || []);
       setSocialData(res.social_accounts);
     });
+  };
+
+  // @Top Skills
+  const handleAddSkill = async (newSkill) => {
+    const skillData = { name: newSkill, skill_type: "top" };
+    try {
+      const response = await addSkillFetch(skillData);
+      if (response.status === 201) {
+        setSkills((prevSkills) => [...prevSkills, response.data]);
+        toast({ title: "Skill Added" });
+      }
+    } catch (error) {
+      console.error("Error adding skill:", error);
+      toast({ title: "Error adding skill", variant: "destructive" });
+    }
+  };
+
+  const handleRemoveSkill = async (skillId) => {
+    try {
+      const response = await deleteSkillFetch(skillId);
+      if (response.status === 204) {
+        setSkills((prevSkills) =>
+          prevSkills.filter((skill) => skill.id !== skillId)
+        );
+        toast({ title: "Skill Deleted" });
+      }
+    } catch (error) {
+      console.error("Error deleting skill:", error);
+      toast({ title: "Error deleting skill", variant: "destructive" });
+    }
   };
   // @Experiance
   const handleAddExperience = async (experienceData) => {
@@ -185,7 +217,12 @@ const ProfilePage = () => {
                   <PersonalInfoForm profileData={data} />
                   <div className="space-y-6">
                     <ResumeSection currentResume={data.resume_file} />
-                    <SkillsSection skills={skills} />
+                    {/* <SkillsSection skills={skills} /> */}
+                    <SkillsSection
+                      skills={skills}
+                      onAddSkill={handleAddSkill}
+                      onRemoveSkill={handleRemoveSkill}
+                    />
                     <ConnectInfoSection />
                   </div>
                 </div>
