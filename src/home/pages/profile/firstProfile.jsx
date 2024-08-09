@@ -38,12 +38,12 @@ const ProfilePage = () => {
 
   const handleSaveChanges = async () => {
     if (profileFile) {
-      console.log("Resume file:", profileFile);
+      // console.log("Resume file:", profileFile);
     }
     if (profileFile) {
       try {
         const response = await createOrUpdateProfile({}, profileFile, null);
-        console.log("Profile uploaded successfully:", response.data);
+        // console.log("Profile uploaded successfully:", response.data);
       } catch (error) {
         console.error("Error uploading resume:", error);
       }
@@ -56,7 +56,7 @@ const ProfilePage = () => {
   const fetchData = async () => {
     const id = await getUserId(reduxAccessToken);
     await getProfile(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       setData(res);
     });
   };

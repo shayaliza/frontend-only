@@ -22,9 +22,9 @@ const SecondProfilePage = () => {
   const fetchData = async () => {
     const id = await getUserId(reduxAccessToken);
     await getProfile(id).then((res) => {
-      console.log(res);
+      // console.log(res);
       setData(res);
-      console.log(data);
+      // console.log(data);
     });
   };
 
