@@ -1,27 +1,21 @@
 import axiosInstance from "./Interceptor/axiosInstance";
-import { getUserId } from "./decodingJwt";
+// import { getUserId } from "./decodingJwt";
 const URL = "https://moviesnap.in/";
 
-const getToken = () => {
-  const storedData = localStorage.getItem("techsnap");
-  if (!storedData) return null;
-  const parsedData = JSON.parse(storedData);
-  return parsedData.user?.userData?.reduxAccessToken || null;
-};
+// const getToken = () => {
+//   const storedData = localStorage.getItem("techsnap");
+//   if (!storedData) return null;
+//   const parsedData = JSON.parse(storedData);
+//   return parsedData.user?.userData?.reduxAccessToken || null;
+// };
 
-const user_id = async () => {
-  const token = await getToken();
-  return getUserId(token);
-};
-/**
- * Function to create or update profile.
- * @param {Object} profileData - The profile data to be updated.
- * @param {File} profilePic - The profile picture file.
- * @param {File} resume - The resume file.
- * @returns {Promise} - Axios response promise.
- */
+// const user_id = async () => {
+//   const token = await getToken();
+//   return getUserId(token);
+// };
+
 const createOrUpdateProfile = (profileData, profilePic, resume) => {
-  const token = getToken();
+  // const token = getToken();
   const formData = new FormData();
 
   Object.keys(profileData).forEach((key) => {
@@ -38,19 +32,19 @@ const createOrUpdateProfile = (profileData, profilePic, resume) => {
   // console.log(formData.get(""), "forrmdat");
   return axiosInstance.put(`${URL}api/auth/profile/`, formData, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      // Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     },
   });
 };
 
 const getProfile = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.get(`${URL}api/auth/profile/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     });
     return response.data;
   } catch (error) {
@@ -59,15 +53,15 @@ const getProfile = async (id) => {
 };
 
 const addExperianceFetch = async (data) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.post(
       `${URL}api/auth/experiences/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -78,15 +72,15 @@ const addExperianceFetch = async (data) => {
 
 // Here the Id will be the experiance id
 const updateExperianceFetch = async (data, id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.put(
       `${URL}api/auth/experiences/${id}/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -95,14 +89,14 @@ const updateExperianceFetch = async (data, id) => {
   }
 };
 const deleteExperianceFetch = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.delete(
       `${URL}api/auth/experiences/${id}/`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -113,7 +107,7 @@ const deleteExperianceFetch = async (id) => {
 
 //@Skills Section
 const addSkillFetch = async (data) => {
-  const token = getToken();
+  // const token = getToken();
 
   const formData = new FormData();
 
@@ -125,10 +119,10 @@ const addSkillFetch = async (data) => {
       `${URL}api/auth/skills/`,
       formData,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   "Content-Type": "multipart/form-data",
+        // },
       }
     );
     return response;
@@ -138,7 +132,7 @@ const addSkillFetch = async (data) => {
 };
 
 const updateSkillFetch = async (data, id) => {
-  const token = getToken();
+  // const token = getToken();
   const formData = new FormData();
 
   formData.append("name", data.name);
@@ -149,10 +143,10 @@ const updateSkillFetch = async (data, id) => {
       `${URL}api/auth/skills/${id}/`,
       formData,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        //   "Content-Type": "multipart/form-data",
+        // },
       }
     );
     return response;
@@ -162,14 +156,14 @@ const updateSkillFetch = async (data, id) => {
 };
 
 const deleteSkillFetch = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.delete(
       `${URL}api/auth/skills/${id}/`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -181,15 +175,15 @@ const deleteSkillFetch = async (id) => {
 //@Proof of Work
 
 const addWorkProofFetch = async (data) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.post(
       `${URL}api/auth/proofs-of-work/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -199,15 +193,15 @@ const addWorkProofFetch = async (data) => {
 };
 
 const updateWorkProofFetch = async (data, id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.put(
       `${URL}api/auth/proofs-of-work/${id}/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -217,14 +211,14 @@ const updateWorkProofFetch = async (data, id) => {
 };
 
 const deleteWorkProofFetch = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.delete(
       `${URL}api/auth/proofs-of-work/${id}/`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -235,15 +229,15 @@ const deleteWorkProofFetch = async (id) => {
 // @Give Recommendation
 
 const addRecommendationFetch = async (data) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.post(
       `${URL}api/auth/recommendations/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -252,15 +246,15 @@ const addRecommendationFetch = async (data) => {
   }
 };
 const updateRecommendationFetch = async (data, id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.put(
       `${URL}api/auth/recommendations/${id}/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -270,14 +264,14 @@ const updateRecommendationFetch = async (data, id) => {
 };
 
 const deleteRecommendationFetch = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.delete(
       `${URL}api/auth/recommendations/${id}/`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -288,15 +282,15 @@ const deleteRecommendationFetch = async (id) => {
 
 // @Language
 const addLanguageFetch = async (data) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.post(
       `${URL}api/auth/languages/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -305,15 +299,15 @@ const addLanguageFetch = async (data) => {
   }
 };
 const updateLanguageFetch = async (data, id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.put(
       `${URL}api/auth/languages/${id}/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -323,14 +317,14 @@ const updateLanguageFetch = async (data, id) => {
 };
 
 const deleteLanguageFetch = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.delete(
       `${URL}api/auth/languages/${id}/`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -341,15 +335,15 @@ const deleteLanguageFetch = async (id) => {
 //@ Social Form
 
 const addSocialFetch = async (data) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.post(
       `${URL}api/auth/social-accounts/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -358,15 +352,15 @@ const addSocialFetch = async (data) => {
   }
 };
 const updateSocialFetch = async (data, id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.put(
       `${URL}api/auth/social-accounts/${id}/`,
       data,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;
@@ -376,14 +370,14 @@ const updateSocialFetch = async (data, id) => {
 };
 
 const deleteSocialFetch = async (id) => {
-  const token = getToken();
+  // const token = getToken();
   try {
     const response = await axiosInstance.delete(
       `${URL}api/auth/social-accounts/${id}/`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       }
     );
     return response;

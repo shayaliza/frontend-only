@@ -31,8 +31,12 @@ import RecommendationForm from "./component/recommendationForm";
 import LangForm from "./component/languageForm";
 import SocialAccountForm from "./component/socialForm";
 import BannerEditProfile from "./component/banner";
+import { setUserData } from "../../../features/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
   const reduxAccessToken = useSelector(
     (state) => state.user.userData.reduxAccessToken
   );
@@ -197,12 +201,32 @@ const ProfilePage = () => {
     }
   };
 
+  // const changeREfressToekn = () => {
+  //   console.log("Change refresh Token");
+  //   dispatch(
+  //     setUserData({
+  //       reduxRefreshToken:
+  //         "eyhhbGciOiJIUzI1NiosInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNDUzNzI1OSwiaWF0IjoxNzIzMjQxMjU5LCJqdGkiOiIzMWYwZTZmZWVhM2M0MzU5ODgzM2JmZDk5ZGFkZDM0YiIsInVzZXJfaWQiOjd9.TMcOv6L4hHRJotLC4dJEf6EgU6alhXRwRTV3iKLLWJ8",
+  //     })
+  //   );
+  // };
+  // const changeAccessToekn = () => {
+  //   console.log("Change Access Token");
+  //   dispatch(
+  //     setUserData({
+  //       reduxAccessToken:
+  //         "eyJhbociOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzMzI3NjU5LCJpYXQiOjE3MjMyNDEyNTksImp0aSI6ImNiMTA3ZWFhYzhlMjQyYzliYzQ0YjI4MjQ5M2FmZjk5IiwidXNlcl9pZCI6NywiaXNfY3JlYXRvciI6ZmFsc2UsImlzX3NlcnZpY2VfcHJvdmlkZXIiOmZhbHNlLCJpc19hbmFseXN0IjpmYWxzZSwiaXNfc25hcHBlciI6ZmFsc2UsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlfQ.jRHiccjAksM_bZ1gPj3Jq-3I7eGCB44Te8llu7LLx9I",
+  //     })
+  //   );
+  // };
   return (
     <div className="flex flex-col">
       <div className="flex bg-gray-100 flex-row ">
         <div className="max-w-holder w-full mx-auto max_width_holder max-w-[1400px] max-[1500px]:max-w-[1100px] overflow-x-hidden overflow-y-scroll">
           <div className="max-w-7xl mx-auto p-4">
             <BannerEditProfile profileImg={`${data.profile_pic}`} />
+            {/* <div onClick={changeREfressToekn}>Chagne Refress Token</div> */}
+            {/* <div onClick={changeAccessToekn}>Change Access Token</div> */}
             <Tabs defaultValue="personal" className="">
               <TabsList className=" mt-4">
                 <TabsTrigger value="personal">Account</TabsTrigger>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "./Interceptor/axiosInstance";
 const URL = "https://moviesnap.in/";
 
@@ -11,14 +10,6 @@ const getToken = () => {
 
 const RegisterFetch = async (username, email, password) => {
   try {
-    console.log(
-      "username: ",
-      username,
-      "email: ",
-      email,
-      "password: ",
-      password
-    );
     const response = await axiosInstance.post(`${URL}api/auth/register/`, {
       username: username,
       email: email,
