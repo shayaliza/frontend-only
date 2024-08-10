@@ -46,7 +46,7 @@ const SocialAccountForm = ({
   const handleEditSocial = async () => {
     const socialData = { title, link };
 
-    onEditSocial(currentSocialId, socialData)
+    onEditSocial(socialData, currentSocialId)
       .then(() => {
         resetForm();
         toast({ title: "Social Account Updated" });

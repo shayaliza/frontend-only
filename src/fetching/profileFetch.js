@@ -353,6 +353,9 @@ const addSocialFetch = async (data) => {
 };
 const updateSocialFetch = async (data, id) => {
   // const token = getToken();
+  console.log(data, "data we send");
+  console.log(id, "id we send");
+
   try {
     const response = await axiosInstance.put(
       `${URL}api/auth/social-accounts/${id}/`,

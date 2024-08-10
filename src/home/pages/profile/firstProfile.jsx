@@ -183,7 +183,9 @@ const ProfilePage = () => {
     }
   };
 
-  const handleEditSocial = async (id, updatedSocial) => {
+  const handleEditSocial = async (updatedSocial, id) => {
+    console.log(updatedSocial, "updatedSocial");
+    console.log(id, "id");
     const res = await updateSocialFetch(updatedSocial, id);
     if (res.status === 200) {
       setSocialData(
@@ -241,13 +243,17 @@ const ProfilePage = () => {
                   <PersonalInfoForm profileData={data} />
                   <div className="space-y-6">
                     <ResumeSection currentResume={data.resume_file} />
-                    {/* <SkillsSection skills={skills} /> */}
                     <SkillsSection
                       skills={skills}
                       onAddSkill={handleAddSkill}
                       onRemoveSkill={handleRemoveSkill}
                     />
-                    <ConnectInfoSection />
+                    <ConnectInfoSection
+                      socialData={socialData}
+                      onAddSocial={handleAddSocial}
+                      onEditSocial={handleEditSocial}
+                      onDeleteSocial={handleDeleteSocial}
+                    />
                   </div>
                 </div>
               </TabsContent>
