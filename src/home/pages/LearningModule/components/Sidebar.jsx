@@ -2,9 +2,9 @@ import { useState } from "react";
 // import './Sidebar.css';
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ isOpen, toggleSidebar, popupPosition }) => {
   const [openChapters, setOpenChapters] = useState({});
-
+  console.log("sidebar popup position ", popupPosition);
   const toggleChapter = (chapter) => {
     setOpenChapters((prev) => ({
       ...prev,
@@ -14,9 +14,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-96 max-[500px]:w-80 h-full bg-white shadow-lg sidebar-content overflow-y-auto ${
-        isOpen ? "sidebar-open-left" : "hidden"
-      }`}
+      className={`fixed top-0  w-96 max-[500px]:w-80 h-full bg-white shadow-lg  overflow-y-auto ${
+        isOpen ? "" : "hidden"
+      }
+
+      ${popupPosition === "right" ? "right-0" : "left-0"}
+      
+      `}
     >
       <div className="p-4">
         <button onClick={toggleSidebar} className="text-gray-500 text-3xl">

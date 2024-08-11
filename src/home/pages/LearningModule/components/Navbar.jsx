@@ -7,24 +7,30 @@ const Navbar = () => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSettingBarOpen, setIsSettingBarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [popupPosition, setPopupPosition] = useState("left");
+
+  console.log(popupPosition, "popup position");
   const toggleNotification = () => {
     setIsNotificationOpen(!isNotificationOpen);
   };
   const toggleSettingBar = () => {
-    setIsSettingBarOpen(!isSettingBarOpen); // Toggle setting bar visibility
+    setIsSettingBarOpen(!isSettingBarOpen);
   };
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to manage sidebar visibility
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar visibility
+    setIsSidebarOpen(!isSidebarOpen);
   };
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
+  };
+  const handlePositionChange = (position) => {
+    setPopupPosition(position);
   };
   return (
     <>
@@ -344,13 +350,17 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />{" "}
-      {/* Add the Sidebar component */}
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        popupPosition={popupPosition}
+      />
       <SettingBar
         isOpen={isSettingBarOpen}
         closeSettingBar={() => setIsSettingBarOpen(false)}
-      />{" "}
-      {/* Add the Setting Bar component */}
+        onPositionChange={handlePositionChange}
+        selectedPosition={popupPosition}
+      />
     </>
   );
 };

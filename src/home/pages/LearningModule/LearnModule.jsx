@@ -26,7 +26,7 @@ function LearnModule() {
   return (
     <div className="App">
       <Navbar />
-      <div className="content">
+      <div className="content mt-16">
         {currentContent === "main" ? (
           <Lecture />
         ) : currentContent === "video" ? (

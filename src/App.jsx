@@ -110,7 +110,6 @@ function AppRoutes() {
                 <Route path="projects" element={<Projects />}>
                   <Route path="details" element={<ProjectDetails />} />
                 </Route>
-                <Route path="learningmodule" element={<LearnModule />} />
                 <Route path="assessment" element={<Assement />}>
                   <Route path="details" element={<AssementDetails />} />
                 </Route>
@@ -119,6 +118,7 @@ function AppRoutes() {
                 <Route path="profile" element={<SecondProfilePage />} />
               </Route>
             )}
+            <Route path="learningmodule" element={<LearnModule />} />
 
             {/* CreateSnap Routes */}
             <Route path="/createsnap" element={<Layout />}>
