@@ -4,11 +4,12 @@ import "alertifyjs/build/css/themes/default.min.css";
 import logoBlack from "../../assets/logo-black.png";
 import alertify from "alertifyjs";
 import { forgotPasswordFetch } from "../../../fetching/authFetch";
+
 const ForgotPassword = () => {
   const [email, setEmail] = React.useState("");
+
   const handleSubmit = async () => {
     await forgotPasswordFetch(email).then((res) => {
-      console.log(res);
       console.log(res);
       if (res.status === 200) {
         alertify.success("Password Reset Link Sent");
@@ -18,6 +19,7 @@ const ForgotPassword = () => {
       }
     });
   };
+
   return (
     <div className="container-fluid bg">
       <div className="row">
@@ -47,13 +49,18 @@ const ForgotPassword = () => {
                     Please choose a correct Email
                   </div>
                   <br />
-                  <button
+                  <div
                     onClick={handleSubmit}
-                    className="button"
+                    className={` text-center ${
+                      !email
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-[#fc00bd] "
+                    } text-white font-bold py-2 px-4 rounded`}
                     type="submit"
+                    disabled={!email}
                   >
                     Reset Password
-                  </button>
+                  </div>
                   <br />
                 </div>
               </div>
