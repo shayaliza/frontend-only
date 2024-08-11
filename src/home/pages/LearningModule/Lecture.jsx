@@ -11,7 +11,7 @@ const Lecture = () => {
           <h2 className="text-lg font-semibold mb-2">Topic Heading</h2>
           <p className="mb-4">Some text describing the topic goes here.</p>
           <img
-            src="https://cdn.programiz.pro/course-images/sql-basics/sql1-2.1.1.png"
+            src="https://dummyimage.com/600x400/000/fff"
             alt="Course Image"
             className="mb-4"
           />

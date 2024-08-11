@@ -4,14 +4,18 @@ import Video from "./Video.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/footer.jsx";
 import Quiz from "./Quiz.jsx";
+import CompletePage from "./components/completePage.jsx";
 
 function LearnModule() {
   const [currentContent, setCurrentContent] = useState("main");
+
   const handleNextLesson = () => {
     if (currentContent === "main") {
       setCurrentContent("video");
     } else if (currentContent === "video") {
       setCurrentContent("quiz");
+    } else if (currentContent === "quiz") {
+      setCurrentContent("complete");
     }
   };
 
@@ -20,6 +24,8 @@ function LearnModule() {
       setCurrentContent("video");
     } else if (currentContent === "video") {
       setCurrentContent("main");
+    } else if (currentContent === "complete") {
+      setCurrentContent("quiz");
     }
   };
 
@@ -31,15 +37,19 @@ function LearnModule() {
           <Lecture />
         ) : currentContent === "video" ? (
           <Video />
-        ) : (
+        ) : currentContent === "quiz" ? (
           <Quiz />
-        )}
+        ) : currentContent === "complete" ? (
+          <CompletePage
+            onNextLesson={handleNextLesson}
+            onPrevLesson={handlePrevLesson}
+          />
+        ) : null}
       </div>
       <Footer
         onNextLesson={handleNextLesson}
         onPrevLesson={handlePrevLesson}
-        isPrevDisabled={currentContent === "main"}
-        isNextDisabled={currentContent === "quiz"}
+        currentContent={currentContent}
       />
     </div>
   );

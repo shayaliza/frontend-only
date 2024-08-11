@@ -1,6 +1,5 @@
-import React from "react";
-// import "./quiz.css"
-// Define the quiz data as a constant
+import React, { useState } from "react";
+
 const quizData = {
   course: "Learn SQL Basics",
   quizTitle: "SQL SELECT Statement",
@@ -31,28 +30,40 @@ const quizData = {
 };
 
 const Quiz = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleOptionClick = (value) => {
+    setSelectedOption(value);
+  };
+
   return (
-    <div className="p-4 sm:px-4 lg:px-20 xl:px-30 quiz">
+    <div className="p-4 sm:px-4 lg:px-20 xl:px-30 quiz relative z-10">
       <div className="sm:px-4 lg:px-8 xl:px-64">
-        <div className="border-2 p-4 sm:p-6 lg:p-8 xl:p-12">
-          <div className="py-2">Course: {quizData.course}</div>
-          <div className="py-2">
+        <div className="border-2 p-4 sm:p-6 lg:p-8 xl:p-12 bg-white shadow-lg rounded-lg">
+          <div className="py-2 text-gray-700">Course: {quizData.course}</div>
+          <div className="py-2 text-gray-700">
             Quiz:
             <br />
             <b>{quizData.quizTitle}</b>
           </div>
           <div
-            className="py-2"
+            className="py-2 text-gray-700"
             dangerouslySetInnerHTML={{ __html: quizData.question }}
           />
           <div className="py-2">
             <ul id="options" className="space-y-4">
               {quizData.options.map((option) => (
-                <li key={option.value}>
-                  <div className="option" data-value={option.value}>
-                    <div>Option {option.value}:</div>
-                    <div>{option.text}</div>
-                  </div>
+                <li
+                  key={option.value}
+                  onClick={() => handleOptionClick(option.value)}
+                  className={`p-4 cursor-pointer rounded-lg border ${
+                    selectedOption === option.value
+                      ? "bg-blue-100 border-blue-500 text-blue-700"
+                      : "bg-white border-gray-300 text-gray-700"
+                  } hover:bg-blue-50 transition-all`}
+                >
+                  <div>Option {option.value}:</div>
+                  <div>{option.text}</div>
                 </li>
               ))}
             </ul>

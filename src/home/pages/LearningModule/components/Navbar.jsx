@@ -3,6 +3,11 @@ import Sidebar from "./Sidebar.jsx";
 import SettingBar from "./Settingbar.jsx";
 import Popup from "./Popup.jsx";
 import { Link } from "react-router-dom";
+import { CiSettings } from "react-icons/ci";
+import { IoIosNotifications } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { FaInfo } from "react-icons/fa";
+import CourseContent from "./info.jsx";
 const Navbar = () => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -10,6 +15,7 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupPosition, setPopupPosition] = useState("left");
+  const [isCourseContentOpen, setIsCourseContentOpen] = useState(false);
 
   console.log(popupPosition, "popup position");
   const toggleNotification = () => {
@@ -32,19 +38,17 @@ const Navbar = () => {
   const handlePositionChange = (position) => {
     setPopupPosition(position);
   };
+
+  const toggleCourseContent = () => {
+    setIsCourseContentOpen(!isCourseContentOpen);
+  };
   return (
     <>
       <nav className="bg-white shadow-lg fixed w-full z-10 top-0">
         <div className="mx-auto px-4">
           <div className="flex justify-between h-16">
             <div className="flex items-center w-80">
-              <div className="flex-shrink-0">
-                <img
-                  className="h-8 w-8"
-                  src="/src/assets/logo-black.png"
-                  alt="Logo"
-                />
-              </div>
+              <div className="flex-shrink-0">Logo</div>
             </div>
             <div className="flex items-center justify-center flex-grow">
               <button
@@ -55,65 +59,18 @@ const Navbar = () => {
               </button>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Link
-                  href="#"
-                  className="text-gray-800 px-3 py-2 rounded-md text-sm font-medium relative"
-                >
-                  <svg
-                    width="24px"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d=""
-                      fill="#0F0F0F"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d=""
-                      fill="#0F0F0F"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d=""
-                      fill="#0F0F0F"
-                    ></path>
-                  </svg>
-                </Link>
-              </div>
               <div className="relative flex justify-between items-center">
-                <i
-                  onClick={togglePopup}
-                  className="fa fa-question-circle py-2 px-3 cursor-pointer"
-                  style={{ fontSize: "34px" }}
-                  title="question"
-                ></i>
                 {isPopupOpen && <Popup onClose={togglePopup} />}
-                <img
-                  src="https://img.icons8.com/external-xnimrodx-lineal-gradient-xnimrodx/64/000000/external-setting-advertising-xnimrodx-lineal-gradient-xnimrodx-3.png"
-                  onClick={toggleSettingBar}
-                  className="w-1/6 h-1/6 py-2 px-3 cursor-pointer"
-                  alt="Setting"
-                  title="Setting"
-                />
+                <div onClick={toggleSettingBar} className="cursor-pointer">
+                  {" "}
+                  <CiSettings size={25} />
+                </div>
                 <div
                   className="relative notification_bell cursor-pointer py-2 px-3"
                   onClick={toggleNotification}
                 >
-                  <div className="">
-                    <img
-                      src="/src/assets/bell.svg"
-                      alt="notification"
-                      className="notification_bell w-8 h-8 ml-1"
-                      title="notification"
-                    />
+                  <div className="cursor-pointer">
+                    <IoIosNotifications size={25} />
                     <span className="absolute top-0 right-0 transform -translate-y-2/5 text-white rounded-full text-xs font-bold px-2 py-1">
                       3
                     </span>
@@ -162,42 +119,21 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-                <i
-                  className="fa fa-info-circle py-2 px-3 cursor-pointer"
-                  style={{ fontSize: "34px" }}
-                  title="info"
-                ></i>
-                <i
+                <div className="cursor-pointer">
+                  <FaInfo size={20} onClick={toggleCourseContent} />
+                </div>
+                {/* <i
                   className="fa fa-arrow-circle-left py-2 px-3 cursor-pointer"
                   style={{ fontSize: "34px" }}
                   title="back"
-                ></i>
+                >
+                  Back
+                </i> */}
                 <div
                   className="relative profile-icon cursor-pointer py-2 px-3"
                   onClick={toggleProfile}
                 >
-                  <Link
-                    href="#"
-                    className="text-gray-800 px-3 rounded-md text-sm font-medium"
-                    id="profile-icon"
-                    title="profile"
-                  >
-                    <svg
-                      width="34px"
-                      height="34px"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-                        stroke="#000000"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      ></path>
-                    </svg>
-                  </Link>
+                  <CgProfile size={25} />
                   {isProfileOpen && (
                     <div
                       id="profile-popup"
@@ -355,6 +291,7 @@ const Navbar = () => {
         toggleSidebar={toggleSidebar}
         popupPosition={popupPosition}
       />
+      {isCourseContentOpen && <CourseContent onClose={toggleCourseContent} />}
       <SettingBar
         isOpen={isSettingBarOpen}
         closeSettingBar={() => setIsSettingBarOpen(false)}
