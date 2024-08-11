@@ -67,18 +67,28 @@ const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
 setupInterceptors();
 function AppRoutes() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
+  const reduxRefreshToken = useSelector(
+    (state) => state.user.userData.reduxRefreshToken
+  );
 
   return (
     <Suspense fallback={<FaSpinner className="animate-spin" />}>
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/verify-email" element={<VerifyEmailToken />} />
-          <Route path="/resendmail" element={<SendMail />} />
-          <Route path="/reset-password/" element={<SetNewPassword />} />
+
+          {!loggedIn && (
+            <>
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/reset-password" element={<SetNewPassword />} />
+            </>
+          )}
+          {reduxRefreshToken && (
+            <Route path="/resendmail" element={<SendMail />} />
+          )}
 
           <>
             {loggedIn && (

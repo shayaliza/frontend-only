@@ -60,11 +60,11 @@ const SignUp = () => {
               username: values.username,
               email: values.email,
               password: values.password,
-              reduxAccessToken: res.data.refresh,
-              reduxRefreshToken: res.data.access,
+              reduxAccessToken: res.data.access,
+              reduxRefreshToken: res.data.refresh,
             })
           );
-          dispatch(login());
+          // dispatch(login());
           alertify.success("Registration successful!");
           navigate("/resendmail");
         }

@@ -18,12 +18,10 @@ const VerifyEmailToken = () => {
           console.log(res);
           if (res.status === 200) {
             dispatch(setVerified(true));
-            // Redirect to dashboard
-            navigate("/dashboard");
+            navigate("/signin");
           }
 
           if (res.status === 400) {
-            // Navigate to sign-in page
             navigate("/signin");
           }
         })

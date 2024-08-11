@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./features/user/userSlice";
+import mailSlice from "./features/mail/mailSlice";
 
 const loadState = () => {
   try {
@@ -28,6 +29,7 @@ const preloadedState = loadState();
 export const store = configureStore({
   reducer: {
     user: userSlice,
+    mail: mailSlice,
   },
   preloadedState,
 });

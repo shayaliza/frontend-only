@@ -15,12 +15,14 @@ import logoutImage from "./../../assets/logout (1).png";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { clearMailData } from "../../../features/mail/mailSlice";
 
 const Sidebar = ({ isActive }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearMailData());
     navigate("/");
   };
   return (
