@@ -28,7 +28,7 @@ function BannerEditProfile({ profileImg }) {
     if (profileFile) {
       try {
         const response = await createOrUpdateProfile({}, profileFile, null);
-        const newProfileImageUrl = response.data.profile_pic;
+        const newProfileImageUrl = `https://moviesnap.in${response.data.profile_pic}`;
         setProfileImage(newProfileImageUrl);
         setInitialProfileImage(newProfileImageUrl);
         setProfileFile(null);

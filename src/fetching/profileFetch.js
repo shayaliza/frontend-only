@@ -39,13 +39,11 @@ const createOrUpdateProfile = (profileData, profilePic, resume) => {
 };
 
 const getProfile = async (id) => {
-  // const token = getToken();
   try {
-    const response = await axiosInstance.get(`${URL}api/auth/profile/${id}/`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    });
+    const response = await axiosInstance.get(
+      `${URL}api/auth/profile/${id}/`,
+      {}
+    );
     return response.data;
   } catch (error) {
     throw error;
