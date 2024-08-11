@@ -131,6 +131,7 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import {
   setTimer,
@@ -150,6 +151,7 @@ import { FaSpinner } from "react-icons/fa6";
 const SendMail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { toast } = useToast();
 
   const reduxAccessToken = useSelector(
     (state) => state.user.userData.reduxAccessToken
@@ -200,15 +202,54 @@ const SendMail = () => {
       dispatch(setCanResend(false));
 
       // Make the API call to resend the verification email
+      // try {
+      //   const response = await reqVerificationEmailFetch(reduxAccessToken);
+      //   if (response.status === 200) {
+      //     console.log("Verification email sent successfully.");
+      //     toast({
+      //       title: "Verification email sent successfully.",
+      //       status: "success",
+      //       isClosable: true,
+      //     });
+      //   } else {
+      //     console.error("Failed to send verification email.", response.data);
+      //   }
+      // } catch (error) {
+      //   console.error("Error sending verification email.", error);
+      // }
       try {
         const response = await reqVerificationEmailFetch(reduxAccessToken);
+
         if (response.status === 200) {
           console.log("Verification email sent successfully.");
+          toast({
+            title: "Verification email sent successfully.",
+            status: "success",
+            isClosable: true,
+          });
+        } else if (response.status === 429) {
+          // Handle "Too Many Requests"
+          console.error("Too many requests. Please try again later.");
+          toast({
+            title: "Too many requests. Please try again later.",
+            status: "error",
+            isClosable: true,
+          });
         } else {
           console.error("Failed to send verification email.", response.data);
+          toast({
+            title: "Failed to send verification email.",
+            status: "error",
+            isClosable: true,
+          });
         }
       } catch (error) {
         console.error("Error sending verification email.", error);
+        toast({
+          title: "Error sending verification email.",
+          status: "error",
+          isClosable: true,
+        });
       }
     } else {
       alert("No more attempts allowed");
