@@ -57,6 +57,7 @@ import { useSelector } from "react-redux";
 import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
 import SendMail from "./home/pages/authentication/sendMail";
 import setupInterceptors from "./fetching/Interceptor/interceptors";
+import DataSnapLayout from "./datasnap/pages/layout";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
@@ -159,6 +160,7 @@ function AppRoutes() {
               </Route>
             </Route>
           </>
+          <Route path="/datasnap" element={<DataSnapLayout />} />
 
           <Route path="*" element={<h1>Page Not Found</h1>} />
         </Routes>
