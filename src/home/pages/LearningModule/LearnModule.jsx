@@ -6,9 +6,16 @@ import Footer from "./components/footer.jsx";
 import Quiz from "./Quiz.jsx";
 import CompletePage from "./components/completePage.jsx";
 import Content from "./components/content.jsx";
+import Sidebar from "./components/Sidebar.jsx";
+import SettingBar from "./components/Settingbar.jsx";
 
 function LearnModule() {
   const [currentContent, setCurrentContent] = useState("main");
+
+  // Lifted state from Navbar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSettingBarOpen, setIsSettingBarOpen] = useState(false);
+  const [popupPosition, setPopupPosition] = useState("left");
 
   const handleNextLesson = () => {
     if (currentContent === "main") {
@@ -34,10 +41,37 @@ function LearnModule() {
     }
   };
 
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const toggleSettingBar = () => setIsSettingBarOpen(!isSettingBarOpen);
+  const handlePositionChange = (position) => setPopupPosition(position);
+
   return (
     <div className="App">
-      <Navbar />
-      <div className="content mt-16">
+      <Navbar
+        toggleSidebar={toggleSidebar}
+        toggleSettingBar={toggleSettingBar}
+        popupPosition={popupPosition}
+        setPopupPosition={handlePositionChange}
+        isSidebarOpen={isSidebarOpen}
+        isSettingBarOpen={isSettingBarOpen}
+      />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        popupPosition={popupPosition}
+      />
+      <SettingBar
+        isOpen={isSettingBarOpen}
+        closeSettingBar={toggleSettingBar}
+        onPositionChange={handlePositionChange}
+        selectedPosition={popupPosition}
+      />
+      <div
+        className={`content mt-16 ${
+          isSidebarOpen ? "blur-sm overflow-hidden" : ""
+        } ${isSettingBarOpen ? "blur-sm overflow-hidden" : ""} 
+        } `}
+      >
         {currentContent === "main" ? (
           <Lecture />
         ) : currentContent === "content" ? (
