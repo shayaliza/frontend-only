@@ -14,7 +14,7 @@ const Sidebar = ({ isOpen, toggleSidebar, popupPosition }) => {
 
   return (
     <div
-      className={`fixed top-0  w-96 max-[500px]:w-80 h-full bg-white shadow-lg  overflow-y-auto ${
+      className={`fixed top-0 z-50 w-96 max-[500px]:w-80 h-full bg-white shadow-lg  overflow-y-auto ${
         isOpen ? "" : "hidden"
       }
 

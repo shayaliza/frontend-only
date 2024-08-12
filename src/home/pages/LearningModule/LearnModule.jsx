@@ -5,12 +5,15 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/footer.jsx";
 import Quiz from "./Quiz.jsx";
 import CompletePage from "./components/completePage.jsx";
+import Content from "./components/content.jsx";
 
 function LearnModule() {
   const [currentContent, setCurrentContent] = useState("main");
 
   const handleNextLesson = () => {
     if (currentContent === "main") {
+      setCurrentContent("content");
+    } else if (currentContent === "content") {
       setCurrentContent("video");
     } else if (currentContent === "video") {
       setCurrentContent("quiz");
@@ -23,6 +26,8 @@ function LearnModule() {
     if (currentContent === "quiz") {
       setCurrentContent("video");
     } else if (currentContent === "video") {
+      setCurrentContent("content");
+    } else if (currentContent === "content") {
       setCurrentContent("main");
     } else if (currentContent === "complete") {
       setCurrentContent("quiz");
@@ -35,6 +40,8 @@ function LearnModule() {
       <div className="content mt-16">
         {currentContent === "main" ? (
           <Lecture />
+        ) : currentContent === "content" ? (
+          <Content />
         ) : currentContent === "video" ? (
           <Video />
         ) : currentContent === "quiz" ? (

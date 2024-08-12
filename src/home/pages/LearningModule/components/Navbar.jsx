@@ -50,9 +50,9 @@ const Navbar = () => {
             <div className="flex items-center w-80">
               <div className="flex-shrink-0">Logo</div>
             </div>
-            <div className="flex items-center justify-center flex-grow">
+            <div className="flex items-center justify-center ">
               <button
-                className="ml-2 flex items-center text-gray-800 px-3 py-2 rounded-md text-sm font-medium border border-gray-300 hover:border-green-500 transition-colors duration-300"
+                className="flex items-center text-gray-800 px-3 py-2 rounded-md text-sm font-medium border border-gray-300 hover:border-green-500 transition-colors duration-300"
                 onClick={toggleSidebar}
               >
                 Open

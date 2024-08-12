@@ -1,8 +1,8 @@
 const Footer = ({ onNextLesson, onPrevLesson, currentContent }) => {
-  // Define background colors for each content type
   const bgColor = {
     main: "bg-blue-300",
     video: "bg-blue-300",
+    content: "bg-blue-300",
     quiz: "bg-blue-300",
     complete: "bg-blue-300",
   };
@@ -18,7 +18,7 @@ const Footer = ({ onNextLesson, onPrevLesson, currentContent }) => {
         }`}
         disabled={currentContent === "main"}
       >
-        <span>&lt;</span> Prev Lesson
+        <span>&lt;</span> <span className="hidden md:block">Prev Lesson</span>
       </button>
 
       {/* Middle Part */}
@@ -26,6 +26,11 @@ const Footer = ({ onNextLesson, onPrevLesson, currentContent }) => {
         <div
           className={`px-6 py-2 rounded ${
             currentContent === "main" ? bgColor.main : "bg-gray-200"
+          }`}
+        ></div>
+        <div
+          className={`px-6 py-2 rounded ${
+            currentContent === "content" ? bgColor.main : "bg-gray-200"
           }`}
         ></div>
         <div
@@ -53,7 +58,8 @@ const Footer = ({ onNextLesson, onPrevLesson, currentContent }) => {
         }`}
         disabled={currentContent === "complete"}
       >
-        Next Lesson <span>&gt;</span>
+        <span className="hidden md:block">Next Lesson </span>
+        <span>&gt;</span>
       </button>
     </footer>
   );

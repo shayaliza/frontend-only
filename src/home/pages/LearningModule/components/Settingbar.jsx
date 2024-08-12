@@ -9,7 +9,7 @@ const SettingBar = ({
   return (
     <div
       id="settingbar"
-      className={`fixed top-0 right-0 h-full bg-white w-96 z-50 transform transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0  right-0 h-full overflow-y-auto bg-white w-96 z-50 transform transition-transform duration-300 ease-in-out ${
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >

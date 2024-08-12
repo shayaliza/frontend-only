@@ -37,7 +37,7 @@ const Quiz = () => {
   };
 
   return (
-    <div className="p-4 sm:px-4 lg:px-20 xl:px-30 quiz relative z-10">
+    <div className="p-4 sm:px-4 lg:px-20 xl:px-30 quiz relative -z-10">
       <div className="sm:px-4 lg:px-8 xl:px-64">
         <div className="border-2 p-4 sm:p-6 lg:p-8 xl:p-12 bg-white shadow-lg rounded-lg">
           <div className="py-2 text-gray-700">Course: {quizData.course}</div>

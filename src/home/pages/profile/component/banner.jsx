@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createOrUpdateProfile } from "../../../../fetching/profileFetch";
 import { useToast } from "@/components/ui/use-toast";
-
+import { TbUserEdit } from "react-icons/tb";
 function BannerEditProfile({ profileImg }) {
   const { toast } = useToast();
   const [initialProfileImage, setInitialProfileImage] = useState(
@@ -78,20 +78,7 @@ function BannerEditProfile({ profileImg }) {
                 onClick={() => document.getElementById("uploadProfile").click()}
                 className="absolute bottom-0 right-0 bg-white border border-gray-300 rounded-full p-2 shadow-md"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15.232 5.232l3.536 3.536M8 16v4h4M8 8l8-8m-2 2l4 4m-6 6H3.5A1.5 1.5 0 012 10.5v-1A1.5 1.5 0 013.5 8h7a1.5 1.5 0 011.5 1.5v1A1.5 1.5 0 0110.5 12H6"
-                  />
-                </svg>
+                <TbUserEdit />
               </button>
             </div>
           </div>
