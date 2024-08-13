@@ -6,7 +6,7 @@ import { FaInfo } from "react-icons/fa";
 import CourseContent from "./info.jsx";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { IoIosNavigate } from "react-icons/io";
 const Navbar = ({ toggleSidebar, toggleSettingBar }) => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -44,6 +44,9 @@ const Navbar = ({ toggleSidebar, toggleSettingBar }) => {
               <div onClick={toggleNotification} className="cursor-pointer">
                 <IoIosNotifications size={25} />
               </div>
+              <Link to="/detailsPages/first" className="cursor-pointer">
+                <IoIosNavigate size={25} />
+              </Link>
               <div onClick={toggleCourseContent} className="cursor-pointer">
                 <FaInfo size={20} />
               </div>

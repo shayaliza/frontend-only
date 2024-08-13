@@ -63,6 +63,12 @@ const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
 );
 const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
+const DetailPageLayout = React.lazy(() =>
+  import("./home/pages/details/layout")
+);
+const First = React.lazy(() => import("./home/pages/details/first"));
+const Second = React.lazy(() => import("./home/pages/details/second"));
+const Third = React.lazy(() => import("./home/pages/details/third"));
 
 // Interceptor
 setupInterceptors();
@@ -120,6 +126,12 @@ function AppRoutes() {
               </Route>
             )}
             <Route path="learningmodule" element={<LearnModule />} />
+
+            <Route path="detailsPages" element={<DetailPageLayout />}>
+              <Route path="first" element={<First />} />
+              <Route path="second" element={<Second />} />
+              <Route path="third" element={<Third />} />
+            </Route>
 
             {/* CreateSnap Routes */}
             <Route path="/createsnap" element={<Layout />}>
