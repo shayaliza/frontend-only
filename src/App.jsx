@@ -69,7 +69,10 @@ const DetailPageLayout = React.lazy(() =>
 const First = React.lazy(() => import("./home/pages/details/first"));
 const Second = React.lazy(() => import("./home/pages/details/second"));
 const Third = React.lazy(() => import("./home/pages/details/third"));
-
+const Fourth = React.lazy(() => import("./home/pages/details/fourth"));
+const AccountSettings = React.lazy(() =>
+  import("./home/pages/accountSettings/accountsSettings")
+);
 // Interceptor
 setupInterceptors();
 function AppRoutes() {
@@ -123,6 +126,7 @@ function AppRoutes() {
                 <Route path="catalog" element={<Catalog />} />
                 <Route path="editprofile" element={<ProfilePage />} />
                 <Route path="profile" element={<SecondProfilePage />} />
+                <Route path="accountSettings" element={<AccountSettings />} />
               </Route>
             )}
             <Route path="learningmodule" element={<LearnModule />} />
@@ -131,6 +135,7 @@ function AppRoutes() {
               <Route path="first" element={<First />} />
               <Route path="second" element={<Second />} />
               <Route path="third" element={<Third />} />
+              <Route path="fourth" element={<Fourth />} />
             </Route>
 
             {/* CreateSnap Routes */}

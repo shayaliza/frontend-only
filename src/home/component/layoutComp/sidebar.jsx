@@ -248,8 +248,13 @@ const Sidebar = ({ isActive }) => {
           </p>
         </Link>
         <Link
-          to="#"
-          className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
+          to="/dashboard/accountSettings"
+          className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
+                 ${
+                   isActive("/dashboard/accountSettings")
+                     ? "bg-gray-500 "
+                     : "hover:bg-gray-700"
+                 }`}
         >
           <img src={user} alt="account settings" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>

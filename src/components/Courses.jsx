@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowRight, FaSearch, FaBook, FaQuestionCircle, FaClipboardCheck } from "react-icons/fa";
+import {
+  FaArrowRight,
+  FaSearch,
+  FaBook,
+  FaQuestionCircle,
+  FaClipboardCheck,
+} from "react-icons/fa";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import img from "../assets/rsc/c1.avif";
@@ -84,7 +90,7 @@ const CourseList = () => {
 
   useEffect(() => {
     setFilteredCourses(
-      coursesData.filter(course =>
+      coursesData.filter((course) =>
         course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
@@ -132,7 +138,7 @@ const CourseList = () => {
           </motion.button>
         </div>
       </motion.div>
-      <motion.div 
+      <motion.div
         layout
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-6"
       >
@@ -153,7 +159,9 @@ const CourseList = () => {
                 alt={`${course.courseName} Cover`}
               />
               <div className="p-6">
-                <h2 className="font-bold text-2xl mb-3 text-gray-800">{course.courseName}</h2>
+                <h2 className="font-bold text-2xl mb-3 text-gray-800">
+                  {course.courseName}
+                </h2>
                 <p className="text-gray-600 mb-4">{course.description}</p>
                 <div className="flex gap-4 mb-4 text-indigo-600">
                   <div className="flex items-center">

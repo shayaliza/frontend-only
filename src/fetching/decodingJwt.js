@@ -10,4 +10,9 @@ const getUserVerified = (token) => {
   return decoded.is_email_verified;
 };
 
-export { getUserId, getUserVerified };
+const getAllData = (token) => {
+  const decoded = jwtDecode(token);
+  return decoded;
+};
+
+export { getUserId, getUserVerified, getAllData };
