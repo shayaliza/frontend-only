@@ -1,6 +1,6 @@
 import axiosInstance from "./../Interceptor/axiosInstance";
-const URL = "https://moviesnap.in/";
-
+const URL = "https://moviesnap.in/career_service/";
+// https://moviesnap.in/career_service/api/course/creator/courses/==
 const getCreaterCourseFetch = async () => {
   try {
     const response = await axiosInstance.get(
@@ -30,7 +30,7 @@ const createACourceFetch = async (
   if (desktopBannerImage) {
     formData.append("desktop_banner_image", desktopBannerImage);
   }
-  console.log(formData.getAll);
+  // console.log(formData.getAll);
   try {
     const response = await axiosInstance.post(
       `${URL}api/course/creator/courses/`,
@@ -41,6 +41,8 @@ const createACourceFetch = async (
         },
       }
     );
+    console.log(response, response.data);
+
     return response;
   } catch (error) {
     throw error;

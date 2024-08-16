@@ -73,6 +73,7 @@ const Fourth = React.lazy(() => import("./home/pages/details/fourth"));
 const AccountSettings = React.lazy(() =>
   import("./home/pages/accountSettings/accountsSettings")
 );
+const TestPage = React.lazy(() => import("./home/pages/testPage"));
 // Interceptor
 setupInterceptors();
 function AppRoutes() {
@@ -99,10 +100,10 @@ function AppRoutes() {
           {reduxRefreshToken && (
             <Route path="/resendmail" element={<SendMail />} />
           )}
-
           <>
             {loggedIn && (
               <Route path="/dashboard" element={<MainLayout />}>
+                <Route path="testpage" element={<TestPage />} />
                 <Route path="progress" index element={<MyProgress />} />
                 <Route path="myfeed" element={<MyFeed />} />
                 <Route path="topics" element={<Topics />} />
