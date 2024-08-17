@@ -1,9 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import alertify from "alertifyjs";
-import "alertifyjs/build/css/alertify.min.css";
-import "alertifyjs/build/css/themes/default.min.css";
+import { useToast } from "@/components/ui/use-toast";
+
 import "./LoginPage.css";
 import logo from "../../assets/logo-black.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,6 +14,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const SignIn = () => {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const validationSchema = Yup.object({
@@ -47,7 +47,7 @@ const SignIn = () => {
         formik.submitForm();
       } else {
         Object.keys(errors).forEach((key) => {
-          alertify.error(errors[key]);
+          toast({ title: errors[key], variant: "destructive" });
         });
       }
     });
@@ -74,19 +74,19 @@ const SignIn = () => {
         const userVerification = await getUserVerified(access);
         console.log(userVerification, "userVerification");
         if (userVerification) {
-          alertify.success("Login successful!");
           dispatch(login());
           navigate("/dashboard/profile");
+          toast({ title: "Login Successful" });
         } else {
-          alertify.error("Please verify your email!");
           navigate("/resendmail");
+          toast({ title: " Please verify your email", variant: "destructive" });
         }
       } else if (res.status === 400) {
-        alertify.error("Invalid Credentials");
+        toast({ title: "Invalid Credentials", variant: "destructive" });
       }
     } catch (error) {
       console.error("An error occurred during login:", error);
-      alertify.error("Something went wrong, please try again later.");
+      toast({ title: "Something went wrong", variant: "destructive" });
     }
   };
 
@@ -95,7 +95,7 @@ const SignIn = () => {
       <div className="row">
         <div className="">
           <div className="logo">
-            <img src={logo} alt="logo" className="img" />
+            <img src={logo} alt="logo" className="img h-36" />
           </div>
         </div>
         <div className="col-md-12">

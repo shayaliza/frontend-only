@@ -11,10 +11,13 @@ import { RegisterFetch } from "../../../fetching/authFetch";
 import { useDispatch } from "react-redux";
 import { login, setUserData } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
+
   const validationSchema = Yup.object({
     username: Yup.string().required("Please choose a username."),
     email: Yup.string()
@@ -43,7 +46,7 @@ const SignUp = () => {
         formik.submitForm();
       } else {
         Object.keys(errors).forEach((key) => {
-          alertify.error(errors[key]);
+          toast({ title: errors[key], variant: "destructive" });
         });
       }
     });
@@ -65,11 +68,11 @@ const SignUp = () => {
             })
           );
           // dispatch(login());
-          alertify.success("Registration successful!");
           navigate("/resendmail");
+          toast({ title: "Registration successful!" });
         }
         if (res.status === 400) {
-          alertify.error("User Already Exists");
+          toast({ title: "User Already Exists", variant: "destructive" });
         }
       }
     );
@@ -80,7 +83,7 @@ const SignUp = () => {
       <div className="row">
         <div className="">
           <div className="logo">
-            <img src={logo} alt="logo" className="img" />
+            <img src={logo} alt="logo" className="img h-36" />
           </div>
         </div>
         <div className="col-md-12">

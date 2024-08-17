@@ -41,8 +41,8 @@ const CoursePopup = ({ isOpen, togglePopup }) => {
       data
     );
 
-    console.log("Response:", res);
-    togglePopup();
+    // console.log("Response:", res);
+    // togglePopup();
   };
 
   if (!isOpen) return null;

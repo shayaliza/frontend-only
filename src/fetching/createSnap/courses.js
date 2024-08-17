@@ -17,12 +17,19 @@ const createACourceFetch = async (
   desktopBannerImage,
   data
 ) => {
+  console.log(data, "data we got in createACourceFetch");
+  console.log(mobileBannerImage, "mobileBannerImage");
+  console.log(desktopBannerImage, "desktopBannerImage");
   const formData = new FormData();
 
   Object.keys(data).forEach((key) => {
     formData.append(key, data[key]);
   });
 
+  // console.log("FormData entries:");
+  // for (let [key, value] of formData.entries()) {
+  //   console.log(key, value);
+  // }
   if (mobileBannerImage) {
     formData.append("mobile_banner_image", mobileBannerImage);
   }
@@ -30,10 +37,15 @@ const createACourceFetch = async (
   if (desktopBannerImage) {
     formData.append("desktop_banner_image", desktopBannerImage);
   }
-  // console.log(formData.getAll);
+
+  for (let [key, value] of formData.entries()) {
+    console.log(key, value);
+  }
+
   try {
     const response = await axiosInstance.post(
-      `${URL}api/course/creator/courses/`,
+      // `${URL}api/course/creator/courses/`,
+      `https://moviesnap.in/career_service/api/course/creator/courses/`,
       formData,
       {
         headers: {
@@ -41,13 +53,15 @@ const createACourceFetch = async (
         },
       }
     );
-    console.log(response, response.data);
+    console.log("Response:", response, response.data);
 
     return response;
   } catch (error) {
+    console.error("Error during API call:", error);
     throw error;
   }
 };
+
 const getOneCourseFetch = async (id) => {
   try {
     const response = await axiosInstance.get(
