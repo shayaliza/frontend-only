@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowRight, FaSearch, FaTrash } from "react-icons/fa";
+import { FaArrowRight, FaSearch, FaTrash, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -8,6 +8,7 @@ import {
 } from "../fetching/createSnap/courses";
 import { useToast } from "../components/ui/use-toast";
 import CoursePopup from "../popups/CoursePopup";
+import EditCoursePopup from "../popups/EditCoursePopup";
 import img from "../assets/rsc/c1.avif";
 
 const CourseList = () => {
@@ -15,21 +16,27 @@ const CourseList = () => {
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCourses, setFilteredCourses] = useState([]);
-  const [data, setData] = useState({ results: [] }); // Ensure results is an array
+  const [data, setData] = useState({ results: [] });
   const [isAddCoursePopup, setIsAddCoursePopup] = useState(false);
+  const [isEditCoursePopup, setIsEditCoursePopup] = useState(false);
+  const [currentCourse, setCurrentCourse] = useState(null);
 
   const toggleAddCoursePopup = () => {
     setIsAddCoursePopup(!isAddCoursePopup);
+  };
+
+  const toggleEditCoursePopup = (course) => {
+    setCurrentCourse(course);
+    setIsEditCoursePopup(!isEditCoursePopup);
   };
 
   useEffect(() => {
     const getAllCourses = async () => {
       const res = await getCreaterCourseFetch();
       if (res && res.data && Array.isArray(res.data.results)) {
-        setData({ results: res.data.results }); // Ensure data has results array
+        setData({ results: res.data.results });
         setFilteredCourses(res.data.results);
       } else {
-        // Handle unexpected data format
         console.error("Unexpected data format:", res);
         setData({ results: [] });
         setFilteredCourses([]);
@@ -60,7 +67,6 @@ const CourseList = () => {
         title: "Course deleted successfully",
       });
 
-      // Update the state to remove the deleted course
       setData((prevData) => ({
         results: prevData.results.filter((course) => course.id !== courseId),
       }));
@@ -158,29 +164,34 @@ const CourseList = () => {
                       course.level.slice(1)}{" "}
                     | Released
                   </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
-                    onClick={() => handleCourse(index)}
-                  >
-                    Get Started <FaArrowRight />
-                  </motion.button>
+                  <div className="flex items-center gap-2">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                      onClick={() => handleCourse(index)}
+                    >
+                      Get Started <FaArrowRight />
+                    </motion.button>
+                  </div>
                 </div>
-                <div>
-                  <button
-                    className=" p-4 text-red-800"
-                    onClick={() => handleDelete(course.id)}
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
+                <button
+                  className="p-4 text-blue-800"
+                  onClick={() => toggleEditCoursePopup(course)} // Pass the entire course object
+                >
+                  <FaEdit />
+                </button>
+                <button
+                  className="p-4 text-red-800"
+                  onClick={() => handleDelete(course.id)}
+                >
+                  <FaTrash />
+                </button>
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
-      {/* Render CoursePopup here */}
       <CoursePopup
         isOpen={isAddCoursePopup}
         togglePopup={toggleAddCoursePopup}
@@ -188,6 +199,15 @@ const CourseList = () => {
         setData={setData}
         setFilteredCourses={setFilteredCourses}
       />
+      {currentCourse && (
+        <EditCoursePopup
+          isOpen={isEditCoursePopup}
+          togglePopup={() => setIsEditCoursePopup(false)}
+          course={currentCourse} // Pass the entire course object
+          setData={setData}
+          setFilteredCourses={setFilteredCourses}
+        />
+      )}
     </motion.div>
   );
 };
