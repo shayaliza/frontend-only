@@ -24,6 +24,17 @@ const createCoursePrequisite = async (courseId, data) => {
     throw error;
   }
 };
+// const createCoursePrequisite = async (courseId, prerequisite) => {
+//   try {
+//     const response = await axiosInstance.post(
+//       `${URL}api/course/creator/courses/${courseId}/prerequisites/`,
+//       { name: prerequisite }
+//     );
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const updateCoursePrequisite = async (courseId, data, prerequisitesId) => {
   try {

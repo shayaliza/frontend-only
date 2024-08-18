@@ -74,6 +74,9 @@ const AccountSettings = React.lazy(() =>
   import("./home/pages/accountSettings/accountsSettings")
 );
 const TestPage = React.lazy(() => import("./home/pages/testPage"));
+const CourseInfoLayout = React.lazy(() =>
+  import("./components/CoursesFolder/CourseInfo/courseinfoLayout")
+);
 // Interceptor
 setupInterceptors();
 function AppRoutes() {
@@ -165,6 +168,7 @@ function AppRoutes() {
             >
               <Route index element={<CourseInfo />} />
               <Route path="info" element={<CourseInfo />} />
+              <Route path="info2" element={<CourseInfoLayout />} />
               <Route path="users" element={<Users />} />
               <Route path="banner" element={<CourseBanner />} />
               <Route path="coursesetting" element={<CourseSetting />} />
