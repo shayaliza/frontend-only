@@ -1,9 +1,9 @@
 import axiosInstance from "./../Interceptor/axiosInstance";
 const URL = "https://moviesnap.in/career_service/";
-const getCoursePrequisite = async (courseId) => {
+const getCourseSkill = async (courseId) => {
   try {
     const response = await axiosInstance.get(
-      `${URL}api/course/creator/courses/${courseId}/prerequisites/`
+      `${URL}api/course/creator/courses/${courseId}/skills/`
     );
     return response;
   } catch (error) {
@@ -11,10 +11,10 @@ const getCoursePrequisite = async (courseId) => {
   }
 };
 
-const createCoursePrequisite = async (courseId, data) => {
+const createCourseSkill = async (courseId, data) => {
   try {
     const response = await axiosInstance.post(
-      `${URL}api/course/creator/courses/${courseId}/prerequisites/`,
+      `${URL}api/course/creator/courses/${courseId}/skills/`,
       data
     );
     // sample data to send
@@ -25,10 +25,10 @@ const createCoursePrequisite = async (courseId, data) => {
   }
 };
 
-const updateCoursePrequisite = async (courseId, data, prerequisitesId) => {
+const updateCourseSkill = async (courseId, data, skillsId) => {
   try {
     const response = await axiosInstance.put(
-      `${URL}api/course/creator/courses/${courseId}/prerequisites/${prerequisitesId}/`,
+      `${URL}api/course/creator/courses/${courseId}/skills/${skillsId}/`,
       data
     );
     // sample data to send
@@ -39,10 +39,10 @@ const updateCoursePrequisite = async (courseId, data, prerequisitesId) => {
   }
 };
 
-const delCoursePrequisite = async (courseId, prerequisitesId) => {
+const delCourseSkill = async (courseId, skillsId) => {
   try {
     const response = await axiosInstance.delete(
-      `${URL}api/course/creator/courses/${courseId}/prerequisites/${prerequisitesId}/`
+      `${URL}api/course/creator/courses/${courseId}/skills/${skillsId}/`
     );
 
     return response;
@@ -51,9 +51,4 @@ const delCoursePrequisite = async (courseId, prerequisitesId) => {
   }
 };
 
-export {
-  getCoursePrequisite,
-  createCoursePrequisite,
-  updateCoursePrequisite,
-  delCoursePrequisite,
-};
+export { getCourseSkill, createCourseSkill, updateCourseSkill, delCourseSkill };

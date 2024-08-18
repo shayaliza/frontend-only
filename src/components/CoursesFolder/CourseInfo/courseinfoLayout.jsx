@@ -1,76 +1,3 @@
-// import React, { useState } from "react";
-// import CourseOverview from "./courseOverview";
-// import SkillsList from "./skillsList";
-// import PrerequisitesList from "./prerequisitesList";
-// import CourseOverviewModal from "./courseOverviewEdit";
-// import SkillsModal from "./skillsEdit";
-// import PrerequisitesModal from "./prequitEdit";
-
-// const CourseInfoLayout = () => {
-//   const [courseOverview, setCourseOverview] = useState(
-//     "This course provides a comprehensive introduction to React development."
-//   );
-//   const [skills, setSkills] = useState([
-//     "React Basics",
-//     "State Management",
-//     "Routing",
-//     "Component Lifecycle",
-//   ]);
-//   const [prerequisites, setPrerequisites] = useState([
-//     "Basic HTML",
-//     "Basic CSS",
-//     "Basic JavaScript",
-//   ]);
-//   const [editingMode, setEditingMode] = useState(null);
-
-//   const handleOpenModal = (mode) => {
-//     setEditingMode(mode);
-//   };
-
-//   const handleCloseModal = () => {
-//     setEditingMode(null);
-//   };
-
-//   return (
-//     <div>
-//       <CourseOverview
-//         overview={courseOverview}
-//         onEdit={() => handleOpenModal("overview")}
-//       />
-//       <SkillsList skills={skills} onEdit={() => handleOpenModal("skills")} />
-//       <PrerequisitesList
-//         prerequisites={prerequisites}
-//         onEdit={() => handleOpenModal("prerequisites")}
-//       />
-
-//       <CourseOverviewModal
-//         isOpen={editingMode === "overview"}
-//         overview={courseOverview}
-//         onSave={(value) => setCourseOverview(value)}
-//         onCancel={handleCloseModal}
-//       />
-
-//       <SkillsModal
-//         isOpen={editingMode === "skills"}
-//         skills={skills}
-//         onSave={(updatedSkills) => setSkills(updatedSkills)}
-//         onCancel={handleCloseModal}
-//       />
-
-//       <PrerequisitesModal
-//         isOpen={editingMode === "prerequisites"}
-//         prerequisites={prerequisites}
-//         onSave={(updatedPrerequisites) =>
-//           setPrerequisites(updatedPrerequisites)
-//         }
-//         onCancel={handleCloseModal}
-//       />
-//     </div>
-//   );
-// };
-
-// export default CourseInfoLayout;
-
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CourseOverview from "./courseOverview";
@@ -82,7 +9,6 @@ import PrerequisitesModal from "./prequitEdit";
 import {
   getCoursePrequisite,
   createCoursePrequisite,
-  updateCoursePrequisite,
   delCoursePrequisite,
 } from "./../../../fetching/createSnap/prequisite";
 
@@ -121,19 +47,6 @@ const CourseInfoLayout = () => {
   const handleCloseModal = () => {
     setEditingMode(null);
   };
-
-  //   const handleSavePrerequisites = async (updatedPrerequisites) => {
-  //     try {
-  //       const res = await createCoursePrequisite(courseId, {
-  //         name: updatedPrerequisites,
-  //       });
-  //       console.log(res, "this and  res");
-  //       setPrerequisites(updatedPrerequisites);
-  //       handleCloseModal();
-  //     } catch (error) {
-  //       console.error("Failed to save prerequisites", error);
-  //     }
-  //   };
 
   const handleSavePrerequisites = async (newPrerequisite) => {
     try {
@@ -201,6 +114,7 @@ const CourseInfoLayout = () => {
         onSave={handleSavePrerequisites}
         onCancel={handleCloseModal}
         onDelete={handleDeletePrerequisite}
+        courseId={courseId}
       />
     </div>
   );
