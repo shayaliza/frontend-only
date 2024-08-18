@@ -1,7 +1,7 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import Points from "./points";
 import ProfileIcon from "../profileicon";
-
+import Image from "./../../assets/icon.svg";
 const Header = ({ toggleMobileMenu }) => {
   return (
     <header
@@ -11,7 +11,7 @@ const Header = ({ toggleMobileMenu }) => {
       <div className="relative mx-auto flex justify-between items-center max-[900px]:min-h-[45px]">
         <div className=" flex items-center">
           <img
-            src="/src/home/assets/icon.svg"
+            src={Image}
             alt="Logo"
             className="w-32 h-12 object-contain hidden md:block"
           />

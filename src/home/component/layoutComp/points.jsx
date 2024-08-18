@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
-
+import coinImage from "./../../assets/coin (3).png";
 function Points() {
   const [isGoalsVisible, setGoalsVisible] = useState(false);
   const [isPowerVisible, setPowerVisible] = useState(false);
@@ -192,11 +192,7 @@ function Points() {
             className="flex items-center font-medium text-base coin cursor-pointer"
             onClick={toggleCoin}
           >
-            <img
-              src="/src/home/assets/coin (3).png"
-              alt="Coin"
-              className="w-6 h-6 mr-1.5"
-            />
+            <img src={coinImage} alt="Coin" className="w-6 h-6 mr-1.5" />
             <span>36912</span>
           </p>
         </div>
