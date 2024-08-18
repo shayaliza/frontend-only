@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useToast } from "../components/ui/use-toast";
 import { createACourceFetch } from "../fetching/createSnap/courses";
 
-const CoursePopup = ({ isOpen, togglePopup }) => {
+const CoursePopup = ({ isOpen, togglePopup, setFilteredCourses, setData }) => {
+  const { toast } = useToast();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [level, setLevel] = useState("");
@@ -21,6 +24,7 @@ const CoursePopup = ({ isOpen, togglePopup }) => {
     setDesktopBannerImage(file);
     setDesktopBannerPreview(URL.createObjectURL(file)); // For preview
   };
+
   const handleSubmit = async () => {
     const data = {
       title,
@@ -41,8 +45,35 @@ const CoursePopup = ({ isOpen, togglePopup }) => {
       data
     );
 
-    // console.log("Response:", res);
-    // togglePopup();
+    // Check if the response is valid
+    if (res && res.data) {
+      console.log(res.data, "data we got in createACourseFetch");
+
+      // Update state with the new course data
+      setData((prevData) => {
+        // Ensure prevData is in the expected format
+        const results = Array.isArray(prevData.results)
+          ? [...prevData.results, res.data]
+          : [res.data];
+        return { ...prevData, results };
+      });
+
+      setFilteredCourses((prevFilteredCourses) => [
+        ...prevFilteredCourses,
+        res.data,
+      ]);
+
+      toast({
+        title: "Added the course",
+      });
+      togglePopup(); // Close the popup after adding the course
+    } else {
+      toast({
+        title: "Failed to add the course",
+        description: res.error || "Something went wrong!",
+        status: "error",
+      });
+    }
   };
 
   if (!isOpen) return null;
