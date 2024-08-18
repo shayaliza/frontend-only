@@ -23,14 +23,16 @@ function ProfileIcon() {
 
   return (
     <div
-      className="profile relative flex items-center"
+      className={`profile relative flex items-center ${
+        isProfileVisible && "bg-blue-300 rounded-lg"
+      }`}
       onClick={toggleProfile}
       ref={profileRef}
     >
       <img src={ProfileImage} alt="Profile" className="w-8 h-8 rounded-full" />
       {isProfileVisible && (
         <div
-          className="profile_dropDown flex flex-col p-4 rounded-lg absolute top-[65px] right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
+          className="profile_dropDown flex flex-col p-4 rounded-lg absolute top-[65px] right-[-90%] mr-6 w-[190px] z-50 bg-white text-center justify-between text-base"
           style={{
             boxShadow:
               "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",

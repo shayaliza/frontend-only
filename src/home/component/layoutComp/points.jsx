@@ -49,7 +49,9 @@ function Points() {
   return (
     <>
       <div
-        className="points relative items-center max-[900px]:hidden bg-purple-200 w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer"
+        className={`points relative items-center max-[900px]:hidden  w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer ${
+          isGoalsVisible ? "bg-blue-300" : "bg-purple-200"
+        }`}
         onClick={toggleGoals}
         ref={goalsRef}
       >
@@ -63,7 +65,7 @@ function Points() {
         </div>
         {isGoalsVisible && (
           <div
-            className="goals_DropDown bg-white rounded-md w-[400px] absolute right-[-70%] top-[65px]"
+            className="goals_DropDown bg-white rounded-md w-[400px] absolute right-[-70%] top-[55px]"
             style={{
               boxShadow:
                 "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
@@ -155,7 +157,12 @@ function Points() {
         )}
       </div>
 
-      <div ref={powerRef} className="score relative flex items-center mr-2">
+      <div
+        ref={powerRef}
+        className={`score relative flex items-center mr-2 ${
+          isPowerVisible ? "bg-blue-300 py-2 rounded-lg" : ""
+        }`}
+      >
         <div>
           <p
             className="flex items-center font-medium text-base mr-3 shock cursor-pointer"
@@ -166,7 +173,7 @@ function Points() {
         </div>
         {isPowerVisible && (
           <div
-            className="power_dropDown flex flex-col p-4 rounded-lg absolute top-[65px] right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
+            className="power_dropDown flex flex-col p-4 rounded-lg absolute top-[50px] right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
             style={{
               boxShadow:
                 "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
@@ -186,7 +193,12 @@ function Points() {
           </div>
         )}
       </div>
-      <div className="score relative flex items-center mr-4">
+      <div
+        //  className="score relative flex items-center mr-4"
+        className={`score relative flex items-center mr-2 ${
+          isCoinVisible ? "bg-blue-300 py-2 rounded-lg " : ""
+        }`}
+      >
         <div ref={coinRef}>
           <p
             className="flex items-center font-medium text-base coin cursor-pointer"
@@ -198,7 +210,7 @@ function Points() {
         </div>
         {isCoinVisible && (
           <div
-            className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-[65px] right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
+            className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-[50px] right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
             style={{
               boxShadow:
                 "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
