@@ -17,12 +17,14 @@ import {
   updateCourseSkill,
   delCourseSkill,
 } from "./../../../fetching/createSnap/skills"; // Import the skill functions
+import { getOneCourseFetch } from "../../../fetching/createSnap/courses";
 
 const CourseInfoLayout = () => {
   const { courseId } = useParams();
   const [courseOverview, setCourseOverview] = useState(
     "This course provides a comprehensive introduction to React development."
   );
+  const [tittle, setTittle] = useState("");
   const [skills, setSkills] = useState([]);
   const [prerequisites, setPrerequisites] = useState([]);
   const [editingMode, setEditingMode] = useState(null);
@@ -32,9 +34,14 @@ const CourseInfoLayout = () => {
       try {
         const prerequisitesResponse = await getCoursePrequisite(courseId);
         setPrerequisites(prerequisitesResponse.data.results);
+        console.log(prerequisitesResponse.data);
 
         const skillsResponse = await getCourseSkill(courseId);
         setSkills(skillsResponse.data.results);
+
+        // Get Cousse Name
+        const response = await getOneCourseFetch(courseId);
+        setTittle(response.data.course.title);
       } catch (error) {
         console.error("Failed to fetch data", error);
       }
@@ -100,7 +107,8 @@ const CourseInfoLayout = () => {
   };
 
   return (
-    <div>
+    <div className="final">
+      <div>{tittle}</div>
       <CourseOverview
         overview={courseOverview}
         onEdit={() => handleOpenModal("overview")}
