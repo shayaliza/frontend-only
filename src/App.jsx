@@ -159,7 +159,10 @@ function AppRoutes() {
               <Route path="viewtimeline" element={<Viewtimeline />} />
               <Route path="html" element={<Html />} />
             </Route>
-            <Route path="/createsnap/course/started" element={<CourseLayout />}>
+            <Route
+              path="/createsnap/course/:courseId/started"
+              element={<CourseLayout />}
+            >
               <Route index element={<CourseInfo />} />
               <Route path="info" element={<CourseInfo />} />
               <Route path="users" element={<Users />} />

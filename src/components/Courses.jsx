@@ -55,8 +55,8 @@ const CourseList = () => {
     }
   }, [searchTerm, data]);
 
-  const handleCourse = (index) => {
-    navigate("/createsnap/course/started/info");
+  const handleCourse = (courseId) => {
+    navigate(`/createsnap/course/${courseId}/started/`);
   };
 
   const handleDelete = async (courseId) => {
@@ -169,7 +169,7 @@ const CourseList = () => {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
-                      onClick={() => handleCourse(index)}
+                      onClick={() => handleCourse(course.id)}
                     >
                       Get Started <FaArrowRight />
                     </motion.button>
