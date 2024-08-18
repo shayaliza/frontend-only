@@ -11,33 +11,36 @@ import {
   createCoursePrequisite,
   delCoursePrequisite,
 } from "./../../../fetching/createSnap/prequisite";
+import {
+  getCourseSkill,
+  createCourseSkill,
+  updateCourseSkill,
+  delCourseSkill,
+} from "./../../../fetching/createSnap/skills"; // Import the skill functions
 
 const CourseInfoLayout = () => {
   const { courseId } = useParams();
   const [courseOverview, setCourseOverview] = useState(
     "This course provides a comprehensive introduction to React development."
   );
-  const [skills, setSkills] = useState([
-    "React Basics",
-    "State Management",
-    "Routing",
-    "Component Lifecycle",
-  ]);
+  const [skills, setSkills] = useState([]);
   const [prerequisites, setPrerequisites] = useState([]);
   const [editingMode, setEditingMode] = useState(null);
 
-  // Fetch prerequisites when the component mounts
   useEffect(() => {
-    const fetchPrerequisites = async () => {
+    const fetchData = async () => {
       try {
-        const response = await getCoursePrequisite(courseId);
-        setPrerequisites(response.data.results);
+        const prerequisitesResponse = await getCoursePrequisite(courseId);
+        setPrerequisites(prerequisitesResponse.data.results);
+
+        const skillsResponse = await getCourseSkill(courseId);
+        setSkills(skillsResponse.data.results);
       } catch (error) {
-        console.error("Failed to fetch prerequisites", error);
+        console.error("Failed to fetch data", error);
       }
     };
 
-    fetchPrerequisites();
+    fetchData();
   }, [courseId]);
 
   const handleOpenModal = (mode) => {
@@ -50,35 +53,49 @@ const CourseInfoLayout = () => {
 
   const handleSavePrerequisites = async (newPrerequisite) => {
     try {
-      // Send the new prerequisite to the server
       const res = await createCoursePrequisite(courseId, {
         name: newPrerequisite.name,
       });
-      console.log(res, "Response from API");
-
-      // Update the local state with the new prerequisite
-      setPrerequisites((prev) => [...prev, newPrerequisite]);
-
-      // Handle modal close logic if needed
+      setPrerequisites((prev) => [
+        ...prev,
+        { ...newPrerequisite, id: res.data.id },
+      ]);
       handleCloseModal();
-
-      // Return the response or relevant data
       return res.data;
     } catch (error) {
       console.error("Failed to save prerequisites", error);
-
-      // Optionally return an error or handle it
       throw error;
     }
   };
 
   const handleDeletePrerequisite = async (prerequisiteId) => {
     try {
-      console.log(courseId, prerequisiteId);
       await delCoursePrequisite(courseId, prerequisiteId);
       setPrerequisites(prerequisites.filter((p) => p.id !== prerequisiteId));
     } catch (error) {
       console.error("Failed to delete prerequisite", error);
+    }
+  };
+
+  const handleSaveSkills = async (updatedSkills) => {
+    try {
+      const res = await createCourseSkill(courseId, {
+        name: updatedSkills.name,
+      });
+      setSkills((prev) => [...prev, { ...updatedSkills, id: res.data.id }]);
+      handleCloseModal();
+      return res.data;
+    } catch (error) {
+      console.error("Failed to save skills", error);
+    }
+  };
+
+  const handleDeleteSkill = async (skillId) => {
+    try {
+      await delCourseSkill(courseId, skillId);
+      setSkills(skills.filter((s) => s.id !== skillId));
+    } catch (error) {
+      console.error("Failed to delete skill", error);
     }
   };
 
@@ -88,10 +105,15 @@ const CourseInfoLayout = () => {
         overview={courseOverview}
         onEdit={() => handleOpenModal("overview")}
       />
-      <SkillsList skills={skills} onEdit={() => handleOpenModal("skills")} />
+      <SkillsList
+        skills={skills}
+        onEdit={() => handleOpenModal("skills")}
+        onDelete={handleDeleteSkill}
+      />
       <PrerequisitesList
         prerequisites={prerequisites}
         onEdit={() => handleOpenModal("prerequisites")}
+        onDelete={handleDeletePrerequisite}
       />
 
       <CourseOverviewModal
@@ -104,8 +126,10 @@ const CourseInfoLayout = () => {
       <SkillsModal
         isOpen={editingMode === "skills"}
         skills={skills}
-        onSave={(updatedSkills) => setSkills(updatedSkills)}
+        onSave={handleSaveSkills}
         onCancel={handleCloseModal}
+        courseId={courseId}
+        onDelete={handleDeleteSkill}
       />
 
       <PrerequisitesModal

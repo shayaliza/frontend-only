@@ -31,24 +31,25 @@ const SkillsList = ({ skills, onEdit }) => {
         </button>
       </div>
       <ul className="list-disc list-inside text-gray-700 space-y-2">
-        {skills.map((skill, index) => (
-          <li key={index} className="flex justify-between">
-            <div className="flex">
-              <svg
-                className="w-5 h-5 text-green-500 mr-2 mt-1"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M6.293 9.293a1 1 0 011.414 0L10 10.586l2.293-2.293a1 1 0 111.414 1.414L10 13.414l-3.707-3.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              {skill}
-            </div>
-          </li>
-        ))}
+        {Array.isArray(skills) &&
+          skills.map((skill) => (
+            <li key={skill.id} className="flex justify-between">
+              <div className="flex">
+                <svg
+                  className="w-5 h-5 text-green-500 mr-2 mt-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M6.293 9.293a1 1 0 011.414 0L10 10.586l2.293-2.293a1 1 0 111.414 1.414L10 13.414l-3.707-3.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {skill.name}
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   );

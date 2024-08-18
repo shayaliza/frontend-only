@@ -83,18 +83,19 @@ const PrerequisitesModal = ({
             Edit Prerequisites
           </h2>
           <ul className="mb-6">
-            {editPrerequisites.map((prerequisite) => (
-              <li
-                key={prerequisite.id}
-                className="flex justify-between items-center mb-2"
-              >
-                <span>{prerequisite.name}</span>
-                <FaTrash
-                  className="cursor-pointer text-red-500 hover:text-red-700"
-                  onClick={() => handleDeletePrerequisite(prerequisite.id)}
-                />
-              </li>
-            ))}
+            {editPrerequisites &&
+              editPrerequisites.map((prerequisite) => (
+                <li
+                  key={prerequisite.id}
+                  className="flex justify-between items-center mb-2"
+                >
+                  <span>{prerequisite.name}</span>
+                  <FaTrash
+                    className="cursor-pointer text-red-500 hover:text-red-700"
+                    onClick={() => handleDeletePrerequisite(prerequisite.id)}
+                  />
+                </li>
+              ))}
           </ul>
           <div className="mb-4">
             <input
