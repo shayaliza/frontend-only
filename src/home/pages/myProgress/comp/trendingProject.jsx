@@ -54,11 +54,7 @@ function TrendingProject() {
       <SwiperSlide>
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
           <div class="image h-[150px] max-[900px]:mb-4">
-            <img
-              src="/src/assets/banner.png"
-              alt="card"
-              class="w-full object-cover"
-            />
+            <img src="/src/home/assets/banner.png" alt="card" class="w-full " />
           </div>
           <div class="flex flex-col justify-between">
             <div class="title p-4 pb-2">
@@ -69,7 +65,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -79,7 +75,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -89,7 +85,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -102,7 +98,7 @@ function TrendingProject() {
               <div class="name flex items-center ml-2">
                 <span>
                   <img
-                    src="/src/assets/coin.svg"
+                    src="/src/home/assets/coin.svg"
                     alt="indian"
                     class="w-4 h-4"
                   />
@@ -130,7 +126,7 @@ function TrendingProject() {
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
           <div class="image h-[150px] max-[900px]:mb-4">
             <img
-              src="/src/assets/banner.png"
+              src="/src/home/assets/banner.png"
               alt="card"
               class="w-full object-cover"
             />
@@ -144,7 +140,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -154,7 +150,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -164,7 +160,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -177,7 +173,7 @@ function TrendingProject() {
               <div class="name flex items-center ml-2">
                 <span>
                   <img
-                    src="/src/assets/coin.svg"
+                    src="/src/home/assets/coin.svg"
                     alt="indian"
                     class="w-4 h-4"
                   />
@@ -205,7 +201,7 @@ function TrendingProject() {
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
           <div class="image h-[150px] max-[900px]:mb-4">
             <img
-              src="/src/assets/banner.png"
+              src="/src/home/assets/banner.png"
               alt="card"
               class="w-full object-cover"
             />
@@ -219,7 +215,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -229,7 +225,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -239,7 +235,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -252,7 +248,7 @@ function TrendingProject() {
               <div class="name flex items-center ml-2">
                 <span>
                   <img
-                    src="/src/assets/coin.svg"
+                    src="/src/home/assets/coin.svg"
                     alt="indian"
                     class="w-4 h-4"
                   />
@@ -280,7 +276,7 @@ function TrendingProject() {
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
           <div class="image h-[150px] max-[900px]:mb-4">
             <img
-              src="/src/assets/banner.png"
+              src="/src/home/assets/banner.png"
               alt="card"
               class="w-full object-cover"
             />
@@ -294,7 +290,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -304,7 +300,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -314,7 +310,7 @@ function TrendingProject() {
               <div class="icon_item flex items-center text-xs">
                 <span>
                   <img
-                    src="/src/assets/card_time.svg"
+                    src="/src/home/assets/card_time.svg"
                     alt="time"
                     class="w-5 h-5"
                   />
@@ -327,7 +323,7 @@ function TrendingProject() {
               <div class="name flex items-center ml-2">
                 <span>
                   <img
-                    src="/src/assets/coin.svg"
+                    src="/src/home/assets/coin.svg"
                     alt="indian"
                     class="w-4 h-4"
                   />

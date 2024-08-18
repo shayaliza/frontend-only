@@ -20,24 +20,35 @@ function MyProgress() {
 
   return (
     <div className="bg-[#f6f6f6]">
-      <div className="flex flex-col w-[90%] mx-auto ">
-        <div className="flex flex-col sm:flex-row bg-white rounded-r-2xl rounded-l-2xl overflow-hidden justify-evenly font-bold my-5 text-center border border-black w-full">
-          {tabs.map((tab) => (
-            <button
-              key={tab.name}
-              className={`px-4 py-3 w-full border-b sm:border-b-0 sm:border-x border-black hover:bg-[#cd27ff] hover:text-white transition ease delay-150 cursor-pointer ${
-                activeTab === tab.name
-                  ? "bg-[#cd27ff] text-white"
-                  : "text-black"
-              }`}
-              onClick={() => setActiveTab(tab.name)}
-            >
-              {tab.name}
-            </button>
-          ))}
+      <div className="w-full flex flex-row gap-10">
+        <div className="w-2/3 ">
+          <div className="flex flex-col w-[90%] mx-auto ">
+            <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold my-5 text-center  w-full">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.name}
+                  className={`px-4 py-3 w-full  hover:bg-[#cd27ff]  hover:text-white transition ease delay-150 cursor-pointer ${
+                    activeTab === tab.name
+                      ? "bg-[#cd27ff] text-white"
+                      : "text-black bg-gray-300"
+                  }`}
+                  onClick={() => setActiveTab(tab.name)}
+                >
+                  {tab.name}
+                </button>
+              ))}
+            </div>
+            <div className="mt-5">
+              <ActiveComponent />
+            </div>
+          </div>
         </div>
-        <div className="mt-5">
-          <ActiveComponent />
+        {/* Right Column */}
+        <div className="w-1/3 mt-4 flex flex-col space-y-4 border-2 ">
+          <div className="h-12 bg-gray-900 text-white p-2">Your buddy</div>
+          <div className="flex-1 bg-gray-400"></div>
+          <div className="flex-1 bg-gray-400"></div>
+          <div className="flex-1 bg-gray-400"></div>
         </div>
       </div>
     </div>

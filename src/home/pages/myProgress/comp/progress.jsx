@@ -13,7 +13,7 @@ function Progress() {
           <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
             <div class="flex items-center p-4">
               <img
-                src="/src/assets/python_logo.png"
+                src="/src/home/assets/python_logo.png"
                 alt="course-logo"
                 class="w-7 h-7 mr-4 rounded-2xl"
               />
@@ -34,7 +34,7 @@ function Progress() {
           <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
             <div class="flex items-center p-4">
               <img
-                src="/src/assets/python_logo.png"
+                src="/src/home/assets/python_logo.png"
                 alt="course-logo"
                 class="w-7 h-7 mr-4 rounded-2xl"
               />
@@ -55,7 +55,7 @@ function Progress() {
           <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
             <div class="flex items-center p-4">
               <img
-                src="/src/assets/python_logo.png"
+                src="/src/home/assets/python_logo.png"
                 alt="course-logo"
                 class="w-7 h-7 mr-4 rounded-2xl"
               />
@@ -132,7 +132,7 @@ function Progress() {
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
                   <span>
                     <img
-                      src="/src/assets/enrolled.svg"
+                      src="/src/home/assets/enrolled.svg"
                       alt="enroll"
                       class="h-4 w-4 mr-2"
                     />{" "}
@@ -147,7 +147,7 @@ function Progress() {
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
                   <span>
                     <img
-                      src="/src/assets/enrolled.svg"
+                      src="/src/home/assets/enrolled.svg"
                       alt="enroll"
                       class="h-4 w-4 mr-2"
                     />{" "}
@@ -162,7 +162,7 @@ function Progress() {
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
                   <span>
                     <img
-                      src="/src/assets/enrolled.svg"
+                      src="/src/home/assets/enrolled.svg"
                       alt="enroll"
                       class="h-4 w-4 mr-2"
                     />{" "}
@@ -189,7 +189,7 @@ function Progress() {
                 <h5 class="w-1/4">1</h5>
                 <div class="w-1/2 flex items-center">
                   <img
-                    src="/src/assets/profile.jpg"
+                    src="/src/home/assets/profile.jpg"
                     alt="avatar"
                     class="h-8 w-8 rounded-full mr-2"
                   />
@@ -201,7 +201,7 @@ function Progress() {
                 <h5 class="w-1/4">1</h5>
                 <div class="w-1/2 flex items-center">
                   <img
-                    src="/src/assets/profile.jpg"
+                    src="/src/home/assets/profile.jpg"
                     alt="avatar"
                     class="h-8 w-8 rounded-full mr-2"
                   />
@@ -213,7 +213,7 @@ function Progress() {
                 <h5 class="w-1/4">1</h5>
                 <div class="w-1/2 flex items-center">
                   <img
-                    src="/src/assets/profile.jpg"
+                    src="/src/home/assets/profile.jpg"
                     alt="avatar"
                     class="h-8 w-8 rounded-full mr-2"
                   />

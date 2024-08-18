@@ -11,7 +11,7 @@ const Header = ({ toggleMobileMenu }) => {
       <div className="relative mx-auto flex justify-between items-center max-[900px]:min-h-[45px]">
         <div className=" flex items-center">
           <img
-            src="/src/assets/icon.svg"
+            src="/src/home/assets/icon.svg"
             alt="Logo"
             className="w-32 h-12 object-contain hidden md:block"
           />

@@ -55,7 +55,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/assets/python_logo.png"
+              src="/src/home/assets/python_logo.png"
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -68,7 +68,7 @@ function TrendingCourse() {
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
                 <img
-                  src="/src/assets/time.svg"
+                  src="/src/home/assets/time.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -76,7 +76,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center mr-4">
                 <img
-                  src="/src/assets/lessons.svg"
+                  src="/src/home/assets/lessons.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -84,7 +84,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center">
                 <img
-                  src="/src/assets/coin.svg"
+                  src="/src/home/assets/coin.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -103,7 +103,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/assets/python_logo.png"
+              src="/src/home/assets/python_logo.png"
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -116,7 +116,7 @@ function TrendingCourse() {
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
                 <img
-                  src="/src/assets/time.svg"
+                  src="/src/home/assets/time.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -124,7 +124,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center mr-4">
                 <img
-                  src="/src/assets/lessons.svg"
+                  src="/src/home/assets/lessons.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -132,7 +132,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center">
                 <img
-                  src="/src/assets/coin.svg"
+                  src="/src/home/assets/coin.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -151,7 +151,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/assets/python_logo.png"
+              src="/src/home/assets/python_logo.png"
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -164,7 +164,7 @@ function TrendingCourse() {
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
                 <img
-                  src="/src/assets/time.svg"
+                  src="/src/home/assets/time.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -172,7 +172,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center mr-4">
                 <img
-                  src="/src/assets/lessons.svg"
+                  src="/src/home/assets/lessons.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -180,7 +180,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center">
                 <img
-                  src="/src/assets/coin.svg"
+                  src="/src/home/assets/coin.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -199,7 +199,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/assets/python_logo.png"
+              src="/src/home/assets/python_logo.png"
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -212,7 +212,7 @@ function TrendingCourse() {
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
                 <img
-                  src="/src/assets/time.svg"
+                  src="/src/home/assets/time.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -220,7 +220,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center mr-4">
                 <img
-                  src="/src/assets/lessons.svg"
+                  src="/src/home/assets/lessons.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />
@@ -228,7 +228,7 @@ function TrendingCourse() {
               </div>
               <div class=" flex items-center">
                 <img
-                  src="/src/assets/coin.svg"
+                  src="/src/home/assets/coin.svg"
                   alt="time"
                   class="w-4 h-4 mr-2"
                 />

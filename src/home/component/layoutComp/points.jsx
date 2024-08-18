@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useRef } from "react";
 import { useState } from "react";
 
 function Points() {
@@ -5,14 +7,51 @@ function Points() {
   const [isPowerVisible, setPowerVisible] = useState(false);
   const [isCoinVisible, setCoinVisible] = useState(false);
 
+  const goalsRef = useRef(null);
+  const powerRef = useRef(null);
+  const coinRef = useRef(null);
+
   const toggleGoals = () => setGoalsVisible(!isGoalsVisible);
   const togglePower = () => setPowerVisible(!isPowerVisible);
   const toggleCoin = () => setCoinVisible(!isCoinVisible);
+
+  const handleClickOutside = (event) => {
+    if (
+      goalsRef.current &&
+      !goalsRef.current.contains(event.target) &&
+      isGoalsVisible
+    ) {
+      setGoalsVisible(false);
+    }
+    if (
+      powerRef.current &&
+      !powerRef.current.contains(event.target) &&
+      isPowerVisible
+    ) {
+      setPowerVisible(false);
+    }
+    if (
+      coinRef.current &&
+      !coinRef.current.contains(event.target) &&
+      isCoinVisible
+    ) {
+      setCoinVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isGoalsVisible, isPowerVisible, isCoinVisible]);
+
   return (
     <>
       <div
         className="points relative items-center max-[900px]:hidden bg-purple-200 w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer"
         onClick={toggleGoals}
+        ref={goalsRef}
       >
         <div className="flex justify-between">
           <p className="flex items-center font-medium text-base mr-2">
@@ -116,7 +155,7 @@ function Points() {
         )}
       </div>
 
-      <div className="score relative flex items-center mr-2">
+      <div ref={powerRef} className="score relative flex items-center mr-2">
         <div>
           <p
             className="flex items-center font-medium text-base mr-3 shock cursor-pointer"
@@ -148,13 +187,13 @@ function Points() {
         )}
       </div>
       <div className="score relative flex items-center mr-4">
-        <div>
+        <div ref={coinRef}>
           <p
             className="flex items-center font-medium text-base coin cursor-pointer"
             onClick={toggleCoin}
           >
             <img
-              src="/src/assets/coin (3).png"
+              src="/src/home/assets/coin (3).png"
               alt="Coin"
               className="w-6 h-6 mr-1.5"
             />
