@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-
+import bannerImage from "./../../../assets/banner.png";
+import profileImage from "../../../assets/profile.png";
+import MoreOptionsPopup from "./moreOption";
+import { FaEllipsisH } from "react-icons/fa";
+import SharePopup from "./sharePopup";
 function FirstPost() {
   const [showMore, setShowMore] = useState(false);
   const [show1, setShow1] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [activeReplyId, setActiveReplyId] = useState(null); // State for active reply
+  const [activeReplyId, setActiveReplyId] = useState(null);
 
   const handleSeeMoreClick = () => {
     setShowMore(!showMore);
@@ -18,6 +22,27 @@ function FirstPost() {
     setActiveReplyId(activeReplyId === id ? null : id);
   };
 
+  // More button
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleMoreClick = () => {
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+  // share
+  const [showSharePopup, setShowSharePopup] = useState(false);
+
+  const handleShareClick = () => {
+    setShowSharePopup(true);
+  };
+
+  const handleCloseSharePopup = () => {
+    setShowSharePopup(false);
+  };
+
   return (
     <div>
       <div
@@ -28,7 +53,7 @@ function FirstPost() {
           <div className="profile flex items-center">
             <img
               className="w-12 h-12 rounded-full mr-4"
-              src="/src/assets/profile.png"
+              src={profileImage}
               alt="profile"
             />
             <div className="name">
@@ -36,7 +61,16 @@ function FirstPost() {
               <span className="text-gray-600 text-xs">TechSnap DevOps</span>
             </div>
           </div>
-          <div className="more cursor-pointer text-4xl">...</div>
+          <div className="relative">
+            <div
+              className="more cursor-pointer text-4xl"
+              onClick={handleMoreClick}
+            >
+              <FaEllipsisH />
+            </div>
+
+            {showPopup && <MoreOptionsPopup onClose={handleClosePopup} />}
+          </div>
         </div>
         <div className="para mt-5 text-sm">
           <p className="text-gray-700">
@@ -57,7 +91,7 @@ function FirstPost() {
             <div className="swiper-wrapper min-h-[400px]">
               <img
                 className="w-full h-auto swiper-slide object-contain bg-[#e1e1e1]"
-                src="/src/assets/banner.png"
+                src={bannerImage}
                 alt="banner"
               />
             </div>
@@ -102,13 +136,28 @@ function FirstPost() {
               </span>
               <span className="text-gray-600 max-[500px]:hidden">Bookmark</span>
             </div>
-            <div className="icon flex items-center cursor-pointer">
+            {/* <div className="icon flex items-center cursor-pointer">
               <img
                 className="w-6 h-6 mr-2"
                 src="https://cdn-icons-png.flaticon.com/512/25/25419.png"
                 alt="share icon"
               />
               <span className="text-gray-600 max-[500px]:hidden">Share</span>
+            </div> */}
+            <div className="relative">
+              <div
+                className="icon flex items-center cursor-pointer"
+                onClick={handleShareClick}
+              >
+                <img
+                  className="w-6 h-6 mr-2"
+                  src="https://cdn-icons-png.flaticon.com/512/25/25419.png"
+                  alt="share icon"
+                />
+                <span className="text-gray-600 max-[500px]:hidden">Share</span>
+              </div>
+
+              {showSharePopup && <SharePopup onClose={handleCloseSharePopup} />}
             </div>
           </div>
         </div>
@@ -117,7 +166,7 @@ function FirstPost() {
             <div className="comment_input1 flex items-center mb-4">
               <img
                 className="w-10 h-10 rounded-full mr-4"
-                src="/src/assets/profile.jpg"
+                src={profileImage}
                 alt="profile"
               />
               <input
@@ -138,7 +187,7 @@ function FirstPost() {
                   <div className="main_info flex-1 flex">
                     <img
                       className="w-10 h-10 rounded-full mr-4"
-                      src="/src/assets/profile.jpg"
+                      src={profileImage}
                       alt="profile"
                     />
                     <div className="flex flex-col">
@@ -172,7 +221,7 @@ function FirstPost() {
                         <div className="comment_input max-[900px]:text-sm reply flex items-center mb-4">
                           <img
                             className="w-8 h-8 rounded-full mr-4"
-                            src="/src/assets/profile.jpg"
+                            src={profileImage}
                             alt="profile"
                           />
                           <input
@@ -195,7 +244,7 @@ function FirstPost() {
                   <div className="sub_comment max-[900px]:text-sm ml-[50px] max-[900px]:ml-[30px] max-[900px]:w-full flex mb-4">
                     <img
                       className="w-8 h-8 rounded-full mr-4"
-                      src="/src/assets/profile.jpg"
+                      src={profileImage}
                       alt="profile"
                     />
                     <div className="flex flex-col bg-white">
@@ -238,7 +287,7 @@ function FirstPost() {
                         <div className="comment_input max-[900px]:text-sm reply flex items-center mb-4">
                           <img
                             className="w-8 h-8 rounded-full mr-4"
-                            src="/src/assets/profile.jpg"
+                            src={profileImage}
                             alt="profile"
                           />
                           <input
@@ -261,7 +310,7 @@ function FirstPost() {
                   <div className="sub_sub_comment max-[900px]:text-sm ml-[95px] max-[900px]:ml-[70px] max-[900px]:w-full flex mb-4">
                     <img
                       className="w-8 h-8 rounded-full mr-4"
-                      src="/src/assets/profile.jpg"
+                      src={profileImage}
                       alt="profile"
                     />
                     <div className="flex flex-col bg-white">
@@ -298,7 +347,7 @@ function FirstPost() {
                         <div className="comment_input max-[900px]:text-sm reply flex items-center mb-4">
                           <img
                             className="w-8 h-8 rounded-full mr-4"
-                            src="/src/assets/profile.jpg"
+                            src={profileImage}
                             alt="profile"
                           />
                           <input
@@ -329,7 +378,7 @@ function FirstPost() {
                     <div className="main_info flex-1 flex">
                       <img
                         className="w-10 h-10 rounded-full mr-4"
-                        src="/src/assets/profile.jpg"
+                        src={profileImage}
                         alt="profile"
                       />
                       <div className="flex flex-col">
@@ -357,7 +406,7 @@ function FirstPost() {
                           <div className="comment_input max-[900px]:text-sm reply flex items-center mb-4">
                             <img
                               className="w-8 h-8 rounded-full mr-4"
-                              src="/src/assets/profile.jpg"
+                              src={profileImage}
                               alt="profile"
                             />
                             <input
