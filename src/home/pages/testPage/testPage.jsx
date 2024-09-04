@@ -126,6 +126,25 @@ function TestPage() {
                 vector-effect="non-scaling-stroke"
               ></path>
             </svg>
+            {/* Mobile View SVG */}
+            <svg
+              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="50%"
+              height="96"
+              viewBox="0 0 128 100"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M70 0 V140"
+                stroke="#168242"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="8 8"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
           </div>
 
           <div
@@ -164,6 +183,25 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 l
                 d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
                 stroke="white"
                 stroke-opacity="0.2"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="8 8"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            {/* Mobile View SVG */}
+            <svg
+              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="50%"
+              height="96"
+              viewBox="0 0 128 100"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M70 0 V140"
+                stroke="white"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-dasharray="8 8"
@@ -211,6 +249,25 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
                 vector-effect="non-scaling-stroke"
               ></path>
             </svg>
+            {/* Mobile View SVG */}
+            <svg
+              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="50%"
+              height="96"
+              viewBox="0 0 128 100"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M70 0 V140"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="8 8"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
           </div>
 
           <div
@@ -252,6 +309,25 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
                 vector-effect="non-scaling-stroke"
               ></path>
             </svg>
+            {/* Mobile View SVG */}
+            <svg
+              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="50%"
+              height="96"
+              viewBox="0 0 128 100"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M70 0 V140"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="8 8"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
           </div>
 
           <div
@@ -287,6 +363,25 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
                 d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
                 stroke="white"
                 stroke-opacity="0.2"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="8 8"
+                vector-effect="non-scaling-stroke"
+              ></path>
+            </svg>
+            {/* Mobile View SVG */}
+            <svg
+              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+              xmlns="http://www.w3.org/2000/svg"
+              width="50%"
+              height="96"
+              viewBox="0 0 128 100"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M70 0 V140"
+                stroke="white"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-dasharray="8 8"
