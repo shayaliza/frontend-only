@@ -3,6 +3,7 @@ import "./style.css";
 import JSImage from "./js.png";
 import reload from "./reload.png";
 import approved from "./approved.png";
+import lockImage from "./lock.png";
 function TestPage() {
   return (
     <div class="bg-[#101523]">
@@ -102,7 +103,7 @@ function TestPage() {
               </p>
               <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
                 <p>Review</p>
-                <img src={reload} alt="" className="h-2 w-2" />
+                <img src={reload} alt="" className="h-5 w-5" />
               </div>
             </div>
           </div>
@@ -128,7 +129,7 @@ function TestPage() {
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline 
+            class="w-[380px]  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -145,7 +146,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 l
               </p>
               <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
                 <p>Start +60 EP</p>
-                <img src={reload} alt="" className="h-2 w-2" />
+                <img src={reload} alt="" className="h-5 w-5" />
               </div>
             </div>
           </div>
@@ -172,7 +173,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 l
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline 
+            class="w-[380px]  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -186,7 +187,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
             <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
               <p class="pb-4">Supersonic Speed Upgrade</p>
               <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src="./assets/lock.png" alt="" />
+                <img src={lockImage} alt="" className="h-6 w-6" />
               </div>
             </div>
           </div>
@@ -213,7 +214,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline 
+            class="w-[380px]  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-end self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -227,7 +228,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
             <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
               <p class="pb-4">Supersonic Speed Upgrade</p>
               <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src="./assets/lock.png" alt="" />
+                <img src={lockImage} alt="" className="h-6 w-6" />
               </div>
             </div>
           </div>
@@ -254,7 +255,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline 
+            class="w-[380px]  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -268,7 +269,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
             <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
               <p class="pb-4">Supersonic Speed Upgrade</p>
               <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src="./assets/lock.png" alt="" />
+                <img src={lockImage} alt="" className="h-6 w-6" />
               </div>
             </div>
           </div>
@@ -295,7 +296,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline 
+            class="w-[380px]  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -309,7 +310,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
             <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
               <p class="pb-4">Supersonic Speed Upgrade</p>
               <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src="./assets/lock.png" alt="" />
+                <img src={lockImage} alt="" className="h-6 w-6" />
               </div>
             </div>
           </div>
@@ -320,7 +321,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
         {/* <div class="course-box-container course-box-react"> */}
         <div class="flex justify-between gap-5 max-w-[1000px] mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
           <div class="locked-icon">
-            <img src="./assets/lock.png" alt="" />
+            <img src={lockImage} alt="" className="h-6 w-6" />
           </div>
           <div class="gradient-top"></div>
           <div class="relative max-w-[550px]">
