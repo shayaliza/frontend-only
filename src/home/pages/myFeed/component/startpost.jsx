@@ -5,13 +5,10 @@ import {
   FaCalendarAlt,
   FaFileAlt,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import NewPost from "./newPost";
 import profileImage from "../../../assets/profile.png";
 
-function StartPost() {
-  const [showNewPost, setShowNewPost] = useState(false);
-
+function StartPost({ handleShowNewPost, handleCloseNewPost, showNewPost }) {
   return (
     <>
       <div className="bg-white p-4 w-[555px] min-[1400px]:w-[650px] max-[500px]:w-full max-[500px]:mx-0 mx-auto rounded-lg shadow-md">
@@ -22,7 +19,7 @@ function StartPost() {
             className="w-12 h-12 rounded-full mr-2"
           />
           <div
-            onClick={() => setShowNewPost(true)}
+            onClick={() => handleShowNewPost()}
             className="post_bar cursor-pointer border-gray-200 border-2 solid w-full rounded-full p-2"
           >
             <h1 className="text-lg font-semibold text-gray-400">
@@ -50,7 +47,7 @@ function StartPost() {
         </div>
       </div>
 
-      {showNewPost && <NewPost onClose={() => setShowNewPost(false)} />}
+      {showNewPost && <NewPost onClose={() => handleCloseNewPost()} />}
     </>
   );
 }
