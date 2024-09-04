@@ -1,0 +1,135 @@
+.course-box-container {
+  /* display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+  padding: 35px;
+  color: #f0f0f0;
+  border-radius: 20px; */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  outline: 1px solid #036cdb;
+  box-shadow: rgba(37, 118, 240, 0.568) 0px 19px 38px,
+    rgba(32, 96, 168, 0.22) 0px 15px 12px;
+
+  background: url(https://t3.ftcdn.net/jpg/07/18/35/84/240_F_718358499_Lu4hqzCIOZ5H0MJ2jZgmm5buOJVDgPDU.jpg);
+
+  background-size: cover;
+}
+
+.right-section {
+  position: relative;
+}
+
+.gradient-top {
+  background: linear-gradient(152deg, #101523 9.38%, rgba(16, 21, 35, 0) 38.76%),
+    linear-gradient(69deg, #101523 22.12%, rgba(16, 21, 35, 0) 64.79%),
+    linear-gradient(341deg, #101523 17.77%, rgba(16, 21, 35, 0) 65.07%),
+    linear-gradient(34deg, #101523 37.95%, rgba(16, 21, 35, 0) 71.79%);
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.course-right {
+  position: absolute;
+  bottom: 0;
+}
+
+@media (max-width: 750px) {
+  .course-box-container {
+    flex-direction: column;
+  }
+
+  .right-section {
+    justify-content: start !important;
+    align-items: start;
+  }
+}
+
+/* lesson box */
+
+.lesson-box-button img {
+  width: 22px;
+  filter: invert(100%);
+}
+
+.lesson-box-button:hover {
+  background-color: #2f3c61;
+}
+
+.start-lesson {
+  border: 8px solid #161c30;
+  outline: 4px solid rgb(16 98 251);
+  box-shadow: rgba(37, 118, 240, 0.568) 0px 19px 38px,
+    rgba(32, 96, 168, 0.22) 0px 15px 12px;
+}
+
+.start-lesson .lesson-box-head {
+  background-color: #1d263e;
+}
+
+.start-lesson .lesson-box-button {
+  background-color: rgb(16 98 251);
+  border: none;
+}
+
+.locked {
+  color: rgb(141, 141, 141);
+  border: #1d263e;
+  outline: #1d263e;
+  box-shadow: rgba(0, 0, 0, 0.568) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.locked .lesson-box-content p {
+  font-size: 1.2rem;
+}
+
+/* images */
+
+.course-box-react {
+  background: url(https://img.freepik.com/free-vector/alien-planet-landscape-night_107791-25044.jpg?t=st=1709575767~exp=1709579367~hmac=b5083325ed0cc2b9a8b236d867e621331cd5db95a31d7e20435a3a8378ba88ea&w=826);
+
+  background-size: cover;
+  background-position: center;
+}
+
+.locked-course {
+  color: rgb(126, 126, 126);
+  outline: none;
+}
+
+.locked-course .course-box-container {
+  outline: none;
+}
+
+.locked-icon {
+  position: absolute;
+  z-index: 4;
+  right: 30px;
+  top: 30px;
+}
+
+.locked-icon img {
+  filter: invert(100%);
+  width: 30px;
+}
+
+@media (max-width: 550px) {
+  .big-heading {
+    font-size: 1.8rem;
+  }
+
+  course-content {
+    font-size: 0.8rem;
+  }
+
+  .top-left {
+    gap: 30px;
+  }
+}

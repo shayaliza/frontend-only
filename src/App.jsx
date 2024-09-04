@@ -73,7 +73,7 @@ const Fourth = React.lazy(() => import("./home/pages/details/fourth"));
 const AccountSettings = React.lazy(() =>
   import("./home/pages/accountSettings/accountsSettings")
 );
-const TestPage = React.lazy(() => import("./home/pages/testPage"));
+const TestPage = React.lazy(() => import("./home/pages/testPage/testPage"));
 const CourseInfoLayout = React.lazy(() =>
   import("./components/CoursesFolder/CourseInfo/courseinfoLayout")
 );
@@ -103,10 +103,10 @@ function AppRoutes() {
           {reduxRefreshToken && (
             <Route path="/resendmail" element={<SendMail />} />
           )}
+          <Route path="testpage" element={<TestPage />} />
           <>
             {/* {loggedIn && ( */}
             <Route path="/dashboard" element={<MainLayout />}>
-              <Route path="testpage" element={<TestPage />} />
               <Route path="progress" index element={<MyProgress />} />
               <Route path="myfeed" element={<MyFeed />} />
               <Route path="topics" element={<Topics />} />
