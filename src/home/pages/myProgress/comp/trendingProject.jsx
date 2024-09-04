@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-
+import BannerImage from "../../../assets/banner.png";
 function TrendingProject() {
   return (
     <Swiper
@@ -53,8 +53,8 @@ function TrendingProject() {
     >
       <SwiperSlide>
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
-          <div class="image h-[150px] max-[900px]:mb-4">
-            <img src="/src/home/assets/banner.png" alt="card" class="w-full " />
+          <div class="h-[150px] max-[900px]:mb-4">
+            <img src={BannerImage} alt="card" class="h-[150px] " />
           </div>
           <div class="flex flex-col justify-between">
             <div class="title p-4 pb-2">
@@ -124,12 +124,8 @@ function TrendingProject() {
       </SwiperSlide>
       <SwiperSlide>
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
-          <div class="image h-[150px] max-[900px]:mb-4">
-            <img
-              src="/src/home/assets/banner.png"
-              alt="card"
-              class="w-full object-cover"
-            />
+          <div class="h-[150px] max-[900px]:mb-4">
+            <img src={BannerImage} alt="card" class="h-[150px] " />
           </div>
           <div class="flex flex-col justify-between">
             <div class="title p-4 pb-2">
@@ -199,18 +195,13 @@ function TrendingProject() {
       </SwiperSlide>
       <SwiperSlide>
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
-          <div class="image h-[150px] max-[900px]:mb-4">
-            <img
-              src="/src/home/assets/banner.png"
-              alt="card"
-              class="w-full object-cover"
-            />
-          </div>
           <div class="flex flex-col justify-between">
+            <div class="h-[150px] max-[900px]:mb-4">
+              <img src={BannerImage} alt="card" class="h-[150px] " />
+            </div>
             <div class="title p-4 pb-2">
               <p class="font-bold text-lg">Introduction to Python</p>
             </div>
-
             <div class="icons flex justify-between p-2 px-4">
               <div class="icon_item flex items-center text-xs">
                 <span>
