@@ -8,7 +8,7 @@ function TestPage() {
   return (
     <div class="bg-[#101523]">
       <div class="course-box pt-4">
-        <div class="flex justify-between gap-5 max-w-[1000px] mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
+        <div class="flex justify-between gap-5 max-w-[1000px] w-11/12 mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
           <div class="gradient-top"></div>
           <div class="relative max-w-[550px]">
             <div class="top-left flex gap-16 mb-20">
@@ -85,8 +85,8 @@ function TestPage() {
       </div>
 
       <div class="">
-        <div class=" flex flex-col max-w-[1084px] m-auto py-20">
-          <div class="w-[380px]  overflow-hidden border-8 border-black outline outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] lg:self-center self-center rounded-2xl">
+        <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+          <div class="md:w-[380px] w-11/12   overflow-hidden border-8 border-black outline outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] lg:self-center self-center rounded-2xl">
             <div class="rounded-t-md flex justify-between bg-green-800 px-4 py-3 align-center">
               <div class=" flex gap-3 align-center text-white">
                 <div class="icon flex align-center">
@@ -107,7 +107,7 @@ function TestPage() {
               </div>
             </div>
           </div>
-          <div class="max-w-[400px] relative flex flex-col">
+          <div class="md:w-[380px] w-11/12 relative flex flex-col">
             <svg
               class="absolute hidden lg:block scale-100 ml-80"
               xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +129,7 @@ function TestPage() {
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline
+            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -150,7 +150,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 l
               </div>
             </div>
           </div>
-          <div class="max-w-[400px] relative flex flex-col">
+          <div class="md:w-[380px] w-11/12 relative flex flex-col">
             <svg
               class="absolute hidden lg:block left-1/2 -scale-x-100 scale-y-100"
               xmlns="http://www.w3.org/2000/svg"
@@ -173,7 +173,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 l
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline
+            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -191,7 +191,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
               </div>
             </div>
           </div>
-          <div class="max-w-[400px] relative flex flex-col">
+          <div class="md:w-[380px] w-11/12 relative flex flex-col">
             <svg
               class="absolute hidden lg:block ml-80 left-1/2 -scale-x-100 scale-y-100"
               xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +214,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline
+            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-end self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -232,7 +232,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
               </div>
             </div>
           </div>
-          <div class="max-w-[400px] relative flex flex-col">
+          <div class="md:w-[380px] w-11/12 relative flex flex-col">
             <svg
               class="absolute hidden lg:block ml-[600px] scale-100"
               xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +255,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline
+            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -273,7 +273,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
               </div>
             </div>
           </div>
-          <div class="max-w-[400px] relative flex flex-col">
+          <div class="md:w-[380px] w-11/12  relative flex flex-col">
             <svg
               class="absolute hidden lg:block ml-60 scale-100"
               xmlns="http://www.w3.org/2000/svg"
@@ -296,7 +296,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
           </div>
 
           <div
-            class="w-[380px]  overflow-hidden border-8 border-black outline
+            class="md:w-[380px] w-11/12   overflow-hidden border-8 border-black outline
 outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
           >
             <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
@@ -319,7 +319,7 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
 
       <div class="course-box locked-course pt-4">
         {/* <div class="course-box-container course-box-react"> */}
-        <div class="flex justify-between gap-5 max-w-[1000px] mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
+        <div class="flex justify-between gap-5 max-w-[1000px] w-11/12 mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
           <div class="locked-icon">
             <img src={lockImage} alt="" className="h-6 w-6" />
           </div>
