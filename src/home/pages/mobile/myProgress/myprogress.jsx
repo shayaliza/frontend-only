@@ -13,19 +13,12 @@ const tabs = [
   { name: "Projects", component: Projects },
   { name: "Internship", component: Internship },
   { name: "CareerPath", component: CareerPath },
-  { name: "Certificate", component: Certificate },
+  // { name: "Certificate", component: Certificate },
 ];
 
 function MyProgress() {
   const [activeTab, setActiveTab] = useState("Progress");
-  // Take Test
-  const [isVisible, setIsVisible] = useState(true);
 
-  const handleClose = () => {
-    setIsVisible(false);
-  };
-
-  if (!isVisible) return null;
   const ActiveComponent = tabs.find((tab) => tab.name === activeTab).component;
 
   return (
@@ -94,14 +87,14 @@ function MyProgress() {
             </div>
           </div>
 
-          <div className="flex flex-col w-[95%] mx-auto ">
-            <div className="flex flex-row gap-3 text-xs bg-white rounded overflow-hidden justify-evenly font-bold mt-5 text-center  w-full">
+          <div className="flex flex-col  w-[95%] mx-auto">
+            <div className="flex flex-row gap-3 text-xs  rounded  justify-evenly font-bold mt-5 text-center  w-full  overflow-x-scroll ">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
-                  className={`px-3 py-2 w-full  hover:bg-[#cd27ff]  hover:text-white transition  cursor-pointer${
+                  className={`px-2 py-2 w-full cursor-pointer ${
                     activeTab === tab.name
-                      ? "bg-[#cd27ff] text-white"
+                      ? "bg-black text-white"
                       : "text-black bg-gray-300"
                   }`}
                   onClick={() => setActiveTab(tab.name)}
@@ -120,7 +113,7 @@ function MyProgress() {
         {/* Right Column */}
         <div className="w-full mt-4 flex flex-row space-y-4  "></div>
       </div>
-      {/* <ActiveComponent /> */}
+      <ActiveComponent />
     </div>
   );
 }
