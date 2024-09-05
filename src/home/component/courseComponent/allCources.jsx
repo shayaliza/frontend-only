@@ -20,7 +20,7 @@ const Tag = ({ tag, isActive, onClick }) => (
 const AllCourses = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/courses/details");
+    navigate("/dashboard/courses/details");
   };
   const [selectedTag, setSelectedTag] = useState("all");
 

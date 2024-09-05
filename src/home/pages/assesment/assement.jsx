@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Assement() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/assesment/details");
+    navigate("/dashboard/assessment/details");
   };
   const CareerCard = () => {
     return (

@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getAllData } from "../../../fetching/decodingJwt";
+// import { useSelector } from "react-redux";
+// import { getAllData } from "../../../fetching/decodingJwt";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@mui/material";
-import refreshTokenFetch from "../../../fetching/Interceptor/refresh";
+// import refreshTokenFetch from "../../../fetching/Interceptor/refresh";
 
 function AccountSettings() {
   const { toast } = useToast();
 
-  const reduxRefreshToken = useSelector(
-    (state) => state.user.userData.reduxRefreshToken
-  );
-  const reduxAccessToken = useSelector(
-    (state) => state.user.userData.reduxAccessToken
-  );
-  const [decodedItem, setDecodedItem] = useState({});
+  // const reduxRefreshToken = useSelector(
+  //   (state) => state.user.userData.reduxRefreshToken
+  // );
+  // const reduxAccessToken = useSelector(
+  //   (state) => state.user.userData.reduxAccessToken
+  // );
+  // const [decodedItem, setDecodedItem] = useState({});
 
-  useEffect(() => {
-    const decoded = getAllData(reduxAccessToken);
-    setDecodedItem(decoded);
-  }, [reduxAccessToken]);
+  // useEffect(() => {
+  //   const decoded = getAllData(reduxAccessToken);
+  //   setDecodedItem(decoded);
+  // }, [reduxAccessToken]);
 
-  const handleGenerateToken = () => {
-    const token = refreshTokenFetch(reduxRefreshToken);
-    console.log(token);
-  };
+  // const handleGenerateToken = () => {
+  //   const token = refreshTokenFetch(reduxRefreshToken);
+  //   console.log(token);
+  // };
   return (
     <div className="p-6 bg-gray-100 min-h-screen flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-6">Account Settings</h1>
@@ -34,7 +34,8 @@ function AccountSettings() {
           Refresh Token
         </div>
         <div className="bg-gray-100 p-2 rounded text-sm text-gray-600 break-all">
-          {reduxRefreshToken}
+          {/* {reduxRefreshToken} */}
+          some refresh token
         </div>
       </div>
 
@@ -43,7 +44,8 @@ function AccountSettings() {
           Access Token
         </div>
         <div className="bg-gray-100 p-2 rounded text-sm text-gray-600 break-all">
-          {reduxAccessToken}
+          {/* {reduxAccessToken} */}
+          some Accss token
         </div>
       </div>
 
@@ -53,14 +55,13 @@ function AccountSettings() {
         </div>
         <div className="bg-gray-100 p-2 rounded text-sm text-gray-600">
           <pre className="whitespace-pre-wrap break-all">
-            {decodedItem
+            {/* {decodedItem
               ? JSON.stringify(decodedItem, null, 2)
-              : "No data available"}
+              : "No data available"} */}
+            decoded jwt
           </pre>
         </div>
-        <Button variant="contained" onClick={handleGenerateToken}>
-          Generate New Token
-        </Button>
+        <Button variant="contained">Generate New Token</Button>
       </div>
     </div>
   );

@@ -24,23 +24,13 @@ import {
 } from "../../../fetching/profileFetch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserId } from "../../../fetching/decodingJwt";
-import { useSelector } from "react-redux";
 import SkillForm from "./component/skillForm";
 import WorkProofForm from "./component/workProof";
-import RecommendationForm from "./component/recommendationForm";
 import LangForm from "./component/languageForm";
 import SocialAccountForm from "./component/socialForm";
 import BannerEditProfile from "./component/banner";
-import { setUserData } from "../../../features/user/userSlice";
-import { useDispatch } from "react-redux";
 
 const ProfilePage = () => {
-  const dispatch = useDispatch();
-
-  const reduxAccessToken = useSelector(
-    (state) => state.user.userData.reduxAccessToken
-  );
-
   const [data, setData] = useState({});
   //Children Components
   const [skills, setSkills] = useState([]);
@@ -48,23 +38,6 @@ const ProfilePage = () => {
   const [workProofs, setWorkProofs] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [socialData, setSocialData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const id = await getUserId(reduxAccessToken);
-    await getProfile(id).then((res) => {
-      console.log(res);
-      setData(res);
-      setSkills(res.skills || []);
-      setExperiences(res.experiences || []);
-      setWorkProofs(res.proofs_of_work || []);
-      setLanguages(res.talking_languages || []);
-      setSocialData(res.social_accounts);
-    });
-  };
 
   // @Top Skills
   const handleAddSkill = async (newSkill) => {
@@ -203,24 +176,6 @@ const ProfilePage = () => {
     }
   };
 
-  // const changeREfressToekn = () => {
-  //   console.log("Change refresh Token");
-  //   dispatch(
-  //     setUserData({
-  //       reduxRefreshToken:
-  //         "eyhhbGciOiJIUzI1NiosInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcyNDUzNzI1OSwiaWF0IjoxNzIzMjQxMjU5LCJqdGkiOiIzMWYwZTZmZWVhM2M0MzU5ODgzM2JmZDk5ZGFkZDM0YiIsInVzZXJfaWQiOjd9.TMcOv6L4hHRJotLC4dJEf6EgU6alhXRwRTV3iKLLWJ8",
-  //     })
-  //   );
-  // };
-  // const changeAccessToekn = () => {
-  //   console.log("Change Access Token");
-  //   dispatch(
-  //     setUserData({
-  //       reduxAccessToken:
-  //         "eyJhbociOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzIzMzI3NjU5LCJpYXQiOjE3MjMyNDEyNTksImp0aSI6ImNiMTA3ZWFhYzhlMjQyYzliYzQ0YjI4MjQ5M2FmZjk5IiwidXNlcl9pZCI6NywiaXNfY3JlYXRvciI6ZmFsc2UsImlzX3NlcnZpY2VfcHJvdmlkZXIiOmZhbHNlLCJpc19hbmFseXN0IjpmYWxzZSwiaXNfc25hcHBlciI6ZmFsc2UsImlzX2VtYWlsX3ZlcmlmaWVkIjp0cnVlfQ.jRHiccjAksM_bZ1gPj3Jq-3I7eGCB44Te8llu7LLx9I",
-  //     })
-  //   );
-  // };
   return (
     <div className="flex flex-col">
       <div className="flex bg-gray-100 flex-row ">

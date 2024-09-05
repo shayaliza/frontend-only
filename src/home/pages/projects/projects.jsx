@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Projects() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/projects/details");
+    navigate("/dashboard/projects/details");
   };
   const CareerCard = () => {
     return (

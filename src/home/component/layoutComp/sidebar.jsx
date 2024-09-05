@@ -186,10 +186,10 @@ const Sidebar = ({ isActive }) => {
               </p>
             </Link> */}
         <Link
-          to="/dashboard/assesment"
+          to="/dashboard/assessment"
           className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
                 ${
-                  isActive("/dashboard/assesment")
+                  isActive("/dashboard/assessment")
                     ? "bg-gray-500 "
                     : "hover:bg-gray-700"
                 }`}

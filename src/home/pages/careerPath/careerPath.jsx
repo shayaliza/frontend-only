@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function CareerPath() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/career/details");
+    navigate("/dashboard/career/details");
   };
   const CareerCard = () => {
     return (

@@ -55,37 +55,10 @@ const SignIn = () => {
 
   const FinalSummit = async (values) => {
     try {
-      const res = await LoginFetch(values.username, values.password);
-
-      console.log(res);
-      console.log(res.data);
-
-      if (res.status === 200) {
-        const { access, refresh } = res.data;
-
-        dispatch(
-          setUserData({
-            username: values.username,
-            reduxAccessToken: access,
-            reduxRefreshToken: refresh,
-          })
-        );
-
-        const userVerification = await getUserVerified(access);
-        console.log(userVerification, "userVerification");
-        if (userVerification) {
-          dispatch(login());
-          navigate("/dashboard/profile");
-          toast({ title: "Login Successful" });
-        } else {
-          navigate("/resendmail");
-          toast({ title: " Please verify your email", variant: "destructive" });
-        }
-      } else if (res.status === 400) {
-        toast({ title: "Invalid Credentials", variant: "destructive" });
-      }
+      dispatch(login());
+      navigate("/dashboard/profile");
+      toast({ title: "Login Successful" });
     } catch (error) {
-      console.error("An error occurred during login:", error);
       toast({ title: "Something went wrong", variant: "destructive" });
     }
   };

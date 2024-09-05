@@ -52,30 +52,7 @@ const SignUp = () => {
     });
   };
   const FinalSummit = async (values) => {
-    await RegisterFetch(values.username, values.email, values.password).then(
-      (res) => {
-        console.log(res);
-        console.log(res.data);
-
-        if (res.status === 201) {
-          dispatch(
-            setUserData({
-              username: values.username,
-              email: values.email,
-              password: values.password,
-              reduxAccessToken: res.data.access,
-              reduxRefreshToken: res.data.refresh,
-            })
-          );
-          // dispatch(login());
-          navigate("/resendmail");
-          toast({ title: "Registration successful!" });
-        }
-        if (res.status === 400) {
-          toast({ title: "User Already Exists", variant: "destructive" });
-        }
-      }
-    );
+    navigate("/resendmail");
   };
 
   return (

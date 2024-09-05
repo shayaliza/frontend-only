@@ -77,14 +77,7 @@ const TestPage = React.lazy(() => import("./home/pages/testPage/testPage"));
 const CourseInfoLayout = React.lazy(() =>
   import("./components/CoursesFolder/CourseInfo/courseinfoLayout")
 );
-// Interceptor
-setupInterceptors();
 function AppRoutes() {
-  const loggedIn = useSelector((state) => state.user.loggedIn);
-  const reduxRefreshToken = useSelector(
-    (state) => state.user.userData.reduxRefreshToken
-  );
-
   return (
     <Suspense fallback={<FaSpinner className="animate-spin" />}>
       <Router>
@@ -92,47 +85,38 @@ function AppRoutes() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/verify-email" element={<VerifyEmailToken />} />
 
-          {!loggedIn && (
-            <>
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/forgotpassword" element={<ForgotPassword />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/reset-password" element={<SetNewPassword />} />
-            </>
-          )}
-          {reduxRefreshToken && (
-            <Route path="/resendmail" element={<SendMail />} />
-          )}
+          {/* {!loggedIn && ( */}
+          <>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/reset-password" element={<SetNewPassword />} />
+            <Route path="/detailspage" element={<CourseDetails />} />
+          </>
+          <Route path="/resendmail" element={<SendMail />} />
           <Route path="testpage" element={<TestPage />} />
           <>
-            {/* {loggedIn && ( */}
             <Route path="/dashboard" element={<MainLayout />}>
               <Route path="progress" index element={<MyProgress />} />
               <Route path="myfeed" element={<MyFeed />} />
               <Route path="topics" element={<Topics />} />
               <Route path="competitions" element={<Competitors />} />
               <Route path="leaderboard" element={<LeaderBoard />} />
-              <Route path="courses" element={<Courses />}>
-                <Route path="details" element={<CourseDetails />} />
-              </Route>
-              <Route path="career" element={<CareerPath />}>
-                <Route path="details" element={<CareerDetails />} />
-              </Route>
-              <Route path="skill" element={<SkillPath />}>
-                <Route path="details" element={<SkillPathDetails />} />
-              </Route>
-              <Route path="projects" element={<Projects />}>
-                <Route path="details" element={<ProjectDetails />} />
-              </Route>
-              <Route path="assessment" element={<Assement />}>
-                <Route path="details" element={<AssementDetails />} />
-              </Route>
+              <Route path="courses" element={<Courses />} />
+              <Route path="courses/details" element={<CourseDetails />} />
+              <Route path="career" element={<CareerPath />} />
+              <Route path="career/details" element={<CareerDetails />} />
+              <Route path="skill" element={<SkillPath />} />
+              <Route path="skill/details" element={<SkillPathDetails />} />
+              <Route path="projects" element={<Projects />} />
+              <Route path="projects/details" element={<ProjectDetails />} />
+              <Route path="assessment" element={<Assement />} />
+              <Route path="assessment/details" element={<AssementDetails />} />
               <Route path="catalog" element={<Catalog />} />
               <Route path="editprofile" element={<ProfilePage />} />
               <Route path="profile" element={<SecondProfilePage />} />
               <Route path="accountSettings" element={<AccountSettings />} />
             </Route>
-            {/* )} */}
             <Route path="learningmodule" element={<LearnModule />} />
 
             <Route path="detailsPages" element={<DetailPageLayout />}>

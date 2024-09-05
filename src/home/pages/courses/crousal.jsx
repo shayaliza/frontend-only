@@ -17,7 +17,7 @@ function Crousal() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/courses/details");
+    navigate("/dashboard/courses/details");
   };
   return (
     <Swiper

@@ -10,7 +10,8 @@ import Crousal from "./crousal";
 function Cources() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/courses/details");
+    console.log("jdf");
+    navigate("/dashboard/courses/details");
   };
 
   return (
