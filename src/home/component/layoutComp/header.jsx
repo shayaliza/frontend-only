@@ -1,29 +1,95 @@
+import { useState, useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Points from "./points";
 import ProfileIcon from "../profileicon";
 import Image from "./../../assets/icon.svg";
+import { IoIosArrowDropdown } from "react-icons/io";
+import { useRef } from "react";
 const Header = ({ toggleMobileMenu }) => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  // Toggle dropdown menu
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown if clicked outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <header
+        className="bg-white fixed py-2 text-lg w-full z-50"
+        style={{ boxShadow: "0 6px 16px -1px rgba(0, 0, 0, 0.3)" }}
+      >
+        <div className="relative mx-auto flex justify-between items-center max-[900px]:min-h-[45px]">
+          <div className="flex items-center" onClick={toggleDropdown}>
+            <img src={Image} alt="Logo" className="w-32 h-12 object-contain" />
+            <div className="relative" ref={dropdownRef}>
+              <button onClick={toggleDropdown} className="p-2">
+                <IoIosArrowDropdown size={24} />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute top-10 -right-10 mt-2 w-48 bg-gray-200 shadow-lg border border-gray-200 rounded">
+                  <ul className="list-none p-2 m-0">
+                    <li className="p-2 hover:bg-gray-100 cursor-pointer">
+                      Follower
+                    </li>
+                    <li className="p-2 hover:bg-gray-100 cursor-pointer">
+                      Following
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center mr-4">
+            <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
+              <Points />
+              <ProfileIcon />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // return the desktop version of the header
   return (
     <header
       className="bg-white fixed py-2 text-lg w-full z-50"
       style={{ boxShadow: "0 6px 16px -1px rgba(0, 0, 0, 0.3)" }}
     >
       <div className="relative mx-auto flex justify-between items-center max-[900px]:min-h-[45px]">
-        <div className=" flex items-center">
+        <div className="flex items-center">
           <img
             src={Image}
             alt="Logo"
             className="w-32 h-12 object-contain hidden md:block"
           />
-
-          {/* <button
-            className="block min-[900px]:hidden ml-2 p-2"
-            onClick={toggleMobileMenu}
-          >
-            <GiHamburgerMenu size={24} />
-          </button> */}
         </div>
-        <div className=" flex items-center mr-4">
+        <div className="flex items-center mr-4">
           <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
             <Points />
             <ProfileIcon />
