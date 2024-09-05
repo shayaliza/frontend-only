@@ -3,6 +3,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Points from "./points";
 import ProfileIcon from "../profileicon";
 import Image from "./../../assets/icon.svg";
+import ProfileIconMobile from "../profileicoMobile";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { useRef } from "react";
 const Header = ({ toggleMobileMenu }) => {
@@ -67,7 +68,7 @@ const Header = ({ toggleMobileMenu }) => {
           <div className="flex items-center mr-4">
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
               <Points />
-              <ProfileIcon />
+              <ProfileIconMobile />
             </div>
           </div>
         </div>
