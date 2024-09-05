@@ -11,7 +11,7 @@ function BottomBar() {
   const location = useLocation();
   const isActive = (path) => location.pathname === path;
   return (
-    <div className="bottombar fixed bottom-0 left-0 w-full h-16 bg-white min-[900px]:hidden border-t border-gray-200">
+    <div className="bottombar z-20 fixed bottom-0 left-0 w-full h-16 bg-white min-[900px]:hidden border-t border-gray-200">
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto font-medium">
         <Link
           to={"/dashboard/progress"}
