@@ -32,12 +32,74 @@ function MyProgress() {
     <div className="bg-[#f6f6f6] w-full">
       <div className="w-full  ">
         <div className="w-full ">
+          <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
+            {/* Profile Section */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <img
+                  src="https://via.placeholder.com/50" // Replace with profile image URL
+                  alt="Profile"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="text-lg font-semibold">Hey, sai pavan! {">"}</p>
+                  <div className="flex items-center space-x-2 text-sm">
+                    <span className="text-gray-500">Profile 30% complete</span>
+                    <div className="w-24 bg-gray-200 rounded-full h-2">
+                      <div
+                        className="bg-green-500 h-2 rounded-full"
+                        style={{ width: "30%" }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* XP Section */}
+            <div className="flex justify-between items-center mt-6">
+              <div className="flex flex-col items-start">
+                <p className="text-gray-500">Daily XP</p>
+                <p className="text-2xl font-bold">
+                  0<span className="text-gray-500">/250</span>
+                </p>
+              </div>
+
+              <div className="border-r h-12 mx-6"></div>
+
+              <div className="flex flex-col items-start">
+                <p className="text-gray-500">Total XP</p>
+                <p className="text-2xl font-bold">250</p>
+              </div>
+            </div>
+
+            {/* Daily Streak Section */}
+            <div className="mt-6">
+              <p className="text-gray-500">Daily Streak</p>
+              <div className="flex items-center mt-2">
+                <p className="text-xl font-bold mr-4">0 days</p>
+                <div className="flex space-x-2">
+                  {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (
+                    <div
+                      key={index}
+                      className={`w-8 h-8 flex items-center justify-center border border-gray-300 rounded-full ${
+                        index === 0 ? "text-gray-500" : "text-gray-300"
+                      }`}
+                    >
+                      {day}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex flex-col w-[95%] mx-auto ">
-            <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold my-5 text-center  w-full">
+            <div className="flex flex-row gap-3 text-xs bg-white rounded overflow-hidden justify-evenly font-bold mt-5 text-center  w-full">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
-                  className={`px-4 py-3 w-full  hover:bg-[#cd27ff]  hover:text-white transition ease delay-150 cursor-pointer ${
+                  className={`px-3 py-2 w-full  hover:bg-[#cd27ff]  hover:text-white transition  cursor-pointer${
                     activeTab === tab.name
                       ? "bg-[#cd27ff] text-white"
                       : "text-black bg-gray-300"
@@ -48,34 +110,17 @@ function MyProgress() {
                 </button>
               ))}
             </div>
-            <div className="mt-5">
+            <div className="">
               <InsideTab />
-              {/* Test */}
-              <div className=" my-8 bg-[#7933ff] text-white p-5 flex flex-col relative">
-                <h1 className="text-lg w-9/12 font-medium">
-                  Please take your skill test so that we can improve your
-                  recommendations and can suggest you better content or projects
-                </h1>
-
-                <button className="w-36 h-10 bg-white text-black font-semibold rounded-lg mt-5">
-                  Take Test
-                </button>
-                <p
-                  className="close_banner absolute top-6 right-6 font-semibold cursor-pointer"
-                  onClick={handleClose}
-                >
-                  X
-                </p>
-              </div>
-              <Graph />
               <MyBuddy />
+              <Graph />
             </div>
           </div>
         </div>
         {/* Right Column */}
         <div className="w-full mt-4 flex flex-row space-y-4  "></div>
       </div>
-      <ActiveComponent />
+      {/* <ActiveComponent /> */}
     </div>
   );
 }

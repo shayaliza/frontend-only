@@ -7,6 +7,17 @@ function Graph() {
     <div className="flex flex-col">
       <div className="flex flex-col">
         {/* Leaderboard */}
+        <div class="mb-4 flex justify-between mt-4">
+          <h1 class="text-sm font-bold p-2">LeaderBoard</h1>
+          <select
+            id="countries"
+            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-24 p-2"
+          >
+            <option selected>Global</option>
+            <option value="FR">FR</option>
+            <option value="DE">DE</option>
+          </select>
+        </div>
         <div className=" bg-white p-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -52,30 +63,8 @@ function Graph() {
             View Leaderboard
           </div>
         </div>
-
-        {/* Progress */}
-        <div className=" bg-white p-4 flex flex-col items-center">
-          <div className="mb-2">Your Progress</div>
-          <div className="flex justify-between gap-3">
-            <CircularProgressChart />
-            <div className="mt-4 ">
-              <div className="">
-                <div className="justify-between flex text-orange-400 ">
-                  <span>Solved:</span>
-                  <span> 1 / 963</span>
-                </div>
-                <div className="justify-between flex text-blue-400">
-                  <span>Attempted:</span>
-                  <span> 1</span>
-                </div>
-                <div className="justify-between flex gap-2">
-                  <span>Accuracy:</span>
-                  <span> 50.00%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="text-blue-500 mt-3">Solve More Problems</div>
+        <div class="mb-4 flex justify-between mt-4">
+          <h1 class="text-sm font-bold">Competitive Programming</h1>
         </div>
         {/* Progress */}
         <div className=" bg-white p-4 flex flex-col items-center">
@@ -101,6 +90,30 @@ function Graph() {
           </div>
           <div className="text-blue-500 mt-3">Solve More Problems</div>
         </div>
+        {/* Progress */}
+        {/* <div className=" bg-white p-4 flex flex-col items-center">
+          <div className="mb-2">Your Progress</div>
+          <div className="flex justify-between gap-3">
+            <CircularProgressChart />
+            <div className="mt-4 ">
+              <div className="">
+                <div className="justify-between flex text-orange-400 ">
+                  <span>Solved:</span>
+                  <span> 1 / 963</span>
+                </div>
+                <div className="justify-between flex text-blue-400">
+                  <span>Attempted:</span>
+                  <span> 1</span>
+                </div>
+                <div className="justify-between flex gap-2">
+                  <span>Accuracy:</span>
+                  <span> 50.00%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-blue-500 mt-3">Solve More Problems</div>
+        </div> */}
       </div>
     </div>
   );

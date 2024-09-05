@@ -6,8 +6,8 @@ function InsideTab() {
   const renderContent = () => {
     if (activeTab === "inProgress") {
       return (
-        <div className="flex flex-wrap justify-between">
-          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
+        <div className="flex  flex-nowrap gap-2  overflow-x-auto  ">
+          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 flex-shrink-0 w-[320px] ">
             <div class="flex items-center p-4">
               <img
                 src="/src/home/assets/python_logo.png"
@@ -28,7 +28,7 @@ function InsideTab() {
               </button>
             </div>
           </div>
-          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
+          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 flex-shrink-0 w-[320px] ">
             <div class="flex items-center p-4">
               <img
                 src="/src/home/assets/python_logo.png"
@@ -49,7 +49,7 @@ function InsideTab() {
               </button>
             </div>
           </div>
-          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
+          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 flex-shrink-0 h-[220px] w-[320px] ">
             <div class="flex items-center p-4">
               <img
                 src="/src/home/assets/python_logo.png"
@@ -85,29 +85,33 @@ function InsideTab() {
   };
   return (
     <div>
-      <div className=" mt-5 border-b border-black flex space-x-4 mb-4 ">
-        <button
-          className={` pb-3  rounded text-xl font-semibold ${
-            activeTab === "inProgress"
-              ? " text-[#cd27ff] border-black border-b-2"
-              : " text-black "
-          }`}
-          onClick={() => setActiveTab("inProgress")}
-        >
-          In Progress
-        </button>
-        <button
-          className={`tab pb-3 rounded text-xl font-semibold ${
-            activeTab === "completed"
-              ? " text-[#cd27ff] border-black border-b-2"
-              : "text-black "
-          }`}
-          onClick={() => setActiveTab("completed")}
-        >
-          Completed
-        </button>
+      <div className="mt-5 border-b border-black flex justify-between items-center space-x-4 mb-4 w-full ">
+        <div className="flex space-x-4">
+          <button
+            className={`pb-3 rounded text-sm font-semibold ${
+              activeTab === "inProgress"
+                ? "text-[#cd27ff] border-black border-b-2"
+                : "text-black"
+            }`}
+            onClick={() => setActiveTab("inProgress")}
+          >
+            In Progress
+          </button>
+          <button
+            className={`tab pb-3 rounded text-sm font-semibold ${
+              activeTab === "completed"
+                ? "text-[#cd27ff] border-black border-b-2"
+                : "text-black"
+            }`}
+            onClick={() => setActiveTab("completed")}
+          >
+            Completed
+          </button>
+        </div>
+
+        <div className="ml-auto text-xs p-2">See all</div>
       </div>
-      <div className="">{renderContent()}</div>
+      <div>{renderContent()}</div>
     </div>
   );
 }
