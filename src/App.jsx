@@ -84,6 +84,25 @@ const MyProgressMobile = React.lazy(() =>
   import("./home/pages/mobile/myProgress/myprogress")
 );
 
+const MyFeedMobile = React.lazy(() =>
+  import("./home/pages/mobile/myFeed/myfeed")
+);
+
+const CareerPathMobile = React.lazy(() =>
+  import("./home/pages/mobile/careerPath/careerPath")
+);
+
+const CoursesMobile = React.lazy(() =>
+  import("./home/pages/mobile/courses/courses")
+);
+
+const SkillPathMobile = React.lazy(() =>
+  import("./home/pages/mobile/skillPath/skillPath")
+);
+
+const ProjectsMobile = React.lazy(() =>
+  import("./home/pages/mobile/projects/projects")
+);
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -120,20 +139,34 @@ function AppRoutes() {
               <Route
                 path="progress"
                 index
-                // element={<MyProgress />}
                 element={isMobile ? <MyProgressMobile /> : <MyProgress />}
               />
-              <Route path="myfeed" element={<MyFeed />} />
+              <Route
+                path="myfeed"
+                element={isMobile ? <MyFeedMobile /> : <MyFeed />}
+              />
               <Route path="topics" element={<Topics />} />
               <Route path="competitions" element={<Competitors />} />
               <Route path="leaderboard" element={<LeaderBoard />} />
-              <Route path="courses" element={<Courses />} />
+              <Route
+                path="courses"
+                element={isMobile ? <CoursesMobile /> : <Courses />}
+              />
               <Route path="courses/details" element={<CourseDetails />} />
-              <Route path="career" element={<CareerPath />} />
+              <Route
+                path="career"
+                element={isMobile ? <CareerPathMobile /> : <CareerPath />}
+              />
               <Route path="career/details" element={<CareerDetails />} />
-              <Route path="skill" element={<SkillPath />} />
+              <Route
+                path="skill"
+                element={isMobile ? <SkillPathMobile /> : <SkillPath />}
+              />
               <Route path="skill/details" element={<SkillPathDetails />} />
-              <Route path="projects" element={<Projects />} />
+              <Route
+                path="projects"
+                element={isMobile ? <ProjectsMobile /> : <Projects />}
+              />
               <Route path="projects/details" element={<ProjectDetails />} />
               <Route path="assessment" element={<Assement />} />
               <Route path="assessment/details" element={<AssementDetails />} />

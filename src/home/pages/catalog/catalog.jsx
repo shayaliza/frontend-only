@@ -51,7 +51,7 @@ function Catalog() {
         <div
           className="underline cursor-pointer"
           onClick={() => {
-            navigate("/career");
+            navigate("/dashboard/career");
           }}
         >
           See all
@@ -95,7 +95,7 @@ function Catalog() {
         <div
           className="underline cursor-pointer"
           onClick={() => {
-            navigate("/skill");
+            navigate("/dashboard/skill");
           }}
         >
           See all
@@ -129,7 +129,7 @@ function Catalog() {
         <div
           className="underline cursor-pointer"
           onClick={() => {
-            navigate("/courses");
+            navigate("/dashboard/courses");
           }}
         >
           See all
@@ -170,7 +170,7 @@ function Catalog() {
         <div
           className="underline cursor-pointer"
           onClick={() => {
-            navigate("/projects");
+            navigate("/dashboard/projects");
           }}
         >
           See all
@@ -198,7 +198,7 @@ function Catalog() {
         <div
           className="underline cursor-pointer"
           onClick={() => {
-            navigate("/projects");
+            navigate("/dashboard/projects");
           }}
         >
           See all
