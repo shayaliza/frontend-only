@@ -16,12 +16,12 @@ const Header = ({ toggleMobileMenu }) => {
             className="w-32 h-12 object-contain hidden md:block"
           />
 
-          <button
+          {/* <button
             className="block min-[900px]:hidden ml-2 p-2"
             onClick={toggleMobileMenu}
           >
             <GiHamburgerMenu size={24} />
-          </button>
+          </button> */}
         </div>
         <div className=" flex items-center mr-4">
           <div className="Icons flex items-center min-[900px]:mr-4 justify-end">

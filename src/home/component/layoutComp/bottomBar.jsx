@@ -14,10 +14,10 @@ function BottomBar() {
     <div className="bottombar fixed bottom-0 left-0 w-full h-16 bg-white min-[900px]:hidden border-t border-gray-200">
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto font-medium">
         <Link
-          to={"/"}
+          to={"/dashboard/progress"}
           className={`inline-flex flex-col items-center justify-center px-5 "
             ${
-              isActive("/")
+              isActive("/dashboard/progress")
                 ? "bg-gray-400 rounded-2xl text-white"
                 : "hover:bg-gray-700 "
             }`}
@@ -26,10 +26,10 @@ function BottomBar() {
           <span className="text-sm">Home</span>
         </Link>
         <Link
-          to={"/myfeed"}
+          to={"/dashboard/myfeed"}
           className={`inline-flex flex-col items-center justify-center px-5 "
           ${
-            isActive("/myfeed")
+            isActive("/dashboard/myfeed")
               ? "bg-gray-400 rounded-2xl text-white"
               : "hover:bg-gray-700 "
           }`}
@@ -40,10 +40,10 @@ function BottomBar() {
           </span>
         </Link>
         <Link
-          to={"/catalog"}
+          to={"/dashboard/catalog"}
           className={`inline-flex flex-col items-center justify-center px-5 "
        ${
-         isActive("/catalog")
+         isActive("/dashboard/catalog")
            ? "bg-gray-400 rounded-2xl text-white"
            : "hover:bg-gray-700 "
        }`}
@@ -54,10 +54,10 @@ function BottomBar() {
           </span>
         </Link>
         <Link
-          to={"/career"}
+          to={"/dashboard/career"}
           className={`inline-flex flex-col items-center justify-center px-5 "
         ${
-          isActive("/career")
+          isActive("/dashboard/career")
             ? "bg-gray-400 rounded-2xl text-white"
             : "hover:bg-gray-700 "
         }`}
