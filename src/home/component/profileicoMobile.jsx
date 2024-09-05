@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ProfileImage from "./../assets/profile.jpg";
+import { AiOutlineClose } from "react-icons/ai"; // Importing the close icon
 
 function ProfileIconMobile() {
   const [isProfileVisible, setProfileVisible] = useState(false);
@@ -33,8 +34,14 @@ function ProfileIconMobile() {
       {isProfileVisible && (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"></div>
-          <div className="absolute  h-screen -top-4 -right-4 mt-2 w-72  bg-white text-black  backdrop-blur-none shadow-lg rounded-lg z-50">
-            <div className="p-4">
+          <div className="absolute h-screen -top-4 -right-4 mt-2 w-72 bg-white text-black backdrop-blur-none shadow-lg rounded-lg z-50">
+            <div className="p-4 relative">
+              {/* Cross Icon */}
+              <AiOutlineClose
+                className="absolute top-4 right-4 text-xl cursor-pointer"
+                onClick={() => setProfileVisible(false)}
+              />
+
               <div className="ml-4">
                 <img
                   src={ProfileImage}
@@ -50,10 +57,14 @@ function ProfileIconMobile() {
                   </p>
                 </div>
                 <div className="profile_item p-2 font-bold">
-                  <p>Dashboard</p>
+                  <p>
+                    <Link to="/dashboard/progress">Dashboard </Link>
+                  </p>
                 </div>
                 <div className="profile_item p-2 font-bold">
-                  <p>Profile</p>
+                  <p>
+                    <Link to="/dashboard/profile">Profile</Link>
+                  </p>
                 </div>
                 <div className="profile_item p-2 font-bold">
                   <p>Settings</p>
