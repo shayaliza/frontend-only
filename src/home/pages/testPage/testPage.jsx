@@ -5,8 +5,362 @@ import reload from "./reload.png";
 import approved from "./approved.png";
 import lockImage from "./lock.png";
 function TestPage() {
-  return (
-    <div class="bg-[#101523]">
+  const GreenCard = () => {
+    return (
+      <>
+        <div class="md:w-[380px] w-11/12   overflow-hidden border-8 border-black outline outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] lg:self-center self-center rounded-2xl">
+          <div class="rounded-t-md flex justify-between bg-green-800 px-4 py-3 align-center">
+            <div class=" flex gap-3 align-center text-white">
+              <div class="icon flex align-center">
+                <i class="ri-file-2-line"></i>
+              </div>
+              <p class="flex align-center">Lesson 1</p>
+            </div>
+            <img class="w-8 h-8" src={approved} alt="" />
+          </div>
+          <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
+            <p class="pb-4">
+              Advanced Arrays and Objects in Javascript: Destructuring, Spread,
+              and Rest Operators
+            </p>
+            <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
+              <p>Review</p>
+              <img src={reload} alt="" className="h-5 w-5" />
+            </div>
+          </div>
+        </div>
+        <div class="md:w-[380px] w-11/12 relative flex flex-col">
+          <svg
+            class="absolute hidden lg:block scale-100 ml-80"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
+              stroke="#168242"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+          {/* Mobile View SVG */}
+          <svg
+            class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M70 0 V140"
+              stroke="#168242"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+        </div>
+      </>
+    );
+  };
+  const PractiseOneCard = () => {
+    return (
+      <div>
+        <div
+          class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
+outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
+        >
+          <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
+            <div class="lessons flex gap-3 align-center text-white">
+              <div class="icon flex align-center">
+                <i class="ri-code-box-line"></i>
+              </div>
+              <p class="flex align-center">Practice 1</p>
+            </div>
+          </div>
+          <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between px-4 text-center text-white py-4">
+            <p class="pb-4">
+              Color Change with ES6 Destructuring and Spread Operator
+            </p>
+            <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
+              <p>Start +60 EP</p>
+              <img src={reload} alt="" className="h-5 w-5" />
+            </div>
+          </div>
+        </div>
+        <div class="md:w-[380px] w-11/12 relative flex flex-col">
+          <svg
+            class="absolute hidden lg:block left-1/2 -scale-x-100 scale-y-100"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
+              stroke="white"
+              stroke-opacity="0.2"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+          {/* Mobile View SVG */}
+          <svg
+            class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M70 0 V140"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    );
+  };
+  const PractiseTwoCard = () => {
+    return (
+      <>
+        <div
+          class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
+outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
+        >
+          <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
+            <div class="lessons flex gap-3 align-center text-white">
+              <div class="icon flex align-center">
+                <i class="ri-code-box-line"></i>
+              </div>
+              <p class="flex align-center">Practice 2</p>
+            </div>
+          </div>
+          <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
+            <p class="pb-4">Supersonic Speed Upgrade</p>
+            <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
+              <img src={lockImage} alt="" className="h-6 w-6" />
+            </div>
+          </div>
+        </div>
+        <div class="md:w-[380px] w-11/12 relative flex flex-col">
+          <svg
+            class="absolute hidden lg:block ml-80 left-1/2 -scale-x-100 scale-y-100"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
+              stroke="white"
+              stroke-opacity="0.2"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+          {/* Mobile View SVG */}
+          <svg
+            class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M70 0 V140"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+        </div>
+      </>
+    );
+  };
+  const PractiseThreeCard = () => {
+    return (
+      <>
+        <div
+          class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
+outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-end self-center mt-24 rounded-2xl"
+        >
+          <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
+            <div class="lessons flex gap-3 align-center text-white">
+              <div class="icon flex align-center">
+                <i class="ri-code-box-line"></i>
+              </div>
+              <p class="flex align-center">Practice 2</p>
+            </div>
+          </div>
+          <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
+            <p class="pb-4">Supersonic Speed Upgrade</p>
+            <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
+              <img src={lockImage} alt="" className="h-6 w-6" />
+            </div>
+          </div>
+        </div>
+        <div class="md:w-[380px] w-11/12 relative flex flex-col">
+          <svg
+            class="absolute hidden lg:block ml-[600px] scale-100"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
+              stroke="white"
+              stroke-opacity="0.2"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+          {/* Mobile View SVG */}
+          <svg
+            class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M70 0 V140"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+        </div>
+      </>
+    );
+  };
+  const PractiseFourCard = () => {
+    return (
+      <>
+        <div
+          class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
+outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
+        >
+          <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
+            <div class="lessons flex gap-3 align-center text-white">
+              <div class="icon flex align-center">
+                <i class="ri-code-box-line"></i>
+              </div>
+              <p class="flex align-center">Practice 2</p>
+            </div>
+          </div>
+          <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
+            <p class="pb-4">Supersonic Speed Upgrade</p>
+            <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
+              <img src={lockImage} alt="" className="h-6 w-6" />
+            </div>
+          </div>
+        </div>
+        <div class="md:w-[380px] w-11/12  relative flex flex-col">
+          <svg
+            class="absolute hidden lg:block ml-60 scale-100"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
+              stroke="white"
+              stroke-opacity="0.2"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+          {/* Mobile View SVG */}
+          <svg
+            class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="50%"
+            height="96"
+            viewBox="0 0 128 100"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M70 0 V140"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="8 8"
+              vector-effect="non-scaling-stroke"
+            ></path>
+          </svg>
+        </div>
+      </>
+    );
+  };
+  const PractiseFiveCard = () => {
+    return (
+      <>
+        <div
+          class="md:w-[380px] w-11/12   overflow-hidden border-8 border-black outline
+outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
+        >
+          <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
+            <div class="lessons flex gap-3 align-center text-white">
+              <div class="icon flex align-center">
+                <i class="ri-code-box-line"></i>
+              </div>
+              <p class="flex align-center">Practice 2</p>
+            </div>
+          </div>
+          <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
+            <p class="pb-4">Supersonic Speed Upgrade</p>
+            <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
+              <img src={lockImage} alt="" className="h-6 w-6" />
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+  const FirstBigCard = () => {
+    return (
       <div class="course-box pt-4">
         <div class="flex justify-between gap-5 max-w-[1000px] w-11/12 mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
           <div class="gradient-top"></div>
@@ -83,335 +437,11 @@ function TestPage() {
           </div>
         </div>
       </div>
+    );
+  };
 
-      <div class="">
-        <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
-          <div class="md:w-[380px] w-11/12   overflow-hidden border-8 border-black outline outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] lg:self-center self-center rounded-2xl">
-            <div class="rounded-t-md flex justify-between bg-green-800 px-4 py-3 align-center">
-              <div class=" flex gap-3 align-center text-white">
-                <div class="icon flex align-center">
-                  <i class="ri-file-2-line"></i>
-                </div>
-                <p class="flex align-center">Lesson 1</p>
-              </div>
-              <img class="w-8 h-8" src={approved} alt="" />
-            </div>
-            <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
-              <p class="pb-4">
-                Advanced Arrays and Objects in Javascript: Destructuring,
-                Spread, and Rest Operators
-              </p>
-              <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <p>Review</p>
-                <img src={reload} alt="" className="h-5 w-5" />
-              </div>
-            </div>
-          </div>
-          <div class="md:w-[380px] w-11/12 relative flex flex-col">
-            <svg
-              class="absolute hidden lg:block scale-100 ml-80"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
-                stroke="#168242"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-            {/* Mobile View SVG */}
-            <svg
-              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M70 0 V140"
-                stroke="#168242"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </div>
-
-          <div
-            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
-outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] start-lesson bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
-          >
-            <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
-              <div class="lessons flex gap-3 align-center text-white">
-                <div class="icon flex align-center">
-                  <i class="ri-code-box-line"></i>
-                </div>
-                <p class="flex align-center">Practice 1</p>
-              </div>
-            </div>
-            <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between px-4 text-center text-white py-4">
-              <p class="pb-4">
-                Color Change with ES6 Destructuring and Spread Operator
-              </p>
-              <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <p>Start +60 EP</p>
-                <img src={reload} alt="" className="h-5 w-5" />
-              </div>
-            </div>
-          </div>
-          <div class="md:w-[380px] w-11/12 relative flex flex-col">
-            <svg
-              class="absolute hidden lg:block left-1/2 -scale-x-100 scale-y-100"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
-                stroke="white"
-                stroke-opacity="0.2"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-            {/* Mobile View SVG */}
-            <svg
-              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M70 0 V140"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </div>
-
-          <div
-            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
-outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
-          >
-            <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
-              <div class="lessons flex gap-3 align-center text-white">
-                <div class="icon flex align-center">
-                  <i class="ri-code-box-line"></i>
-                </div>
-                <p class="flex align-center">Practice 2</p>
-              </div>
-            </div>
-            <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
-              <p class="pb-4">Supersonic Speed Upgrade</p>
-              <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src={lockImage} alt="" className="h-6 w-6" />
-              </div>
-            </div>
-          </div>
-          <div class="md:w-[380px] w-11/12 relative flex flex-col">
-            <svg
-              class="absolute hidden lg:block ml-80 left-1/2 -scale-x-100 scale-y-100"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
-                stroke="white"
-                stroke-opacity="0.2"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-            {/* Mobile View SVG */}
-            <svg
-              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M70 0 V140"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </div>
-
-          <div
-            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
-outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-end self-center mt-24 rounded-2xl"
-          >
-            <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
-              <div class="lessons flex gap-3 align-center text-white">
-                <div class="icon flex align-center">
-                  <i class="ri-code-box-line"></i>
-                </div>
-                <p class="flex align-center">Practice 2</p>
-              </div>
-            </div>
-            <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
-              <p class="pb-4">Supersonic Speed Upgrade</p>
-              <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src={lockImage} alt="" className="h-6 w-6" />
-              </div>
-            </div>
-          </div>
-          <div class="md:w-[380px] w-11/12 relative flex flex-col">
-            <svg
-              class="absolute hidden lg:block ml-[600px] scale-100"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
-                stroke="white"
-                stroke-opacity="0.2"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-            {/* Mobile View SVG */}
-            <svg
-              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M70 0 V140"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </div>
-
-          <div
-            class="md:w-[380px] w-11/12  overflow-hidden border-8 border-black outline
-outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-center self-center mt-24 rounded-2xl"
-          >
-            <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
-              <div class="lessons flex gap-3 align-center text-white">
-                <div class="icon flex align-center">
-                  <i class="ri-code-box-line"></i>
-                </div>
-                <p class="flex align-center">Practice 2</p>
-              </div>
-            </div>
-            <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
-              <p class="pb-4">Supersonic Speed Upgrade</p>
-              <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src={lockImage} alt="" className="h-6 w-6" />
-              </div>
-            </div>
-          </div>
-          <div class="md:w-[380px] w-11/12  relative flex flex-col">
-            <svg
-              class="absolute hidden lg:block ml-60 scale-100"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M126 2.12159V2.12159C115.974 38.3765 88.8647 67.4445 53.3959 79.9706L2 98.1216"
-                stroke="white"
-                stroke-opacity="0.2"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-            {/* Mobile View SVG */}
-            <svg
-              class="absolute md:hidden scale-100 left-1/2 transform -translate-x-1/2"
-              xmlns="http://www.w3.org/2000/svg"
-              width="50%"
-              height="96"
-              viewBox="0 0 128 100"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M70 0 V140"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-dasharray="8 8"
-                vector-effect="non-scaling-stroke"
-              ></path>
-            </svg>
-          </div>
-
-          <div
-            class="md:w-[380px] w-11/12   overflow-hidden border-8 border-black outline
-outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self-start self-center mt-24 rounded-2xl"
-          >
-            <div class="rounded-t-md flex justify-between px-4 py-3 align-center">
-              <div class="lessons flex gap-3 align-center text-white">
-                <div class="icon flex align-center">
-                  <i class="ri-code-box-line"></i>
-                </div>
-                <p class="flex align-center">Practice 2</p>
-              </div>
-            </div>
-            <div class="rounded-b-md bg-[#1d263e] min-h-[160px] flex flex-col justify-between bg-neutral-1000 px-4 text-center text-white py-4">
-              <p class="pb-4">Supersonic Speed Upgrade</p>
-              <div class="w-full py-3 rounded-lg bg-[#202944] border border-[#d6d6d6] mb-5 flex gap-2 justify-center">
-                <img src={lockImage} alt="" className="h-6 w-6" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+  const SecondBigCard = () => {
+    return (
       <div class="course-box locked-course pt-4">
         {/* <div class="course-box-container course-box-react"> */}
         <div class="flex justify-between gap-5 max-w-[1000px] w-11/12 mx-auto p-9 text-[#f0f0f0] rounded-[20px]  overflow-hidden outline-1 outline-[#036cdb] course-box-container">
@@ -487,6 +517,100 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    );
+  };
+  // return (
+  //   <div class="bg-[#101523]">
+  //     <FirstBigCard />
+  //     <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+  //       <GreenCard />
+  //       <PractiseOneCard />
+  //       <PractiseTwoCard />
+  //       <PractiseThreeCard />
+  //       <PractiseFourCard />
+  //       <PractiseFiveCard />
+  //     </div>
+  //     <SecondBigCard />
+  //   </div>
+  // );
+  // return (
+  //   <div>
+  //     {/* Sky to Airflow */}
+  //     <div className="bg-gradient-to-b from-[#87CEEB] to-[#ADD8E6] min-h-[50vh] flex items-center justify-center">
+  //       <FirstBigCard />
+  //     </div>
+
+  //     {/* Airflow to Nature */}
+  //     <div className="bg-gradient-to-b from-[#ADD8E6] to-[#87CEFA] min-h-[50vh ">
+  //       <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+  //         <GreenCard />
+  //         <PractiseOneCard />
+  //         <PractiseTwoCard />
+  //         <PractiseThreeCard />
+  //         <PractiseFourCard />
+  //         <PractiseFiveCard />
+  //       </div>
+  //     </div>
+
+  //     {/* Nature to Boat */}
+  //     <div className="bg-gradient-to-b from-[#87CEFA] to-[#00BFFF] min-h-[50vh] flex items-center justify-center">
+  //       <SecondBigCard />
+  //     </div>
+
+  //     {/* Boat Section */}
+  //     <div className="bg-gradient-to-b from-[#00BFFF] to-[#a1fda1] min-h-[50vh] flex justify-center items-end">
+  //       <div className="bg-gradient-to-b from-[#a1fda1] to-[#008080] w-full h-48 flex items-center justify-center">
+  //         {/* Boat content here */}
+  //       </div>
+  //     </div>
+
+  //     {/* Ocean */}
+  //     <div className="bg-gradient-to-b from-[#008080] to-[#00008B] min-h-[50vh] flex items-center justify-center">
+  //       {/* Ocean content here */}
+  //     </div>
+
+  //     {/* Ocean floor */}
+  //     <div className="bg-gradient-to-b from-[#00008B] to-[#000033] min-h-[50vh] flex items-center justify-center">
+  //       {/* Ocean floor content here */}
+  //     </div>
+  //   </div>
+  // );
+  return (
+    <div className="relative min-h-screen">
+      {/* Background layer */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#87CEEB] via-[#ADD8E6] via-[#87CEFA] via-[#00BFFF] via-[#a1fda1] via-[#008080] to-[#00008B] z-0"></div>
+
+      {/* Content layer */}
+      <div className="relative z-10">
+        <div className="max-w-[1084px] mx-auto ">
+          <FirstBigCard />
+
+          <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+            <GreenCard />
+            <PractiseOneCard />
+            <PractiseTwoCard />
+            <PractiseThreeCard />
+            <PractiseFourCard />
+            <PractiseFiveCard />
+          </div>
+
+          <SecondBigCard />
+        </div>
+        <div className="max-w-[1084px] mx-auto ">
+          <FirstBigCard />
+
+          <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+            <GreenCard />
+            <PractiseOneCard />
+            <PractiseTwoCard />
+            <PractiseThreeCard />
+            <PractiseFourCard />
+            <PractiseFiveCard />
+          </div>
+
+          <SecondBigCard />
         </div>
       </div>
     </div>
