@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
 import Post from "./../../assets/bottomNav/post.png";
 import Jobs from "./../../assets/bottomNav/jobs.png";
 import Surprize from "./../../assets/bottomNav/surprice.png";
@@ -62,9 +62,9 @@ function BottomBar() {
             : "hover:bg-gray-700 "
         }`}
         >
-          <img src={Jobs} alt="progress" className="w-6 h-6" />
+          <IoIosNotificationsOutline className="w-6 h-6" />
           <span className="text-sm text-gray-600 group-hover:text-pink-600">
-            Jobs
+            Notification
           </span>
         </Link>
         <Link

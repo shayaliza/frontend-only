@@ -51,7 +51,7 @@ const Header = ({ toggleMobileMenu }) => {
                 <IoIosArrowDropdown size={24} />
               </button>
               {isDropdownOpen && (
-                <div className="absolute top-10 -right-10 mt-2 w-48 bg-gray-200 shadow-lg border border-gray-200 rounded">
+                <div className="absolute top-10 -right-10 mt-2 w-48  bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg  rounded-lg">
                   <ul className="list-none p-2 m-0">
                     <li className="p-2 hover:bg-gray-100 cursor-pointer">
                       Follower
