@@ -70,12 +70,11 @@ function CareerPath() {
             Web Development
           </div>
         </div>
-        <div className="flex flex-col mb-2 ml-2">
+        <div className="flex flex-row mb-2 w-11/12 m-auto">
           <div className="flex flex-row gap-4 items-center w-full mb-2">
-            <span className="text-sm font-semibold p-1">Sort by:</span>
             <div className="flex  gap-2  flex-row w-auto">
-              <div className="flex items-center rounded-3xl border-gray-500 p-1 border text-xs">
-                <span className="mr-2">Option 1:</span>
+              <div className="flex items-center rounded-3xl border-gray-500 px-2 py-2 border text-xs">
+                <span className="mr-2">Sort By</span>
                 <select className="border-none focus:outline-none rounded-md font-bold">
                   <option>Option 1</option>
                   <option>Option 2</option>
@@ -84,11 +83,10 @@ function CareerPath() {
               </div>
             </div>
           </div>
-          <div className="flex flex-row gap-4 items-center w-full ">
-            <span className="text-sm font-semibold p-1">Filter by:</span>
+          <div className="flex flex-row gap-4 items-center w-full mb-2">
             <div className="flex  gap-1  flex-row w-auto">
-              <div className="flex items-center rounded-3xl border-gray-500 p-1 border text-xs ">
-                <span className="mr-1">Option 1:</span>
+              <div className="flex items-center rounded-3xl border-gray-500 px-2 py-2 border text-xs ">
+                <span className="mr-1">Filter by:</span>
                 <select className="border-none focus:outline-none rounded-md font-bold">
                   <option>Option 1</option>
                   <option>Option 2</option>
