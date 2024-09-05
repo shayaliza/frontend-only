@@ -113,7 +113,9 @@ function MyProgress() {
         {/* Right Column */}
         <div className="w-full mt-4 flex flex-row space-y-4  "></div>
       </div>
-      <ActiveComponent />
+      <div className="w-11/12 mx-auto">
+        <ActiveComponent />
+      </div>{" "}
     </div>
   );
 }
