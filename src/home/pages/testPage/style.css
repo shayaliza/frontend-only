@@ -133,3 +133,235 @@
     gap: 30px;
   }
 }
+
+.water-plant {
+  width: 30px;
+  height: 100px;
+  background-color: #008080;
+  border-radius: 0 0 50% 50%;
+  position: relative;
+  animation: sway 4s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.tree {
+  animation: sway 6s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.wave-line {
+  position: absolute;
+  width: 200%;
+  height: 10px; /* Thin curved line */
+  background-color: rgba(255, 255, 255, 0.7); /* Light color for the wave */
+  border-radius: 50%; /* Curved effect */
+  animation: moveCurve 6s linear infinite; /* Continuous animation */
+}
+
+.line1 {
+  top: 20%; /* Position of the first line */
+  animation-duration: 8s;
+}
+
+.line2 {
+  top: 40%; /* Position of the second line */
+  animation-duration: 10s;
+}
+
+.line3 {
+  top: 60%; /* Position of the third line */
+  animation-duration: 12s;
+  opacity: 0.8;
+}
+
+@keyframes moveCurve {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 30px 30px 0 -10px rgba(255, 255, 255, 0.8),
+    60px 30px 0 -20px rgba(255, 255, 255, 0.7),
+    90px 30px 0 -30px rgba(255, 255, 255, 0.6),
+    60px 60px 0 -40px rgba(255, 255, 255, 0.5),
+    90px 60px 0 -50px rgba(255, 255, 255, 0.4);
+  width: 200px; /* Adjusted to cover more area */
+  height: 100px; /* Adjusted height */
+  opacity: 0.8;
+}
+
+.cloud1 {
+  right: 0; /* Starting off-screen */
+  animation: moveCloudsLeft 40s linear infinite;
+}
+
+.cloud2 {
+  left: 10%; /* Starting off-screen */
+  animation: moveCloudsLeft 45s linear infinite;
+}
+
+.cloud3 {
+  left: 20%; /* Starting off-screen */
+  animation: moveCloudsLeft 50s linear infinite;
+}
+
+.cloud4 {
+  right: 30%; /* Starting off-screen */
+  animation: moveCloudsLeft 55s linear infinite;
+}
+
+.cloud5 {
+  left: 0%; /* Starting off-screen */
+  animation: moveCloudsLeft 60s linear infinite;
+}
+
+.cloud6 {
+  right: 20%; /* Starting off-screen */
+  animation: moveCloudsLeft 65s linear infinite;
+}
+
+/* Additional clouds */
+.cloud7 {
+  top: 10%;
+  left: -200px; /* Starting off-screen */
+  animation: moveCloudsRight 40s linear infinite;
+}
+
+.cloud8 {
+  top: 25%;
+  left: -250px; /* Starting off-screen */
+  animation: moveCloudsRight 45s linear infinite;
+}
+
+.cloud9 {
+  top: 40%;
+  left: -300px; /* Starting off-screen */
+  animation: moveCloudsRight 50s linear infinite;
+}
+
+.cloud10 {
+  top: 55%;
+  left: -350px; /* Starting off-screen */
+  animation: moveCloudsRight 55s linear infinite;
+}
+
+.cloud11 {
+  top: 70%;
+  left: -400px; /* Starting off-screen */
+  animation: moveCloudsRight 60s linear infinite;
+}
+
+.cloud12 {
+  top: 85%;
+  left: -450px; /* Starting off-screen */
+  animation: moveCloudsRight 65s linear infinite;
+}
+
+@keyframes moveCloudsLeft {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+@keyframes moveCloudsRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Fish */
+.fish1 {
+  left: -200px; /* Start off-screen to the left */
+  width: 100px; /* Adjust the size of the fish */
+  height: auto;
+  animation: moveFish 15s linear infinite; /* Infinite animation for movement */
+}
+.fish2 {
+  left: -200px; /* Start off-screen to the left */
+  width: 100px; /* Adjust the size of the fish */
+  height: auto;
+  animation: moveFish 15s linear infinite; /* Infinite animation for movement */
+}
+
+.fish3 {
+  right: 50%; /* Start off-screen to the left */
+  width: 100px; /* Adjust the size of the fish */
+  height: auto;
+  animation: moveFish 15s linear infinite; /* Infinite animation for movement */
+}
+
+@keyframes moveFish {
+  0% {
+    transform: translateX(100vw); /* Start off-screen on the left */
+  }
+  100% {
+    transform: translateX(-100%); /* Move across the full viewport width */
+  }
+}
+
+/* Winds */
+
+/* Wind Lines Animation */
+.wind-line {
+  stroke: white;
+  stroke-width: 1;
+  fill: transparent;
+  animation: moveWind 8s linear infinite;
+}
+
+@keyframes moveFlow {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes moveWind {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(800px); /* Move across the full SVG width */
+  }
+}

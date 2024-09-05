@@ -4,6 +4,8 @@ import JSImage from "./js.png";
 import reload from "./reload.png";
 import approved from "./approved.png";
 import lockImage from "./lock.png";
+import "./style.css";
+import FishImage from "./fish.png";
 function TestPage() {
   const GreenCard = () => {
     return (
@@ -521,73 +523,60 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
       </div>
     );
   };
+
   // return (
-  //   <div class="bg-[#101523]">
-  //     <FirstBigCard />
-  //     <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
-  //       <GreenCard />
-  //       <PractiseOneCard />
-  //       <PractiseTwoCard />
-  //       <PractiseThreeCard />
-  //       <PractiseFourCard />
-  //       <PractiseFiveCard />
-  //     </div>
-  //     <SecondBigCard />
-  //   </div>
-  // );
-  // return (
-  //   <div>
-  //     {/* Sky to Airflow */}
-  //     <div className="bg-gradient-to-b from-[#87CEEB] to-[#ADD8E6] min-h-[50vh] flex items-center justify-center">
-  //       <FirstBigCard />
-  //     </div>
+  //   <div className="relative min-h-screen">
+  //     {/* Background layer */}
+  //     <div className="absolute inset-0 bg-gradient-to-b from-[#87CEEB] via-[#ADD8E6] via-[#87CEFA] via-[#00BFFF] via-[#a1fda1] via-[#008080] to-[#00008B] z-0"></div>
 
-  //     {/* Airflow to Nature */}
-  //     <div className="bg-gradient-to-b from-[#ADD8E6] to-[#87CEFA] min-h-[50vh ">
-  //       <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
-  //         <GreenCard />
-  //         <PractiseOneCard />
-  //         <PractiseTwoCard />
-  //         <PractiseThreeCard />
-  //         <PractiseFourCard />
-  //         <PractiseFiveCard />
+  //     {/* Content layer */}
+  //     <div className="relative z-10">
+  //       <div className="max-w-[1084px] mx-auto ">
+  //         <FirstBigCard />
+
+  //         <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+  //           <GreenCard />
+  //           <PractiseOneCard />
+  //           <PractiseTwoCard />
+  //           <PractiseThreeCard />
+  //           <PractiseFourCard />
+  //           <PractiseFiveCard />
+  //         </div>
+
+  //         <SecondBigCard />
   //       </div>
-  //     </div>
+  //       <div className="max-w-[1084px] mx-auto ">
+  //         <FirstBigCard />
 
-  //     {/* Nature to Boat */}
-  //     <div className="bg-gradient-to-b from-[#87CEFA] to-[#00BFFF] min-h-[50vh] flex items-center justify-center">
-  //       <SecondBigCard />
-  //     </div>
+  //         <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+  //           <GreenCard />
+  //           <PractiseOneCard />
+  //           <PractiseTwoCard />
+  //           <PractiseThreeCard />
+  //           <PractiseFourCard />
+  //           <PractiseFiveCard />
+  //         </div>
 
-  //     {/* Boat Section */}
-  //     <div className="bg-gradient-to-b from-[#00BFFF] to-[#a1fda1] min-h-[50vh] flex justify-center items-end">
-  //       <div className="bg-gradient-to-b from-[#a1fda1] to-[#008080] w-full h-48 flex items-center justify-center">
-  //         {/* Boat content here */}
+  //         <SecondBigCard />
   //       </div>
-  //     </div>
-
-  //     {/* Ocean */}
-  //     <div className="bg-gradient-to-b from-[#008080] to-[#00008B] min-h-[50vh] flex items-center justify-center">
-  //       {/* Ocean content here */}
-  //     </div>
-
-  //     {/* Ocean floor */}
-  //     <div className="bg-gradient-to-b from-[#00008B] to-[#000033] min-h-[50vh] flex items-center justify-center">
-  //       {/* Ocean floor content here */}
   //     </div>
   //   </div>
   // );
+
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Sun - Circle at the top */}
+      <div className="absolute top-0 right-0 transform -translate-x-1/2 w-40 h-40 bg-yellow-400 rounded-full shadow-lg z-20"></div>
+
       {/* Background layer */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#87CEEB] via-[#ADD8E6] via-[#87CEFA] via-[#00BFFF] via-[#a1fda1] via-[#008080] to-[#00008B] z-0"></div>
 
       {/* Content layer */}
-      <div className="relative z-10">
-        <div className="max-w-[1084px] mx-auto ">
+      <div className="relative z-10 pb-40 pt-10">
+        <div className="max-w-[1084px] mx-auto">
           <FirstBigCard />
 
-          <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+          <div className="flex flex-col max-w-[1084px] m-auto py-20">
             <GreenCard />
             <PractiseOneCard />
             <PractiseTwoCard />
@@ -598,10 +587,10 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
 
           <SecondBigCard />
         </div>
-        <div className="max-w-[1084px] mx-auto ">
+        <div className="max-w-[1084px] mx-auto">
           <FirstBigCard />
 
-          <div class=" flex flex-col max-w-[1084px]  m-auto py-20">
+          <div className="flex flex-col max-w-[1084px] m-auto py-20">
             <GreenCard />
             <PractiseOneCard />
             <PractiseTwoCard />
@@ -612,6 +601,95 @@ outline-[4px] outline-[#37c537] z-20 bg-[#1d263e] locked bg-neutral-1000 lg:self
 
           <SecondBigCard />
         </div>
+      </div>
+      {/* Clouds */}
+      <div className="w-full h-40 ">
+        <div className="cloud cloud1 absolute top-[9%]"></div>
+        <div className="cloud cloud2 absolute top-[10%]"></div>
+        <div className="cloud cloud3 top-[12%] absolute"></div>
+        <div className="cloud cloud4 top-[10%]"></div>
+        <div className="cloud cloud5 top-[7%]"></div>
+        <div className="cloud cloud6 top-[8%]"></div>
+      </div>
+      {/* Fish moving from left to right */}
+      <div className=" w-full">
+        <img
+          src={FishImage}
+          alt="Fish"
+          className="fish1 h-20  absolute bottom-[20%]"
+        />
+        <img
+          src={FishImage}
+          alt="Fish"
+          className="fish2  h-20 absolute bottom-[25%]"
+        />
+        <img
+          src={FishImage}
+          alt="Fish"
+          className="fish1 h-20  absolute bottom-[20%]"
+        />
+        <img
+          src={FishImage}
+          alt="Fish"
+          className="fish2  h-20 absolute bottom-[15%]"
+        />
+        <img
+          src={FishImage}
+          alt="Fish"
+          className="fish1 h-20  absolute bottom-[19%]"
+        />
+        <img
+          src={FishImage}
+          alt="Fish"
+          className="fish3  h-20 absolute bottom-[18%]"
+        />
+      </div>
+      {/* Winds */}
+
+      {/* Wind Lines Animation */}
+      <div className="absolute top-[26%] w-full inset-0 ">
+        <svg viewBox="0 0 800 400">
+          <path
+            id="wind-line-1"
+            class="wind-line"
+            d="M -200 100 Q 150 50 200 100 T 300 100 Q 350 150 400 100 T 600 100"
+          />
+          <path
+            id="wind-line-2"
+            class="wind-line"
+            d="M -200 200 Q 200 100 300 200 T 500 200 Q 600 300 800 200"
+          />
+          <path
+            id="wind-line-3"
+            class="wind-line"
+            d="M -250 300 Q 150 200 250 300 T 450 300 Q 550 400 850 300"
+          />
+          <path
+            id="wind-line-4"
+            class="wind-line"
+            d="M -250 150 Q 150 50 250 150 T 450 150 Q 550 250 850 150"
+          />
+          <path
+            id="wind-line-5"
+            class="wind-line"
+            d="M -200 250 Q 150 150 250 250 T 450 250 Q 550 350 800 250"
+          />
+        </svg>
+      </div>
+
+      {/* Tree at the bottom */}
+      <div className=" w-full h-full z-10 pointer-events-none">
+        <div className="absolute left-14 bottom-[55%] w-20 h-40 bg-green-700 rounded-b-full tree"></div>
+        <div className="absolute right-10 bottom-[50%] w-24 h-48 bg-green-600 rounded-b-full tree"></div>
+        <div className="absolute right-14 bottom-[55%] w-20 h-40 bg-green-700 rounded-b-full tree"></div>
+      </div>
+
+      {/* Animated Water Plants at the bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-40 flex justify-around items-end overflow-hidden">
+        <div className="water-plant"></div>
+        <div className="water-plant"></div>
+        <div className="water-plant"></div>
+        <div className="water-plant"></div>
       </div>
     </div>
   );
