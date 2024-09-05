@@ -13,4 +13,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </Provider>
 );
 
-serviceWorker.unregister();
+// serviceWorker.unregister();
