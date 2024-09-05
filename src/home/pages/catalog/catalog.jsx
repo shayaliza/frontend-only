@@ -7,44 +7,6 @@ function Catalog() {
 
   return (
     <div>
-      <div className="sticky top-0 z-10 flex flex-wrap gap-2 mb-2 max-w-[1150px] mx-auto px-4 py-2 bg-white overflow-hidden md:overflow-auto md:h-auto">
-        <div
-          className="tagCourse p-3 bg-black text-white rounded-md flex-shrink-0"
-          data-tag="all"
-        >
-          All
-        </div>
-        <div
-          className="tagCourse p-3 bg-gray-200 text-black rounded-md flex-shrink-0"
-          data-tag="python"
-        >
-          Python
-        </div>
-        <div
-          className="tagCourse p-3 bg-gray-200 text-black rounded-md flex-shrink-0"
-          data-tag="web-development"
-        >
-          Web Development
-        </div>
-        <div
-          className="tagCourse p-3 bg-gray-200 text-black rounded-md flex-shrink-0"
-          data-tag="frontend"
-        >
-          Frontend
-        </div>
-        <div
-          className="tagCourse p-3 bg-gray-200 text-black rounded-md flex-shrink-0"
-          data-tag="python"
-        >
-          Python
-        </div>
-        <div
-          className="tagCourse p-3 bg-gray-200 text-black rounded-md flex-shrink-0"
-          data-tag="web-development"
-        >
-          Web Development
-        </div>
-      </div>
       {/* Popular Tracks */}
       <div className="flex justify-between w-11/12 m-auto my-2 text-lg">
         <div className="font-bold">Popular Tracks</div>
@@ -57,38 +19,61 @@ function Catalog() {
           See all
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pb-10 w-11/12 m-auto">
-        <div className="flex flex-col p-4 bg-white shadow-md border">
-          <div className="text-[#8677ae]">23 Course</div>
-          <div className="font-bold">Data Analyst(R)</div>
-          <div className="flex gap-2 text-xs">
-            <div>icon</div>
-            <div>techsnap</div>
-          </div>
-          <div className="border border-gray-200 mt-4"></div>
-          <div className="flex justify-between mt-2">
-            <div className="text-blue-500">View Path</div>
-            <div>
-              <FaRightLong className="mt-1 text-blue-500" />
+      <div className="w-full overflow-x-auto">
+        <div className="flex gap-2 pb-10 w-max md:w-11/12 m-auto">
+          {/* Card 1 */}
+          <div className="flex flex-col p-4 bg-white shadow-md border w-[180px]">
+            <div className="text-[#8677ae]">23 Course</div>
+            <div className="font-bold">Data Analyst(R)</div>
+            <div className="flex gap-2 text-xs">
+              <div>icon</div>
+              <div>techsnap</div>
+            </div>
+            <div className="border border-gray-200 mt-4"></div>
+            <div className="flex justify-between mt-2">
+              <div className="text-blue-500">View Path</div>
+              <div>
+                <FaRightLong className="mt-1 text-blue-500" />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col p-4 bg-white shadow-md border">
-          <div className="text-[#8677ae]">23 Course</div>
-          <div className="font-bold">Data Analyst(R)</div>
-          <div className="flex gap-2 text-xs">
-            <div>icon</div>
-            <div>techsnap</div>
+
+          {/* Card 2 */}
+          <div className="flex flex-col p-4 bg-white shadow-md border w-[180px]">
+            <div className="text-[#8677ae]">23 Course</div>
+            <div className="font-bold">Data Analyst(R)</div>
+            <div className="flex gap-2 text-xs">
+              <div>icon</div>
+              <div>techsnap</div>
+            </div>
+            <div className="border border-gray-200 mt-4"></div>
+            <div className="flex justify-between mt-2">
+              <div className="text-blue-500">View Path</div>
+              <div>
+                <FaRightLong className="mt-1 text-blue-500" />
+              </div>
+            </div>
           </div>
-          <div className="border border-gray-200 mt-4"></div>
-          <div className="flex justify-between mt-2">
-            <div className="text-blue-500">View Path</div>
-            <div>
-              <FaRightLong className="mt-1 text-blue-500" />
+
+          {/* Card 3 */}
+          <div className="flex flex-col p-4 bg-white shadow-md border w-[180px]">
+            <div className="text-[#8677ae]">15 Courses</div>
+            <div className="font-bold">Software Engineer</div>
+            <div className="flex gap-2 text-xs">
+              <div>icon</div>
+              <div>techsnap</div>
+            </div>
+            <div className="border border-gray-200 mt-4"></div>
+            <div className="flex justify-between mt-2">
+              <div className="text-blue-500">View Path</div>
+              <div>
+                <FaRightLong className="mt-1 text-blue-500" />
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       {/* Popular Skill Path */}
       <div className="flex justify-between w-11/12 m-auto my-2 text-lg">
         <div className="font-bold">Popular Skills Path</div>
@@ -101,25 +86,37 @@ function Catalog() {
           See all
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pb-10 w-11/12 m-auto">
-        <div className="flex flex-col p-4 bg-white shadow-md border">
-          <div className="font-bold">Analyze Data with SQL</div>
-          <div className="text-sm mt-1 text-gray-600">
-            learn to analyz data with sql and prepare for data science
+      <div className="w-full overflow-x-auto">
+        <div className=" pb-10 flex gap-2 w-max m-auto">
+          <div className="flex flex-col p-4 bg-white shadow-md border w-[190px]">
+            <div className="font-bold">Analyze Data with SQL</div>
+            <div className="text-sm mt-1 text-gray-600">
+              learn to analyz data with sql and prepare for data science
+            </div>
+            <div className="flex gap-2 text-sm mt-2">
+              <div>icon</div>
+              <div>techsnap</div>
+            </div>
           </div>
-          <div className="flex gap-2 text-sm mt-2">
-            <div>icon</div>
-            <div>techsnap</div>
+          <div className="flex flex-col p-4 bg-white shadow-md border w-[190px]">
+            <div className="font-bold">Analyze Data with SQL</div>
+            <div className="text-sm mt-1 text-gray-600">
+              learn to analyz data with sql and prepare for data science
+            </div>
+            <div className="flex gap-2 text-sm mt-2">
+              <div>icon</div>
+              <div>techsnap</div>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col p-4 bg-white shadow-md border">
-          <div className="font-bold">Analyze Data with SQL</div>
-          <div className="text-sm mt-1 text-gray-600">
-            learn to analyz data with sql and prepare for data science
-          </div>
-          <div className="flex gap-2 text-sm mt-2">
-            <div>icon</div>
-            <div>techsnap</div>
+          <div className="flex flex-col p-4 bg-white shadow-md border w-[190px]">
+            <div className="font-bold">Analyze Data with SQL</div>
+            <div className="text-sm mt-1 text-gray-600">
+              learn to analyz data with sql and prepare for data science
+            </div>
+            <div className="flex gap-2 text-sm mt-2">
+              <div>icon</div>
+              <div>techsnap</div>
+            </div>
           </div>
         </div>
       </div>
