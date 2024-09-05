@@ -58,6 +58,8 @@ import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
 import SendMail from "./home/pages/authentication/sendMail";
 import setupInterceptors from "./fetching/Interceptor/interceptors";
 import DataSnapLayout from "./datasnap/pages/layout";
+import { useState } from "react";
+import { useEffect } from "react";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
@@ -77,7 +79,25 @@ const TestPage = React.lazy(() => import("./home/pages/testPage/testPage"));
 const CourseInfoLayout = React.lazy(() =>
   import("./components/CoursesFolder/CourseInfo/courseinfoLayout")
 );
+// Mobile View Imports
+const MyProgressMobile = React.lazy(() =>
+  import("./home/pages/mobile/myProgress/myprogress")
+);
+
 function AppRoutes() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Suspense fallback={<FaSpinner className="animate-spin" />}>
       <Router>
@@ -97,7 +117,12 @@ function AppRoutes() {
           <Route path="testpage" element={<TestPage />} />
           <>
             <Route path="/dashboard" element={<MainLayout />}>
-              <Route path="progress" index element={<MyProgress />} />
+              <Route
+                path="progress"
+                index
+                // element={<MyProgress />}
+                element={isMobile ? <MyProgressMobile /> : <MyProgress />}
+              />
               <Route path="myfeed" element={<MyFeed />} />
               <Route path="topics" element={<Topics />} />
               <Route path="competitions" element={<Competitors />} />
@@ -117,6 +142,7 @@ function AppRoutes() {
               <Route path="profile" element={<SecondProfilePage />} />
               <Route path="accountSettings" element={<AccountSettings />} />
             </Route>
+
             <Route path="learningmodule" element={<LearnModule />} />
 
             <Route path="detailsPages" element={<DetailPageLayout />}>
