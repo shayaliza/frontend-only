@@ -32,25 +32,25 @@ function MyProgress() {
     <div className="bg-[#f6f6f6] w-full">
       <div className="w-full  ">
         <div className="w-full ">
-          <div className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
+          <div className="bg-white  rounded-lg p-6 max-w-4xl mx-auto">
             {/* Profile Section */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <img
-                  src="https://via.placeholder.com/50" // Replace with profile image URL
+                  src="https://dummyimage.com/50x50"
                   alt="Profile"
                   className="w-12 h-12 rounded-full object-cover"
                 />
                 <div>
                   <p className="text-lg font-semibold">Hey, sai pavan! {">"}</p>
                   <div className="flex items-center space-x-2 text-sm">
-                    <span className="text-gray-500">Profile 30% complete</span>
                     <div className="w-24 bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-green-500 h-2 rounded-full"
                         style={{ width: "30%" }}
                       ></div>
                     </div>
+                    <span className="text-gray-500">Profile 30% complete</span>
                   </div>
                 </div>
               </div>
@@ -59,8 +59,8 @@ function MyProgress() {
             {/* XP Section */}
             <div className="flex justify-between items-center mt-6">
               <div className="flex flex-col items-start">
-                <p className="text-gray-500">Daily XP</p>
-                <p className="text-2xl font-bold">
+                <p className="text-gray-500 text-sm">Daily XP</p>
+                <p className="text-lg font-bold">
                   0<span className="text-gray-500">/250</span>
                 </p>
               </div>
@@ -68,17 +68,17 @@ function MyProgress() {
               <div className="border-r h-12 mx-6"></div>
 
               <div className="flex flex-col items-start">
-                <p className="text-gray-500">Total XP</p>
-                <p className="text-2xl font-bold">250</p>
+                <p className="text-gray-500 text-sm">Total XP</p>
+                <p className="text-lg font-bold">250</p>
               </div>
             </div>
 
             {/* Daily Streak Section */}
             <div className="mt-6">
-              <p className="text-gray-500">Daily Streak</p>
-              <div className="flex items-center mt-2">
-                <p className="text-xl font-bold mr-4">0 days</p>
-                <div className="flex space-x-2">
+              <p className="text-gray-500 text-sm">Daily Streak</p>
+              <div className="flex justify-between mt-2">
+                <p className="text-lg font-bold mr-4 text-nowrap">0 days</p>
+                <div className="flex space-x-1 text-xs">
                   {["M", "T", "W", "T", "F", "S", "S"].map((day, index) => (
                     <div
                       key={index}
