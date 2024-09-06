@@ -61,6 +61,7 @@ import DataSnapLayout from "./datasnap/pages/layout";
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
+import More from "./components/CoursesFolder/More";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
@@ -221,6 +222,7 @@ function AppRoutes() {
               <Route path="addassessment" element={<AttachAssessment />} />
               <Route path="coursestructure" element={<CourseStructure />} />
               <Route path="testimonial" element={<CourseTestimonial />} />
+              <Route path="more" element={< More/>}/>
               <Route path="html/introduction" element={<Introduction />}/>
                 <Route path="html/introduction/quiz" element={<Quiz />} />
                 <Route path="html/introduction/video" element={<Video />} />

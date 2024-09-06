@@ -103,7 +103,9 @@ const CourseList = () => {
         animate={{ y: 0 }}
         className="flex flex-col md:flex-row justify-between items-center mb-10"
       >
-        <h1 className="text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
+        <h1 
+        onClick={()=>navigate("html/started/info")}
+        className="text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
           Explore Courses
         </h1>
         <div className="flex justify-center items-center w-full md:w-auto">

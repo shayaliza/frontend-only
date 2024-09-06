@@ -115,19 +115,19 @@ function Introduction() {
   const handleSave = (type) => {
     switch (type) {
       case 'Quiz':
-        navigate("/createsnap/course/html/started/html/introduction/quiz");
+        navigate("quiz");
         break;
       case 'Test':
-        navigate("/createsnap/course/html/started/html/introduction/test");
+        navigate("test");
         break;
       case 'Video':
-        navigate("/createsnap/course/html/started/html/introduction/video");
+        navigate("video");
         break;
       case 'Article':
-        navigate("/createsnap/course/html/started/html/introduction/text");
+        navigate("text");
         break;
       case 'Practice text':
-        navigate("/createsnap/course/html/started/html/introduction/practicetext");
+        navigate("practicetext");
         break;
       default:
         break;

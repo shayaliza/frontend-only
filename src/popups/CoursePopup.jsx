@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useToast } from "../components/ui/use-toast";
 import { createACourceFetch } from "../fetching/createSnap/courses";
 
+
 const CoursePopup = ({ isOpen, togglePopup, setFilteredCourses, setData }) => {
   const { toast } = useToast();
 

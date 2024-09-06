@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 function BottomBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPath = location.pathname.split("/").pop(); // Corrected to get the last part of the path
+  const currentPath = location.pathname.split("/").pop(); 
 
   const tabs = [
     { name: "info", icon: InfoIcon, label: "Info" },
@@ -29,7 +29,7 @@ function BottomBar() {
             key={tab.name}
             className={`relative flex flex-col items-center justify-center w-16 h-16 cursor-pointer rounded-full transition-all duration-300 ${
               isActive ? "text-black scale-110" : "text-gray-500"
-            } hover:scale-105 hover:text-blue-600`}
+            } hover:scale-105`}
             onClick={() => handleClick(tab.name)}
             aria-label={tab.label}
           >

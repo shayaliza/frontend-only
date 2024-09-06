@@ -3,6 +3,7 @@ import Header from '../Header';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import ManageSidebar from './CourseSidebar';
 import "../Layout.css"
+import BottomBar from './CoBottomBar';
 
 function ManageLayout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -21,13 +22,8 @@ function ManageLayout() {
     setProfileOpen(!profileOpen);
   };
 
-
-
   const location = useLocation();
-  
 
-
-  
 const pathSegments = location.pathname.split('/').filter(Boolean);
 const breadcrumbs = [
   { name: "Home", path: "/" }
@@ -44,8 +40,10 @@ pathSegments.forEach((segment, index) => {
       <div className="flex">
         <ManageSidebar isPanelOpen={isPanelOpen} toggleSidebar={toggleSidebar} />
         <div className={`flex flex-col w-full ${isPanelOpen ? 'blur' : ''}`}>
+          <div className="h-20 z-10">
         <Header handlePanel={handlePanel} profileOpen={profileOpen} toggleProfile={toggleProfile} />
-        <div className={`lg:ml-56 mt-20 overflow-y-auto flex-grow ${isPanelOpen ? 'blur' : ''}`}>
+        </div>
+        <div className={`lg:ml-56 overflow-y-auto flex- pb-4 ${isPanelOpen ? 'blur' : ''}`}>
       <nav className="breadcrumb p-4 mb-2 overflow-auto">
         {breadcrumbs.map((breadcrumb, index) => (
           <span key={index}>
@@ -59,6 +57,9 @@ pathSegments.forEach((segment, index) => {
         ))}
       </nav>
         <Outlet />
+      </div>
+      <div className="h-16 lg:hidden">
+        <BottomBar/>
       </div>
         </div>
       </div>

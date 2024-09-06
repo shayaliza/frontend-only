@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import userdata from "../../data.json";
 import { FaSearch } from "react-icons/fa";
 
@@ -20,6 +20,7 @@ function Users() {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentChunk, setCurrentChunk] = useState(1);
   const [jumpPage, setJumpPage] = useState("");
+  const [tableHeight, setTableHeight] = useState("auto");
 
   const pagesPerChunk = 10;
 
@@ -105,96 +106,89 @@ function Users() {
     handlePageChange(totalPages);
   };
 
+  useEffect(() => {
+    const updateTableHeight = () => {
+      const windowHeight = window.innerHeight;
+      const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
+      const controlsHeight = document.querySelector('.controls')?.offsetHeight || 0;
+      const paginationHeight = document.querySelector('.pagination')?.offsetHeight || 0;
+      const availableHeight = windowHeight - headerHeight - controlsHeight - paginationHeight - 40;
+      setTableHeight(`${Math.max(500, availableHeight)}px`); 
+    };
+
+    updateTableHeight();
+    window.addEventListener('resize', updateTableHeight);
+    return () => window.removeEventListener('resize', updateTableHeight);
+  }, []);
+
   return (
-    <>
-      <div className="overflow-x-auto px-4 lg:px-20 py-4 max-w-sm">
-        <div className="mb-8 flex flex-col md:flex-row items-center justify-between">
-          <h3 className="text-2xl font-bold underline mb-4 md:mb-0">
-            Enrolled Users
-          </h3>
-          <div className="flex flex-col md:flex-row items-center gap-2">
-            <div className="relative w-full md:w-64 mb-4 md:mb-0">
-              <input
-                type="text"
-                placeholder="Search by name, email, or date joined"
-                onChange={(e) => setSearchItem(e.target.value)}
-                className="w-full p-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
-              />
-              <FaSearch className="absolute left-3 top-3 text-gray-400" />
-            </div>
-            <div className="flex flex-col items-center md:flex-row md:gap-0">
-              <label
-                htmlFor="items-per-page"
-                className="text-sm text-gray-700 mr-2 md:mr-4"
-              >
-                per page:
-              </label>
-              <select
-                id="items-per-page"
-                value={itemsPerPage}
-                onChange={handleItemsPerPageChange}
-                className="bg-white border border-gray-600 rounded-md shadow-sm p-2 focus:outline-none w-20 md:w-20"
-              >
-                <option value={25}>25</option>
-                <option value={50}>50</option>
-                <option value={75}>75</option>
-                <option value={100}>100</option>
-              </select>
-            </div>
-            <div className="relative flex items-center mt-4 md:mt-0 border border-gray-200 rounded-md w-fit">
-              <input
-                type="number"
-                value={jumpPage}
-                onChange={handleJumpPageChange}
-                className="p-2 w-20 pr-4"
-                placeholder="Page"
-              />
-              <button
-                onClick={handleJumpToPage}
-                className="absolute right-0 top-0 bottom-0 bg-blue-500 text-white px-1 py-2 rounded-r-md"
-              >
-                Go
-              </button>
-            </div>
+    <div className="flex flex-col h-screen">
+      <div className="header px-2 sm:px-4 lg:px-20 py-4">
+        <h3 className="text-2xl font-bold underline mb-4">
+          Enrolled Users
+        </h3>
+      </div>
+      <div className="controls px-2 sm:px-4 lg:px-20 mb-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <div className="relative w-full sm:w-64 mb-2 sm:mb-0">
+            <input
+              type="text"
+              placeholder="Search..."
+              onChange={(e) => setSearchItem(e.target.value)}
+              className="w-full p-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2"
+            />
+            <FaSearch className="absolute left-3 top-3 text-gray-400" />
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="items-per-page" className="text-sm text-gray-700">
+              per page:
+            </label>
+            <select
+              id="items-per-page"
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+              className="bg-white border border-gray-600 rounded-md shadow-sm p-2 focus:outline-none w-20"
+            >
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={75}>75</option>
+              <option value={100}>100</option>
+            </select>
+          </div>
+          <div className="relative flex items-center border border-gray-200 rounded-md w-fit">
+            <input
+              type="number"
+              value={jumpPage}
+              onChange={handleJumpPageChange}
+              className="p-2 w-20 pr-4"
+              placeholder="Page"
+            />
+            <button
+              onClick={handleJumpToPage}
+              className="absolute right-0 top-0 bottom-0 bg-blue-500 text-white px-1 py-2 rounded-r-md"
+            >
+              Go
+            </button>
           </div>
         </div>
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead className="bg-gray-100">
+      </div>
+      <div className="flex-grow overflow-hidden px-2 sm:px-4 lg:px-20">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden h-full">
+          <div className="overflow-auto h-full" style={{ maxHeight: tableHeight }}>
+            <table className="w-full">
+              <thead className="bg-gray-100 sticky top-0">
                 <tr>
-                  <th
-                    className="px-4 py-2 text-left text-gray-600 whitespace-nowrap cursor-pointer"
-                    onClick={() => handleSortChange("name")}
-                  >
-                    Username{" "}
-                    {sortCriteria === "name"
-                      ? sortDirection === "asc"
-                        ? "▲"
-                        : "▼"
-                      : ""}
+                  <th className="px-4 py-3 text-left text-gray-600 whitespace-nowrap cursor-pointer"
+                    onClick={() => handleSortChange("name")}>
+                    Username {sortCriteria === "name" ? (sortDirection === "asc" ? "▲" : "▼") : ""}
                   </th>
-                  <th
-                    className="px-4 py-2 text-left text-gray-600 whitespace-nowrap cursor-pointer"
-                    onClick={() => handleSortChange("email")}
-                  >
-                    Email{" "}
-                    {sortCriteria === "email"
-                      ? sortDirection === "asc"
-                        ? "▲"
-                        : "▼"
-                      : ""}
+                  <th className="px-4 py-2 text-left text-gray-600 whitespace-nowrap cursor-pointer"
+                    onClick={() => handleSortChange("email")}>
+                    Email {sortCriteria === "email" ? (sortDirection === "asc" ? "▲" : "▼") : ""}
                   </th>
-                  <th
-                    className="px-4 py-2 text-left text-gray-600 whitespace-nowrap cursor-pointer"
-                    onClick={() => handleSortChange("date")}
-                  >
-                    Date Joined{" "}
-                    {sortCriteria === "date"
-                      ? sortDirection === "asc"
-                        ? "▲"
-                        : "▼"
-                      : ""}
+                  <th className="px-4 py-2 text-left text-gray-600 whitespace-nowrap cursor-pointer"
+                    onClick={() => handleSortChange("date")}>
+                    Date Joined {sortCriteria === "date" ? (sortDirection === "asc" ? "▲" : "▼") : ""}
                   </th>
                   <th className="px-4 py-2 text-left text-gray-600 whitespace-nowrap cursor-pointer">
                     Gender
@@ -214,59 +208,61 @@ function Users() {
             </table>
           </div>
         </div>
-        <div className="mt-4 flex justify-center items-center">
+      </div>
+      <div className="pagination mt-4 px-2 sm:px-4 lg:px-20 py-4">
+        <div className="flex justify-center items-center flex-wrap gap-2">
+          <button
+            onClick={handleJumpToFirstPage}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm"
+          >
+            First
+          </button>
           <Pagination>
-            <PaginationContent>
-              <button
-                onClick={handleJumpToFirstPage}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                First Page
-              </button>
-              <PaginationItem>
-                <PaginationPrevious
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                href="#"
+                onClick={() => handlePageChange(currentPage - 1)}
+              />
+            </PaginationItem>
+            {Array.from(
+              { length: chunkEnd - chunkStart + 1 },
+              (_, i) => chunkStart + i
+            ).map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
                   href="#"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                />
+                  className={
+                    page === currentPage ? "active bg-gray-300" : "inactive"
+                  }
+                  onClick={() => handlePageChange(page)}
+                >
+                  {page}
+                </PaginationLink>
               </PaginationItem>
-              {Array.from(
-                { length: chunkEnd - chunkStart + 1 },
-                (_, i) => chunkStart + i
-              ).map((page) => (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href="#"
-                    className={
-                      page === currentPage ? "active bg-gray-300" : "inactive"
-                    }
-                    onClick={() => handlePageChange(page)}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              {chunkEnd < totalPages && (
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-              )}
+            ))}
+            {chunkEnd < totalPages && (
               <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                />
+                <PaginationEllipsis />
               </PaginationItem>
-              <button
-                onClick={handleJumpToFinalPage}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-              >
-                Last Page
-              </button>
-            </PaginationContent>
+            )}
+            <PaginationItem>
+              <PaginationNext
+                href="#"
+                onClick={() => handlePageChange(currentPage + 1)}
+              />
+            </PaginationItem>
+          </PaginationContent>
           </Pagination>
+          <button
+            onClick={handleJumpToFinalPage}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm"
+          >
+            Last
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
