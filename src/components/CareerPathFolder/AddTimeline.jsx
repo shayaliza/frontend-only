@@ -2,9 +2,9 @@ import React from 'react';
 
 function AddTimeLine() {
   return (
-    <div className="flex justify-center items-center mt-8 p-4">
-      <div className="bg-white border p-6 rounded-lg shadow-md w-full max-w-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center">Add Time Line</h2>
+    <div className="flex justify-center items-center px-4 py-2 lg:p-6">
+      <div className="bg-white border px-6 lg:p-6 rounded-lg shadow-md w-full max-w-lg">
+        <h2 className="text-2xl font-bold my-2 text-center">Add Time Line</h2>
         <form>
           <div className="mb-3">
             <label htmlFor="title" className="block text-gray-700 font-bold mb-1">Title</label>
@@ -60,7 +60,7 @@ function AddTimeLine() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-2"
             >
               Submit
             </button>

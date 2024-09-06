@@ -106,8 +106,8 @@ const CourseList = () => {
         <h1 className="text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
           Explore Courses
         </h1>
-        <div className="flex items-center w-full md:w-auto">
-          <div className="relative w-full md:w-64 mb-4 md:mb-0">
+        <div className="flex justify-center items-center w-full md:w-auto">
+          <div className="relative w-full md:w-64 mb-0 lg:mb-4">
             <input
               type="text"
               placeholder="Search for a course"

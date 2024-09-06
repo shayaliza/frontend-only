@@ -76,12 +76,12 @@ function Careerpath() {
       className="courses-container bg-gradient-to-br min-h-screen p-8"
     >
       <motion.div 
-        className="flex flex-col w-full md:flex-row justify-between items-center px-8 mb-10"
+        className="flex flex-col w-full md:flex-row justify-between items-center px-6 mb-10"
         initial={{ y: -50 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
       >
-        <h1 className="text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+        <h1 className="text-3xl lg:text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
           Explore Career Path
         </h1>
         <div className="flex items-center w-full md:w-auto">
