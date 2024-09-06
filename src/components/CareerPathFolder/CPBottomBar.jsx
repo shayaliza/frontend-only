@@ -1,22 +1,22 @@
 import React from "react";
-import { HelpCircle, ChartArea, FileQuestion, PencilIcon, Cog } from "lucide-react";
+import { HelpCircle, InfoIcon, FileQuestion, EyeIcon, HistoryIcon } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function BottomBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPath = location.pathname.split('/').pop(); 
+  const currentPath = location.pathname.split("/").pop(); // Corrected to get the last part of the path
 
   const tabs = [
-    { name: "analytics", icon: ChartArea, label: "Analytics" },
-    { name: "manage", icon: Cog, label: "Manage"},
-    { name: "create", icon: PencilIcon, label: "Create" },
+    { name: "info", icon: InfoIcon, label: "Info" },
+    { name: "addtimeline", icon: HistoryIcon, label: "Timeline" },
+    { name: "viewtimeline", icon: EyeIcon, label: "View" },
     { name: "doubts", icon: FileQuestion, label: "Doubts" },
     { name: "support", icon: HelpCircle, label: "Support" }
   ];
 
   const handleClick = (path) => {
-    navigate(`/createsnap/${path}`);
+    navigate(`/createsnap/career-path/preview/${path}`);
   };
 
   return (

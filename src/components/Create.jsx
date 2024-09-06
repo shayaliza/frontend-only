@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaBriefcase, FaBook, FaVideo, FaFileAlt, FaPen } from "react-icons/fa"; // Icons
+import { FaBriefcase, FaBook, FaVideo, FaFileAlt, FaPen } from "react-icons/fa"; 
 
 function Create() {
   const navigate = useNavigate();

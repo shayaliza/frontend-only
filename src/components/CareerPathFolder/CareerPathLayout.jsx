@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import BottomBar from "./CPBottomBar"
 import Header from "../Header";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import PreviewSidebar from "./CareerPathSidebar";
@@ -47,17 +47,19 @@ function Layout() {
           toggleSidebar={toggleSidebar}
         />
         <div className={`flex flex-col w-full${isPanelOpen ? "blur" : ""}`}>
+          <div className="h-20">
           <Header
             handlePanel={handlePanel}
             profileOpen={profileOpen}
             toggleProfile={toggleProfile}
           />
+          </div>
           <div
-            className={`lg:ml-56 mt-20 overflow-y-auto flex-grow z-0 ${
+            className={`lg:ml-56 overflow-y-auto flex-grow z-0 ${
               isPanelOpen ? "blur" : ""
             }`}
           >
-            <nav className="breadcrumb p-2 mb-2">
+            <nav className="breadcrumb p-2 mb-2 overflow-auto">
           {breadcrumbs.map((breadcrumb, index) => (
             <span key={index}>
               <Link to={breadcrumb.path} className="text-blue-500 hover:underline">
@@ -71,6 +73,9 @@ function Layout() {
         </nav>
             <Outlet context={{handleTimelinePopup}}/>
           </div>
+          <div className="h-16 lg:hidden">
+        <BottomBar/>
+        </div>
         </div>
         <TimelinePopup isOpen={isTimelinePopup} togglePopup={handleTimelinePopup}/>
       </div>

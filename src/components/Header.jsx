@@ -21,6 +21,7 @@ function Header({handlePanel, toggleProfile,profileOpen}) {
       <div className="navigation z-10">
         <div className="navi">
           <div className="nav-logo gap-2 lg:hidden">
+          <img src={img2} alt="" className="noti-icon" />
             <p className="nav-logo-item nav-logo-text">managesnap</p>
           </div>
           <div className="nav-rest">
