@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./Profile.css";
 import img1 from "../assets/rsc/icons8-menu-50.png";
 import img2 from "../assets/rsc/icons8-project-management-48.png";
@@ -8,20 +9,22 @@ import closeIcon from '../assets/rsc/icons8-close-50.png';
 import krishtis from '../assets/rsc/kristina-v-hYdikKrex4U-unsplash.jpg';
 import settingsIcon from '../assets/rsc/icons8-settings-48.png';
 import logoutIcon from '../assets/rsc/icons8-logout-48.png';
+import { HomeIcon } from 'lucide-react';
 
 
 
 function Header({handlePanel, toggleProfile,profileOpen}) {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="navigation z-10">
         <div className="navi">
-          <div className="nav-logo lg:hidden">
-            <img src={img1} alt="" id="menu" className="nav-logo-item" onClick={handlePanel} />
-            <img src={img2} alt="" className="nav-logo-item nav-logo-image" />
+          <div className="nav-logo gap-2 lg:hidden">
             <p className="nav-logo-item nav-logo-text">managesnap</p>
           </div>
           <div className="nav-rest">
+          <HomeIcon className='w-6 h-6 text-black' onClick={()=> navigate("/dashboard/profile")}/>
             <div className="nav-item">
               <img src={img3} alt="" className="noti-icon" />
             </div>

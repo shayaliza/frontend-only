@@ -48,7 +48,7 @@ function Sidebar({ isPanelOpen, toggleSidebar }) {
   ];
 
   return (
-    <div className={`side-panel-container ${isPanelOpen ? "block" : "hidden"} lg:block z-50`}>
+    <div className={`side-panel-container lg:block z-50`}>
       <div className="side-panel">
         <button className="sidebar-close-btn" onClick={toggleSidebar}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" color='white' xmlns="http://www.w3.org/2000/svg">

@@ -69,6 +69,7 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import CareerPathPopup from "../popups/CareerPathPopup";
+import BottomBar from "./BottomBar";
 import "./Layout.css";
 
 function Layout() {
@@ -96,17 +97,22 @@ function Layout() {
     <div className="flex overflow-hidden">
       <Sidebar isPanelOpen={isPanelOpen} toggleSidebar={toggleSidebar} />
       <div className={`flex flex-col w-full ${isPanelOpen ? "blur" : ""}`}>
+        <div className="h-20 z-20">
         <Header
           handlePanel={handlePanel}
           profileOpen={profileOpen}
           toggleProfile={toggleProfile}
         />
-        <div className={`lg:ml-56 mt-20 overflow-y-auto flex-grow z-0`}>
+        </div>
+        <div className={`lg:ml-56 overflow-y-auto flex-grow z-0`}>
           <Outlet
             context={{
               toggleAddCareerPathPopup,
             }}
           />
+        </div>
+        <div className="h-16 lg:hidden">
+        <BottomBar/>
         </div>
       </div>
       <CareerPathPopup

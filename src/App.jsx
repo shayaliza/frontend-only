@@ -60,6 +60,7 @@ import setupInterceptors from "./fetching/Interceptor/interceptors";
 import DataSnapLayout from "./datasnap/pages/layout";
 import { useState } from "react";
 import { useEffect } from "react";
+import Create from "./components/Create";
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
@@ -194,6 +195,7 @@ function AppRoutes() {
               <Route path="analytics" element={<Analytics />} />
               <Route path="career-path" element={<Careerpath />} />
               <Route path="course" element={<Course />} />
+              <Route path="create" element={<Create/>}/>
             </Route>
             <Route
               path="/createsnap/career-path/preview"

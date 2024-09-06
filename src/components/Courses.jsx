@@ -119,7 +119,7 @@ const CourseList = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-3 ml-4 rounded-full text-white font-semibold shadow-lg transform transition duration-300"
+            className="p-3 ml-4 rounded-full text-white font-semibold shadow-lg transform transition duration-300 lg:mb-4"
             onClick={toggleAddCoursePopup}
             style={{
               background: "linear-gradient(to right, #6a11cb, #2575fc)",

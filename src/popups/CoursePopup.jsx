@@ -80,7 +80,7 @@ const CoursePopup = ({ isOpen, togglePopup, setFilteredCourses, setData }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[9999]">
-      <div className="bg-white rounded-lg shadow-xl border relative flex flex-col md:flex-row w-full max-w-4xl mx-4 my-8 md:my-16 lg:my-24 h-[calc(100vh-8rem)] md:h-[calc(100vh-6rem)] lg:h-[calc(100vh-8rem)] overflow-hidden">
+      <div className="bg-white rounded-lg shadow-xl border relative flex flex-col md:flex-row w-full max-w-4xl mx-4 my-8 md:my-16 lg:my-24 h-[calc(100vh-12rem)] md:h-[calc(100vh-6rem)] lg:h-[calc(100vh-8rem)] overflow-hidden">
         <div className="w-full md:w-1/2 flex-shrink-0">
           <img
             src="https://images.unsplash.com/photo-1602578558883-a40f8c22b3a0?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob2VzJTIwYWRzfGVufDB8fDB8fHww&amp;auto=format&amp;fit=crop&amp;w=400&amp;q=60"
