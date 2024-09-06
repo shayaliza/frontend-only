@@ -6,6 +6,7 @@ import Image from "./../../assets/icon.svg";
 import ProfileIconMobile from "../profileicoMobile";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { useRef } from "react";
+import { SearchIcon } from "lucide-react";
 const Header = ({ toggleMobileMenu }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
@@ -67,7 +68,7 @@ const Header = ({ toggleMobileMenu }) => {
           </div>
           <div className="flex items-center mr-4">
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
-              <Points />
+              <SearchIcon />
               <ProfileIconMobile />
             </div>
           </div>

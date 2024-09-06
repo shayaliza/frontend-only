@@ -34,7 +34,7 @@ function ProfileIconMobile() {
       {isProfileVisible && (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-40"></div>
-          <div className="absolute h-screen -top-4 -right-4 mt-2 w-72 bg-white text-black backdrop-blur-none shadow-lg rounded-lg z-50">
+          <div className="absolute h-screen -top-4 -right-4 mt-2 w-60 bg-white text-black backdrop-blur-none shadow-lg rounded-lg z-50">
             <div className="p-4 relative">
               {/* Cross Icon */}
               <AiOutlineClose
@@ -42,12 +42,16 @@ function ProfileIconMobile() {
                 onClick={() => setProfileVisible(false)}
               />
 
-              <div className="ml-4">
+              <div className="ml-4 flex mt-4">
                 <img
                   src={ProfileImage}
                   alt="Profile"
                   className="w-20 h-20 rounded-full"
                 />
+                <div className="pt-3 pl-2">
+                  <div>Name Here</div>
+                  <div>6 Sep 2024</div>
+                </div>
               </div>
 
               <ul className="list-none p-2 m-0">
