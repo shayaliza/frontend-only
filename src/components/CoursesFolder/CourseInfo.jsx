@@ -105,7 +105,7 @@ function CourseDetails() {
 
   return (
     <>
-      <div className="container mx-auto p-4 lg:p-8">
+      <div className="mx-auto px-4 py-2 lg:p-8">
         <div className="w-full md:w-2/3">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl underline">
@@ -150,7 +150,7 @@ function CourseDetails() {
 
           <div className="bg-white p-6 rounded-lg shadow-lg mb-6">
             <div className="flex justify-between">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              <h2 className="text-xl lg:text-2xl font-semibold text-gray-800 mb-4">
                 Skills You Will Gain
               </h2>
               <button

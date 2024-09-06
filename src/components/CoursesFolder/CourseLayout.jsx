@@ -46,7 +46,7 @@ pathSegments.forEach((segment, index) => {
         <div className={`flex flex-col w-full ${isPanelOpen ? 'blur' : ''}`}>
         <Header handlePanel={handlePanel} profileOpen={profileOpen} toggleProfile={toggleProfile} />
         <div className={`lg:ml-56 mt-20 overflow-y-auto flex-grow ${isPanelOpen ? 'blur' : ''}`}>
-      <nav className="breadcrumb p-2 mb-2">
+      <nav className="breadcrumb p-4 mb-2 overflow-auto">
         {breadcrumbs.map((breadcrumb, index) => (
           <span key={index}>
             <Link to={breadcrumb.path} className="text-blue-500 hover:underline">

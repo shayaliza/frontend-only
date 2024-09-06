@@ -106,7 +106,7 @@
                 Add a new question
               </button>
               <div className="col-span-1 mt-5">
-                <div className="flex flex-col gap-4 px-1 py-2 overflow-y-auto h-96 scrollbar-hidden">
+                <div className="flex flex-col gap-4 px-1 py-2 overflow-y-auto max-h-96 scrollbar-hidden">
                   {questions.map((question, index) => (
                     <div
                       key={question.id}

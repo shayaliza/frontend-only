@@ -107,7 +107,7 @@ function Users() {
 
   return (
     <>
-      <div className="overflow-x-auto px-4 lg:px-20 py-4">
+      <div className="overflow-x-auto px-4 lg:px-20 py-4 max-w-sm">
         <div className="mb-8 flex flex-col md:flex-row items-center justify-between">
           <h3 className="text-2xl font-bold underline mb-4 md:mb-0">
             Enrolled Users

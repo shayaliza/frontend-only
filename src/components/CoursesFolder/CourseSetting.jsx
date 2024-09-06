@@ -20,8 +20,8 @@ const TabComponent = () => {
 
   const Tab1 = () => {
     return (
-      <div className="container  p-4 lg:p-8 max-w-xl">
-  <h1 className="text-3xl font-bold text-gray-900 mb-6">Course Settings</h1>
+      <div className="p-2 lg:p-8 max-w-xl">
+  <h1 className="text-3xl font-bold text-gray-900 mb-3">Course Settings</h1>
 
   <div className="bg-white p-5 border rounded-md shadow-md mb-4 hover:shadow-lg transition-shadow duration-200 ease-in-out">
     <label className="flex items-center space-x-4">

@@ -115,19 +115,19 @@ function Introduction() {
   const handleSave = (type) => {
     switch (type) {
       case 'Quiz':
-        navigate("/createsnap/course/started/html/introduction/quiz");
+        navigate("/createsnap/course/html/started/html/introduction/quiz");
         break;
       case 'Test':
-        navigate("/createsnap/course/started/html/introduction/test");
+        navigate("/createsnap/course/html/started/html/introduction/test");
         break;
       case 'Video':
-        navigate("/createsnap/course/started/html/introduction/video");
+        navigate("/createsnap/course/html/started/html/introduction/video");
         break;
       case 'Article':
-        navigate("/createsnap/course/started/html/introduction/text");
+        navigate("/createsnap/course/html/started/html/introduction/text");
         break;
       case 'Practice text':
-        navigate("/createsnap/course/started/html/introduction/practicetext");
+        navigate("/createsnap/course/html/started/html/introduction/practicetext");
         break;
       default:
         break;
@@ -171,34 +171,34 @@ function Introduction() {
                           {...provided.droppableProps}
                           className="p-4 space-y-4"
                         >
-                          <div className="lg:w-1/2 md:w-2/3 flex justify-around my-4">
+                          <div className="lg:w-1/2 md:w-2/3 flex gap-2 md:justify-around my-4">
                             <button
                               onClick={() => handleInternalPopup("Quiz")}
-                              className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition duration-300"
+                              className="px-2 lg:py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition duration-300"
                             >
                               Quiz
                             </button>
                             <button
                               onClick={() => handleInternalPopup("Test")}
-                              className="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
+                              className="px-2 lg:py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
                             >
                               Test
                             </button>
                             <button
                               onClick={() => handleInternalPopup("Video")}
-                              className="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 transition duration-300"
+                              className="px-2 lg:py-2 bg-purple-500 text-white font-semibold rounded-lg shadow-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75 transition duration-300"
                             >
                               Video
                             </button>
                             <button
                               onClick={() => handleInternalPopup("Article")}
-                              className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300"
+                              className="px-2 lg:py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300"
                             >
                               Text
                             </button>
                             <button
                               onClick={() => handleInternalPopup("Practice text")}
-                              className="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300"
+                              className="px-2 lg:py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition duration-300"
                             >
                               Practice text
                             </button>

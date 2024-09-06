@@ -3,8 +3,8 @@ import React from 'react';
 function Test() {
   return (
     <div className="w-full mx-auto p-4">
-      <div className="w-full flex border">
-        <div className="w-1/2 p-4">
+      <div className="w-full flex flex-col lg:flex-row border">
+        <div className="w-full lg:w-1/2 p-4">
           <h2 className="text-2xl font-bold text-gray-800">Title Label</h2>
           <input
             type="text"
@@ -13,7 +13,7 @@ function Test() {
           />
         </div>
         
-        <div className="w-1/2">
+        <div className="w-full lg:w-1/2">
           <iframe
             frameBorder="0"
             height="600px"

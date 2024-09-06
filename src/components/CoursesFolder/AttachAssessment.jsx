@@ -23,7 +23,7 @@ const AttachAssessment = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 lg:p-8">
+    <div className="mx-auto p-4 lg:p-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-6">Attach Assessment</h1>
       
       <form onSubmit={handleSubmit} className="bg-gray-100 p-6 rounded-lg shadow-lg">

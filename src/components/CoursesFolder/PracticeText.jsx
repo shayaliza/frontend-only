@@ -11,8 +11,8 @@ function PracticeText() {
 
   return (
     <div className="w-full mx-auto p-4">
-      <div className="w-full flex border">
-        <div className="w-1/2 p-4 flex flex-col gap-4">
+      <div className="w-full flex flex-col lg:flex-row border">
+        <div className="w-full lg:w-1/2 p-4 flex flex-col gap-4">
         <div className="">
           <h2 className="text-2xl font-bold text-gray-800">Title</h2>
           <input
@@ -25,11 +25,11 @@ function PracticeText() {
       <ReactQuill
         value={editorValue}
         onChange={handleChange}
-        className="h-full "
+        className="h-[30vh] "
       />
       </div>
         </div>
-        <div className="w-1/2">
+        <div className="w-full lg:w-1/2">
           <iframe
             frameBorder="0"
             height="600px"
