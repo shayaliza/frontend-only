@@ -16,7 +16,7 @@ function Header({handlePanel, toggleProfile,profileOpen}) {
     <>
       <div className="navigation z-10">
         <div className="navi">
-          <div className="nav-logo">
+          <div className="nav-logo lg:hidden">
             <img src={img1} alt="" id="menu" className="nav-logo-item" onClick={handlePanel} />
             <img src={img2} alt="" className="nav-logo-item nav-logo-image" />
             <p className="nav-logo-item nav-logo-text">managesnap</p>

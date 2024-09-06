@@ -114,7 +114,7 @@ function Viewtimelines() {
               {timelines.map((timeline, timelineIndex) => (
                 <div
                   key={timelineIndex}
-                  className="mb-4 border border-gray-200 rounded-md shadow-md mx-6"
+                  className="mb-4 border border-gray-200 rounded-md shadow-md mx-4"
                 >
                   <div className="flex items-center justify-between border-b border-gray-300 p-2 bg-gray-100">
                     <div className="flex">
@@ -161,7 +161,7 @@ function Viewtimelines() {
                           {...provided.droppableProps}
                           className="min-w-full border-t border-gray-300"
                         >
-                          <div className="bg-white p-2 space-y-2">
+                          <div className="bg-white p-2 space-y-2 overflow-auto">
                             {" "}
                             {/* Added padding and space between items */}
                             {timeline.items.map((item, itemIndex) => (
@@ -175,7 +175,7 @@ function Viewtimelines() {
                                     ref={provided.innerRef}
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
-                                    className="cursor-move bg-gray-50 border-b border-gray-300 p-3 flex justify-between items-center rounded-md"
+                                    className="w-full overflow-auto cursor-move bg-gray-50 border-b border-gray-300 p-3 flex justify-between space-x-2 items-center rounded-md"
                                   >
                                     <div className="flex items-center space-x-3">
                                       <FaArrowUp className="h-4 w-4 text-gray-600" />

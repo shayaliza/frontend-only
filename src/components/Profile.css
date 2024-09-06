@@ -28,7 +28,6 @@
 		  rgba(4, 13, 66, 1) 100%
 	  );
 	  box-shadow: rgba(48, 47, 47, 0.24) 12px 0px 120px;
-	  z-index: 10;
 	  overflow-y: scroll;
 	  scroll-behavior: smooth;
   }
@@ -141,6 +140,7 @@
   
   .navigation {
 	  background-color: white;
+	  z-index: 0;
   }
   .navigation .navi {
 	  background-color: white;
@@ -150,6 +150,7 @@
 	  left: 0px;
 	  right: 0px;
 	  box-shadow: rgba(65, 65, 65, 0.1) 0px 4px 12px;
+	  z-index:0;
   }
   .navi {
 	  padding: 6px 20px;
@@ -424,6 +425,14 @@
 		  display: block !important;
 	  }
 	  
+  }
+
+  @media (min-width : 1024px) {
+	.navigation .navi{
+		width: calc(100vw - 210px);
+		margin-left: 210px;
+		justify-content: flex-end;
+	}
   }
   
   @media (max-width: 750px) {
