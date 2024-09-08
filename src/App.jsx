@@ -110,7 +110,7 @@ const ProjectsMobile = React.lazy(() =>
 );
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const [showSplash, setShowSplash] = useState(isIOSMobileOrTablet());
+  const [showSplash, setShowSplash] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -123,14 +123,22 @@ function AppRoutes() {
     };
   }, []);
 
+  const splashScreenShown = sessionStorage.getItem("splashScreenShown");
+
   useEffect(() => {
-    if (showSplash) {
+    if (!splashScreenShown && isIOSMobileOrTablet()) {
+    setShowSplash(true);
       const timer = setTimeout(() => {
+        sessionStorage.setItem("splashScreenShown", "true");
         setShowSplash(false);
       }, 3000);
 
       return () => clearTimeout(timer);
     }
+    else{
+      setShowSplash(false);
+    }
+    
   }, [showSplash]);
 
   return (

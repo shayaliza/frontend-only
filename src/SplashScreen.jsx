@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "./assets/rsc/faviconmobile.png"
 
 const SplashScreen = () => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 3000); 
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isVisible) return null;
+  
 
   return (
     <div className="flex items-center justify-center h-screen w-screen bg-white fixed inset-0 z-50 transition-opacity duration-500">
