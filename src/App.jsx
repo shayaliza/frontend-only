@@ -64,7 +64,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
 import More from "./components/CoursesFolder/More";
-const [showSplash, setShowSplash] = useState(isIOSMobileOrTablet());
+
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
   import("./home/pages/authentication/setNewpass")
@@ -110,6 +110,7 @@ const ProjectsMobile = React.lazy(() =>
 );
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [showSplash, setShowSplash] = useState(isIOSMobileOrTablet());
 
   useEffect(() => {
     const handleResize = () => {
