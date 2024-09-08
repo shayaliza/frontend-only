@@ -67,7 +67,7 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import CareerPathPopup from "../popups/CareerPathPopup";
 import BottomBar from "./BottomBar";
 import "./Layout.css";
@@ -76,6 +76,7 @@ function Layout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [isAddCareerPathPopup, setIsAddCareerPathPopup] = useState(false);
+  const navigate = useNavigate();
 
   const handlePanel = () => {
     setIsPanelOpen(!isPanelOpen);

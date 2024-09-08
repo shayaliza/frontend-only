@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Header from '../Header';
-import { Outlet, useLocation, Link } from 'react-router-dom';
+import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
 import ManageSidebar from './CourseSidebar';
 import "../Layout.css"
 import BottomBar from './CoBottomBar';
 
 function ManageLayout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handlePanel = () => {
     setIsPanelOpen(!isPanelOpen);

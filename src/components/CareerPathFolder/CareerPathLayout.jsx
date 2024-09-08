@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import BottomBar from "./CPBottomBar"
 import Header from "../Header";
-import { Outlet, useLocation, Link } from "react-router-dom";
+import { Outlet, useLocation, Link, useNavigate } from "react-router-dom";
 import PreviewSidebar from "./CareerPathSidebar";
 import "../Layout.css";
 import TimelinePopup from "../../popups/CareerPathPopup";
 
 function Layout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const navigate = useNavigate()
 
   const handlePanel = () => {
     setIsPanelOpen(!isPanelOpen);
