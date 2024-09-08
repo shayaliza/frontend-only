@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../public/faviconmobile.png"
+import logo from "./assets/rsc/faviconmobile.png"
 
 const SplashScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
