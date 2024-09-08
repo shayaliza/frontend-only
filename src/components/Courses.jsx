@@ -121,7 +121,7 @@ const CourseList = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-3 ml-4 rounded-full text-white font-semibold shadow-lg transform transition duration-300 lg:mb-4"
+            className="p-3 ml-4 rounded-full text-white font-semibold shadow-lg transform transition duration-300"
             onClick={toggleAddCoursePopup}
             style={{
               background: "linear-gradient(to right, #6a11cb, #2575fc)",
@@ -131,6 +131,22 @@ const CourseList = () => {
           </motion.button>
         </div>
       </motion.div>
+      <div className=" flex justify-start md:justify-end gap-4 mb-2">
+        <button 
+        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
+        style={{
+          background: "linear-gradient(to right, #2575fc, #6a11cb)",
+        }}
+        >
+          Draft</button>
+        <button 
+        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
+        style={{
+          background: "linear-gradient(to right, #2575fc, #6a11cb)",
+        }}
+        >
+          Released</button>
+      </div>
       <motion.div
         layout
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-6"

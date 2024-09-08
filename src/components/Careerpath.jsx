@@ -73,10 +73,10 @@ function Careerpath() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="courses-container bg-gradient-to-br min-h-screen p-8"
+      className=" md:course-container bg-gradient-to-br min-h-screen p-8"
     >
       <motion.div 
-        className="flex flex-col w-full md:flex-row justify-between items-center px-6 mb-10"
+        className="flex flex-col w-full md:justify-between md:flex-row md:items-center mb-10"
         initial={{ y: -50 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
@@ -107,6 +107,22 @@ function Careerpath() {
           </motion.button>
         </div>
       </motion.div>
+      <div className=" flex justify-start md:justify-end gap-4 mb-4">
+        <button 
+        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
+        style={{
+          background: "linear-gradient(to right, #2575fc, #6a11cb)",
+        }}
+        >
+          Draft</button>
+        <button 
+        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
+        style={{
+          background: "linear-gradient(to right, #2575fc, #6a11cb)",
+        }}
+        >
+          Released</button>
+      </div>
       <motion.div 
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         initial={{ opacity: 0, y: 50 }}
