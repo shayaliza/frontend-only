@@ -108,6 +108,8 @@ const SkillPathMobile = React.lazy(() =>
 const ProjectsMobile = React.lazy(() =>
   import("./home/pages/mobile/projects/projects")
 );
+
+const TestPage2 = React.lazy(() => import("./home/pages/testPage/testPage2"));
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showSplash, setShowSplash] = useState(false);
@@ -127,18 +129,16 @@ function AppRoutes() {
 
   useEffect(() => {
     if (!splashScreenShown && isIOSMobileOrTablet()) {
-    setShowSplash(true);
+      setShowSplash(true);
       const timer = setTimeout(() => {
         sessionStorage.setItem("splashScreenShown", "true");
         setShowSplash(false);
       }, 3000);
 
       return () => clearTimeout(timer);
-    }
-    else{
+    } else {
       setShowSplash(false);
     }
-    
   }, [showSplash]);
 
   return (
@@ -162,6 +162,8 @@ function AppRoutes() {
               </>
               <Route path="/resendmail" element={<SendMail />} />
               <Route path="testpage" element={<TestPage />} />
+              <Route path="testpage2" element={<TestPage2 />} />
+
               <>
                 <Route path="/dashboard" element={<MainLayout />}>
                   <Route
