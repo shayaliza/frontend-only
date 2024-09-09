@@ -19,6 +19,41 @@ function Create() {
       >
         <FaBook className="text-xl" /> Course
       </button>
+
+      <button
+        onClick={() => navigate("/createsnap/course")}
+        className="w-full flex items-center justify-start gap-3 px-4 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
+      >
+        <FaBook className="text-xl" /> Skill paths
+      </button>
+
+      <button
+        onClick={() => navigate("/createsnap/course")}
+        className="w-full flex items-center justify-start gap-3 px-4 py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
+      >
+        <FaBook className="text-xl" /> Assignments
+      </button>
+
+      <button
+        onClick={() => navigate("/createsnap/course")}
+        className="w-full flex items-center justify-start gap-3 px-4 py-3 bg-purple-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
+      >
+        <FaBook className="text-xl" /> Coding Round
+      </button>
+
+      <button
+        onClick={() => navigate("/createsnap/course")}
+        className="w-full flex items-center justify-start gap-3 px-4 py-3 bg-orange-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
+      >
+        <FaBook className="text-xl" />Hackathon
+      </button>
+
+      <button
+        onClick={() => navigate("/createsnap/course")}
+        className="w-full flex items-center justify-start gap-3 px-4 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition duration-300"
+      >
+        <FaBook className="text-xl" /> Resource
+      </button>
     </div>
   );
 }

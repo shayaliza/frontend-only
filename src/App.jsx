@@ -7,7 +7,6 @@ import {
   Link,
 } from "react-router-dom";
 import { isIOSMobileOrTablet } from "./utils/isIOSMobileOrTablet";
-import PullToRefreshWrapper from "./PullToRefreshWrapper"
 import SplashScreen from "./SplashScreen";
 import Courses from "./home/pages/courses/courses";
 import SignIn from "./home/pages/authentication/signin";
@@ -65,7 +64,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
 import More from "./components/CoursesFolder/More";
-import AddTimeLine from "./components/CareerPathFolder/AddTimeline";
 
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
@@ -153,8 +151,10 @@ function AppRoutes() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/verify-email" element={<VerifyEmailToken />} />
+
+              {/* {!loggedIn && ( */}
               <>
-                <Route path="/signin" element={<PullToRefreshWrapper Component={SignIn}/>} />
+                <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/reset-password" element={<SetNewPassword />} />
@@ -173,14 +173,14 @@ function AppRoutes() {
                     path="myfeed"
                     element={isMobile ? <MyFeedMobile /> : <MyFeed />}
                   />
-                  <Route path="topics" element={<PullToRefreshWrapper Component={Topics}/>} />
-                  <Route path="competitions" element={<PullToRefreshWrapper Component={Competitors}/>} />
-                  <Route path="leaderboard" element={<PullToRefreshWrapper Component={LeaderBoard}/>} />
+                  <Route path="topics" element={<Topics />} />
+                  <Route path="competitions" element={<Competitors />} />
+                  <Route path="leaderboard" element={<LeaderBoard />} />
                   <Route
                     path="courses"
                     element={isMobile ? <CoursesMobile /> : <Courses />}
                   />
-                  <Route path="courses/details" element={<PullToRefreshWrapper Component={CourseDetails}/>} />
+                  <Route path="courses/details" element={<CourseDetails />} />
                   <Route
                     path="career"
                     element={isMobile ? <CareerPathMobile /> : <CareerPath />}
@@ -222,44 +222,44 @@ function AppRoutes() {
                     index
                     element={<Navigate to="/createsnap/analytics" replace />}
                   />
-                  <Route path="analytics" element={<PullToRefreshWrapper Component={Analytics}/>}/>
-                  <Route path="career-path" element={<PullToRefreshWrapper Component={CareerPath}/>} />
-                  <Route path="course" element={<PullToRefreshWrapper Component={Course}/>} />
-                  <Route path="create" element={<PullToRefreshWrapper Component={Create}/>} />
+                  <Route path="analytics" element={<Analytics />} />
+                  <Route path="career-path" element={<Careerpath />} />
+                  <Route path="course" element={<Course />} />
+                  <Route path="create" element={<Create />} />
                 </Route>
                 <Route
                   path="/createsnap/career-path/preview"
                   element={<CPLayout />}
                 >
-                  <Route index element={<PullToRefreshWrapper Component={Info}/>} />
-                  <Route path="info" element={<PullToRefreshWrapper Component={Info}/>} />
-                  <Route path="addtimeline" element={<PullToRefreshWrapper Component={AddTimeLine}/>} />
-                  <Route path="viewtimeline" element={<PullToRefreshWrapper Component={Viewtimeline}/>}  />
-                  <Route path="html" element={<PullToRefreshWrapper Component={Html}/>} />
+                  <Route index element={<Info />} />
+                  <Route path="info" element={<Info />} />
+                  <Route path="addtimeline" element={<AddTimeline />} />
+                  <Route path="viewtimeline" element={<Viewtimeline />} />
+                  <Route path="html" element={<Html />} />
                 </Route>
                 <Route
                   path="/createsnap/course/:courseId/started"
                   element={<CourseLayout />}
                 >
-                  <Route index element={<PullToRefreshWrapper Component={CourseInfo}/>}  />
-                  <Route path="info" element={<PullToRefreshWrapper Component={CourseInfo}/>}  />
+                  <Route index element={<CourseInfo />} />
+                  <Route path="info" element={<CourseInfo />} />
                   <Route path="info2" element={<CourseInfoLayout />} />
-                  <Route path="users" element={<PullToRefreshWrapper Component={Users}/>}  />
-                  <Route path="banner" element={<PullToRefreshWrapper Component={CourseBanner}/>} />
-                  <Route path="coursesetting" element={<PullToRefreshWrapper Component={CourseSetting}/>}  />
-                  <Route path="addproject" element={<PullToRefreshWrapper Component={AddProject}/>}  />
-                  <Route path="addassessment" element={<PullToRefreshWrapper Component={AttachAssessment}/>} />
-                  <Route path="coursestructure" element={<PullToRefreshWrapper Component={CourseStructure}/>}  />
-                  <Route path="testimonial" element={<PullToRefreshWrapper Component={CourseTestimonial}/>}  />
-                  <Route path="more" element={<PullToRefreshWrapper Component={More}/>}  />
-                  <Route path="html/introduction" element={<PullToRefreshWrapper Component={Introduction}/>}  />
-                  <Route path="html/introduction/quiz" element={<PullToRefreshWrapper Component={Quiz}/>}  />
-                  <Route path="html/introduction/video" element={<PullToRefreshWrapper Component={Video}/>}  />
-                  <Route path="html/introduction/test" element={<PullToRefreshWrapper Component={Test}/>}  />
-                  <Route path="html/introduction/text" element={<PullToRefreshWrapper Component={Text}/>}  />
+                  <Route path="users" element={<Users />} />
+                  <Route path="banner" element={<CourseBanner />} />
+                  <Route path="coursesetting" element={<CourseSetting />} />
+                  <Route path="addproject" element={<AddProject />} />
+                  <Route path="addassessment" element={<AttachAssessment />} />
+                  <Route path="coursestructure" element={<CourseStructure />} />
+                  <Route path="testimonial" element={<CourseTestimonial />} />
+                  <Route path="more" element={<More />} />
+                  <Route path="html/introduction" element={<Introduction />} />
+                  <Route path="html/introduction/quiz" element={<Quiz />} />
+                  <Route path="html/introduction/video" element={<Video />} />
+                  <Route path="html/introduction/test" element={<Test />} />
+                  <Route path="html/introduction/text" element={<Text />} />
                   <Route
                     path="html/introduction/practicetext"
-                    element={<PullToRefreshWrapper Component={PracticeText}/>} 
+                    element={<PracticeText />}
                   />
                 </Route>
               </>

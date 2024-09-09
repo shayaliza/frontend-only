@@ -55,6 +55,7 @@ function Careerpath() {
   const { toggleAddCareerPathPopup } = useOutletContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredCourses, setFilteredCourses] = useState(coursesData);
+  const [activeTab, setActiveTab] = useState("released");
 
   useEffect(() => {
     setFilteredCourses(
@@ -63,6 +64,8 @@ function Careerpath() {
       )
     );
   }, [searchTerm]);
+
+  
 
   const handlePreview = (courseId) => {
     navigate(`/createsnap/career-path/preview/info`);
@@ -81,7 +84,7 @@ function Careerpath() {
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
       >
-        <h1 className="text-3xl lg:text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
+        <h1 className="text-2xl lg:text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
           Explore Career Path
         </h1>
         <div className="flex items-center w-full md:w-auto">
@@ -95,33 +98,43 @@ function Careerpath() {
             <FaSearch className="absolute left-3 top-4 text-purple-400" />
           </div>
           <motion.button
-            className="p-3 ml-4 rounded-full text-white font-bold shadow-lg transform transition duration-300 hover:scale-105"
-            onClick={toggleAddCareerPathPopup}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            className="p-2 ml-4 rounded-full text-white w-1/2 md:w-auto md:font-semibold shadow-lg transform transition duration-300"
+            onClick={toggleAddCareerPathPopup}
             style={{
-              background: 'linear-gradient(45deg, #7928CA, #FF0080)'
+              background: "linear-gradient(to right, #6a11cb, #2575fc)",
             }}
           >
             Add Course
           </motion.button>
         </div>
       </motion.div>
-      <div className=" flex justify-start md:justify-end gap-4 mb-4">
-        <button 
-        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
-        style={{
-          background: "linear-gradient(to right, #2575fc, #6a11cb)",
-        }}
-        >
-          Draft</button>
-        <button 
-        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
-        style={{
-          background: "linear-gradient(to right, #2575fc, #6a11cb)",
-        }}
-        >
-          Released</button>
+      <div
+        className="sticky top-0 bg-white z-10 p-2"
+      >
+        <div className="flex justify-start md:justify-end gap-4 mb-2">
+          <button
+            className={`p-3 font-semibold  transition-transform ${
+              activeTab === "draft"
+                ? " text-black border-b-4 border-blue-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("draft")}
+          >
+            Draft
+          </button>
+          <button
+            className={`p-3 font-semibold transition-transform ${
+              activeTab === "released"
+                ? "text-black border-b-4 border-blue-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("released")}
+          >
+            Released
+          </button>
+        </div>
       </div>
       <motion.div 
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"

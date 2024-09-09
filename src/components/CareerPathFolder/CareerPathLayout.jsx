@@ -60,7 +60,7 @@ function Layout() {
               isPanelOpen ? "blur" : ""
             }`}
           >
-            <nav className="breadcrumb p-2 mb-2 overflow-auto">
+            <nav className="breadcrumb p-2 mb-2 overflow-auto hidden lg:block">
           {breadcrumbs.map((breadcrumb, index) => (
             <span key={index}>
               <Link to={breadcrumb.path} className="text-blue-500 hover:underline">

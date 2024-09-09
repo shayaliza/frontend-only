@@ -25,7 +25,7 @@ function Header({handlePanel, toggleProfile,profileOpen}) {
             <p className="nav-logo-item nav-logo-text">managesnap</p>
           </div>
           <div className="nav-rest">
-          <HomeIcon className='w-6 h-6 text-black' onClick={()=> navigate("/dashboard/profile")}/>
+          <HomeIcon className='w-6 h-6 text-black' onClick={()=> navigate("/createsnap/analytics")}/>
             <div className="nav-item">
               <img src={img3} alt="" className="noti-icon" />
             </div>

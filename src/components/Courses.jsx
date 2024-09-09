@@ -20,6 +20,7 @@ const CourseList = () => {
   const [isAddCoursePopup, setIsAddCoursePopup] = useState(false);
   const [isEditCoursePopup, setIsEditCoursePopup] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
+  const [activeTab, setActiveTab] = useState("released");
 
   const toggleAddCoursePopup = () => {
     setIsAddCoursePopup(!isAddCoursePopup);
@@ -101,11 +102,12 @@ const CourseList = () => {
       <motion.div
         initial={{ y: -50 }}
         animate={{ y: 0 }}
-        className="flex flex-col md:flex-row justify-between items-center mb-10"
+        className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-10"
       >
-        <h1 
-        onClick={()=>navigate("html/started/info")}
-        className="text-4xl font-bold mb-6 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">
+        <h1
+          onClick={() => navigate("html/started/info")}
+          className="text-2xl md:text-4xl font-bold mb-4 md:mb-0 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600 cursor-pointer"
+        >
           Explore Courses
         </h1>
         <div className="flex justify-center items-center w-full md:w-auto">
@@ -121,7 +123,7 @@ const CourseList = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="p-3 ml-4 rounded-full text-white font-semibold shadow-lg transform transition duration-300"
+            className="p-3 ml-4 rounded-full text-white w-1/2 md:w-auto md:font-semibold shadow-lg transform transition duration-300"
             onClick={toggleAddCoursePopup}
             style={{
               background: "linear-gradient(to right, #6a11cb, #2575fc)",
@@ -131,85 +133,102 @@ const CourseList = () => {
           </motion.button>
         </div>
       </motion.div>
-      <div className=" flex justify-start md:justify-end gap-4 mb-2">
-        <button 
-        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
-        style={{
-          background: "linear-gradient(to right, #2575fc, #6a11cb)",
-        }}
-        >
-          Draft</button>
-        <button 
-        className="p-3 rounded-lg text-white font-semibold shadow-lg transform transition duration-300"
-        style={{
-          background: "linear-gradient(to right, #2575fc, #6a11cb)",
-        }}
-        >
-          Released</button>
+      <div
+        className="sticky top-0 bg-white z-10 p-2"
+      >
+        <div className="flex justify-start md:justify-end gap-4 mb-2">
+          <button
+            className={`p-3 font-semibold  transition-transform ${
+              activeTab === "draft"
+                ? " text-black border-b-4 border-blue-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("draft")}
+          >
+            Draft
+          </button>
+          <button
+            className={`p-3 font-semibold transition-transform ${
+              activeTab === "released"
+                ? "text-black border-b-4 border-blue-500"
+                : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("released")}
+          >
+            Released
+          </button>
+        </div>
       </div>
       <motion.div
         layout
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-6"
       >
         <AnimatePresence>
-          {filteredCourses.map((course, index) => (
-            <motion.div
-              key={course.id}
-              layout
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
-            >
-              <img
-                className="w-full h-48 object-cover"
-                src={
-                  course.mobile_banner_image ||
-                  course.desktop_banner_image ||
-                  img
-                }
-                alt={`${course.title} Cover`}
-              />
-              <div className="p-6">
-                <h2 className="font-bold text-2xl mb-3 text-gray-800">
-                  {course.title}
-                </h2>
-                <p className="text-gray-600 mb-4">{course.description}</p>
-                <div className="flex justify-between items-center">
-                  <div className="text-gray-600 text-sm font-medium">
-                    {course.level.charAt(0).toUpperCase() +
-                      course.level.slice(1)}{" "}
-                    | Released
+          {filteredCourses
+            .filter((course) =>
+              activeTab === "draft"
+                ? course.status === "draft"
+                : course.status === "released"
+            )
+            .map((course, index) => (
+              <motion.div
+                key={course.id}
+                layout
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+              >
+                <img
+                  className="w-full h-48 object-cover"
+                  src={
+                    course.mobile_banner_image ||
+                    course.desktop_banner_image ||
+                    img
+                  }
+                  alt={`${course.title} Cover`}
+                />
+                <div className="p-6">
+                  <h2 className="font-bold text-2xl mb-3 text-gray-800">
+                    {course.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4">{course.description}</p>
+                  <div className="flex justify-between items-center">
+                    <div className="text-gray-600 text-sm font-medium">
+                      {course.level.charAt(0).toUpperCase() +
+                        course.level.slice(1)}{" "}
+                      | {course.status}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                        onClick={() => handleCourse(course.id)}
+                      >
+                        Get Started <FaArrowRight />
+                      </motion.button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
-                      onClick={() => handleCourse(course.id)}
-                    >
-                      Get Started <FaArrowRight />
-                    </motion.button>
-                  </div>
+                  <button
+                    className="p-4 text-blue-800"
+                    onClick={() => toggleEditCoursePopup(course)}
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    className="p-4 text-red-800"
+                    onClick={() => handleDelete(course.id)}
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
-                <button
-                  className="p-4 text-blue-800"
-                  onClick={() => toggleEditCoursePopup(course)} // Pass the entire course object
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  className="p-4 text-red-800"
-                  onClick={() => handleDelete(course.id)}
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
         </AnimatePresence>
       </motion.div>
+
       <CoursePopup
         isOpen={isAddCoursePopup}
         togglePopup={toggleAddCoursePopup}
@@ -221,7 +240,7 @@ const CourseList = () => {
         <EditCoursePopup
           isOpen={isEditCoursePopup}
           togglePopup={() => setIsEditCoursePopup(false)}
-          course={currentCourse} // Pass the entire course object
+          course={currentCourse}
           setData={setData}
           setFilteredCourses={setFilteredCourses}
         />

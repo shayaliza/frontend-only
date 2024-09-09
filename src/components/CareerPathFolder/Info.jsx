@@ -1,5 +1,6 @@
 import React from 'react';
 import "../courses-style.css";
+import img from "../../assets/rsc/django.jpeg"
 
 function Info() {
   return (
@@ -18,7 +19,7 @@ function Info() {
         <div className="course-sets">
           <div className="course">
             <div className="course-banner">
-              <img style={{ width: '100px' }} src="/media/career/services1.jpeg" alt="djnago developer"/>
+              <img style={{ width: '100%', marginBottom:"10px" }} src={img} alt="djnago developer"/>
             </div>
             <button className="filter-btn" id="add-course-btn">
               <a href="/careerpaths/status_career_path/2">Release</a>
