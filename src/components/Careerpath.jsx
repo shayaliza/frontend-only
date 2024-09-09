@@ -76,10 +76,10 @@ function Careerpath() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className=" md:course-container bg-gradient-to-br min-h-screen p-8"
+      className=" md:course-container bg-gradient-to-br min-h-screen px-8 py-4"
     >
       <motion.div 
-        className="flex flex-col w-full md:justify-between md:flex-row md:items-center mb-10"
+        className="flex flex-col w-full md:justify-between md:flex-row md:items-center mb-4 md:mb-10"
         initial={{ y: -50 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 100 }}
