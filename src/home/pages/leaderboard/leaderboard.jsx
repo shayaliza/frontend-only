@@ -26,7 +26,7 @@ function LeaderBoard() {
   };
 
   return (
-    <div className="bg-[#f6f6f6]">
+    <div className="bg-[#f6f6f6] final ">
       <div className="p-[30px] max-[900px]:ml-0 max-w-[1400px]   ">
         <div className="heading ">
           <h1 className="text-2xl font-semibold mr-4">

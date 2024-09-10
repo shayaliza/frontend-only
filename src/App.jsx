@@ -20,6 +20,7 @@ import MyProgress from "./home/pages/myProgress/myprogress";
 import MyFeed from "./home/pages/myFeed/myfeed";
 import Topics from "./home/pages/topics/topics";
 import Competitors from "./home/pages/competitors/competitors";
+import LiveEvent from "./home/pages/liveEvent/liveEvent";
 import LeaderBoard from "./home/pages/leaderboard/leaderboard";
 import ForgotPassword from "./home/pages/authentication/forgotpass";
 import LearnModule from "./home/pages/LearningModule/LearnModule";
@@ -198,6 +199,8 @@ function AppRoutes() {
                     element={isMobile ? <ProjectsMobile /> : <Projects />}
                   />
                   <Route path="projects/details" element={<ProjectDetails />} />
+                  <Route path="liveevent" element={<LiveEvent />} />
+
                   <Route path="assessment" element={<Assement />} />
                   <Route
                     path="assessment/details"

@@ -200,8 +200,13 @@ const Sidebar = ({ isActive }) => {
           </p>
         </Link>
         <Link
-          to="#"
-          className="flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
+          to="/dashboard/liveevent"
+          className={`flex h-10 text-white text-[14px] w-full justify-center items-center hover:text-gray-400 transition-colors duration-300"
+            ${
+              isActive("/dashboard/liveevent")
+                ? "bg-gray-500 "
+                : "hover:bg-gray-700"
+            }`}
         >
           <img src={deadline} alt="live events" className="w-4 h-4" />
           <p className="w-[70%] ml-[10px]" style={{ fontFamily: "Nunito" }}>
