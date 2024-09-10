@@ -1,5 +1,5 @@
 import React from "react";
-
+import enrollImage from "../../../assets/enrolled.svg";
 function MyBuddy() {
   return (
     <div>
@@ -7,7 +7,7 @@ function MyBuddy() {
       <div class="flex flex-col gap-4 mt-2 ">
         <div class="rounded-lg mb-2">
           <div class="mb-4 flex justify-between">
-            <h1 class="text-xl font-bold">Your buddy</h1>
+            <h1 class="text-xl font-bold ml-4">Your buddy</h1>
             <p class="text-gray-600">Need help?</p>
           </div>
           <div className="w-10/12 mx-auto">
@@ -15,11 +15,7 @@ function MyBuddy() {
               <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
                   <span>
-                    <img
-                      src="/src/home/assets/enrolled.svg"
-                      alt="enroll"
-                      class="h-4 w-4 mr-2"
-                    />{" "}
+                    <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
                   </span>
                   Enrolled
                 </h2>
@@ -30,11 +26,7 @@ function MyBuddy() {
               <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
                   <span>
-                    <img
-                      src="/src/home/assets/enrolled.svg"
-                      alt="enroll"
-                      class="h-4 w-4 mr-2"
-                    />{" "}
+                    <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
                   </span>
                   Enrolled
                 </h2>
@@ -45,11 +37,7 @@ function MyBuddy() {
               <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
                   <span>
-                    <img
-                      src="/src/home/assets/enrolled.svg"
-                      alt="enroll"
-                      class="h-4 w-4 mr-2"
-                    />{" "}
+                    <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
                   </span>
                   Enrolled
                 </h2>

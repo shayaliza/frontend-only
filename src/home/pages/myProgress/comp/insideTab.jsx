@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-
+import pylogo from "../../../assets/python_logo.png";
 function InsideTab() {
   const [activeTab, setActiveTab] = useState("inProgress");
   const renderContent = () => {
@@ -10,7 +10,7 @@ function InsideTab() {
           <div class=" flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
-                src="/src/home/assets/python_logo.png"
+                src={pylogo}
                 alt="course-logo"
                 class="w-7 h-7 mr-4 rounded-2xl"
               />
@@ -32,7 +32,7 @@ function InsideTab() {
           <div class="bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
-                src="/src/home/assets/python_logo.png"
+                src={pylogo}
                 alt="course-logo"
                 class="w-7 h-7 mr-4 rounded-2xl"
               />
@@ -54,7 +54,7 @@ function InsideTab() {
           <div class="bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
-                src="/src/home/assets/python_logo.png"
+                src={pylogo}
                 alt="course-logo"
                 class="w-7 h-7 mr-4 rounded-2xl"
               />
