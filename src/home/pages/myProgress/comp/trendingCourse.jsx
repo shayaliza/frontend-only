@@ -12,6 +12,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
+// images
+import pyLogo from "../../../assets/python_logo.png";
+import timeLogo from "../../../assets/time.svg";
+import lessonLogo from "../../../assets/lessons.svg";
+import coinLogo from "../../../assets/coin.svg";
+
 function TrendingCourse() {
   return (
     <Swiper
@@ -55,7 +61,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/home/assets/python_logo.png"
+              src={pyLogo}
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -67,27 +73,15 @@ function TrendingCourse() {
             <h1 class="text-lg font-semibold">Introduction to SQL</h1>
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">15 hours</p>
               </div>
               <div class=" flex items-center mr-4">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">779 coins</p>
               </div>
             </div>
@@ -103,7 +97,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/home/assets/python_logo.png"
+              src={pyLogo}
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -115,27 +109,15 @@ function TrendingCourse() {
             <h1 class="text-lg font-semibold">Introduction to SQL</h1>
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">15 hours</p>
               </div>
               <div class=" flex items-center mr-4">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">779 coins</p>
               </div>
             </div>
@@ -151,7 +133,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/home/assets/python_logo.png"
+              src={pyLogo}
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -163,27 +145,15 @@ function TrendingCourse() {
             <h1 class="text-lg font-semibold">Introduction to SQL</h1>
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">15 hours</p>
               </div>
               <div class=" flex items-center mr-4">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">779 coins</p>
               </div>
             </div>
@@ -199,7 +169,7 @@ function TrendingCourse() {
         <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
           <div class=" flex items-center justify-between">
             <img
-              src="/src/home/assets/python_logo.png"
+              src={pyLogo}
               alt="course-logo"
               class="w-10 h-10 rounded-full"
             />
@@ -211,27 +181,15 @@ function TrendingCourse() {
             <h1 class="text-lg font-semibold">Introduction to SQL</h1>
             <div class="my_progess_trending_card_options_holder flex items-center mt-2">
               <div class="flex items-center mr-4">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">15 hours</p>
               </div>
               <div class=" flex items-center mr-4">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-4 h-4 mr-2"
-                />
+                <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
                 <p class="text-sm font-semibold text-gray-600">779 coins</p>
               </div>
             </div>

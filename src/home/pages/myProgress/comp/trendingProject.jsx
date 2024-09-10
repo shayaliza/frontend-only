@@ -12,6 +12,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import BannerImage from "../../../assets/banner.png";
+import coinLogo from "../../../assets/coin.svg";
+import cardTimeLogo from "../../../assets/card_time.svg";
+
 function TrendingProject() {
   return (
     <Swiper
@@ -64,31 +67,19 @@ function TrendingProject() {
             <div class="icons flex justify-between p-2 px-4">
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
@@ -97,11 +88,7 @@ function TrendingProject() {
               <p class="text-gray-700 font-semibold">Author:</p>
               <div class="name flex items-center ml-2">
                 <span>
-                  <img
-                    src="/src/home/assets/coin.svg"
-                    alt="indian"
-                    class="w-4 h-4"
-                  />
+                  <img src={coinLogo} alt="indian" class="w-4 h-4" />
                 </span>
                 <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
               </div>
@@ -135,31 +122,19 @@ function TrendingProject() {
             <div class="icons flex justify-between p-2 px-4">
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
@@ -168,11 +143,7 @@ function TrendingProject() {
               <p class="text-gray-700 font-semibold">Author:</p>
               <div class="name flex items-center ml-2">
                 <span>
-                  <img
-                    src="/src/home/assets/coin.svg"
-                    alt="indian"
-                    class="w-4 h-4"
-                  />
+                  <img src={coinLogo} alt="indian" class="w-4 h-4" />
                 </span>
                 <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
               </div>
@@ -205,31 +176,19 @@ function TrendingProject() {
             <div class="icons flex justify-between p-2 px-4">
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
@@ -238,11 +197,7 @@ function TrendingProject() {
               <p class="text-gray-700 font-semibold">Author:</p>
               <div class="name flex items-center ml-2">
                 <span>
-                  <img
-                    src="/src/home/assets/coin.svg"
-                    alt="indian"
-                    class="w-4 h-4"
-                  />
+                  <img src={coinLogo} alt="indian" class="w-4 h-4" />
                 </span>
                 <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
               </div>
@@ -265,12 +220,8 @@ function TrendingProject() {
       </SwiperSlide>
       <SwiperSlide>
         <div class=" bg-white    mb-20 shadow-md flex flex-col">
-          <div class="image h-[150px] max-[900px]:mb-4">
-            <img
-              src="/src/home/assets/banner.png"
-              alt="card"
-              class="w-full object-cover"
-            />
+          <div class="h-[150px] max-[900px]:mb-4">
+            <img src={BannerImage} alt="card" class="h-[150px] " />
           </div>
           <div class="flex flex-col justify-between">
             <div class="title p-4 pb-2">
@@ -280,31 +231,19 @@ function TrendingProject() {
             <div class="icons flex justify-between p-2 px-4">
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
               <div class="icon_item flex items-center text-xs">
                 <span>
-                  <img
-                    src="/src/home/assets/card_time.svg"
-                    alt="time"
-                    class="w-5 h-5"
-                  />
+                  <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
                 </span>
                 <p>16 hours</p>
               </div>
@@ -313,11 +252,7 @@ function TrendingProject() {
               <p class="text-gray-700 font-semibold">Author:</p>
               <div class="name flex items-center ml-2">
                 <span>
-                  <img
-                    src="/src/home/assets/coin.svg"
-                    alt="indian"
-                    class="w-4 h-4"
-                  />
+                  <img src={coinLogo} alt="indian" class="w-4 h-4" />
                 </span>
                 <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
               </div>
