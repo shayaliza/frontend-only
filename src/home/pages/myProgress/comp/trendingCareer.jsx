@@ -11,6 +11,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import timeLogo from "../../../assets/time.svg";
+import lessonLogo from "../../../assets/lessons.svg";
+import coinLogo from "../../../assets/coin.svg";
 
 function TrendingCareer() {
   return (
@@ -60,27 +63,15 @@ function TrendingCareer() {
             </div>
             <div class=" flex justify-between items-end">
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={timeLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">15 hours</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={lessonLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={coinLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">779 coins</p>
               </div>
             </div>
@@ -113,27 +104,15 @@ function TrendingCareer() {
             </div>
             <div class=" flex justify-between items-end">
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={timeLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">15 hours</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={lessonLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={coinLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">779 coins</p>
               </div>
             </div>
@@ -166,27 +145,15 @@ function TrendingCareer() {
             </div>
             <div class=" flex justify-between items-end">
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/time.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={timeLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">15 hours</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/lessons.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={lessonLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">9 lessons</p>
               </div>
               <div class=" flex items-center">
-                <img
-                  src="/src/home/assets/coin.svg"
-                  alt="time"
-                  class="w-5 h-5"
-                />
+                <img src={coinLogo} alt="time" class="w-5 h-5" />
                 <p class="white text-sm ml-2">779 coins</p>
               </div>
             </div>
