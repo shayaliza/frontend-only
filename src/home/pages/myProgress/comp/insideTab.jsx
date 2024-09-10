@@ -6,8 +6,8 @@ function InsideTab() {
   const renderContent = () => {
     if (activeTab === "inProgress") {
       return (
-        <div className="flex flex-wrap justify-between">
-          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
+        <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1 ">
+          <div class=" flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
                 src="/src/home/assets/python_logo.png"
@@ -16,7 +16,7 @@ function InsideTab() {
               />
               <h1 class="text-base font-bold">Introduction to Python</h1>
             </div>
-            <div class=" p-4">
+            <div class="p-4">
               <p class="text-gray-700 text-[0.8rem]">
                 Master the basics of data analysis in Python. Expand your
                 skillset by learning scientific computing with numpy.
@@ -28,7 +28,8 @@ function InsideTab() {
               </button>
             </div>
           </div>
-          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
+
+          <div class="bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
                 src="/src/home/assets/python_logo.png"
@@ -37,7 +38,7 @@ function InsideTab() {
               />
               <h1 class="text-base font-bold">Introduction to Python</h1>
             </div>
-            <div class=" p-4">
+            <div class="p-4">
               <p class="text-gray-700 text-[0.8rem]">
                 Master the basics of data analysis in Python. Expand your
                 skillset by learning scientific computing with numpy.
@@ -49,7 +50,8 @@ function InsideTab() {
               </button>
             </div>
           </div>
-          <div class=" bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 mr-2.5 h-[220px] w-[32%] max-[900px]:w-full">
+
+          <div class="bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
                 src="/src/home/assets/python_logo.png"
@@ -58,7 +60,7 @@ function InsideTab() {
               />
               <h1 class="text-base font-bold">Introduction to Python</h1>
             </div>
-            <div class=" p-4">
+            <div class="p-4">
               <p class="text-gray-700 text-[0.8rem]">
                 Master the basics of data analysis in Python. Expand your
                 skillset by learning scientific computing with numpy.

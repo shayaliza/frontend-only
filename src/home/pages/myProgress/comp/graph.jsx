@@ -5,7 +5,7 @@ import CircularProgressChart from "../../../component/chart/circle";
 function Graph() {
   return (
     <div>
-      <div className="flex space-x-4">
+      <div className="flex flex-wrap gap-2">
         {/* Leaderboard */}
         <div className=" bg-white p-4">
           <div className="space-y-2">

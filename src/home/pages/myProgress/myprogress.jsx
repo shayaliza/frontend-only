@@ -25,14 +25,14 @@ function MyProgress() {
     setIsVisible(false);
   };
 
-  if (!isVisible) return null;
   const ActiveComponent = tabs.find((tab) => tab.name === activeTab).component;
 
   return (
     <div className="bg-[#f6f6f6]">
-      <div className="w-full flex flex-row ">
+      <div className="flex final flex-row ">
+        {/* Left Column */}
         <div className="w-2/3 ">
-          <div className="flex flex-col w-[95%] mx-auto ">
+          <div className="flex flex-col  ">
             <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold my-5 text-center  w-full">
               {tabs.map((tab) => (
                 <button
@@ -49,25 +49,32 @@ function MyProgress() {
               ))}
             </div>
             <div className="mt-5">
-              <InsideTab />
-              {/* Test */}
-              <div className="my_progress_third_card my-8 bg-[#7933ff] text-white p-5 flex flex-col relative">
-                <h1 className="text-lg w-9/12 font-medium">
-                  Please take your skill test so that we can improve your
-                  recommendations and can suggest you better content or projects
-                </h1>
+              <div className="flex flex-col ">
+                <InsideTab />
 
-                <button className="w-36 h-10 bg-white text-black font-semibold rounded-lg mt-5">
-                  Take Test
-                </button>
-                <p
-                  className="close_banner absolute top-6 right-6 font-semibold cursor-pointer"
-                  onClick={handleClose}
-                >
-                  X
-                </p>
+                {/* Test */}
+                {isVisible && (
+                  <div className="my_progress_third_card my-8 bg-[#7933ff] text-white p-5 flex flex-col relative">
+                    <h1 className="text-lg w-9/12 font-medium">
+                      Please take your skill test so that we can improve your
+                      recommendations and can suggest you better content or
+                      projects
+                    </h1>
+
+                    <button className="w-36 h-10 bg-white text-black font-semibold rounded-lg mt-5">
+                      Take Test
+                    </button>
+                    <p
+                      className="close_banner absolute top-6 right-6 font-semibold cursor-pointer"
+                      onClick={handleClose}
+                    >
+                      X
+                    </p>
+                  </div>
+                )}
+
+                <Graph />
               </div>
-              <Graph />
             </div>
           </div>
         </div>
