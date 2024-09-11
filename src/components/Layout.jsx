@@ -1,81 +1,46 @@
-// import React, { useState } from "react";
-// import Sidebar from "./Sidebar";
-// import Header from "./Header";
-// import { Outlet } from "react-router-dom";
-// import CoursePopup from "../popups/CoursePopup";
-// import CareerPathPopup from "../popups/CareerPathPopup";
-// import "./Layout.css";
-
-// function Layout() {
-//   const [isPanelOpen, setIsPanelOpen] = useState(false);
-//   const [profileOpen, setProfileOpen] = useState(false);
-//   const [isAddCoursePopup, setIsAddCoursePopup] = useState(false);
-//   const [isAddCareerPathPopup, setIsAddCareerPathPopup] = useState(false);
-
-//   const handlePanel = () => {
-//     setIsPanelOpen(!isPanelOpen);
-//   };
-
-//   const toggleSidebar = () => {
-//     setIsPanelOpen(false);
-//   };
-
-//   const toggleProfile = () => {
-//     setProfileOpen(!profileOpen);
-//   };
-
-//   const toggleAddCoursePopup = () => {
-//     setIsAddCoursePopup(!isAddCoursePopup);
-//   };
-
-//   const toggleAddCareerPathPopup = () => {
-//     setIsAddCareerPathPopup(!isAddCareerPathPopup);
-//   };
-
-//   return (
-//     <div className="flex overflow-hidden">
-//       <Sidebar isPanelOpen={isPanelOpen} toggleSidebar={toggleSidebar} />
-//       <div className={`flex flex-col w-full ${isPanelOpen ? "blur" : ""}`}>
-//         <Header
-//           handlePanel={handlePanel}
-//           profileOpen={profileOpen}
-//           toggleProfile={toggleProfile}
-//         />
-//         <div className={`lg:ml-56 mt-20 overflow-y-auto flex-grow z-0`}>
-//           <Outlet
-//             context={{
-//               toggleAddCoursePopup,
-//               toggleAddCareerPathPopup,
-//             }}
-//           />
-//         </div>
-//       </div>
-//       <CoursePopup
-//         isOpen={isAddCoursePopup}
-//         togglePopup={toggleAddCoursePopup}
-//       />
-//       <CareerPathPopup
-//         isOpen={isAddCareerPathPopup}
-//         togglePopup={toggleAddCareerPathPopup}
-//       />
-//     </div>
-//   );
-// }
-
-// export default Layout;
-
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { Outlet, useNavigate } from "react-router-dom";
 import CareerPathPopup from "../popups/CareerPathPopup";
 import BottomBar from "./BottomBar";
 import "./Layout.css";
+import { PullToRefresh } from "react-js-pull-to-refresh";
+import { Loader2 } from "lucide-react";
+
+function CustomSpinner({ pullProgress, isRefreshing }) {
+  const spinnerRef = useRef(null);
+
+  useEffect(() => {
+    if (spinnerRef.current && !isRefreshing) {
+      spinnerRef.current.style.transform = `rotate(${pullProgress * 360}deg)`;
+    }
+  }, [pullProgress, isRefreshing]);
+
+  if (!isRefreshing && pullProgress === 0) return null;
+
+  return (
+    <div className="flex justify-center items-center h-16">
+      <div className="relative bg-slate-100 p-2 rounded-full shadow-md">
+        <Loader2 
+          ref={spinnerRef}
+          className={`w-6 h-6 ${isRefreshing ? 'animate-spin' : ''} text-blue-500 relative z-10`} 
+        />
+      </div>
+    </div>
+  );
+}
+
+function PullContent({ pullProgress, isRefreshing }) {
+  return <CustomSpinner pullProgress={pullProgress} isRefreshing={isRefreshing} />;
+}
 
 function Layout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [isAddCareerPathPopup, setIsAddCareerPathPopup] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const navigate = useNavigate();
 
   const handlePanel = () => {
@@ -94,26 +59,53 @@ function Layout() {
     setIsAddCareerPathPopup(!isAddCareerPathPopup);
   };
 
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        setRefreshKey((prevKey) => prevKey + 1);
+        setIsRefreshing(false);
+        resolve();
+      }, 2000);
+    });
+  };
+
   return (
     <div className="flex overflow-hidden">
       <Sidebar isPanelOpen={isPanelOpen} toggleSidebar={toggleSidebar} />
       <div className={`flex flex-col w-full ${isPanelOpen ? "blur" : ""}`}>
         <div className="h-20 z-20">
-        <Header
-          handlePanel={handlePanel}
-          profileOpen={profileOpen}
-          toggleProfile={toggleProfile}
-        />
-        </div>
-        <div className={`lg:ml-56 overflow-y-auto flex-grow z-0`}>
-          <Outlet
-            context={{
-              toggleAddCareerPathPopup,
-            }}
+          <Header
+            handlePanel={handlePanel}
+            profileOpen={profileOpen}
+            toggleProfile={toggleProfile}
           />
         </div>
+        <PullToRefresh
+          pullDownContent={<PullContent />}
+          releaseContent={<CustomSpinner pullProgress={1} isRefreshing={true} />}
+          refreshContent={<CustomSpinner pullProgress={1} isRefreshing={true} />}
+          pullDownThreshold={70}
+          onRefresh={handleRefresh}
+          triggerHeight={70}
+          backgroundColor="white"
+          startInvisible={true}
+          pullDownContentProps={{ 
+            pullProgress: (y) => y / 70,
+            isRefreshing: isRefreshing
+          }}
+        >
+          <div className={`lg:ml-56 flex-1 overflow-y-auto min-h-screen flex-grow z-0`}>
+            <Outlet
+              key={refreshKey}
+              context={{
+                toggleAddCareerPathPopup,
+              }}
+            />
+          </div>
+        </PullToRefresh>
         <div className="h-16 lg:hidden">
-        <BottomBar/>
+          <BottomBar />
         </div>
       </div>
       <CareerPathPopup
