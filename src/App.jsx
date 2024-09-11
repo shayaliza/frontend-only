@@ -60,7 +60,13 @@ import { useSelector } from "react-redux";
 import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
 import SendMail from "./home/pages/authentication/sendMail";
 import setupInterceptors from "./fetching/Interceptor/interceptors";
-import DataSnapLayout from "./datasnap/pages/layout";
+import DataSnapLayout from "./datasnap/components/Layout";
+import BlogHome from "./datasnap/components/Home";
+import BlogExplore from "./datasnap/components/Explore";
+import BlogDrafts from "./datasnap/components/Drafts";
+import BlogBookmarks from "./datasnap/components/Bookmarks";
+import BlogCreate from "./datasnap/components/Blog/BlogCreate";
+import BlogDetails from "./datasnap/components/Blog/Details";
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -267,8 +273,17 @@ function AppRoutes() {
                     element={<PracticeText />}
                   />
                 </Route>
+
+                <Route path="/datasnap" element={<DataSnapLayout />}>
+                <Route index element={<Navigate to="home" replace />} />
+                <Route path="home" element={<BlogHome />} />
+                <Route path="explore" element={<BlogExplore />} />
+                <Route path="drafts" element={<BlogDrafts />} />
+                <Route path="bookmarks" element={<BlogBookmarks />} />
+              </Route>
+              <Route path="ds/create" element={<BlogCreate />} />
+              <Route path="ds/detail" element={<BlogDetails/>}/>
               </>
-              <Route path="/datasnap" element={<DataSnapLayout />} />
 
               <Route path="*" element={<h1>Page Not Found</h1>} />
             </Routes>

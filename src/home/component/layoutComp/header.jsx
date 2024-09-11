@@ -7,6 +7,7 @@ import ProfileIconMobile from "../profileicoMobile";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { useRef } from "react";
 import { SearchIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 const Header = ({ toggleMobileMenu }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
@@ -60,6 +61,9 @@ const Header = ({ toggleMobileMenu }) => {
                     </li>
                     <li className="p-2 hover:bg-gray-100 cursor-pointer">
                       Following
+                    </li>
+                    <li className="p-2 hover:bg-gray-100 cursor-pointer">
+                      <Link to="/datasnap">Datasnap</Link>
                     </li>
                   </ul>
                 </div>

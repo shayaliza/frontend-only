@@ -39,6 +39,11 @@ function ProfileIcon() {
               </p>
             </div>
             <div className="profile_item p-2 font-bold">
+              <p>
+                <Link to="/datasnap">Data Snap</Link>
+              </p>
+            </div>
+            <div className="profile_item p-2 font-bold">
               <p>Dashboard</p>
             </div>
             <div className="profile_item p-2 font-bold">
