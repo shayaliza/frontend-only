@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Notification from './Notification';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import BottomBar from './BottomBar';
 
 function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -11,15 +12,25 @@ function Layout() {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const toggleNotification = () => setIsNotificationOpen(!isNotificationOpen);
 
+  const location = useLocation();
+  const currentPath = location.pathname.split('/').pop();
+
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen max-h-screen">
       <Header toggleSidebar={toggleSidebar} toggleNotification={toggleNotification} />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-        <main className="flex-1 p-4 md:p-6 bg-gray-800 overflow-auto">
+        {currentPath !== "detail" && (
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+        )}
+        <main className={`flex-1 ${ currentPath === "detail" ? "p-0 pb-16 w-screen" : "p-4 pb-20 md:p-6"} bg-gray-800 overflow-auto lg:pb-0`}>
           <Outlet />
         </main>
-        <Notification isOpen={isNotificationOpen} />
+        {currentPath !== "detail" && (
+          <Notification isOpen={isNotificationOpen} className="overflow-auto" />
+        )}
+        <div className="fixed bottom-0 lg:hidden h-16 w-full">
+          <BottomBar />
+        </div>
       </div>
     </div>
   );

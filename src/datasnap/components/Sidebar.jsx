@@ -54,7 +54,7 @@ function Sidebar({ isOpen, setIsOpen }) {
           </div>
           <div className={getLinkClass("/more")}>
             <FaEllipsisH className="w-6 h-6 mr-4 text-blue-400" />
-            <Link to="/ds/detail" className="text-lg font-medium">
+            <Link to="detail" className="text-lg font-medium">
               More
             </Link>
           </div>
@@ -120,7 +120,7 @@ function Sidebar({ isOpen, setIsOpen }) {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         className={`lg:hidden fixed inset-0 w-2/3 bg-black left-0 z-50 overflow-y-auto transition-transform duration-500 ease-in-out transform ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } 
@@ -226,7 +226,7 @@ function Sidebar({ isOpen, setIsOpen }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

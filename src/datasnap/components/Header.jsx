@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import menu from "../assets/rsc/menu.png";
 import datasnaplogo from "../assets/rsc/datasnap-logo.png";
@@ -13,6 +13,7 @@ function Header({toggleSidebar}) {
   const [searchInput, setSearchInput] = useState("");
   const [activeTab, setActiveTab] = useState("top");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleSearchOpen = () => {
     setSearchOpen(true);
@@ -97,16 +98,20 @@ function Header({toggleSidebar}) {
     <>
       <div className="flex justify-between items-center border-b py-4 px-4 lg:px-8 bg-gray-800 text-white">
         <div className="flex items-center space-x-4">
-          <div className="relative" onClick={toggleSidebar}>
-        <img src={menu} alt="Menu" className="w-6 h-6 lg:hidden" />
-        </div>
-          <img src={datasnaplogo} alt="datasnap logo" className="w-10" />
-          <p className="text-xl font-semibold hidden sm:block">datasnap</p>
+          <img src={datasnaplogo} alt="datasnap logo" className="w-10 cursor-pointer" onClick={() => navigate("/datasnap/home")} />
+          <p className="text-xl font-semibold sm:block">datasnap</p>
         </div>
         <div className="flex items-center space-x-4">
           <div
-            className="relative flex items-center bg-black rounded-full px-4 py-4 cursor-pointer"
+            className="hidden relative lg:flex items-center bg-black rounded-full px-4 py-4 cursor-pointer"
             onClick={handleSearchOpen}
+          >
+            <FaSearch className="text-gray-400" />
+          </div>
+
+          <div
+            className="relative lg:hidden items-center bg-black rounded-full px-4 py-4 cursor-pointer"
+            onClick={() => navigate("/ds/search")}
           >
             <FaSearch className="text-gray-400" />
           </div>
@@ -131,20 +136,22 @@ function Header({toggleSidebar}) {
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50 lg:hidden">
                 <Link
-                  to="#"
+                  to="detail"
                   className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
+                  onClick={() => setDropdownOpen(false)}
                 >
                   <img
                     src={notification}
                     alt="Notifications"
                     className="inline w-4 h-4 mr-2"
                   />
-                  Notifications
+                  Details
                 </Link>
                 <button
                   className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
                   onClick={() => {
                     document.body.classList.toggle("dark");
+                    setDropdownOpen(false);
                   }}
                 >
                   <img

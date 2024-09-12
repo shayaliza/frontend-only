@@ -65,8 +65,9 @@ import BlogHome from "./datasnap/components/Home";
 import BlogExplore from "./datasnap/components/Explore";
 import BlogDrafts from "./datasnap/components/Drafts";
 import BlogBookmarks from "./datasnap/components/Bookmarks";
+import BlogSearch from "./datasnap/components/Search";
 import BlogCreate from "./datasnap/components/Blog/BlogCreate";
-import BlogDetails from "./datasnap/components/Blog/Details";
+import BlogDetails from "./datasnap/components/Details";
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -280,9 +281,10 @@ function AppRoutes() {
                 <Route path="explore" element={<BlogExplore />} />
                 <Route path="drafts" element={<BlogDrafts />} />
                 <Route path="bookmarks" element={<BlogBookmarks />} />
+                <Route path="detail" element={<BlogDetails/>}/>
               </Route>
               <Route path="ds/create" element={<BlogCreate />} />
-              <Route path="ds/detail" element={<BlogDetails/>}/>
+              <Route path="ds/search" element={<BlogSearch/>}/>
               </>
 
               <Route path="*" element={<h1>Page Not Found</h1>} />

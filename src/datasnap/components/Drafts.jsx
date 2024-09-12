@@ -3,7 +3,7 @@ import trashIcon from '../assets/rsc/icons8-trash-32.png';
 
 function Drafts() {
   return (
-    <div className="flex flex-col items-center py-4 px-2 sm:px-4">
+    <div className="flex flex-col items-center py-4 px-2 sm:px-4 min-h-screen">
       <div className="w-full max-w-3xl py-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           <div>
