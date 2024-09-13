@@ -17,9 +17,9 @@ function Layout() {
 
   return (
     <div>
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <Header toggleMobileMenu={toggleMobileMenu} />
-        <div className="flex overflow-hidden">
+        <div className=" ">
           <Sidebar isActive={isActive} />
           <MobileMenu
             isMobileMenuOpen={isMobileMenuOpen}
@@ -27,7 +27,7 @@ function Layout() {
             isActive={isActive}
           />
           <div
-            className={`min-[900px]:ml-52 flex-1 mt-16 mb-10 md:mb-0 overflow-y-auto ${
+            className={`min-[900px]:ml-52 flex-1 mt-16 mb-10 md:mb-0   ${
               isMobileMenuOpen ? "blur" : ""
             }`}
           >

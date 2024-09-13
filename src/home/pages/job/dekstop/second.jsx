@@ -89,7 +89,7 @@ export default function Second() {
   return (
     <div className="max-w-lg mx-auto p-4">
       {/* Filter */}
-      <div className="flex  gap-2 flex-nowrap overflow-auto  mb-2 ">
+      <div className="sticky top-[66px] z-10 bg-white flex gap-2 flex-nowrap overflow-auto mb-2 py-2 ">
         <select className="bg-gray-100 py-1 px-3 rounded-lg text-sm">
           <option value="">
             <BiSort size={15} /> Relevance
