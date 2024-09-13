@@ -4,7 +4,7 @@ const Card = () => {
   return (
     <div className="bg-white p-2 border border-gray-300 flex gap-4">
       <div>
-        <img src="https:dummyimage.com/50x50/00ff00" />
+        <img src="https:/dummyimage.com/50x50/00ff00" />
       </div>
       <div className="flex flex-col">
         <div className="text-base font-semibold mb-1">Introduction to SQL</div>
