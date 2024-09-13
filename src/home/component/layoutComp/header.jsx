@@ -8,6 +8,8 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { useRef } from "react";
 import { SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
+
 const Header = ({ toggleMobileMenu }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
 
@@ -73,6 +75,7 @@ const Header = ({ toggleMobileMenu }) => {
           <div className="flex items-center mr-4">
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
               <SearchIcon />
+              <IoIosNotificationsOutline size={28} />
               <ProfileIconMobile />
             </div>
           </div>

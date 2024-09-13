@@ -62,9 +62,9 @@ function BottomBar() {
             : "hover:bg-gray-700 "
         }`}
         >
-          <IoIosNotificationsOutline className="w-6 h-6" />
+          <img src={Jobs} alt="progress" className="w-6 h-6" />
           <span className="text-sm text-gray-600 group-hover:text-pink-600">
-            Notification
+            Jobs
           </span>
         </Link>
         <Link
