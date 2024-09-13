@@ -25,7 +25,7 @@ const Job = () => {
 
   return (
     <div className="w-full">
-      <div className="flex justify-center space-x-4  mb-2 mt-2 ">
+      <div className="flex  gap-1 mx-2 flex-nowrap overflow-auto  mb-2 mt-2 ">
         {/* Dashboard Tab */}
         <button
           className={`py-2 px-4  cursor-pointer rounded ${
