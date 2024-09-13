@@ -1,5 +1,6 @@
 import React from "react";
 import { RiProfileLine } from "react-icons/ri";
+import { FaArrowDown } from "react-icons/fa";
 
 function JobCard({
   companyName,
@@ -127,6 +128,20 @@ export default function First() {
 
   return (
     <div className="max-w-md mx-auto p-4">
+      {/* Filter */}
+      <div className="flex  gap-2  flex-nowrap overflow-auto  mb-2 ">
+        <div className="bg-gray-100 py-1 px-3 rounded-lg text-sm w-full flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <div>All Application</div>
+            <div className="border-2 border-gray-300 px-2 py-1 rounded-lg">
+              See All
+            </div>
+          </div>
+          <div>
+            <FaArrowDown />
+          </div>
+        </div>
+      </div>
       {jobListings.map((job, index) => (
         <JobCard
           key={index}

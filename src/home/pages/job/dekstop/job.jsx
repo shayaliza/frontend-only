@@ -28,10 +28,10 @@ const Job = () => {
       <div className="flex  gap-1 mx-2 flex-nowrap overflow-auto  mb-2 mt-2 ">
         {/* Dashboard Tab */}
         <button
-          className={`py-2 px-4  cursor-pointer rounded ${
+          className={`py-2 px-4  cursor-pointer  ${
             activeTab === "first"
-              ? "bg-black text-white"
-              : "text-black bg-gray-300"
+              ? " text-black border-b-2 border-black"
+              : "text-gray-500 "
           } `}
           onClick={() => setActiveTab("first")}
         >
@@ -40,10 +40,10 @@ const Job = () => {
 
         {/* Job Tab */}
         <button
-          className={`py-2 px-4  cursor-pointer rounded ${
+          className={`py-2 px-4  cursor-pointer  ${
             activeTab === "second"
-              ? "bg-black text-white"
-              : "text-black bg-gray-300"
+              ? " text-black border-b-2 border-black"
+              : "text-gray-500 "
           } `}
           onClick={() => setActiveTab("second")}
         >
@@ -52,10 +52,10 @@ const Job = () => {
 
         {/* Profile Tab */}
         <button
-          className={`py-2 px-4  cursor-pointer rounded ${
+          className={`py-2 px-4  cursor-pointer  ${
             activeTab === "third"
-              ? "bg-black text-white"
-              : "text-black bg-gray-300"
+              ? " text-black border-b-2 border-black"
+              : "text-gray-500 "
           } `}
           onClick={() => setActiveTab("third")}
         >
@@ -64,10 +64,10 @@ const Job = () => {
 
         {/* Settings Tab */}
         <button
-          className={`py-2 px-4  cursor-pointer rounded ${
+          className={`py-2 px-4  cursor-pointer  ${
             activeTab === "fourth"
-              ? "bg-black text-white"
-              : "text-black bg-gray-300"
+              ? " text-black border-b-2 border-black"
+              : "text-gray-500 "
           } `}
           onClick={() => setActiveTab("fourth")}
         >

@@ -88,6 +88,30 @@ export default function Third() {
 
   return (
     <div className="max-w-lg mx-auto p-4">
+      {/* Filter */}
+      <div className="flex  gap-2  flex-nowrap overflow-auto  mb-2 ">
+        <select className="bg-gray-100 py-1 px-3 rounded-lg text-sm">
+          <option value="">Relevance</option>
+          <option value="">Relevance</option>
+          <option value="">Relevance</option>
+        </select>
+        <div className="bg-gray-100 py-1 px-3 rounded-lg text-sm">Paid</div>
+        <select className="bg-gray-100 py-1 px-3 rounded-lg text-sm">
+          <option value="">Domain</option>
+          <option value="">Relevance</option>
+          <option value="">Relevance</option>
+        </select>
+        <div className="bg-gray-100 py-1 px-3 rounded-lg text-sm">
+          Internship
+        </div>
+        <div className="bg-gray-100 py-1 px-3 rounded-lg text-sm">Remote</div>
+        <div className="bg-gray-100 py-1 px-3 rounded-lg text-sm">
+          Freelancing
+        </div>
+        <div className="bg-gray-100 py-1 px-3 rounded-lg text-sm whitespace-nowrap">
+          Full Time
+        </div>
+      </div>
       {jobListings.map((job, index) => (
         <JobCard
           key={index}
