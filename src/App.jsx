@@ -121,9 +121,9 @@ const ProjectsMobile = React.lazy(() =>
 const ProfileMobile = React.lazy(() =>
   import("./home/pages/mobile/profile/secondProfile")
 );
-const EditProfileMobile = React.lazy(() =>
-  import("./home/pages/mobile/profile/firstProfile")
-);
+// const EditProfileMobile = React.lazy(() =>
+//   import("./home/pages/mobile/profile/firstProfile")
+// );
 const TestPage2 = React.lazy(() => import("./home/pages/testPage/testPage2"));
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -226,7 +226,8 @@ function AppRoutes() {
                   <Route path="catalog" element={<Catalog />} />
                   <Route
                     path="editprofile"
-                    element={isMobile ? <EditProfileMobile /> : <ProfilePage />}
+                    // element={isMobile ? <EditProfileMobile /> : <ProfilePage />}
+                    element={ProfilePage}
                   />
                   <Route
                     path="profile"
