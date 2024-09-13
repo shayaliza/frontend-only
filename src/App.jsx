@@ -72,6 +72,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
 import More from "./components/CoursesFolder/More";
+import Notification from "./home/pages/notification/notification";
 
 const MainLayout = React.lazy(() => import("./home/pages/layout"));
 const SetNewPassword = React.lazy(() =>
@@ -183,6 +184,7 @@ function AppRoutes() {
               <>
                 <Route path="/dashboard" element={<MainLayout />}>
                   <Route path="job" element={<Job />} />
+                  <Route path="notification" element={<Notification />} />
 
                   <Route
                     path="progress"

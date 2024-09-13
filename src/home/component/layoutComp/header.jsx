@@ -9,9 +9,11 @@ import { useRef } from "react";
 import { SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ toggleMobileMenu }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -75,7 +77,10 @@ const Header = ({ toggleMobileMenu }) => {
           <div className="flex items-center mr-4">
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
               <SearchIcon className="mr-2" />
-              <IoIosNotificationsOutline size={28} />
+              <IoIosNotificationsOutline
+                size={28}
+                onClick={() => navigate("/dashboard/notification")}
+              />
               <ProfileIconMobile />
             </div>
           </div>
