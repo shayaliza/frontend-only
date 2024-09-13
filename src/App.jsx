@@ -81,6 +81,7 @@ const LandingPage = React.lazy(() => import("./home/pages/landingPage"));
 const DetailPageLayout = React.lazy(() =>
   import("./home/pages/details/layout")
 );
+const Job = React.lazy(() => import("./home/pages/job/dekstop/job"));
 const First = React.lazy(() => import("./home/pages/details/first"));
 const Second = React.lazy(() => import("./home/pages/details/second"));
 const Third = React.lazy(() => import("./home/pages/details/third"));
@@ -159,6 +160,8 @@ function AppRoutes() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/verify-email" element={<VerifyEmailToken />} />
+              {/*  */}
+              <Route path="/job" element={<Job />} />
 
               {/* {!loggedIn && ( */}
               <>
@@ -276,15 +279,15 @@ function AppRoutes() {
                 </Route>
 
                 <Route path="/datasnap" element={<DataSnapLayout />}>
-                <Route index element={<Navigate to="home" replace />} />
-                <Route path="home" element={<BlogHome />} />
-                <Route path="explore" element={<BlogExplore />} />
-                <Route path="drafts" element={<BlogDrafts />} />
-                <Route path="bookmarks" element={<BlogBookmarks />} />
-                <Route path="detail" element={<BlogDetails/>}/>
-              </Route>
-              <Route path="ds/create" element={<BlogCreate />} />
-              <Route path="ds/search" element={<BlogSearch/>}/>
+                  <Route index element={<Navigate to="home" replace />} />
+                  <Route path="home" element={<BlogHome />} />
+                  <Route path="explore" element={<BlogExplore />} />
+                  <Route path="drafts" element={<BlogDrafts />} />
+                  <Route path="bookmarks" element={<BlogBookmarks />} />
+                  <Route path="detail" element={<BlogDetails />} />
+                </Route>
+                <Route path="ds/create" element={<BlogCreate />} />
+                <Route path="ds/search" element={<BlogSearch />} />
               </>
 
               <Route path="*" element={<h1>Page Not Found</h1>} />
