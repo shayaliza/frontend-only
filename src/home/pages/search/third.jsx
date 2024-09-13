@@ -4,7 +4,7 @@ const Card = () => {
   return (
     <div className="flex flex-row overflow-hidden flex-nowrap  whitespace-nowrap items-center">
       <img
-        src="https:/dummyimage.com/40x40/00ff00"
+        src="https://dummyimage.com/40x40/00ff00"
         className="rounded-full mr-1"
       />
       <div className="text-semibold text-sm">Brajesh Jumar Roy</div>
