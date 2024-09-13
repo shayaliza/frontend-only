@@ -54,10 +54,10 @@ function BottomBar() {
           </span>
         </Link>
         <Link
-          to={"/dashboard/career"}
+          to={"/job"}
           className={`inline-flex flex-col items-center justify-center px-5 "
         ${
-          isActive("/dashboard/career")
+          isActive("/job")
             ? "bg-gray-400 rounded-2xl text-white"
             : "hover:bg-gray-700 "
         }`}
