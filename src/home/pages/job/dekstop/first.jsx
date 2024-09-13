@@ -14,16 +14,16 @@ function JobCard({
 
       <div className="px-2 pt-2 flex items-center space-x-2">
         <div>
-          <RiProfileLine size={30} />
+          <RiProfileLine size={35} />
         </div>
         <div className="flex flex-col">
           <div className="font-semibold text-base">{companyName}</div>
-          <div className="text-gray-500 text-sm">{companySize}</div>
+          <div className="text-gray-500 text-sm">{companySize} employees</div>
         </div>
       </div>
 
       {/* Description */}
-      <p className="text-gray-600 mb-4 px-2">{description}</p>
+      <p className="text-gray-600 mb-4 text-sm pt-1 px-2">{description}</p>
 
       {/* Labels (like actively hiring, growing fast, etc.) */}
       <div className="flex flex-wrap gap-2 mb-4 px-2">

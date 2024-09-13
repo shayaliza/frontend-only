@@ -35,7 +35,7 @@ const Job = () => {
           } `}
           onClick={() => setActiveTab("first")}
         >
-          First
+          Company
         </button>
 
         {/* Job Tab */}
@@ -47,7 +47,7 @@ const Job = () => {
           } `}
           onClick={() => setActiveTab("second")}
         >
-          Second
+          Jobs
         </button>
 
         {/* Profile Tab */}
@@ -59,7 +59,7 @@ const Job = () => {
           } `}
           onClick={() => setActiveTab("third")}
         >
-          Third
+          Internship
         </button>
 
         {/* Settings Tab */}
@@ -71,7 +71,7 @@ const Job = () => {
           } `}
           onClick={() => setActiveTab("fourth")}
         >
-          Fourth
+          Freelancing
         </button>
       </div>
 
