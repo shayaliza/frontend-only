@@ -161,7 +161,6 @@ function AppRoutes() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/verify-email" element={<VerifyEmailToken />} />
               {/*  */}
-              <Route path="/job" element={<Job />} />
 
               {/* {!loggedIn && ( */}
               <>
@@ -177,6 +176,8 @@ function AppRoutes() {
 
               <>
                 <Route path="/dashboard" element={<MainLayout />}>
+                  <Route path="job" element={<Job />} />
+
                   <Route
                     path="progress"
                     index
