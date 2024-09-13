@@ -74,7 +74,7 @@ const Header = ({ toggleMobileMenu }) => {
           </div>
           <div className="flex items-center mr-4">
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
-              <SearchIcon />
+              <SearchIcon className="mr-2" />
               <IoIosNotificationsOutline size={28} />
               <ProfileIconMobile />
             </div>

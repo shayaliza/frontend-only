@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ProfileImage from "./../assets/profile.jpg";
 import { AiOutlineClose } from "react-icons/ai"; // Importing the close icon
+import { IoIosNotificationsOutline } from "react-icons/io";
 
 function ProfileIconMobile() {
   const [isProfileVisible, setProfileVisible] = useState(false);
@@ -69,6 +70,14 @@ function ProfileIconMobile() {
                   <p>
                     <Link to="/dashboard/profile">Profile</Link>
                   </p>
+                </div>
+                <div className="profile_item p-2 font-bold">
+                  <div className="flex">
+                    <span>Notification</span>
+                    <span>
+                      <IoIosNotificationsOutline size={28} />
+                    </span>
+                  </div>
                 </div>
                 <div className="profile_item p-2 font-bold">
                   <p>Settings</p>
