@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import bannerImage from "./../../../assets/banner.png";
 import profileImage from "../../../assets/profile.png";
 import MoreOptionsPopup from "./moreOption";
 import { FaEllipsisH } from "react-icons/fa";
 import SharePopup from "./sharePopup";
+import { useNavigate } from "react-router-dom";
 import {
   Navigation,
   Autoplay,
@@ -17,6 +17,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 function FirstPost({ images }) {
+  const navigate = useNavigate();
+
   const [showMore, setShowMore] = useState(false);
   const [show1, setShow1] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -56,6 +58,13 @@ function FirstPost({ images }) {
   };
 
   console.log(images, "this is image");
+
+  // Handle image click to navigate to new page with selected image
+  const handleImageClick = (image) => {
+    navigate("/dashboard/myfeed/feeddetail", {
+      state: { allImages: images },
+    });
+  };
   return (
     <div>
       <div
@@ -134,7 +143,10 @@ function FirstPost({ images }) {
             >
               {images.map((image, index) => (
                 <SwiperSlide key={index}>
-                  <div className="swiper-wrapper min-h-[400px]">
+                  <div
+                    className="swiper-wrapper min-h-[400px]"
+                    onClick={() => handleImageClick(image)}
+                  >
                     <img
                       className="w-full h-auto swiper-slide object-contain bg-[#e1e1e1]"
                       src={image}

@@ -18,6 +18,7 @@ import CareerDetails from "./home/pages/careerPath/details";
 import CourseDetails from "./home/pages/courses/details";
 import MyProgress from "./home/pages/myProgress/myprogress";
 import MyFeed from "./home/pages/myFeed/myfeed";
+import MyFeedDetail from "./home/pages/myFeed/component/feedDetail";
 import Topics from "./home/pages/topics/topics";
 import Competitors from "./home/pages/competitors/competitors";
 import LiveEvent from "./home/pages/liveEvent/liveEvent";
@@ -122,6 +123,8 @@ const ProjectsMobile = React.lazy(() =>
 const ProfileMobile = React.lazy(() =>
   import("./home/pages/mobile/profile/secondProfile")
 );
+import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
+
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
 // );
@@ -195,6 +198,12 @@ function AppRoutes() {
                   <Route
                     path="myfeed"
                     element={isMobile ? <MyFeedMobile /> : <MyFeed />}
+                  />
+                  <Route
+                    path="myfeed/feeddetail"
+                    element={
+                      isMobile ? <MyFeedDetailMobile /> : <MyFeedDetail />
+                    }
                   />
                   <Route path="topics" element={<Topics />} />
                   <Route path="competitions" element={<Competitors />} />

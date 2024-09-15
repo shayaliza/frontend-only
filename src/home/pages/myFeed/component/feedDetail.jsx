@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import profileImage from "../../../../assets/profile.png";
-
+import React from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import profileImage from "../../../assets/profile.png";
 import MoreOptionsPopup from "./moreOption";
 import { FaEllipsisH } from "react-icons/fa";
 import SharePopup from "./sharePopup";
-import { useNavigate } from "react-router-dom";
 import {
   Navigation,
   Autoplay,
@@ -17,12 +17,14 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-function FirstPost({ images }) {
-  const navigate = useNavigate();
+function FeedDetail() {
+  const location = useLocation();
+  const { allImages } = location.state;
 
+  //   Post things here
   const [showMore, setShowMore] = useState(false);
   const [show1, setShow1] = useState(false);
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
   const [activeReplyId, setActiveReplyId] = useState(null);
 
   const handleSeeMoreClick = () => {
@@ -57,15 +59,12 @@ function FirstPost({ images }) {
   const handleCloseSharePopup = () => {
     setShowSharePopup(false);
   };
-  const handleImageClick = (image) => {
-    navigate("/dashboard/myfeed/feeddetail", {
-      state: { allImages: images },
-    });
-  };
+  // Post things end here
+
   return (
     <div>
       <div
-        className="post_box p-4 shadow-lg my-8 rounded w-[555px] min-[1400px]:w-[650px] max-[500px]:w-full mx-auto"
+        className="mb-8 mt-24 bg-gray-100 rounded w-3/5 mx-auto shadow-lg p-4 "
         style={{ fontFamily: "Nunito" }}
       >
         <div className="avater_section flex items-center justify-between">
@@ -91,7 +90,7 @@ function FirstPost({ images }) {
             {showPopup && <MoreOptionsPopup onClose={handleClosePopup} />}
           </div>
         </div>
-        <div className="para mt-5 text-sm">
+        <div className="para mt-5 text-sm  ">
           <p className="text-gray-700 ">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
             reprehenderit minima dolorem{" "}
@@ -138,12 +137,9 @@ function FirstPost({ images }) {
                 },
               }}
             >
-              {images.map((image, index) => (
+              {allImages.map((image, index) => (
                 <SwiperSlide key={index}>
-                  <div
-                    className="swiper-wrapper min-h-[400px]"
-                    onClick={() => handleImageClick(image)}
-                  >
+                  <div className="swiper-wrapper min-h-[400px]">
                     <img
                       className="w-full h-auto swiper-slide object-contain bg-[#e1e1e1]"
                       src={image}
@@ -206,11 +202,12 @@ function FirstPost({ images }) {
                 />
                 <span className="text-gray-600 max-[500px]:hidden">Share</span>
               </div>
-
+              {/* Share popup */}
               {showSharePopup && <SharePopup onClose={handleCloseSharePopup} />}
             </div>
           </div>
         </div>
+        {/* Comment section */}
         {showComments && (
           <div className="comment_section p-4 max-[900px]:p-0">
             <div className="comment_input1 flex items-center mb-4">
@@ -496,4 +493,4 @@ function FirstPost({ images }) {
   );
 }
 
-export default FirstPost;
+export default FeedDetail;
