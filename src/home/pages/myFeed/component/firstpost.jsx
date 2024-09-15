@@ -4,7 +4,19 @@ import profileImage from "../../../assets/profile.png";
 import MoreOptionsPopup from "./moreOption";
 import { FaEllipsisH } from "react-icons/fa";
 import SharePopup from "./sharePopup";
-function FirstPost() {
+import {
+  Navigation,
+  Autoplay,
+  Pagination,
+  Scrollbar,
+  A11y,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+function FirstPost({ images }) {
   const [showMore, setShowMore] = useState(false);
   const [show1, setShow1] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -43,6 +55,7 @@ function FirstPost() {
     setShowSharePopup(false);
   };
 
+  console.log(images, "this is image");
   return (
     <div>
       <div
@@ -72,13 +85,19 @@ function FirstPost() {
             {showPopup && <MoreOptionsPopup onClose={handleClosePopup} />}
           </div>
         </div>
-        <div className="para mt-5 text-sm">
-          <p className="text-gray-700">
+        <div className="para mt-5 text-sm  ">
+          <p className="text-gray-700 ">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-            reprehenderit minima dolorem deleniti consequatur quas, alias quis.
-            Quam quo harum inventore, hic rerum ab. Laudantium numquam inventore
-            iste provident labore!
+            reprehenderit minima dolorem{" "}
+            {showMore && (
+              <>
+                deleniti consequatur quas, alias quis. Quam quo harum inventore,
+                hic rerum ab. Laudantium numquam inventore iste provident
+                labore!
+              </>
+            )}
           </p>
+
           <button
             className="text-blue-500 cursor-pointer"
             onClick={handleSeeMoreClick}
@@ -88,13 +107,43 @@ function FirstPost() {
         </div>
         <div className="relative">
           <div className="photo cursor-pointer mt-5 swiper mySwiper">
-            <div className="swiper-wrapper min-h-[400px]">
-              <img
-                className="w-full h-auto swiper-slide object-contain bg-[#e1e1e1]"
-                src={bannerImage}
-                alt="banner"
-              />
-            </div>
+            <Swiper
+              className="swiper-container"
+              modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+              spaceBetween={50}
+              slidesPerView={3}
+              navigation
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                480: {
+                  slidesPerView: 1,
+                  spaceBetween: 30,
+                },
+                768: {
+                  slidesPerView: 1,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 1,
+                  spaceBetween: 50,
+                },
+              }}
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <div className="swiper-wrapper min-h-[400px]">
+                    <img
+                      className="w-full h-auto swiper-slide object-contain bg-[#e1e1e1]"
+                      src={image}
+                      alt={`banner-${index}`}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
         <div className="post_tages pl-0 flex items-center justify-between p-4">
@@ -136,14 +185,6 @@ function FirstPost() {
               </span>
               <span className="text-gray-600 max-[500px]:hidden">Bookmark</span>
             </div>
-            {/* <div className="icon flex items-center cursor-pointer">
-              <img
-                className="w-6 h-6 mr-2"
-                src="https://cdn-icons-png.flaticon.com/512/25/25419.png"
-                alt="share icon"
-              />
-              <span className="text-gray-600 max-[500px]:hidden">Share</span>
-            </div> */}
             <div className="relative">
               <div
                 className="icon flex items-center cursor-pointer"
@@ -156,11 +197,12 @@ function FirstPost() {
                 />
                 <span className="text-gray-600 max-[500px]:hidden">Share</span>
               </div>
-
+              {/* Share popup */}
               {showSharePopup && <SharePopup onClose={handleCloseSharePopup} />}
             </div>
           </div>
         </div>
+        {/* Comment section */}
         {showComments && (
           <div className="comment_section p-4 max-[900px]:p-0">
             <div className="comment_input1 flex items-center mb-4">
