@@ -174,7 +174,7 @@ function FirstPost({ images }) {
               <span id="heart" className="mr-2">
                 <i className="fa fa-heart-o text-xl"></i>
               </span>
-              <span className="text-gray-600 max-[500px]:hidden">Like</span>
+              <span className="text-gray-600 ">Like</span>
             </div>
             <div
               className="icon comment_icon flex items-center mr-4 cursor-pointer"
@@ -185,14 +185,14 @@ function FirstPost({ images }) {
                 src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/64/000000/external-comment-chat-flatart-icons-outline-flatarticons-2.png"
                 alt="comment icon"
               />
-              <span className="text-gray-600 max-[500px]:hidden">Comment</span>
+              <span className="text-gray-600 ">Comment</span>
             </div>
             <div className="icon flex items-center mr-4 cursor-pointer">
               <span className="mr-2"> </span>
               <span id="bookmark" className="mr-2">
                 <i className="fa fa-bookmark-o text-xl"></i>
               </span>
-              <span className="text-gray-600 max-[500px]:hidden">Bookmark</span>
+              <span className="text-gray-600 ">Bookmark</span>
             </div>
             <div className="relative">
               <div
