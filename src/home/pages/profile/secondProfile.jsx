@@ -8,25 +8,71 @@ import { getProfile } from "../../../fetching/profileFetch";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getUserId } from "../../../fetching/getExpiration";
+import someBannerImage from "./../../../datasnap/assets/rsc/jeffrey-keenan-pUhxoSapPFA-unsplash.jpg";
 
 const SecondProfilePage = () => {
   const reduxAccessToken = useSelector(
     (state) => state.user.userData.reduxAccessToken
   );
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    proofs_of_work: [
+      {
+        title: "Software Engineer",
+      },
+      {
+        title: "Software Engineer",
+      },
+      {
+        title: "Software Engineer",
+      },
+    ],
+    education: [
+      {
+        title: "Software Engineer",
+      },
+      {
+        title: "Software Engineer",
+      },
+      {
+        title: "Software Engineer",
+      },
+    ],
+    skills: [
+      {
+        name: "Software Engineer",
+      },
+      {
+        name: "Software Engineer",
+      },
+      {
+        name: "Software Engineer",
+      },
+    ],
+    talking_languages: [
+      {
+        title: "English",
+      },
+      {
+        title: "Spanish",
+      },
+      {
+        title: "Hindi",
+      },
+    ],
+  });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-  const fetchData = async () => {
-    const id = await getUserId(reduxAccessToken);
-    await getProfile(id).then((res) => {
-      // console.log(res);
-      setData(res);
-      // console.log(data);
-    });
-  };
+  // const fetchData = async () => {
+  //   const id = await getUserId(reduxAccessToken);
+  //   await getProfile(id).then((res) => {
+  //     // console.log(res);
+  //     setData(res);
+  //     // console.log(data);
+  //   });
+  // };
 
   return (
     <div className="flex flex-col">
@@ -36,7 +82,8 @@ const SecondProfilePage = () => {
             <div className=" mx-auto ">
               <div className="relative">
                 <img
-                  src={"https://via.placeholder.com/1500x300"}
+                  // src={"https://via.placeholder.com/1500x300"}
+                  src={someBannerImage}
                   alt="Banner"
                   className="w-full h-48 object-cover rounded-lg"
                 />
@@ -60,14 +107,16 @@ const SecondProfilePage = () => {
 
                     <div className="ml-4">
                       <h2 className="text-lg font-semibold text-foreground">
-                        {data?.full_name}
+                        {/* {data?.full_name} */}
+                        Full Name
                       </h2>
                       <p className="text-muted-foreground">@saketh33</p>
                       {/* <p className="text-muted-foreground">{data?.bio}</p> */}
                       <p className="text-muted-foreground">
-                        {data?.city} {data?.state}
+                        {/* {data?.city} {data?.state}
                         {""}
-                        {data?.country}
+                        {data?.country} */}
+                        City, State, Country
                       </p>
                     </div>
                   </div>
@@ -101,10 +150,14 @@ const SecondProfilePage = () => {
                       About
                     </h2>
                     <div className={"text-muted-foreground flex flex-col"}>
-                      <div>{data?.bio}</div>
-                      {/* <span className="text-primary hover:underline">
+                      <div>
+                        {/* {data?.bio} */}
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Omnis, architecto.
+                      </div>
+                      <span className="text-blue-800  text-sm mt-2 hover:underline">
                         SEE MORE
-                      </span> */}
+                      </span>
                     </div>
                   </div>
                   <div className={"p-4 bg-background rounded-lg shadow-md"}>
@@ -129,7 +182,9 @@ const SecondProfilePage = () => {
                     </a>
                   </div>
                   <div className="mt-4">
-                    <ExperienceCard expData={data?.experiences} />
+                    <ExperienceCard
+                    // expData={data?.experiences}
+                    />
                   </div>
                   <div className="mt04">
                     <EducationCard />
