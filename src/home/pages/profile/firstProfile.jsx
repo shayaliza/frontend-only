@@ -33,11 +33,93 @@ import BannerEditProfile from "./component/banner";
 const ProfilePage = () => {
   const [data, setData] = useState({});
   //Children Components
-  const [skills, setSkills] = useState([]);
-  const [experiences, setExperiences] = useState([]);
-  const [workProofs, setWorkProofs] = useState([]);
-  const [languages, setLanguages] = useState([]);
-  const [socialData, setSocialData] = useState([]);
+  const [skills, setSkills] = useState([
+    {
+      id: 1,
+      name: "HTML",
+      skill_type: "top",
+    },
+    {
+      id: 2,
+      name: "CSS",
+      skill_type: "top",
+    },
+    {
+      id: 3,
+      name: "JavaScript",
+      skill_type: "top",
+    },
+  ]);
+  const [experiences, setExperiences] = useState([
+    {
+      id: 1,
+      title: "Software Developer",
+      company_name: "Google",
+      location: "Mountain View, CA",
+      start_date: "2022-01-01",
+      end_date: "2022-12-31",
+    },
+    {
+      id: 1,
+      title: "Software Developer",
+      company_name: "Google",
+      location: "Mountain View, CA",
+      start_date: "2022-01-01",
+      end_date: "2022-12-31",
+    },
+    {
+      id: 1,
+      title: "Software Developer",
+      company_name: "Google",
+      location: "Mountain View, CA",
+      start_date: "2022-01-01",
+      end_date: "2022-12-31",
+    },
+    {
+      id: 1,
+      title: "Software Developer",
+      company_name: "Google",
+      location: "Mountain View, CA",
+      start_date: "2022-01-01",
+      end_date: "2022-12-31",
+    },
+  ]);
+  const [workProofs, setWorkProofs] = useState([
+    {
+      id: 1,
+      title: "Google",
+      link: "https://google.com",
+    },
+    {
+      id: 1,
+      title: "Google",
+      link: "https://google.com",
+    },
+  ]);
+  const [languages, setLanguages] = useState([
+    {
+      id: 1,
+      title: "English",
+      level: "Intermediate",
+    },
+    {
+      id: 2,
+      title: "Spanish",
+      level: "Intermediate",
+    },
+  ]);
+  const [socialData, setSocialData] = useState([
+    {
+      id: 1,
+      title: "Github",
+      link: "https://github.com",
+    },
+    {
+      id: 2,
+      title: "LinkedIn",
+      link: "https://linkedin.com",
+    },
+  ]);
 
   // @Top Skills
   const handleAddSkill = async (newSkill) => {
