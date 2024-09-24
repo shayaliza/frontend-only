@@ -67,9 +67,6 @@ function Points() {
         </div>
         {isGoalsVisible && (
           <div>
-            <div className="absolute top-10 right-20">
-              <FaArrowUpLong />
-            </div>
             <div
               className="goals_DropDown bg-white rounded-md w-[400px] absolute right-[-70%] top-16"
               style={{
@@ -77,6 +74,8 @@ function Points() {
                   "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
               }}
             >
+              <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[45%] rotate-45 content-['']"></div>
+
               <div className="title flex justify-between items-center px-4 py-2 border-b">
                 <h2 className="text-lg font-semibold">Daily Goals</h2>
                 <p className="text-blue-500 hover:text-blue-700 text-base cursor-pointer">
@@ -180,9 +179,6 @@ function Points() {
         </div>
         {isPowerVisible && (
           <div>
-            <div className="absolute top-10 right-4">
-              <FaArrowUpLong />
-            </div>
             <div
               className="power_dropDown flex flex-col p-4 rounded-lg absolute top-16 right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
               style={{
@@ -190,6 +186,8 @@ function Points() {
                   "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
               }}
             >
+              <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[45%] rotate-45 content-['']"></div>
+
               <div className="power_item h-[40px] font-bold">
                 <p>Highest xp : 200</p>
               </div>
@@ -222,9 +220,6 @@ function Points() {
         </div>
         {isCoinVisible && (
           <div>
-            <div className="absolute top-10 right-4">
-              <FaArrowUpLong />
-            </div>
             <div
               className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-16 right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
               style={{
@@ -232,6 +227,8 @@ function Points() {
                   "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
               }}
             >
+              <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[45%] rotate-45 content-['']"></div>
+
               <div className="power_item h-[40px] font-bold">
                 <p>Total Coins : 36912</p>
               </div>

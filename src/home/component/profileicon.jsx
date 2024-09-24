@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ProfileImage from "./../assets/profile.jpg";
-import { FaArrowUpLong } from "react-icons/fa6";
 function ProfileIcon() {
   const [isProfileVisible, setProfileVisible] = useState(false);
   const profileRef = useRef(null);
@@ -32,10 +31,9 @@ function ProfileIcon() {
       <img src={ProfileImage} alt="Profile" className="w-8 h-8 rounded-full" />
       {isProfileVisible && (
         <div>
-          <div className="absolute top-14 right-3">
-            <FaArrowUpLong />
-          </div>
           <div className="absolute md:top-16 top-14 right-0 mt-2 w-48  bg-white text-black border border-gray-300  rounded-lg">
+            <div className="absolute w-5 h-5 bg-inherit top-[-10px] right-4 rotate-45 content-['']"></div>
+
             <ul className="list-none p-2 m-0">
               <div className="profile_item p-2 font-bold">
                 <p>
