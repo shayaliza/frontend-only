@@ -260,6 +260,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { CgProfile } from "react-icons/cg";
 
 function NewPost({ onClose }) {
   const [images, setImages] = useState([]);
@@ -308,11 +309,11 @@ function NewPost({ onClose }) {
   };
 
   return (
-    <div className="w-full flex items-center justify-center">
-      <div className="w-full">
-        <div className="bg-white p-4 rounded-lg mt-4">
+    <div className="w-full flex items-center justify-center  ">
+      <div className="w-11/12">
+        <div className="bg-gray-200 p-4 rounded-lg mt-4">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-2xl font-semibold mt-2 pl-4">
               {step === 1 ? "Create a Post" : "Add Title and Description"}
             </h2>
           </div>
@@ -320,9 +321,18 @@ function NewPost({ onClose }) {
           {step === 1 ? (
             <>
               <div className="mb-6 ">
-                <div>Alan Biju</div>
+                <div className="flex  items-center pl-4">
+                  <div>
+                    <CgProfile size={40} />
+                  </div>
+                  <div className="flex flex-col ml-4 ">
+                    <div className="text-lg font-semibold">Alan Biju</div>
+                    <div>TechSnap DevOps</div>
+                  </div>
+                </div>
+
                 {images.length === 0 && (
-                  <div className="flex justify-around  items-center">
+                  <div className="flex justify-around  items-center py-20">
                     <div className="fles justify-center text-center">
                       <label
                         className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 transition-all duration-200 ease-in-out"
