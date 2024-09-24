@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ProfileImage from "./../assets/profile.jpg";
-
+import { FaArrowUpLong } from "react-icons/fa6";
 function ProfileIcon() {
   const [isProfileVisible, setProfileVisible] = useState(false);
   const profileRef = useRef(null);
@@ -31,28 +31,33 @@ function ProfileIcon() {
     >
       <img src={ProfileImage} alt="Profile" className="w-8 h-8 rounded-full" />
       {isProfileVisible && (
-        <div className="absolute md:top-16 top-14 right-0 mt-2 w-48  bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg  rounded-lg">
-          <ul className="list-none p-2 m-0">
-            <div className="profile_item p-2 font-bold">
-              <p>
-                <Link to="/createsnap">Create Snap</Link>
-              </p>
-            </div>
-            <div className="profile_item p-2 font-bold">
-              <p>
-                <Link to="/datasnap">Data Snap</Link>
-              </p>
-            </div>
-            <div className="profile_item p-2 font-bold">
-              <p>Dashboard</p>
-            </div>
-            <div className="profile_item p-2 font-bold">
-              <p>Profile</p>
-            </div>
-            <div className="profile_item p-2 font-bold">
-              <p>Settings</p>
-            </div>
-          </ul>
+        <div>
+          <div className="absolute top-14 right-3">
+            <FaArrowUpLong />
+          </div>
+          <div className="absolute md:top-16 top-14 right-0 mt-2 w-48  bg-white text-black border border-gray-300  rounded-lg">
+            <ul className="list-none p-2 m-0">
+              <div className="profile_item p-2 font-bold">
+                <p>
+                  <Link to="/createsnap">Create Snap</Link>
+                </p>
+              </div>
+              <div className="profile_item p-2 font-bold">
+                <p>
+                  <Link to="/datasnap">Data Snap</Link>
+                </p>
+              </div>
+              <div className="profile_item p-2 font-bold">
+                <p>Dashboard</p>
+              </div>
+              <div className="profile_item p-2 font-bold">
+                <p>Profile</p>
+              </div>
+              <div className="profile_item p-2 font-bold">
+                <p>Settings</p>
+              </div>
+            </ul>
+          </div>
         </div>
       )}
     </div>
