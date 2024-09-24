@@ -239,7 +239,7 @@ function AppRoutes() {
                   <Route
                     path="editprofile"
                     // element={isMobile ? <EditProfileMobile /> : <ProfilePage />}
-                    element={ProfilePage}
+                    element={<ProfilePage />}
                   />
                   <Route
                     path="profile"

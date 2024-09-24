@@ -4,26 +4,26 @@ import ResumeSection from "./component/resumeSection";
 import SkillsSection from "./component/skillSection";
 import ConnectInfoSection from "./component/connectinfor";
 import ExperienceForm from "./component/expForm";
-import {
-  addExperianceFetch,
-  addLanguageFetch,
-  addSkillFetch,
-  addSocialFetch,
-  addWorkProofFetch,
-  createOrUpdateProfile,
-  deleteExperianceFetch,
-  deleteLanguageFetch,
-  deleteSkillFetch,
-  deleteSocialFetch,
-  deleteWorkProofFetch,
-  getProfile,
-  updateExperianceFetch,
-  updateLanguageFetch,
-  updateSocialFetch,
-  updateWorkProofFetch,
-} from "../../../fetching/profileFetch";
+// import {
+//   addExperianceFetch,
+//   addLanguageFetch,
+//   addSkillFetch,
+//   addSocialFetch,
+//   addWorkProofFetch,
+//   createOrUpdateProfile,
+//   deleteExperianceFetch,
+//   deleteLanguageFetch,
+//   deleteSkillFetch,
+//   deleteSocialFetch,
+//   deleteWorkProofFetch,
+//   getProfile,
+//   updateExperianceFetch,
+//   updateLanguageFetch,
+//   updateSocialFetch,
+//   updateWorkProofFetch,
+// } from "../../../fetching/profileFetch";
+// import { getUserId } from "../../../fetching/decodingJwt";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getUserId } from "../../../fetching/decodingJwt";
 import SkillForm from "./component/skillForm";
 import WorkProofForm from "./component/workProof";
 import LangForm from "./component/languageForm";
@@ -41,139 +41,168 @@ const ProfilePage = () => {
 
   // @Top Skills
   const handleAddSkill = async (newSkill) => {
-    const skillData = { name: newSkill, skill_type: "top" };
-    try {
-      const response = await addSkillFetch(skillData);
-      if (response.status === 201) {
-        setSkills((prevSkills) => [...prevSkills, response.data]);
-        toast({ title: "Skill Added" });
-      }
-    } catch (error) {
-      console.error("Error adding skill:", error);
-      toast({ title: "Error adding skill", variant: "destructive" });
-    }
+    // const skillData = { name: newSkill, skill_type: "top" };
+    // try {
+    //   const response = await addSkillFetch(skillData);
+    //   if (response.status === 201) {
+    //     setSkills((prevSkills) => [...prevSkills, response.data]);
+    //     toast({ title: "Skill Added" });
+    //   }
+    // } catch (error) {
+    //   console.error("Error adding skill:", error);
+    //   toast({ title: "Error adding skill", variant: "destructive" });
+    // }
+    setSkills((prevSkills) => [...prevSkills, response.data]);
+    toast({ title: "Skill Added" });
   };
 
   const handleRemoveSkill = async (skillId) => {
-    try {
-      const response = await deleteSkillFetch(skillId);
-      if (response.status === 204) {
-        setSkills((prevSkills) =>
-          prevSkills.filter((skill) => skill.id !== skillId)
-        );
-        toast({ title: "Skill Deleted" });
-      }
-    } catch (error) {
-      console.error("Error deleting skill:", error);
-      toast({ title: "Error deleting skill", variant: "destructive" });
-    }
+    // try {
+    //   const response = await deleteSkillFetch(skillId);
+    //   if (response.status === 204) {
+    //     setSkills((prevSkills) =>
+    //       prevSkills.filter((skill) => skill.id !== skillId)
+    //     );
+    //     toast({ title: "Skill Deleted" });
+    //   }
+    // } catch (error) {
+    //   console.error("Error deleting skill:", error);
+    //   toast({ title: "Error deleting skill", variant: "destructive" });
+    // }
+
+    setSkills((prevSkills) =>
+      prevSkills.filter((skill) => skill.id !== skillId)
+    );
+    toast({ title: "Skill Deleted" });
   };
   // @Experiance
   const handleAddExperience = async (experienceData) => {
-    await addExperianceFetch(experienceData).then((res) => {
-      if (res.status === 201) {
-        setExperiences([...experiences, res.data]);
-      }
-    });
+    // await addExperianceFetch(experienceData).then((res) => {
+    //   if (res.status === 201) {
+    //     setExperiences([...experiences, res.data]);
+    //   }
+    // });
+    setExperiences([...experiences, res.data]);
   };
 
   const handleEditExperience = async (id, experienceData) => {
-    await updateExperianceFetch(experienceData, id).then((res) => {
-      if (res.status === 200) {
-        setExperiences(
-          experiences.map((exp) => (exp.id === id ? res.data : exp))
-        );
-      }
-    });
+    // await updateExperianceFetch(experienceData, id).then((res) => {
+    //   if (res.status === 200) {
+    //     setExperiences(
+    //       experiences.map((exp) => (exp.id === id ? res.data : exp))
+    //     );
+    //   }
+    // });
+    setExperiences(experiences.map((exp) => (exp.id === id ? res.data : exp)));
   };
 
   const handleDeleteExperience = async (id) => {
-    await deleteExperianceFetch(id).then((res) => {
-      if (res.status === 204) {
-        setExperiences(experiences.filter((exp) => exp.id !== id));
-      }
-    });
+    // await deleteExperianceFetch(id).then((res) => {
+    //   if (res.status === 204) {
+    //     setExperiences(experiences.filter((exp) => exp.id !== id));
+    //   }
+    // });
+    setExperiences(experiences.filter((exp) => exp.id !== id));
   };
 
   //@Work Proof
 
   const handleAddWorkProof = async (workData) => {
-    const res = await addWorkProofFetch(workData);
-    if (res.status === 201) {
-      setWorkProofs([...workProofs, res.data]);
-    }
+    // const res = await addWorkProofFetch(workData);
+    // if (res.status === 201) {
+    //   setWorkProofs([...workProofs, res.data]);
+    // }
+    setWorkProofs([...workProofs, res.data]);
   };
 
   const handleEditWorkProof = async (id, workData) => {
-    const res = await updateWorkProofFetch(workData, id);
-    if (res.status === 200) {
-      setWorkProofs(
-        workProofs.map((work) =>
-          work.id === id ? { ...work, ...res.data } : work
-        )
-      );
-    }
+    // const res = await updateWorkProofFetch(workData, id);
+    // if (res.status === 200) {
+    //   setWorkProofs(
+    //     workProofs.map((work) =>
+    //       work.id === id ? { ...work, ...res.data } : work
+    //     )
+    //   );
+    // }
+    setWorkProofs(
+      workProofs.map((work) =>
+        work.id === id ? { ...work, ...res.data } : work
+      )
+    );
   };
 
   const handleDeleteWorkProof = async (id) => {
-    const res = await deleteWorkProofFetch(id);
-    if (res.status === 204) {
-      setWorkProofs(workProofs.filter((work) => work.id !== id));
-    }
+    // const res = await deleteWorkProofFetch(id);
+    // if (res.status === 204) {
+    //   setWorkProofs(workProofs.filter((work) => work.id !== id));
+    // }
+    setWorkProofs(workProofs.filter((work) => work.id !== id));
   };
 
   // @Language
 
   const handleAddLanguage = async (languageData) => {
-    const res = await addLanguageFetch(languageData);
-    if (res.status === 201) {
-      setLanguages([...languages, res.data]);
-    }
+    // const res = await addLanguageFetch(languageData);
+    // if (res.status === 201) {
+    //   setLanguages([...languages, res.data]);
+    // }
+    setLanguages([...languages, res.data]);
   };
 
   const handleEditLanguage = async (id, languageData) => {
-    const res = await updateLanguageFetch(languageData, id);
-    if (res.status === 200) {
-      setLanguages(
-        languages.map((lang) =>
-          lang.id === id ? { ...lang, ...res.data } : lang
-        )
-      );
-    }
+    // const res = await updateLanguageFetch(languageData, id);
+    // if (res.status === 200) {
+    //   setLanguages(
+    //     languages.map((lang) =>
+    //       lang.id === id ? { ...lang, ...res.data } : lang
+    //     )
+    //   );
+    // }
+    setLanguages(
+      languages.map((lang) =>
+        lang.id === id ? { ...lang, ...res.data } : lang
+      )
+    );
   };
 
   const handleDeleteLanguage = async (id) => {
-    const res = await deleteLanguageFetch(id);
-    if (res.status === 204) {
-      setLanguages(languages.filter((lang) => lang.id !== id));
-    }
+    // const res = await deleteLanguageFetch(id);
+    // if (res.status === 204) {
+    //   setLanguages(languages.filter((lang) => lang.id !== id));
+    // }
+    setLanguages(languages.filter((lang) => lang.id !== id));
   };
   // @Social
   const handleAddSocial = async (newSocial) => {
-    const res = await addSocialFetch(newSocial);
-    if (res.status === 201) {
-      setSocialData([...socialData, res.data]);
-    }
+    // const res = await addSocialFetch(newSocial);
+    // if (res.status === 201) {
+    //   setSocialData([...socialData, res.data]);
+    // }
+    setSocialData([...socialData, res.data]);
   };
 
   const handleEditSocial = async (updatedSocial, id) => {
-    console.log(updatedSocial, "updatedSocial");
-    console.log(id, "id");
-    const res = await updateSocialFetch(updatedSocial, id);
-    if (res.status === 200) {
-      setSocialData(
-        socialData.map((social) =>
-          social.id === id ? { ...social, ...res.data } : social
-        )
-      );
-    }
+    // const res = await updateSocialFetch(updatedSocial, id);
+    // if (res.status === 200) {
+    //   setSocialData(
+    //     socialData.map((social) =>
+    //       social.id === id ? { ...social, ...res.data } : social
+    //     )
+    //   );
+    // }
+    setSocialData(
+      socialData.map((social) =>
+        social.id === id ? { ...social, ...res.data } : social
+      )
+    );
   };
 
   const handleDeleteSocial = async (id) => {
-    const res = await deleteSocialFetch(id);
-    if (res.status === 204) {
-      setSocialData(socialData.filter((social) => social.id !== id));
-    }
+    // const res = await deleteSocialFetch(id);
+    // if (res.status === 204) {
+    //   setSocialData(socialData.filter((social) => social.id !== id));
+    // }
+    setSocialData(socialData.filter((social) => social.id !== id));
   };
 
   return (
