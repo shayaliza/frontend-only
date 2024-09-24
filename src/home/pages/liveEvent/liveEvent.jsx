@@ -64,6 +64,29 @@ const Card = ({ imageUrl, title, description, tag, category, timeLeft }) => (
   </div>
 );
 
+const NewCard = () => {
+  return (
+    <>
+      <div class="min-w-[300px]  w-full h-[390px] bg-pink my-4 md:mx-3 rounded-2xl">
+        <div class="card_poster_holder h-[55%]">
+          <img
+            src="https://www.bluelearn.in/_next/image?url=https%3A%2F%2Ffiles.bluelearn.in%2FEVENT_IMAGE%2F303%2F2022-07-08T16%253A27%253A53%252B00%253A00-blob&amp;w=1920&amp;q=60"
+            alt=""
+            class="w-full h-full rounded-t-lg"
+          />
+        </div>
+        <div class="card_body h-[45%] flex flex-col justify-evenly items-center px-10 bg-gray-900 rounded-b-lg">
+          <h1 class="text-xl text-white">
+            Lorem, ipsum dolor sit ame dolor sit ame
+          </h1>
+          <p class="text-gray-500">Bluelearn</p>
+          <p class="text-gray-500">Jul 5, 2022 8.00pm</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const CompetitionSection = () => {
   const [activeTab, setActiveTab] = useState("active");
 
@@ -74,35 +97,26 @@ const CompetitionSection = () => {
   return (
     <div className=" final" style={{ fontFamily: "Nunito" }}>
       <section className=" py-5 relative">
-        <div className=" h-[300px] flex justify-between items-center">
-          <div className="mx-8 flex flex-col justify-between">
-            <h1
-              className="text-4xl font-semibold"
-              style={{ fontFamily: "Nunito" }}
-            >
-              Competitions
-            </h1>
-            <p
-              className="w-11/12 leading-relaxed tracking-wide"
-              style={{ fontFamily: "Nunito" }}
-            >
-              Grow your data science skills by competing in our exciting
-              competitions. Find help in the documentation or learn about
-              Community Competitions.
-            </p>
-            <button className="w-[200px] h-[40px] mt-4 bg-black text-sm text-white font-semibold rounded-full">
-              Host a Competition
-            </button>
+        {/* Upper Section */}
+        <div className="">
+          <div class="heading_holder px-10 text-center">
+            <h1 class="text-3xl font-semibold my-5">Upcoming Events For You</h1>
+            <div class="text-center">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis
+              incidunt? <span class="text-yellow-500">join now</span>
+            </div>
           </div>
-          <div className="right w-2/5">
-            <img
-              src="https://www.kaggle.com/static/images/competitions/landing_header.png"
-              alt="banner"
-              className="w-3/4 h-auto"
-            />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-col-2 gap-8">
+            <NewCard />
+            <NewCard />
+            <NewCard />
+            <NewCard />
           </div>
         </div>
-        <div className="tab flex border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white max-[900px]:px-0">
+        <h1 class="text-xl font-semibold my-8 flex justify-center">
+          If you missed something, access it right here
+        </h1>
+        <div className="tab flex justify-center border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white max-[900px]:px-0">
           <button
             className={`tablinks hover:bg-gray-200  text-xl px-6 py-2 ${
               activeTab === "active"
@@ -134,65 +148,8 @@ const CompetitionSection = () => {
             Upcoming
           </button>
         </div>
-        <div
-          className={`tabcontent ${
-            activeTab === "active" ? "block" : "hidden"
-          }`}
-          style={{ fontFamily: "Nunito" }}
-        >
-          <div className="cards_holder flex flex-wrap justify-center">
-            {TAB_CONTENTS.active.map((card) => (
-              <Card
-                key={card.id}
-                imageUrl={card.imageUrl}
-                title={card.title}
-                description={card.description}
-                tag={card.tag}
-                category={card.category}
-                timeLeft={card.timeLeft}
-              />
-            ))}
-          </div>
-        </div>
-        <div
-          className={`tabcontent ${
-            activeTab === "closed" ? "block" : "hidden"
-          }`}
-          style={{ fontFamily: "Nunito" }}
-        >
-          <div className="cards_holder flex flex-wrap justify-center">
-            {TAB_CONTENTS.closed.map((card) => (
-              <Card
-                key={card.id}
-                imageUrl={card.imageUrl}
-                title={card.title}
-                description={card.description}
-                tag={card.tag}
-                category={card.category}
-                timeLeft={card.timeLeft}
-              />
-            ))}
-          </div>
-        </div>
-        <div
-          className={`tabcontent ${
-            activeTab === "upcoming" ? "block" : "hidden"
-          }`}
-          style={{ fontFamily: "Nunito" }}
-        >
-          <div className="cards_holder flex flex-wrap justify-center">
-            {TAB_CONTENTS.upcoming.map((card) => (
-              <Card
-                key={card.id}
-                imageUrl={card.imageUrl}
-                title={card.title}
-                description={card.description}
-                tag={card.tag}
-                category={card.category}
-                timeLeft={card.timeLeft}
-              />
-            ))}
-          </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-col-2 gap-8">
+          <NewCard />
         </div>
       </section>
     </div>
