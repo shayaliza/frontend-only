@@ -6,8 +6,8 @@ function MyBuddy() {
       {/* <div className="h-12  text-black p-2">Your buddy</div> */}
       <div class="flex flex-col gap-4 mt-2 ">
         <div class="rounded-lg mb-2">
-          <div class="mb-4 flex justify-between">
-            <h1 class="text-xl font-bold ml-4">Your buddy</h1>
+          <div class="mb-4 flex justify-between w-10/12 mx-auto">
+            <h1 class="text-xl font-bold">Your buddy</h1>
             <p class="text-gray-600">Need help?</p>
           </div>
           <div className="w-10/12 mx-auto">

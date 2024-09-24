@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Progress from "./comp/progress";
+import InsideTab from "./comp/insideTab";
+import MyBuddy from "./comp/myBuddy";
+import Graph from "./comp/graph";
 import Projects from "./comp/projects";
 import Internship from "./comp/internship";
 import CareerPath from "./comp/careerPath";
 import Certificate from "./comp/certificate";
-import InsideTab from "./comp/insideTab";
-import MyBuddy from "./comp/myBuddy";
-import Graph from "./comp/graph";
 
 const tabs = [
-  { name: "Progress", component: Progress },
+  { name: "Progress", component: InsideTab },
   { name: "Projects", component: Projects },
   { name: "Internship", component: Internship },
   { name: "CareerPath", component: CareerPath },
@@ -50,7 +50,8 @@ function MyProgress() {
             </div>
             <div className="mt-5">
               <div className="flex flex-col ">
-                <InsideTab />
+                {/* <InsideTab /> */}
+                <ActiveComponent />
 
                 {/* Test */}
                 {isVisible && (
@@ -83,7 +84,7 @@ function MyProgress() {
           <MyBuddy />
         </div>
       </div>
-      <ActiveComponent />
+      <Progress />
     </div>
   );
 }
