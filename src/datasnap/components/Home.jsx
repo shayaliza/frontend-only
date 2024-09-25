@@ -9,6 +9,7 @@ import featuredIcon from "../assets/rsc/icons8-star-24.png";
 import recentIcon from "../assets/rsc/icons8-clock-24.png";
 import read from "../assets/rsc/read.png";
 import img2 from "../assets/rsc/image2.png";
+import { useTheme } from "../../DarkMode/ThemeProvider";
 
 const tabs = [
   { id: "myfeed", icon: activityFeedIcon, text: "My Feed" },
@@ -269,6 +270,7 @@ const articleData = [
 
 function Home() {
   const [activeTab, setActiveTab] = useState("myfeed");
+  const {theme} = useTheme();
 
   const Article = ({
     profileImg,
@@ -322,7 +324,7 @@ function Home() {
           <div className="flex flex-col md:flex-row justify-between gap-4 p-4">
             <div className="flex-1">
               <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-              <div className="text-gray-300 mb-2">
+              <div className="mb-2">
                 <span>{description}</span>
               </div>
               <p className="text-gray-400"></p>
@@ -364,8 +366,8 @@ function Home() {
   );
 
   return (
-    <div className="bg-gray-800 min-h-screen">
-      <div className="custom-scrollbar flex overflow-x-auto whitespace-nowrap p-4 bg-gray-800">
+    <div className={`${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-gray-300"} min-h-screen`}>
+      <div className="custom-scrollbar flex overflow-x-auto whitespace-nowrap p-4">
         {images.map((src, index) => (
           <img
             key={index}

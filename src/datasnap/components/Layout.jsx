@@ -4,6 +4,7 @@ import Header from './Header';
 import Notification from './Notification';
 import { Outlet, useLocation } from 'react-router-dom';
 import BottomBar from './BottomBar';
+import  {useTheme} from "../../DarkMode/ThemeProvider"
 
 function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,6 +15,7 @@ function Layout() {
 
   const location = useLocation();
   const currentPath = location.pathname.split('/').pop();
+  const {theme} = useTheme();
 
   return (
     <div className="flex flex-col h-screen max-h-screen">
@@ -22,7 +24,7 @@ function Layout() {
         {currentPath !== "detail" && (
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         )}
-        <main className={`flex-1 ${ currentPath === "detail" ? "p-0 pb-16 w-screen" : "p-4 pb-20 md:p-6"} bg-gray-800 overflow-auto lg:pb-0`}>
+        <main className={`flex-1 ${ currentPath === "detail" ? "p-0 pb-16 w-screen" : "p-4 pb-20 md:p-6"} ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800"} bg-background overflow-auto lg:pb-0`}>
           <Outlet />
         </main>
         {currentPath !== "detail" && (

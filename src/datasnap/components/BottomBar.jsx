@@ -5,6 +5,7 @@ import img3 from "../assets/rsc/bookmark.png";
 import img4 from "../assets/rsc/explore.png";
 import img5 from "../assets/rsc/notification-bell.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "../../DarkMode/ThemeProvider";
 
 function BottomBar() {
   const navigate = useNavigate();
@@ -23,8 +24,10 @@ function BottomBar() {
     navigate(`/datasnap/${path}`);
   };
 
+  const {theme} = useTheme();
+
   return (
-    <div className="w-full bg-gray-800 border-t border-gray-300 z-30 shadow-lg flex justify-around items-center px-4 pb-2 safe-bottom">
+    <div className={`w-full bg-background border-t border-gray-300 z-30 shadow-lg ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-white"} flex justify-around items-center px-4 pb-2 safe-bottom`}>
       {tabs.map((tab) => {
         const isActive = currentPath === tab.name;
 

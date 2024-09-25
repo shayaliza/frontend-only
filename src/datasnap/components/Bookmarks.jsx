@@ -1,8 +1,10 @@
 import React from 'react';
 import profileImg from '../assets/rsc/jeffrey-keenan-pUhxoSapPFA-unsplash.jpg';
 import articleImg from '../assets/rsc/image2.png';
+import { useTheme } from '../../DarkMode/ThemeProvider';
 
 const Bookmarks = () => {
+  const {theme} = useTheme();
   return (
     <div className="p-4 sm:p-8">
       <div className="mb-8">
@@ -10,7 +12,7 @@ const Bookmarks = () => {
           <h2 className="text-2xl text-white font-bold mb-2">Bookmarks</h2>
           <p className="text-white text-lg">All articles you have bookmarked on Hashnode</p>
         </div>
-        <div className="p-4 sm:p-6 bg-gray-800 rounded-lg">
+        <div className={`p-4 sm:p-6 border border-gray-200 ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-gray-300"} rounded-lg`}>
           <div className="flex flex-col sm:flex-row items-start mb-4">
             <img src={profileImg} alt="" className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 mb-4 sm:mb-0 sm:mr-4" />
             <div>
