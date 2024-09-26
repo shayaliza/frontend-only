@@ -179,6 +179,7 @@ function AppRoutes() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/reset-password" element={<SetNewPassword />} />
                 <Route path="/detailspage" element={<CourseDetails />} />
+                <Route path="/search" element={<Search />} />
               </>
               <Route path="/resendmail" element={<SendMail />} />
               <Route path="testpage" element={<TestPage />} />
@@ -188,7 +189,6 @@ function AppRoutes() {
                 <Route path="/dashboard" element={<MainLayout />}>
                   <Route path="job" element={<Job />} />
                   <Route path="notification" element={<Notification />} />
-                  <Route path="search" element={<Search />} />
 
                   <Route
                     path="progress"

@@ -84,7 +84,7 @@ const Header = ({ toggleMobileMenu }) => {
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
               <SearchIcon
                 className="mr-2"
-                onClick={() => navigate("/dashboard/search")}
+                onClick={() => navigate("/search")}
               />
               <IoIosNotificationsOutline
                 size={28}
