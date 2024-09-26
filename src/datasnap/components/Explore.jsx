@@ -4,6 +4,7 @@ import image2 from "../assets/rsc/jeffrey-keenan-pUhxoSapPFA-unsplash.jpg";
 import image3 from "../assets/rsc/joshua-earle-ICE__bo2Vws-unsplash.jpg";
 import image4 from "../assets/rsc/arnold-francisca-nPhl2x4fk2s-unsplash.jpg";
 import { FaPlus } from "react-icons/fa";
+import { useTheme } from "../../DarkMode/ThemeProvider";
 
 const tagSections = [
   {
@@ -102,6 +103,7 @@ const blogSections = [
 ];
 
 const BlogPage = () => {
+  const { theme } = useTheme();
   return (
     <div className="px-2 md:px-8">
       <h1 className="text-2xl md:text-3xl md:text-center text-white font-bold mb-4">
@@ -118,7 +120,11 @@ const BlogPage = () => {
               {section.items.map((item, itemIndex) => (
                 <div
                   key={itemIndex}
-                  className="flex justify-between items-center p-2 border rounded-lg border-gray-600 bg-gray-600"
+                  className={`flex justify-between items-center p-2 border rounded-lg border-gray-600 ${
+                    theme == "dark"
+                      ? "bg-black text-white"
+                      : "bg-gray-600 text-gray-300"
+                  }`}
                 >
                   <div>
                     <h4 className="text-lg font-medium">{item.tag}</h4>
@@ -142,44 +148,43 @@ const BlogPage = () => {
               <p className="text-white">{section.subtitle}</p>
             </div>
             <div className="space-y-8">
-  {section.blogs.map((blog, blogIndex) => (
-    <div
-      key={blogIndex}
-      className="bg-gray-700 p-4 rounded-lg shadow-md"
-    >
-      <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
-        <div className="flex items-center mb-4 lg:mb-0">
-          <img
-            src={blog.profileImg}
-            alt="Profile"
-            className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 shadow-md mr-4"
-          />
-          <div>
-            <h4 className="text-xl font-semibold text-white">{blog.author}</h4>
-            <p className="text-gray-300">{blog.url}</p>
-          </div>
-        </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
-          <span>Follow</span>
-          <FaPlus className="w-4 h-4"/>
-        </button>
-      </div>
-      <div>
-        {blog.posts.map((post, postIndex) => (
-          <div
-            key={postIndex}
-            className="pt-2 mt-2"
-          >
-            <p className="text-white">
-              <span className="font-medium">{post.date}</span> - {post.title}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
-
+              {section.blogs.map((blog, blogIndex) => (
+                <div
+                  key={blogIndex}
+                  className={`${theme == 'dark' ? 'bg-black text-white' : "bg-gray-700 text-gray-300"}  border border-gray-200 p-4 rounded-lg shadow-md`}
+                >
+                  <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
+                    <div className="flex items-center mb-4 lg:mb-0">
+                      <img
+                        src={blog.profileImg}
+                        alt="Profile"
+                        className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 shadow-md mr-4"
+                      />
+                      <div>
+                        <h4 className="text-xl font-semibold text-white">
+                          {blog.author}
+                        </h4>
+                        <p className="text-gray-300">{blog.url}</p>
+                      </div>
+                    </div>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
+                      <span>Follow</span>
+                      <FaPlus className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div>
+                    {blog.posts.map((post, postIndex) => (
+                      <div key={postIndex} className="pt-2 mt-2">
+                        <p className="text-white">
+                          <span className="font-medium">{post.date}</span> -{" "}
+                          {post.title}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
 
@@ -192,42 +197,42 @@ const BlogPage = () => {
               <p className="text-white">{section.subtitle}</p>
             </div>
             <div className="space-y-8">
-  {section.blogs.map((blog, blogIndex) => (
-    <div
-      key={blogIndex}
-      className="bg-gray-700 p-4 rounded-lg shadow-md"
-    >
-      <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
-        <div className="flex items-center mb-4 lg:mb-0">
-          <img
-            src={blog.profileImg}
-            alt="Profile"
-            className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 shadow-md mr-4"
-          />
-          <div>
-            <h4 className="text-xl font-semibold text-white">{blog.author}</h4>
-            <p className="text-gray-300">{blog.url}</p>
-          </div>
-        </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
-          <span>Following</span>
-        </button>
-      </div>
-      <div>
-        {blog.posts.map((post, postIndex) => (
-          <div
-            key={postIndex}
-            className="pt-2 mt-2"
-          >
-            <p className="text-white">
-              <span className="font-medium">{post.date}</span> - {post.title}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  ))}
-</div>
+              {section.blogs.map((blog, blogIndex) => (
+                <div
+                  key={blogIndex}
+                  className={`${theme == 'dark' ? 'bg-black text-white' : "bg-gray-700 text-gray-300"} border border-gray-200 p-4 rounded-lg shadow-md`}
+                >
+                  <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
+                    <div className="flex items-center mb-4 lg:mb-0">
+                      <img
+                        src={blog.profileImg}
+                        alt="Profile"
+                        className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 shadow-md mr-4"
+                      />
+                      <div>
+                        <h4 className="text-xl font-semibold text-white">
+                          {blog.author}
+                        </h4>
+                        <p className="text-gray-300">{blog.url}</p>
+                      </div>
+                    </div>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
+                      <span>Following</span>
+                    </button>
+                  </div>
+                  <div>
+                    {blog.posts.map((post, postIndex) => (
+                      <div key={postIndex} className="pt-2 mt-2">
+                        <p className="text-white">
+                          <span className="font-medium">{post.date}</span> -{" "}
+                          {post.title}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>

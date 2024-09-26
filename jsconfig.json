@@ -4,9 +4,7 @@
       {
         "path": "./jsconfig.app.json"
       },
-      {
-        "path": "./jsconfig.node.json"
-      }
+      
     ],
     "compilerOptions": {
       "baseUrl": ".",
