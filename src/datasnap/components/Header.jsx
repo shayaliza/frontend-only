@@ -150,10 +150,13 @@ function Header({ toggleSidebar }) {
                     Following
                   </li>
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    <Link to="/datasnap">Datasnap</Link>
+                    <Link to="/dashboard/profile">Home</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    <Link to="/dashboard/profile">Home</Link>
+                    <Link to="/createsnap/analytics">Createsnap</Link>
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/datasnap">Datasnap</Link>
                   </li>
                 </ul>
               </div>
