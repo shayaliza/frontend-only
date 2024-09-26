@@ -28,7 +28,10 @@ function Search() {
   return (
     <div className="w-full mt-4">
       <div className="flex items-center w-full ">
-        <FaArrowLeft className="text-gray-500 text-xl cursor-pointer ml-1" />
+        <FaArrowLeft
+          className="text-gray-500 text-xl cursor-pointer ml-1"
+          onClick={() => window.history.back()}
+        />
         <div className="flex bg-blue-100 rounded-md px-2 w-full mr-2 ml-2 py-1">
           <FaSearch className="text-gray-500 text-xl cursor-pointer" />
           <input
