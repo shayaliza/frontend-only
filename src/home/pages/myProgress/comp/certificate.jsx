@@ -89,7 +89,7 @@ function Certificate() {
     <div>
       <div className=" mt-5 border-b border-black flex space-x-4 mb-4 ">
         <button
-          className={` pb-3  rounded text-xl font-semibold ${
+          className={` pb-3  rounded text-lg font-semibold ${
             activeTab === "inProgress"
               ? " text-[#cd27ff] border-black border-b-2"
               : " text-black "
@@ -99,7 +99,7 @@ function Certificate() {
           In Progress
         </button>
         <button
-          className={`tab pb-3 rounded text-xl font-semibold ${
+          className={`tab pb-3 rounded text-lg font-semibold ${
             activeTab === "completed"
               ? " text-[#cd27ff] border-black border-b-2"
               : "text-black "

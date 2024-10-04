@@ -29,9 +29,9 @@ function MyProgress() {
 
   return (
     <div className="bg-[#f6f6f6]">
-      <div className="flex final flex-row ">
+      <div className="final flex flex-row ">
         {/* Left Column */}
-        <div className="w-2/3 ">
+        <div className="w-9/12">
           <div className="flex flex-col  ">
             <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold my-5 text-center  w-full">
               {tabs.map((tab) => (
@@ -80,7 +80,7 @@ function MyProgress() {
           </div>
         </div>
         {/* Right Column */}
-        <div className="w-1/3 mt-4 flex flex-col space-y-4  ">
+        <div className="w-1/4 mt-4 flex flex-col space-y-4  ">
           <MyBuddy />
         </div>
       </div>
