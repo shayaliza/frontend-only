@@ -1,0 +1,17 @@
+/* Change the color and scale the size of the navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: black !important; /* Customize the arrow color */
+  width: 30px !important; /* Set a specific width */
+  height: 30px !important; /* Set a specific height */
+  transform: scale(0.8); /* Scale down the size */
+}
+
+/* Adjust arrow position if necessary */
+.swiper-button-next {
+  right: 10px !important; /* Move closer to the swiper if needed */
+}
+
+.swiper-button-prev {
+  left: 10px !important; /* Move closer to the swiper if needed */
+}
