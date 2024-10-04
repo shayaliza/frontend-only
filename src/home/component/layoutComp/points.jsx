@@ -51,9 +51,7 @@ function Points() {
   return (
     <>
       <div
-        className={`points relative items-center max-[900px]:hidden  w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer ${
-          isGoalsVisible ? "bg-blue-300" : "bg-purple-200"
-        }`}
+        className={`points relative items-center max-[900px]:hidden  w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer `}
         onClick={toggleGoals}
         ref={goalsRef}
       >
@@ -163,12 +161,7 @@ function Points() {
         )}
       </div>
 
-      <div
-        ref={powerRef}
-        className={`score relative flex items-center mr-2 ${
-          isPowerVisible ? "bg-blue-300 py-2 rounded-lg" : ""
-        }`}
-      >
+      <div ref={powerRef} className={`score relative flex items-center mr-2 `}>
         <div>
           <p
             className="flex items-center font-medium text-base mr-3 shock cursor-pointer"
@@ -205,9 +198,7 @@ function Points() {
       </div>
       <div
         //  className="score relative flex items-center mr-4"
-        className={`score relative flex items-center mr-2 ${
-          isCoinVisible ? "bg-blue-300 py-2 rounded-lg " : ""
-        }`}
+        className={`score relative flex items-center mr-2 `}
       >
         <div ref={coinRef}>
           <p

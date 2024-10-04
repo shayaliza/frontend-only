@@ -22,9 +22,7 @@ function ProfileIcon() {
 
   return (
     <div
-      className={`profile relative flex items-center ${
-        isProfileVisible && "bg-blue-300 rounded-lg"
-      }`}
+      className={`profile relative flex items-center `}
       onClick={toggleProfile}
       ref={profileRef}
     >
