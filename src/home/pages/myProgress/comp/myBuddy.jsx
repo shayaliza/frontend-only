@@ -6,11 +6,11 @@ function MyBuddy() {
       {/* <div className="h-12  text-black p-2">Your buddy</div> */}
       <div class="flex flex-col gap-4 mt-2 ">
         <div class="rounded-lg mb-2">
-          <div class="mb-4 flex justify-between w-10/12 mx-auto">
+          <div class="mb-4 flex justify-between w-full mx-auto">
             <h1 class="text-xl font-bold">Your buddy</h1>
             <p class="text-gray-600">Need help?</p>
           </div>
-          <div className="w-10/12 mx-auto">
+          <div className="w-full mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
               <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">

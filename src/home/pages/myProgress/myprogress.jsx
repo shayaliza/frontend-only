@@ -29,11 +29,11 @@ function MyProgress() {
 
   return (
     <div className="bg-[#f6f6f6]">
-      <div className="final flex flex-row ">
+      <div className="final flex flex-row gap-4">
         {/* Left Column */}
-        <div className="w-9/12">
+        <div className="w-full">
           <div className="flex flex-col  ">
-            <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold my-5 text-center  w-full">
+            <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold mt-5 text-center  w-full">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
@@ -48,7 +48,7 @@ function MyProgress() {
                 </button>
               ))}
             </div>
-            <div className="mt-5">
+            <div className="">
               <div className="flex flex-col ">
                 {/* <InsideTab /> */}
                 <ActiveComponent />
@@ -80,7 +80,7 @@ function MyProgress() {
           </div>
         </div>
         {/* Right Column */}
-        <div className="w-1/4 mt-4 flex flex-col space-y-4  ">
+        <div className="w-1/5 mt-4  ">
           <MyBuddy />
         </div>
       </div>

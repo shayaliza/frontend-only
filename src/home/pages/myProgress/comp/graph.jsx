@@ -5,9 +5,9 @@ import CircularProgressChart from "../../../component/chart/circle";
 function Graph() {
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap  gap-7">
         {/* Leaderboard */}
-        <div className=" bg-white p-4">
+        <div className=" bg-white px-6 py-4">
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -54,7 +54,7 @@ function Graph() {
         </div>
 
         {/* Progress */}
-        <div className=" bg-white p-4 flex flex-col items-center">
+        <div className=" bg-white px-6 py-4 flex flex-col items-center">
           <div className="mb-2">Your Progress</div>
           <div className="flex justify-between gap-3">
             <CircularProgressChart />
@@ -78,7 +78,7 @@ function Graph() {
           <div className="text-blue-500 mt-3">Solve More Problems</div>
         </div>
         {/* Progress */}
-        <div className=" bg-white p-4 flex flex-col items-center">
+        <div className=" bg-white px-6 py-4 flex flex-col items-center">
           <div className="mb-2">Your Progress</div>
           <div className="flex justify-between gap-3">
             <CircularProgressChart />
