@@ -1,17 +1,43 @@
-/* Change the color and scale the size of the navigation arrows */
 .swiper-button-next,
 .swiper-button-prev {
-  color: black !important; /* Customize the arrow color */
-  width: 30px !important; /* Set a specific width */
-  height: 30px !important; /* Set a specific height */
-  transform: scale(0.8); /* Scale down the size */
+  color: black !important;
+  width: 30px !important;
+  height: 30px !important;
+  transform: scale(0.8);
 }
 
-/* Adjust arrow position if necessary */
 .swiper-button-next {
-  right: 10px !important; /* Move closer to the swiper if needed */
+  right: 10px !important;
 }
 
 .swiper-button-prev {
-  left: 10px !important; /* Move closer to the swiper if needed */
+  left: 10px !important;
+}
+
+.my-swiper-button-next-uni,
+.my-swiper-button-prev-uni {
+  color: black;
+  transform: scale(0.8);
+  position: absolute;
+  top: 50%; /* This will center the buttons vertically */
+  transform: translateY(-50%) scale(0.8); /* Adjusting for transform and centering */
+  z-index: 20;
+}
+
+.my-swiper-button-next-uni {
+  right: -20px;
+  background-color: rgba(128, 128, 128, 0.515);
+  height: 40px;
+  width: 40px;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.my-swiper-button-prev-uni {
+  left: -20px;
+  background-color: rgba(128, 128, 128, 0.515);
+  height: 40px;
+  width: 40px;
+  padding: 6px;
+  border-radius: 50%;
 }
