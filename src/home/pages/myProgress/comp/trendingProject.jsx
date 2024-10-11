@@ -21,10 +21,10 @@ import "./../../../pages/myFeed/component/swiper.css";
 function TrendingProject() {
   return (
     <div className="swiper-container relative">
-      <div className="my-swiper-button-next-uni">
+      <div className="my-swiper-button-next-uni2">
         <GrNext size={25} />
       </div>
-      <div className="my-swiper-button-prev-uni">
+      <div className="my-swiper-button-prev-uni2">
         <GrPrevious size={25} />
       </div>
 
@@ -35,8 +35,9 @@ function TrendingProject() {
         slidesPerView={3}
         // navigation
         navigation={{
-          nextEl: ".my-swiper-button-next-uni",
-          prevEl: ".my-swiper-button-prev-uni",
+          nextEl: ".my-swiper-button-next-uni2",
+          prevEl: ".my-swiper-button-prev-uni2",
+          disabledClass: "swiper-button-disabled",
         }}
         breakpoints={{
           // when window width is >= 320px

@@ -39,6 +39,7 @@ function TrendingCourse() {
         navigation={{
           nextEl: ".my-swiper-button-next-uni",
           prevEl: ".my-swiper-button-prev-uni",
+          disabledClass: "swiper-button-disabled",
         }}
         breakpoints={{
           // when window width is >= 320px

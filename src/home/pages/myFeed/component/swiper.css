@@ -16,28 +16,43 @@
 
 .my-swiper-button-next-uni,
 .my-swiper-button-prev-uni {
-  color: black;
-  transform: scale(0.8);
+  /* color: black; */
+  /* transform: scale(0.8); */
   position: absolute;
-  top: 50%; /* This will center the buttons vertically */
-  transform: translateY(-50%) scale(0.8); /* Adjusting for transform and centering */
-  z-index: 20;
+  top: 50%;
+  /* transform: translateY(-50%) scale(0.8); */
+  /* z-index: 20; */
 }
 
 .my-swiper-button-next-uni {
   right: -20px;
-  background-color: rgba(128, 128, 128, 0.515);
-  height: 40px;
-  width: 40px;
-  padding: 6px;
-  border-radius: 50%;
 }
 
 .my-swiper-button-prev-uni {
   left: -20px;
-  background-color: rgba(128, 128, 128, 0.515);
-  height: 40px;
-  width: 40px;
-  padding: 6px;
-  border-radius: 50%;
+}
+
+.my-swiper-button-next-uni2,
+.my-swiper-button-prev-uni2 {
+  position: absolute;
+  top: 50%; /* This will center the buttons vertically */
+}
+
+.my-swiper-button-next-uni2 {
+  right: -20px;
+}
+
+.my-swiper-button-prev-uni2 {
+  left: -20px;
+}
+
+.my-swiper-button-next-uni.swiper-button-disabled,
+.my-swiper-button-prev-uni.swiper-button-disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+.my-swiper-button-next-uni2.swiper-button-disabled,
+.my-swiper-button-prev-uni2.swiper-button-disabled {
+  color: #ccc;
+  cursor: not-allowed;
 }
