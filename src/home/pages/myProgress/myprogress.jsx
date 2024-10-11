@@ -9,15 +9,15 @@ import CareerPath from "./comp/careerPath";
 import Certificate from "./comp/certificate";
 
 const tabs = [
-  { name: "Progress", component: InsideTab },
-  { name: "Projects", component: Projects },
-  { name: "Internship", component: Internship },
-  { name: "CareerPath", component: CareerPath },
-  { name: "Certificate", component: Certificate },
+  { name: "Courses", component: InsideTab },
+  { name: "Careerpaths", component: Projects },
+  { name: "Skillpaths", component: Internship },
+  { name: "Projects", component: CareerPath },
+  { name: "Assignments", component: Certificate },
 ];
 
 function MyProgress() {
-  const [activeTab, setActiveTab] = useState("Progress");
+  const [activeTab, setActiveTab] = useState("Courses");
   // Take Test
   const [isVisible, setIsVisible] = useState(true);
 

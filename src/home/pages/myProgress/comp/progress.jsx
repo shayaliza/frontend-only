@@ -7,7 +7,7 @@ function Progress() {
   return (
     <div className="final">
       {/* Trending Career with Swiper */}
-      <div class="mb-4 flex justify-between">
+      <div class="mb-4 mt-4 flex justify-between">
         <h1 class="text-lg font-bold">Trending Career Paths</h1>
       </div>
       <TrendingCareer />
@@ -19,6 +19,16 @@ function Progress() {
       {/* Trending Career with Swiper */}
       <div class="mb-4 flex justify-between">
         <h1 class="text-lg font-bold mt-4 mb-4">Trending Projects</h1>
+      </div>
+      <TrendingProject />
+      {/* Trending Course with Swiper */}
+      <div class="mb-4 flex justify-between">
+        <h1 class="text-lg font-bold mt-4">Trending Skillpath</h1>
+      </div>
+      <TrendingCourse />
+      {/* Trending Career with Swiper */}
+      <div class="mb-4 flex justify-between">
+        <h1 class="text-lg font-bold mt-4 mb-4">Trending Assignments</h1>
       </div>
       <TrendingProject />
     </div>
