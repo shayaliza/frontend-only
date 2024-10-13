@@ -46,7 +46,7 @@ function LearnModule() {
   const handlePositionChange = (position) => setPopupPosition(position);
 
   return (
-    <div className="App">
+    <div className="">
       <Navbar
         toggleSidebar={toggleSidebar}
         toggleSettingBar={toggleSettingBar}
@@ -67,7 +67,7 @@ function LearnModule() {
         selectedPosition={popupPosition}
       />
       <div
-        className={`content mt-16 ${
+        className={`max-w-[1500px] mx-auto mt-16 ${
           isSidebarOpen ? "blur-sm overflow-hidden" : ""
         } ${isSettingBarOpen ? "blur-sm overflow-hidden" : ""} 
         } `}
