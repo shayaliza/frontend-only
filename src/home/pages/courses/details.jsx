@@ -8,8 +8,10 @@ import {
   FaVideo,
 } from "react-icons/fa";
 import FAQ from "./fasq";
+import { useNavigate } from "react-router-dom";
 
 function CourseDetails() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#F8F9FB]">
       <div className="2xl:w-[1250px] w-full m-auto  bg-white md:mt-10  border-2 border-black">
@@ -48,6 +50,16 @@ function CourseDetails() {
               <span className="text-gray-700">32 Exercises</span>
             </div>
           </div>
+        </div>
+        <div className="flex justify-end -mt-[70px] ">
+          <button
+            onClick={() => {
+              navigate("/learningmodule");
+            }}
+            className="text-md p-2 my-2 mr-2 bg-black text-white rounded-lg hover:bg-blue-600 transition-all"
+          >
+            Get Started
+          </button>
         </div>
       </div>
       <div className="final   gap-16 flex md:flex-row flex-col">
