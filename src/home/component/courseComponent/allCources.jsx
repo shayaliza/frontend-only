@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
-
+import sunset from "./../../assets/courses/sunset.jpg";
+import profile from "./../../assets/profile.jpg";
+import time from "./../../assets/time.svg";
 // Tag Component
 const Tag = ({ tag, isActive, onClick }) => (
   <div
@@ -28,16 +30,16 @@ const AllCourses = () => {
   const courses = [
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["Web Development", "Frontend"],
       level: [
@@ -49,16 +51,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["Web Development", "Frontend"],
       level: [
@@ -70,16 +72,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["Web Development", "Frontend"],
       level: [
@@ -91,16 +93,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["Web Development", "Frontend"],
       level: [
@@ -112,16 +114,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["python"],
       level: [
@@ -133,16 +135,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["python"],
       level: [
@@ -154,16 +156,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["python"],
       level: [
@@ -175,16 +177,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["python"],
       level: [
@@ -196,16 +198,16 @@ const AllCourses = () => {
     },
     {
       title: "Learn Python",
-      image: "/src/assets/courses/sunset.jpg",
-      profileImage: "/src/assets/profile.jpg",
+      image: sunset,
+      profileImage: profile,
       provider: "Techsnap",
       type: "company",
       enrollment: "2.8k",
       duration: "3h 20 min",
       details: [
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
-        { icon: "/src/assets/time.svg", label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
+        { icon: time, label: "12 Courses" },
       ],
       tags: ["frontend"],
       level: [

@@ -13,6 +13,10 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
+import sunset from "./../../assets/courses/sunset.jpg";
+import profile from "./../../assets/profile.jpg";
+import time from "./../../assets/time.svg";
+
 function Crousal() {
   const navigate = useNavigate();
 
@@ -65,7 +69,7 @@ function Crousal() {
         <div className="border border-black h-auto pb-4 w-full lg:w-[350px] mb-4 lg:mb-0">
           <div className="flex flex-col">
             <img
-              src="/src/assets/courses/sunset.jpg"
+              src={sunset}
               className="w-full object-cover h-[210px]"
               alt="Course 1"
             />
@@ -73,7 +77,7 @@ function Crousal() {
             <div className="flex flex-row ml-2">
               <div className="mr-2">
                 <img
-                  src="/src/assets/profile.jpg"
+                  src={profile}
                   className="rounded-full h-[60px] w-[60px]"
                   alt="Profile"
                 />
@@ -88,15 +92,15 @@ function Crousal() {
             </div>
             <div className="flex flex-row mt-3 text-sm justify-center gap-4 lg:text-xs">
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
             </div>
@@ -149,7 +153,7 @@ function Crousal() {
         <div className="border border-black h-auto pb-4 w-full lg:w-[350px] mb-4 lg:mb-0">
           <div className="flex flex-col">
             <img
-              src="/src/assets/courses/sunset.jpg"
+              src={sunset}
               className="w-full object-cover h-[210px]"
               alt="Course 1"
             />
@@ -157,7 +161,7 @@ function Crousal() {
             <div className="flex flex-row ml-2">
               <div className="mr-2">
                 <img
-                  src="/src/assets/profile.jpg"
+                  src={profile}
                   className="rounded-full h-[60px] w-[60px]"
                   alt="Profile"
                 />
@@ -172,15 +176,15 @@ function Crousal() {
             </div>
             <div className="flex flex-row mt-3 text-sm justify-center gap-4 lg:text-xs">
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
             </div>
@@ -233,7 +237,7 @@ function Crousal() {
         <div className="border border-black h-auto pb-4 w-full lg:w-[350px] mb-4 lg:mb-0">
           <div className="flex flex-col">
             <img
-              src="/src/assets/courses/sunset.jpg"
+              src={sunset}
               className="w-full object-cover h-[210px]"
               alt="Course 1"
             />
@@ -241,7 +245,7 @@ function Crousal() {
             <div className="flex flex-row ml-2">
               <div className="mr-2">
                 <img
-                  src="/src/assets/profile.jpg"
+                  src={profile}
                   className="rounded-full h-[60px] w-[60px]"
                   alt="Profile"
                 />
@@ -256,15 +260,15 @@ function Crousal() {
             </div>
             <div className="flex flex-row mt-3 text-sm justify-center gap-4 lg:text-xs">
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
             </div>
@@ -317,7 +321,7 @@ function Crousal() {
         <div className="border border-black h-auto pb-4 w-full lg:w-[350px] mb-4 lg:mb-0">
           <div className="flex flex-col">
             <img
-              src="/src/assets/courses/sunset.jpg"
+              src={sunset}
               className="w-full object-cover h-[210px]"
               alt="Course 1"
             />
@@ -325,7 +329,7 @@ function Crousal() {
             <div className="flex flex-row ml-2">
               <div className="mr-2">
                 <img
-                  src="/src/assets/profile.jpg"
+                  src={profile}
                   className="rounded-full h-[60px] w-[60px]"
                   alt="Profile"
                 />
@@ -340,15 +344,15 @@ function Crousal() {
             </div>
             <div className="flex flex-row mt-3 text-sm justify-center gap-4 lg:text-xs">
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
               <div className="flex gap-1">
-                <img src="/src/assets/time.svg" alt="Time" />
+                <img src={time} alt="Time" />
                 <div className="text-[#f4b9cd] font-bold">12 Courses</div>
               </div>
             </div>
