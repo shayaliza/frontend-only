@@ -2,38 +2,12 @@ import React from "react";
 import "./timeline2.css";
 
 function Path() {
-  const courses = [
-    {
-      number: 1,
-      title: "Stellar JavaScript for the React Universe",
-      description:
-        "This course is an exciting step towards understanding necessary JavaScript basics and ES6 specifically, which are essential to leverage the power of React. Learn about...",
-      lessons: 4,
-      practices: 21,
-    },
-    {
-      number: 2,
-      title: "Galactic Gateway to React",
-      description:
-        "Extend your JavaScript knowledge by exploring React components. Learn to outline functional components, handle their lifecycle, and interact dynamically with user...",
-      lessons: 7,
-      practices: 35,
-    },
-    {
-      number: 3,
-      title: "Stellar Explorations in React",
-      description:
-        "Extend your JavaScript knowledge by exploring React components. Learn to handle components lifecycle, and interact dynamically with user interaction.",
-      lessons: 6,
-      practices: 32,
-    },
-  ];
-
   return (
-    <section class="hero-section">
-      <div class="timeline_title">
+    <section class="p-4">
+      <div className="timeline_title h-[150px] max-w-[1200px] mx-auto relative flex items-center text-[1.6rem] sm:h-auto sm:text-[20px]">
         <h1>START YOUR JOURNEY</h1>
       </div>
+
       <div class="container">
         <div class="timeline">
           <div class="timeline-container primary" data-aos="fade-up">

@@ -103,10 +103,7 @@ function SkillPathDetails() {
           </div>
         </div>
       </div>
-      <div className=" m-auto mt-2">
-        {/* <div className="text-2xl font-bold my-4 w-full pl-4 md:w-full m-auto">
-      Start Your Journey
-    </div> */}
+      <div className="final mt-2">
         <Path />
         <div className="text-2xl font-bold my-4 w-full pl-4 md:w-full  m-auto">
           Also Must to Know About
