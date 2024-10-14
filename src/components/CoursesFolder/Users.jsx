@@ -96,6 +96,10 @@ function Users() {
       handlePageChange(page);
       setJumpPage("");
     }
+    if (page > totalPages || page< handlePageChange(1)){
+      alert("Invalid page or out of page bound");
+      setJumpPage("")
+    }
   };
 
   const handleJumpToFirstPage = () => {
@@ -105,6 +109,8 @@ function Users() {
   const handleJumpToFinalPage = () => {
     handlePageChange(totalPages);
   };
+
+
 
   useEffect(() => {
     const updateTableHeight = () => {
@@ -160,7 +166,7 @@ function Users() {
               type="number"
               value={jumpPage}
               onChange={handleJumpPageChange}
-              className="p-2 w-20 pr-4"
+              className="p-2 w-20 pr-4 focus:outline-none"
               placeholder="Page"
             />
             <button
@@ -173,7 +179,7 @@ function Users() {
         </div>
       </div>
       <div className="flex-grow overflow-hidden px-2 sm:px-4 lg:px-20">
-        <div className="bg-white shadow-md rounded-lg overflow-hidden h-full">
+        <div className="bg-white shadow-md rounded-lg overflow-hidden h-full border">
           <div className="overflow-auto h-full" style={{ maxHeight: tableHeight }}>
             <table className="w-full">
               <thead className="bg-gray-100 sticky top-0">
@@ -210,7 +216,7 @@ function Users() {
         </div>
       </div>
       <div className="pagination mt-4 px-2 sm:px-4 lg:px-20 py-4">
-        <div className="flex justify-center items-center flex-wrap gap-2">
+        <div className="flex justify-center items-center flex-wrap lg:flex-nowrap gap-2">
           <button
             onClick={handleJumpToFirstPage}
             className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm"
