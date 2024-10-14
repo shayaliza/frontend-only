@@ -347,7 +347,7 @@ function MoreDetails() {
       <MoreDetailsHeader title="HTML basics" onClose={showDetailsPopUp} />
       <MoreDetailsBanner src={banner} alt="HTML Basics" />
       <MoreDetailsDescription text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum iure aliquid dolor laborum, suscipit laboriosam totam a! Dicta aliquam, eos vitae iusto accusantium ratione inventore praesentium repudiandae sed quaerat voluptatum." />
-      {/* <MoreDetailsRoadmap /> */}
+      <MoreDetailsRoadmap />
       <CuratedCourses />
       <MoreDetailsRelatedExperts />
       <ProjectList />
