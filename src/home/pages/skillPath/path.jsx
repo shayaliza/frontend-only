@@ -45,7 +45,7 @@ function Path() {
                 <p class="timeline-subtitle">2 Hours Ago</p>
                 <button
                   class="timeline-button"
-                  onClick={() => navigate("/dashboard/career/more")}
+                  onClick={() => navigate("/dashboard/skill/more")}
                 >
                   view details
                 </button>
@@ -83,7 +83,7 @@ function Path() {
                 <p class="timeline-subtitle">2 Hours Ago</p>
                 <button
                   class="timeline-button"
-                  onClick={() => navigate("/dashboard/career/more")}
+                  onClick={() => navigate("/dashboard/skill/more")}
                 >
                   view details
                 </button>
@@ -120,7 +120,7 @@ function Path() {
                 <p class="timeline-subtitle">2 Hours Ago</p>
                 <button
                   class="timeline-button"
-                  onClick={() => navigate("/dashboard/career/more")}
+                  onClick={() => navigate("/dashboard/skill/more")}
                 >
                   view details
                 </button>
@@ -161,7 +161,7 @@ function Path() {
                 <p class="timeline-subtitle">2 Hours Ago</p>
                 <button
                   class="timeline-button"
-                  onClick={() => navigate("/dashboard/career/more")}
+                  onClick={() => navigate("/dashboard/skill/more")}
                 >
                   view details
                 </button>
@@ -199,7 +199,7 @@ function Path() {
                 <p class="timeline-subtitle">2 Hours Ago</p>
                 <button
                   class="timeline-button"
-                  onClick={() => navigate("/dashboard/career/more")}
+                  onClick={() => navigate("/dashboard/skill/more")}
                 >
                   view details
                 </button>
@@ -239,7 +239,7 @@ function Path() {
                 <p class="timeline-subtitle">2 Hours Ago</p>
                 <button
                   class="timeline-button"
-                  onClick={() => navigate("/dashboard/career/more")}
+                  onClick={() => navigate("/dashboard/skill/more")}
                 >
                   view details
                 </button>

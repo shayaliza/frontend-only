@@ -1,0 +1,500 @@
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 4000;
+  background-color: rgba(0, 0, 0, 0.24);
+  display: none;
+}
+
+.more_section {
+  width: 50%;
+  max-width: 700px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  display: grid;
+  z-index: 5555;
+  transition: 0.5s ease-in-out;
+}
+
+.more_container {
+  width: 100%;
+  height: 100vh;
+
+  overflow-y: scroll;
+  background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  padding-bottom: 8rem;
+}
+
+.more_container::-webkit-scrollbar {
+  display: none;
+}
+.more_container_head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.more_container_title {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+.more_banner_holder {
+  margin-top: 20px;
+  width: 100%;
+  height: 180px;
+}
+.more_banner_holder img {
+  width: 100%;
+  height: 100%;
+}
+.more_button {
+  width: 60px;
+  cursor: pointer;
+}
+.more_description {
+  width: 100%;
+  margin-top: 20px;
+  text-align: justify;
+}
+.more_description p {
+  font-size: 1rem;
+  font-weight: 500;
+  font-weight: 600;
+}
+.more_close {
+  font-weight: 600;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 888;
+}
+
+.more_roadmap_heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: rgb(16 98 251);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.more_roadmap_cont {
+  display: flex;
+  flex-direction: column;
+}
+
+.more_roadmap_card {
+  align-self: start;
+  background-color: #1e2846;
+  border: 6px solid black;
+  outline: 4px solid rgb(16 98 251);
+  padding: 20px;
+  width: 40%;
+  min-width: 150px;
+  color: white;
+  margin: 0 2rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: rgba(37, 118, 240, 0.568) 0px 19px 38px,
+    rgba(32, 96, 168, 0.22) 0px 15px 12px;
+  margin-top: 96px;
+}
+
+.more_roadmap_card p {
+  font-size: 1.2rem;
+}
+
+.svg-line {
+  position: absolute;
+  display: block;
+  left: 50%; /* Adjust as needed */
+  transform: translateX(-50%);
+  width: 30%; /* Adjust as needed */
+  height: 96px; /* Adjust as needed */
+  fill: none;
+}
+
+.scale-change {
+  transform: scaleX(-1);
+  left: 30%;
+}
+
+.svg-line path {
+  stroke: #000; /* Black color */
+}
+
+.max_width_section {
+  margin: 0 auto;
+  max-width: 1400px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.more_section2 {
+  width: 50%;
+  max-width: 700px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  display: block;
+  z-index: 6555;
+  transition: 0.5s ease-in-out;
+}
+
+.more_section2_container {
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+  font-family: "Roboto", sans-serif;
+  padding: 20px 30px;
+  border-radius: 0 8px 8px 0;
+}
+
+.second {
+  width: 100px;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .more_section {
+    width: 100%;
+  }
+
+  .more_section2 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 550px) {
+  .timeline_title h1 {
+    font-size: 1.8rem;
+  }
+
+  .timeline-headline {
+    font-size: 1.2rem;
+  }
+
+  .timeline p {
+    font-size: 0.8rem;
+  }
+
+  .timeline-lessons {
+    gap: 10px;
+  }
+}
+
+.more-course-card {
+  width: 50%;
+  min-width: 330px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  overflow: hidden;
+}
+
+.more-ccard-heading {
+  height: 180px;
+  width: 100%;
+  color: white;
+  padding-left: 10px;
+  padding-top: 10px;
+  background: url("https://images.unsplash.com/photo-1711381712581-81a70ab44380?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHx8");
+  background-size: cover;
+  background-position: center;
+}
+
+.ccard-content {
+  padding: 18px;
+}
+
+.ccard-students {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.more-course-card p {
+  font-size: 0.8rem;
+}
+
+.more-course-card h4 {
+  line-height: 1.4rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.ccard-bookmark {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.ccard-bookmark img {
+  width: 15px;
+  height: 15px;
+}
+
+.ccard-btn {
+  padding: 0.6rem 0;
+  background-color: rgb(16 98 251);
+  color: white;
+  text-align: center;
+  margin: 0.8rem 1rem 0.3rem 1rem;
+}
+
+.more-related-cont {
+  display: flex;
+  gap: 2rem;
+  padding: 10px 0;
+  overflow: scroll;
+}
+
+.more-related-cont::-webkit-scrollbar {
+  display: none;
+}
+.more-related-card {
+  padding: 10px;
+  border: 1px solid black;
+  box-shadow: 5px 5px rgb(126, 126, 126);
+  width: 40%;
+  min-width: 300px;
+}
+
+.more-related-heading {
+  display: flex;
+  gap: 10px;
+  border-bottom: 2px solid rgb(53, 53, 53);
+  padding-bottom: 0.5rem;
+}
+
+.related-img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100%;
+}
+
+.related-tags {
+  display: flex;
+  gap: 10px;
+}
+
+.related-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tag-item {
+  font-size: 0.6rem;
+  padding: 2px 5px;
+  background-color: rgb(236, 167, 167);
+}
+
+.related-details h3 {
+  color: rgb(16 98 251);
+  font-size: 1.2rem;
+  margin-top: 0.3rem;
+}
+
+.related-believers {
+  display: flex;
+  gap: 10px;
+}
+
+.related-believers p {
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.related-believers img {
+  width: 15px;
+  height: 15px;
+}
+
+.more-related-card h2 {
+  font-size: 0.9rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.related-btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.connect-btn {
+  color: rgb(16 98 251);
+
+  border: 2px solid rgb(16 98 251);
+  padding: 2px 10px;
+  margin: 0.8rem 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.message-btn {
+  background-color: rgb(16 98 251);
+  color: white;
+}
+.more-course-cont {
+  display: flex;
+  gap: 2rem;
+  /* overflow: scroll; */
+  padding: 20px 10px;
+}
+
+.more-course-cont::-webkit-scrollbar {
+  display: none;
+}
+.projects-cards {
+  min-width: 330px;
+}
+.projects-content {
+  padding: 15px;
+  width: 50%;
+  min-width: 330px;
+}
+
+.projects-content p {
+  color: rgb(16 98 251);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.projects-content h2 {
+  margin: 0.8rem 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.projects-content h3 {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.projects-btn {
+  background-color: rgb(16 98 251);
+  max-width: max-content;
+  padding: 0.4rem 1.5rem;
+  color: white;
+  text-align: center;
+  margin: 1.5rem 0 0 0;
+}
+
+.more-external-cont {
+  display: flex;
+  gap: 2rem;
+  padding: 10px 5px;
+  overflow: scroll;
+}
+
+.more-external-cont::-webkit-scrollbar {
+  display: none;
+}
+
+.more-external-card {
+  background-color: rgb(243, 255, 131);
+  gap: 2rem;
+  border-radius: 15px;
+  padding: 20px;
+  width: 70%;
+  min-width: 380px;
+}
+.more-external-heading {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  align-items: center;
+}
+
+.more-external-heading img {
+  width: 10px;
+  height: 10px;
+}
+
+.external-text {
+  margin-top: 0.8rem;
+  font-weight: 500;
+}
+
+.external-text span {
+  font-weight: 700;
+  padding-left: 7px;
+}
+
+.external-btn {
+  background-color: black;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  width: max-content;
+  text-align: center;
+  margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.more-resource {
+  margin-top: 3rem;
+}
+
+.more-resource-card {
+  background-color: #0d3488;
+  border-radius: 15px;
+  padding: 20px;
+  min-height: 250px;
+  width: 80%;
+  min-width: 400px;
+}
+
+.more-resource-card p {
+  font-size: 1.4rem;
+  color: white;
+}
+
+.more-footer {
+  position: relative;
+}
+
+.more-footer-container {
+  height: 70px;
+  max-height: 100px;
+  background-color: yellow;
+  display: none;
+  gap: 2.5rem;
+  position: fixed;
+  /* width: 100%; */
+  bottom: 0;
+  left: 0;
+  right: 50%;
+  transition: display 0.5s ease-in;
+  padding-left: 2rem;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media (max-width: 700px) {
+  .more-footer-container {
+    right: 0px;
+  }
+}
+
+.more-footer-container p {
+  background-color: white;
+  padding: 6px 15px;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}

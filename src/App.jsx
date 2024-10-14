@@ -129,6 +129,12 @@ import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail"
 //   import("./home/pages/mobile/profile/firstProfile")
 // );
 const TestPage2 = React.lazy(() => import("./home/pages/testPage/testPage2"));
+const SkillPathMoreDetails = React.lazy(() =>
+  import("./home/pages/skillPath/moreDetails")
+);
+const CareerPathMoreDetails = React.lazy(() =>
+  import("./home/pages/careerPath/moreDetails")
+);
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showSplash, setShowSplash] = useState(false);
@@ -219,10 +225,17 @@ function AppRoutes() {
                   />
                   <Route path="career/details" element={<CareerDetails />} />
                   <Route
+                    path="career/more"
+                    element={<CareerPathMoreDetails />}
+                  />
+
+                  <Route
                     path="skill"
                     element={isMobile ? <SkillPathMobile /> : <SkillPath />}
                   />
                   <Route path="skill/details" element={<SkillPathDetails />} />
+                  <Route path="skill/more" element={<SkillPathMoreDetails />} />
+
                   <Route
                     path="projects"
                     element={isMobile ? <ProjectsMobile /> : <Projects />}
