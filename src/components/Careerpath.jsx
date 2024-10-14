@@ -143,39 +143,39 @@ function Careerpath() {
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         {filteredCourses.map((course, index) => (
-          <motion.div
-            key={index}
-            className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
-            whileHover={{ y: -5 }}
-          >
-            <div className="p-6">
-              <h3 className="text-2xl font-bold mb-3 text-gray-800">{course.courseName}</h3>
-              <p className="text-gray-600 mb-4">{course.description}</p>
-              <div className="flex items-center mb-4">
-                <img src={course.author} alt="Course Author" className="w-10 h-10 rounded-full mr-3" />
-                <p className="font-medium text-gray-700">{course.authorName}</p>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center">
-                  <FaRocket className="w-5 h-5 text-purple-500 mr-2" />
-                  <p className="text-sm font-medium text-gray-600">Skill Path 3</p>
-                </div>
-                <div className="flex items-center">
-                  <FaStar className="w-5 h-5 text-yellow-400 mr-1" />
-                  <p className="text-sm font-medium text-gray-600">{course.difficulty}</p>
-                </div>
-              </div>
-            </div>
-            <motion.button
-              className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
-              onClick={() => handlePreview(index)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Preview Course
-            </motion.button>
-          </motion.div>
-        ))}
+  <motion.div
+    key={index}
+    className="relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col border"
+    whileHover={{ y: -5 }}
+  >
+    <div className="p-6 flex-grow">
+      <h3 className="text-2xl font-bold mb-3 text-gray-800">{course.courseName}</h3>
+      <p className="text-gray-600 mb-4">{course.description}</p>
+      <div className="flex items-center mb-4">
+        <img src={course.author} alt="Course Author" className="w-10 h-10 rounded-full mr-3" />
+        <p className="font-medium text-gray-700">{course.authorName}</p>
+      </div>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center">
+          <FaRocket className="w-5 h-5 text-purple-500 mr-2" />
+          <p className="text-sm font-medium text-gray-600">Skill Path 3</p>
+        </div>
+        <div className="flex items-center">
+          <FaStar className="w-5 h-5 text-yellow-400 mr-1" />
+          <p className="text-sm font-medium text-gray-600">{course.difficulty}</p>
+        </div>
+      </div>
+    </div>
+    <motion.button
+      className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold hover:from-purple-700 hover:to-blue-700 transition-all duration-300"
+      onClick={() => handlePreview(index)}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Preview Course
+    </motion.button>
+  </motion.div>
+))}
       </motion.div>
     </motion.div>
   );
