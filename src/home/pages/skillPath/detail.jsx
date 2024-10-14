@@ -8,7 +8,7 @@ import {
   FaMoneyBillWave,
   FaBuilding,
 } from "react-icons/fa";
-import Path from "./../careerPath/path";
+import Path from "./path";
 
 function SkillPathDetails() {
   const CareerCard = () => {
