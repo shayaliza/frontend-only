@@ -14,7 +14,7 @@ import { IoIosArrowDropdown } from 'react-icons/io';
 
 
 
-function Header({handlePanel, toggleProfile,profileOpen}) {
+function Header({handlePanel, toggleProfile,profileOpen,toggleNotification}) {
   const navigate = useNavigate();
   const mainToggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -68,9 +68,9 @@ function Header({handlePanel, toggleProfile,profileOpen}) {
             )}
           </div>
           </div>
-          <div className="nav-rest">
+          <div className="nav-rest mr-4">
           {/* <HomeIcon className='w-6 h-6 text-black' onClick={()=> navigate("/createsnap/analytics")}/> */}
-            <div className="nav-item">
+            <div className="nav-item" onClick={toggleNotification}>
               <img src={img3} alt="" className="noti-icon" />
             </div>
             <div className="profile-image nav-item" onClick={toggleProfile}>
@@ -79,7 +79,7 @@ function Header({handlePanel, toggleProfile,profileOpen}) {
           </div>
         </div>
       </div>
-      {profileOpen && (
+      {/* {profileOpen && (
         <div className="profile-container ">
           <div className="profile">
             <div className="profile-heading">
@@ -105,7 +105,7 @@ function Header({handlePanel, toggleProfile,profileOpen}) {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }

@@ -3,10 +3,13 @@ import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { Outlet, useNavigate } from "react-router-dom";
 import CareerPathPopup from "../popups/CareerPathPopup";
+import ProfileComponent from "../popups/ManageSnapProfile"
+import NotificationComponent from "../popups/ManageSnapNotification"
 import BottomBar from "./BottomBar";
 import "./Layout.css";
 import { PullToRefresh } from "react-js-pull-to-refresh";
 import { Loader2 } from "lucide-react";
+import img4 from "../assets/rsc/kristina-v-hYdikKrex4U-unsplash.jpg";
 
 function CustomSpinner({ pullProgress, isRefreshing }) {
   const spinnerRef = useRef(null);
@@ -38,10 +41,25 @@ function PullContent({ pullProgress, isRefreshing }) {
 function Layout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [notiOpen, setNotiOpen] = useState(false);
   const [isAddCareerPathPopup, setIsAddCareerPathPopup] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([
+    {
+      userImage: "/api/placeholder/40/40",
+      userName: "John Doe",
+      message: "Hey, check out this new feature!",
+      time: "2m ago"
+    },
+    {
+      userImage: "/api/placeholder/40/40",
+      userName: "Jane Smith",
+      message: "You have a new follower",
+      time: "1h ago"
+    },
+  ]);
 
   const handlePanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -53,6 +71,10 @@ function Layout() {
 
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
+  };
+
+  const toggleNotification = () => {
+    setNotiOpen(!notiOpen);
   };
 
   const toggleAddCareerPathPopup = () => {
@@ -78,6 +100,8 @@ function Layout() {
           <Header
             handlePanel={handlePanel}
             profileOpen={profileOpen}
+            notiOpen={notiOpen}
+            toggleNotification={toggleNotification}
             toggleProfile={toggleProfile}
           />
         </div>
@@ -111,6 +135,18 @@ function Layout() {
       <CareerPathPopup
         isOpen={isAddCareerPathPopup}
         togglePopup={toggleAddCareerPathPopup}
+      />
+      <ProfileComponent 
+        isOpen={profileOpen}
+        onClose={toggleProfile}
+        userImage={img4}
+        userName="rose_emily003"
+        userFullName="Emily Rose"
+      />
+      <NotificationComponent 
+        isOpen={notiOpen}
+        onClose={toggleNotification}
+        notifications={notifications}
       />
     </div>
   );
