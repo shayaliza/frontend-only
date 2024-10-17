@@ -16,7 +16,7 @@ function Planet() {
       <EventCard />
       <div className="w-full">
         <Tabs defaultValue="overview" className="w-full">
-          <div className="w-9/12 mx-auto mb-4 mt-4">
+          <div className="md:w-9/12 mx-auto mb-4 mt-4 flex flex-wrap overflow-x-scroll md:overflow-hidden">
             <TabsList className="">
               <TabsTrigger value="overview" className="text-xl">
                 Overview

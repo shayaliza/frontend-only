@@ -5,8 +5,8 @@ const EventCard = () => {
     <div className="">
       {/* Event Ended Badge */}
       <div className="bg-gray-600 text-white px-6 pt-20 pb-24">
-        <div className="w-9/12 mx-auto">
-          <div className="w-max text-md bg-red-600 text-white px-3 py-1  font-semibold rounded">
+        <div className="md:w-9/12 w-full mx-auto">
+          <div className="md:w-max text-md bg-red-600 text-white px-3 py-1  font-semibold rounded">
             <span role="img" aria-label="clock">
               ⏰
             </span>{" "}
@@ -39,9 +39,9 @@ const EventCard = () => {
       </div>
 
       <div className="bg-[#013145] py-4 ">
-        <div className="w-9/12 flex justify-between mx-auto">
+        <div className="md:w-9/12 px-2 md:px-0  flex md:flex-row justify-between mx-auto">
           {/* Organized by */}
-          <div className="flex gap-6 text-white">
+          <div className="md:flex gap-6 text-white">
             <div className="mt-6 flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <span>Organized by:</span>
