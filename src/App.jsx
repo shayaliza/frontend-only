@@ -91,6 +91,7 @@ const Fourth = React.lazy(() => import("./home/pages/details/fourth"));
 const AccountSettings = React.lazy(() =>
   import("./home/pages/accountSettings/accountsSettings")
 );
+const Planet = React.lazy(() => import("./home/pages/planet/planet"));
 const TestPage = React.lazy(() => import("./home/pages/testPage/testPage"));
 const CourseInfoLayout = React.lazy(() =>
   import("./components/CoursesFolder/CourseInfo/courseinfoLayout")
@@ -180,6 +181,8 @@ function AppRoutes() {
 
               {/* {!loggedIn && ( */}
               <>
+                <Route path="/planet" element={<Planet />} />
+
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 <Route path="/signup" element={<SignUp />} />
