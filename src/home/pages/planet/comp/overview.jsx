@@ -12,11 +12,11 @@ function OverView() {
   return (
     <div>
       <Stepper />
-      <div className="flex w-9/12 mx-auto">
+      <div className="flex md:flex-row flex-col md:w-9/12 w-11/12 mx-auto mt-6">
         {/* Button Section */}
         <div className="flex flex-col">
           <button
-            className={`py-3 px-4 text-left text-sm font-medium w-[150px] ${
+            className={`py-3 px-4 text-left text-sm font-medium md:w-[150px] w-full ${
               activeTab === "tab1"
                 ? "bg-green-600 text-white"
                 : "bg-white text-green-600 hover:bg-gray-100"
@@ -26,7 +26,7 @@ function OverView() {
             About
           </button>
           <button
-            className={`py-3 px-4 text-left text-sm font-medium w-[150px] ${
+            className={`py-3 px-4 text-left text-sm font-medium md:w-[150px] w-full ${
               activeTab === "tab2"
                 ? "bg-green-600 text-white"
                 : "bg-white text-green-600 hover:bg-gray-100"
