@@ -9,10 +9,11 @@ function CourseStructure() {
     {
       title: "HTML",
       items: [
-        { text: "Introduction", id: "html1" },
-        { text: "Html Syntax", id: "html2" },
-        { text: "Basic Tags", id: "html3" },
-        { text: "article", id: "html4" },
+        { text: "introduction", id: "html1" },
+        { text: "practicetext", id: "html2" },
+        { text: "quiz", id: "html3" },
+        { text: "text", id: "html4" },
+        { text: "text", id: "html4" },
       ],
     },
     {
@@ -157,7 +158,7 @@ function CourseStructure() {
                                   </div>
                                   <div className="flex space-x-2">
                                     <Link
-                                      to={`/course/started/${course.title.toLowerCase()}/introduction`}
+                                      to={`/createsnap/course/html/started/${item.text.toLowerCase()}`}
                                       className="font-medium text-blue-600 hover:underline"
                                     >
                                       View

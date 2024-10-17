@@ -10,9 +10,9 @@ import img from "../assets/rsc/c1.avif";
 
 const dummyCourses = [
   {
-    id: 1,
-    title: "Introduction to React",
-    description: "Learn the basics of React and build your first app",
+    id: "html",
+    title: "Introduction to HTML",
+    description: "Learn the basics of html and build your first app",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,

@@ -4,9 +4,28 @@ import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
 import ManageSidebar from './CourseSidebar';
 import "../Layout.css"
 import BottomBar from './CoBottomBar';
+import ProfileComponent from '../../popups/ManageSnapProfile';
+import NotificationComponent from '../../popups/ManageSnapNotification';
+import img4 from "../../assets/rsc/kristina-v-hYdikKrex4U-unsplash.jpg";
 
 function ManageLayout() {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [notiOpen, setNotiOpen] = useState(false);
+  const [notifications, setNotifications] = useState([
+    {
+      userImage: "/api/placeholder/40/40",
+      userName: "John Doe",
+      message: "Hey, check out this new feature!",
+      time: "2m ago"
+    },
+    {
+      userImage: "/api/placeholder/40/40",
+      userName: "Jane Smith",
+      message: "You have a new follower",
+      time: "1h ago"
+    },
+  ]);
   const navigate = useNavigate();
 
   const handlePanel = () => {
@@ -17,11 +36,15 @@ function ManageLayout() {
     setIsPanelOpen(false);
   };
 
-  const [profileOpen, setProfileOpen] = useState(false);
-
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
   };
+
+  const toggleNotification = () => {
+    setNotiOpen(!notiOpen);
+  };
+
+
 
   const location = useLocation();
 
@@ -42,7 +65,13 @@ pathSegments.forEach((segment, index) => {
         <ManageSidebar isPanelOpen={isPanelOpen} toggleSidebar={toggleSidebar} />
         <div className={`flex flex-col w-full ${isPanelOpen ? 'blur' : ''}`}>
           <div className="h-20 z-10">
-        <Header handlePanel={handlePanel} profileOpen={profileOpen} toggleProfile={toggleProfile} />
+          <Header
+            handlePanel={handlePanel}
+            profileOpen={profileOpen}
+            notiOpen={notiOpen}
+            toggleNotification={toggleNotification}
+            toggleProfile={toggleProfile}
+          />
         </div>
         <div className={`lg:ml-56 overflow-y-auto flex- pb-4 ${isPanelOpen ? 'blur' : ''}`}>
       <nav className="breadcrumb p-4 mb-2 overflow-auto hidden lg:block">
@@ -64,7 +93,18 @@ pathSegments.forEach((segment, index) => {
       </div>
         </div>
       </div>
-      
+      <ProfileComponent 
+        isOpen={profileOpen}
+        onClose={toggleProfile}
+        userImage={img4}
+        userName="rose_emily003"
+        userFullName="Emily Rose"
+      />
+      <NotificationComponent 
+        isOpen={notiOpen}
+        onClose={toggleNotification}
+        notifications={notifications}
+      />
     </>
   );
 }

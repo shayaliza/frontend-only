@@ -311,13 +311,13 @@ function AppRoutes() {
                   <Route path="coursestructure" element={<CourseStructure />} />
                   <Route path="testimonial" element={<CourseTestimonial />} />
                   <Route path="more" element={<More />} />
-                  <Route path="html/introduction" element={<Introduction />} />
-                  <Route path="html/introduction/quiz" element={<Quiz />} />
-                  <Route path="html/introduction/video" element={<Video />} />
-                  <Route path="html/introduction/test" element={<Test />} />
-                  <Route path="html/introduction/text" element={<Text />} />
+                  <Route path="introduction" element={<Introduction />} />
+                  <Route path="introduction/quiz" element={<Quiz />} />
+                  <Route path="introduction/video" element={<Video />} />
+                  <Route path="introduction/test" element={<Test />} />
+                  <Route path="introduction/text" element={<Text />} />
                   <Route
-                    path="html/introduction/practicetext"
+                    path="introduction/practicetext"
                     element={<PracticeText />}
                   />
                 </Route>
