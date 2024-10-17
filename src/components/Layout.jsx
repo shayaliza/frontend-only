@@ -119,7 +119,7 @@ function Layout() {
             isRefreshing: isRefreshing
           }}
         >
-          <div className={`lg:ml-56 flex-1 overflow-y-auto min-h-screen flex-grow z-0`}>
+          <div className={`lg:pl-56 flex-1 overflow-y-auto min-h-screen flex-grow max-w-[1500px] 2xl:mx-auto z-0 `}>
             <Outlet
               key={refreshKey}
               context={{

@@ -73,7 +73,7 @@ pathSegments.forEach((segment, index) => {
             toggleProfile={toggleProfile}
           />
         </div>
-        <div className={`lg:ml-56 overflow-y-auto flex- pb-4 ${isPanelOpen ? 'blur' : ''}`}>
+        <div className={`lg:pl-56 overflow-y-auto max-w-[1500px] 3xl:mx-auto  pb-4 ${isPanelOpen ? 'blur' : ''}`}>
       <nav className="breadcrumb p-4 mb-2 overflow-auto hidden lg:block">
         {breadcrumbs.map((breadcrumb, index) => (
           <span key={index}>
