@@ -137,6 +137,8 @@ const SkillPathMoreDetails = React.lazy(() =>
 const CareerPathMoreDetails = React.lazy(() =>
   import("./home/pages/careerPath/moreDetails")
 );
+// setting up interceptors
+setupInterceptors();
 function AppRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showSplash, setShowSplash] = useState(false);

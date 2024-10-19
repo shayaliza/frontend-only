@@ -1,10 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import alertify from "alertifyjs";
-import "alertifyjs/build/css/alertify.min.css";
-import "alertifyjs/build/css/themes/default.min.css";
-import "./LoginPage.css";
 import logo from "../../assets/logo-black.png";
 import { Link } from "react-router-dom";
 import { RegisterFetch } from "../../../fetching/authFetch";
@@ -12,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { login, setUserData } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import "./LoginPage.css";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -52,7 +49,30 @@ const SignUp = () => {
     });
   };
   const FinalSummit = async (values) => {
-    navigate("/resendmail");
+    await RegisterFetch(values.username, values.email, values.password).then(
+      (res) => {
+        console.log(res);
+        console.log(res.data);
+
+        if (res.status === 201) {
+          dispatch(
+            setUserData({
+              username: values.username,
+              email: values.email,
+              password: values.password,
+              reduxAccessToken: res.data.access,
+              reduxRefreshToken: res.data.refresh,
+            })
+          );
+          // dispatch(login());
+          navigate("/resendmail");
+          toast({ title: "Registration successful!" });
+        }
+        if (res.status === 400) {
+          toast({ title: "User Already Exists", variant: "destructive" });
+        }
+      }
+    );
   };
 
   return (
