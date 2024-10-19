@@ -125,6 +125,7 @@ const ProfileMobile = React.lazy(() =>
   import("./home/pages/mobile/profile/secondProfile")
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
+import TagProfile from "./home/pages/topics/oneTopic";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -181,8 +182,6 @@ function AppRoutes() {
 
               {/* {!loggedIn && ( */}
               <>
-                <Route path="/planet" element={<Planet />} />
-
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -215,7 +214,14 @@ function AppRoutes() {
                     }
                   />
                   <Route path="topics" element={<Topics />} />
+                  <Route path="topics/oneTopic" element={<TagProfile />} />
+
                   <Route path="competitions" element={<Competitors />} />
+                  <Route
+                    path="competitions/competitionPage"
+                    element={<Planet />}
+                  />
+
                   <Route path="leaderboard" element={<LeaderBoard />} />
                   <Route
                     path="courses"

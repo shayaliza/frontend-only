@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const cardData = [
   {
@@ -39,8 +40,19 @@ const TAB_CONTENTS = {
   upcoming: cardData, // Use cardData for now; replace with actual data if different
 };
 
-const Card = ({ imageUrl, title, description, tag, category, timeLeft }) => (
-  <div className="card max-w-[290px] min-w-[290px] w-[290px] h-[350px] flex flex-col justify-between shadow-md rounded-3xl relative m-4">
+const Card = ({
+  imageUrl,
+  title,
+  description,
+  tag,
+  category,
+  timeLeft,
+  handleCardClick,
+}) => (
+  <div
+    onClick={handleCardClick} // This will trigger the navigation
+    className="card max-w-[290px] min-w-[290px] w-[290px] h-[350px] flex flex-col justify-between shadow-md rounded-3xl relative m-4"
+  >
     <div className="bookmark popup absolute top-1/2 right-5 transform -translate-y-1/2 text-xl font-bold">
       :
     </div>
@@ -65,6 +77,12 @@ const Card = ({ imageUrl, title, description, tag, category, timeLeft }) => (
 );
 
 const CompetitionSection = () => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/dashboard/competitions/competitionPage`);
+  };
+
   const [activeTab, setActiveTab] = useState("active");
 
   const handleTabChange = (tab) => {
@@ -72,9 +90,9 @@ const CompetitionSection = () => {
   };
 
   return (
-    <div className=" final" style={{ fontFamily: "Nunito" }}>
-      <section className=" py-5 relative">
-        <div className=" h-[300px] flex justify-between items-center">
+    <div className="final" style={{ fontFamily: "Nunito" }}>
+      <section className="py-5 relative">
+        <div className="h-[300px] flex justify-between items-center">
           <div className="mx-8 flex flex-col justify-between">
             <h1
               className="text-4xl font-semibold"
@@ -104,7 +122,7 @@ const CompetitionSection = () => {
         </div>
         <div className="tab flex border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white max-[900px]:px-0">
           <button
-            className={`tablinks hover:bg-gray-200  text-xl px-6 py-2 ${
+            className={`tablinks hover:bg-gray-200 text-xl px-6 py-2 ${
               activeTab === "active"
                 ? "active text-[#ec1ee2] border-b-2 rounded-none border-black border-solid"
                 : ""
@@ -114,7 +132,7 @@ const CompetitionSection = () => {
             Active
           </button>
           <button
-            className={` hover:bg-gray-200 text-xl px-6 py-2 ${
+            className={`hover:bg-gray-200 text-xl px-6 py-2 ${
               activeTab === "closed"
                 ? "active text-[#ec1ee2] border-b-2 rounded-none border-black border-solid"
                 : ""
@@ -124,7 +142,7 @@ const CompetitionSection = () => {
             Closed
           </button>
           <button
-            className={`tablinks hover:bg-gray-200  text-xl px-6 py-2 ${
+            className={`tablinks hover:bg-gray-200 text-xl px-6 py-2 ${
               activeTab === "upcoming"
                 ? "active text-[#ec1ee2] border-b-2 rounded-none border-black border-solid"
                 : ""
@@ -150,6 +168,7 @@ const CompetitionSection = () => {
                 tag={card.tag}
                 category={card.category}
                 timeLeft={card.timeLeft}
+                handleCardClick={handleCardClick} // Add this
               />
             ))}
           </div>
@@ -170,6 +189,7 @@ const CompetitionSection = () => {
                 tag={card.tag}
                 category={card.category}
                 timeLeft={card.timeLeft}
+                handleCardClick={handleCardClick} // Add this
               />
             ))}
           </div>
@@ -190,6 +210,7 @@ const CompetitionSection = () => {
                 tag={card.tag}
                 category={card.category}
                 timeLeft={card.timeLeft}
+                handleCardClick={handleCardClick} // Add this
               />
             ))}
           </div>

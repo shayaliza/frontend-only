@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 const tags = [
   {
     title: "Javascript",
@@ -27,6 +28,7 @@ const tags = [
   },
 ];
 function Topics() {
+  const navigate = useNavigate();
   return (
     <div className="bg-[#f6f6f6]">
       <div className="grid place-items-center w-full  max-[1500px]:max-w-[1100px] overflow-x-hidden overflow-y-scroll">
@@ -41,6 +43,7 @@ function Topics() {
           <div className="tags_holder flex my-10 flex-wrap justify-between max-[900px]:justify-center">
             {tags.map((tag, index) => (
               <div
+                onClick={() => navigate("/dashboard/topics/onetopic")}
                 key={index}
                 className="tag flex items-center bg-gray-300 min-w-[300px] border border-white h-[80px] my-0.5 rounded-md p-2"
               >

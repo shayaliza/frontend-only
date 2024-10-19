@@ -2,7 +2,7 @@ import React from "react";
 
 const EventCard = () => {
   return (
-    <div className="">
+    <div className="pt-2">
       {/* Event Ended Badge */}
       <div className="bg-gray-600 text-white px-6 pt-20 pb-24">
         <div className="md:w-9/12 w-full mx-auto">

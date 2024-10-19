@@ -11,8 +11,8 @@ import OverView from "./comp/overview";
 
 function Planet() {
   return (
-    <div>
-      <Navbar />
+    <div className="final">
+      {/* <Navbar /> */}
       <EventCard />
       <div className="w-full">
         <Tabs defaultValue="overview" className="w-full">
