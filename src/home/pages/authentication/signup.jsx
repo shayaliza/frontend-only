@@ -9,11 +9,20 @@ import { login, setUserData } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import "./LoginPage.css";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/dashboard/profile");
+    }
+  });
 
   const validationSchema = Yup.object({
     username: Yup.string().required("Please choose a username."),
