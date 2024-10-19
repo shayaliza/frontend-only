@@ -4,6 +4,7 @@ const URL = "https://snapgpt.online/";
 // https://moviesnap.in/career_service/api/course/creator/courses/==
 const getCreaterCourseFetch = async () => {
   try {
+    console.log(`this is the url  ${URL}api/course/creator/courses/`);
     const response = await axiosInstance.get(
       `${URL}api/course/creator/courses/`
     );
