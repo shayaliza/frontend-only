@@ -29,8 +29,8 @@ function ProfileIcon() {
       <img src={ProfileImage} alt="Profile" className="w-8 h-8 rounded-full" />
       {isProfileVisible && (
         <div>
-          <div className="absolute md:top-16 top-14 right-0 mt-2 w-48  bg-white text-black border border-gray-300  rounded-lg">
-            <div className="absolute w-5 h-5 bg-inherit top-[-10px] right-4 rotate-45 content-['']"></div>
+          <div className="absolute md:top-16 top-14 right-0 mt-2 w-48  bg-white dark:bg-gray-700 dark:text-white text-black border border-gray-300 rounded-lg">
+            <div className="absolute w-5 h-5 bg-inherit top-[-10px] right-4 rotate-45 content-[''] "></div>
 
             <ul className="list-none p-2 m-0">
               <div className="profile_item p-2 font-bold">
@@ -51,6 +51,9 @@ function ProfileIcon() {
               </div>
               <div className="profile_item p-2 font-bold">
                 <p>Settings</p>
+              </div>
+              <div className="profile_item p-2 font-bold">
+                <Link to="/detailsPages/first">Support</Link>
               </div>
             </ul>
           </div>
