@@ -170,6 +170,7 @@ function AppRoutes() {
     }
   }, [showSplash]);
 
+  const loggedIn = useSelector((state) => state.user.loggedIn);
   return (
     <div className="">
       {showSplash ? (
@@ -182,7 +183,6 @@ function AppRoutes() {
               <Route path="/verify-email" element={<VerifyEmailToken />} />
               {/*  */}
 
-              {/* {!loggedIn && ( */}
               <>
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
@@ -194,85 +194,99 @@ function AppRoutes() {
               <Route path="/resendmail" element={<SendMail />} />
               <Route path="testpage" element={<TestPage />} />
               <Route path="testpage2" element={<TestPage2 />} />
-
+              {/*// All Dashboard Routes //*/}
               <>
-                <Route path="/dashboard" element={<MainLayout />}>
-                  <Route path="job" element={<Job />} />
-                  <Route path="notification" element={<Notification />} />
+                {loggedIn && (
+                  <Route path="/dashboard" element={<MainLayout />}>
+                    <Route path="job" element={<Job />} />
+                    <Route path="notification" element={<Notification />} />
 
-                  <Route
-                    path="progress"
-                    index
-                    element={isMobile ? <MyProgressMobile /> : <MyProgress />}
-                  />
-                  <Route
-                    path="myfeed"
-                    element={isMobile ? <MyFeedMobile /> : <MyFeed />}
-                  />
-                  <Route
-                    path="myfeed/feeddetail"
-                    element={
-                      isMobile ? <MyFeedDetailMobile /> : <MyFeedDetail />
-                    }
-                  />
-                  <Route path="topics" element={<Topics />} />
-                  <Route path="topics/oneTopic" element={<TagProfile />} />
+                    <Route
+                      path="progress"
+                      index
+                      element={isMobile ? <MyProgressMobile /> : <MyProgress />}
+                    />
+                    <Route
+                      path="myfeed"
+                      element={isMobile ? <MyFeedMobile /> : <MyFeed />}
+                    />
+                    <Route
+                      path="myfeed/feeddetail"
+                      element={
+                        isMobile ? <MyFeedDetailMobile /> : <MyFeedDetail />
+                      }
+                    />
+                    <Route path="topics" element={<Topics />} />
+                    <Route path="topics/oneTopic" element={<TagProfile />} />
 
-                  <Route path="competitions" element={<Competitors />} />
-                  <Route
-                    path="competitions/competitionPage"
-                    element={<Planet />}
-                  />
+                    <Route path="competitions" element={<Competitors />} />
+                    <Route
+                      path="competitions/competitionPage"
+                      element={<Planet />}
+                    />
 
-                  <Route path="leaderboard" element={<LeaderBoard />} />
-                  <Route
-                    path="courses"
-                    element={isMobile ? <CoursesMobile /> : <Courses />}
-                  />
-                  <Route path="courses/details" element={<CourseDetails />} />
-                  <Route
-                    path="career"
-                    element={isMobile ? <CareerPathMobile /> : <CareerPath />}
-                  />
-                  <Route path="career/details" element={<CareerDetails />} />
-                  <Route
-                    path="career/more"
-                    element={<CareerPathMoreDetails />}
-                  />
+                    <Route path="leaderboard" element={<LeaderBoard />} />
+                    <Route
+                      path="courses"
+                      element={isMobile ? <CoursesMobile /> : <Courses />}
+                    />
+                    <Route path="courses/details" element={<CourseDetails />} />
+                    <Route
+                      path="career"
+                      element={isMobile ? <CareerPathMobile /> : <CareerPath />}
+                    />
+                    <Route path="career/details" element={<CareerDetails />} />
+                    <Route
+                      path="career/more"
+                      element={<CareerPathMoreDetails />}
+                    />
 
-                  <Route
-                    path="skill"
-                    element={isMobile ? <SkillPathMobile /> : <SkillPath />}
-                  />
-                  <Route path="skill/details" element={<SkillPathDetails />} />
-                  <Route path="skill/more" element={<SkillPathMoreDetails />} />
+                    <Route
+                      path="skill"
+                      element={isMobile ? <SkillPathMobile /> : <SkillPath />}
+                    />
+                    <Route
+                      path="skill/details"
+                      element={<SkillPathDetails />}
+                    />
+                    <Route
+                      path="skill/more"
+                      element={<SkillPathMoreDetails />}
+                    />
 
-                  <Route
-                    path="projects"
-                    element={isMobile ? <ProjectsMobile /> : <Projects />}
-                  />
-                  <Route path="projects/details" element={<ProjectDetails />} />
-                  <Route path="liveevent" element={<LiveEvent />} />
+                    <Route
+                      path="projects"
+                      element={isMobile ? <ProjectsMobile /> : <Projects />}
+                    />
+                    <Route
+                      path="projects/details"
+                      element={<ProjectDetails />}
+                    />
+                    <Route path="liveevent" element={<LiveEvent />} />
 
-                  <Route path="assessment" element={<Assement />} />
-                  <Route
-                    path="assessment/details"
-                    element={<AssementDetails />}
-                  />
-                  <Route path="catalog" element={<Catalog />} />
-                  <Route
-                    path="editprofile"
-                    // element={isMobile ? <EditProfileMobile /> : <ProfilePage />}
-                    element={<ProfilePage />}
-                  />
-                  <Route
-                    path="profile"
-                    element={
-                      isMobile ? <ProfileMobile /> : <SecondProfilePage />
-                    }
-                  />
-                  <Route path="accountSettings" element={<AccountSettings />} />
-                </Route>
+                    <Route path="assessment" element={<Assement />} />
+                    <Route
+                      path="assessment/details"
+                      element={<AssementDetails />}
+                    />
+                    <Route path="catalog" element={<Catalog />} />
+                    <Route
+                      path="editprofile"
+                      // element={isMobile ? <EditProfileMobile /> : <ProfilePage />}
+                      element={<ProfilePage />}
+                    />
+                    <Route
+                      path="profile"
+                      element={
+                        isMobile ? <ProfileMobile /> : <SecondProfilePage />
+                      }
+                    />
+                    <Route
+                      path="accountSettings"
+                      element={<AccountSettings />}
+                    />
+                  </Route>
+                )}
 
                 <Route path="learningmodule" element={<LearnModule />} />
 
