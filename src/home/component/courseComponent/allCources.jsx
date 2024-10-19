@@ -220,14 +220,14 @@ const AllCourses = () => {
     // Add more course objects as needed
   ];
   const Card = ({ course }) => (
-    <div className="border pb-2 border-gray-200 shadow-lg rounded-xl overflow-hidden w-full lg:w-[350px] mb-4 lg:mb-0 transition duration-300 ease-in-out  hover:shadow-2xl">
+    <div className="border bg-white dark:bg-gray-700 pb-2 border-gray-200 shadow-lg rounded-xl overflow-hidden w-full lg:w-[350px] mb-4 lg:mb-0 transition duration-300 ease-in-out  hover:shadow-2xl">
       <div className="flex flex-col">
         <img
           src={course.image}
           className="w-full object-cover h-[210px] rounded-t-xl"
           alt="Course Banner"
         />
-        <div className="font-bold text-lg ml-4 my-3 text-gray-800">
+        <div className="font-bold text-lg ml-4 my-3 text-gray-800 dark:text-white">
           {course.title}
         </div>
         <div className="flex items-center ml-4">
@@ -237,7 +237,7 @@ const AllCourses = () => {
             alt="Instructor Profile"
           />
           <div className="flex flex-col">
-            <div className="font-bold text-sm text-gray-700">
+            <div className="font-bold text-sm text-gray-700 dark:text-white">
               {course.provider}
             </div>
             <div className="text-xs text-gray-500">{course.type}</div>
@@ -286,13 +286,13 @@ const AllCourses = () => {
                 />
               ))}
             </div>
-            <div className="text-sm font-semibold text-gray-600 mt-1">
+            <div className="text-sm font-semibold text-gray-600 dark:text-white mt-1">
               {course.levelText}
             </div>
           </div>
           <div className="mr-4">
             <button
-              className="border border-gray-300 px-4 py-2 font-bold flex items-center gap-1 rounded-lg transition hover:bg-gray-100 hover:border-gray-500"
+              className="border border-gray-300 px-4 py-2 font-bold flex items-center gap-1 rounded-lg transition hover:bg-gray-100 hover:border-gray-500 dark:text-white dark:hover:text-black"
               onClick={handleClick}
             >
               Get Started
@@ -310,12 +310,12 @@ const AllCourses = () => {
 
   return (
     <div className="py-8 px-4 relative">
-      <div className="text-3xl font-bold mb-6 ">
+      <div className="text-3xl font-bold mb-6 text-black md:text-white ">
         <p>All Courses</p>
       </div>
       <div
         id="sticky-tags"
-        className={`flex flex-wrap gap-2 mb-8 max-w-[1150px] mx-auto px-4 py-2 bg-white h-auto overflow-hidden md:overflow-auto 
+        className={`flex flex-wrap gap-2 mb-8 max-w-[1150px] mx-auto px-4 py-2  h-auto overflow-hidden md:overflow-auto 
         }`}
       >
         {tags.map((tag) => (
@@ -331,7 +331,7 @@ const AllCourses = () => {
         <div className="flex flex-col gap-4 md:flex-row md:justify-between mb-6">
           <div className="flex items-center rounded-3xl border-gray-500 p-3 border flex-shrink-0 w-full md:w-auto">
             <span className="mr-2">Sort by:</span>
-            <select className="border-none focus:outline-none rounded-md font-bold">
+            <select className="border-none focus:outline-none rounded-md font-bold bg-transparent">
               <option>Most Popular</option>
               <option>Filter</option>
               <option>Filter</option>
@@ -342,7 +342,7 @@ const AllCourses = () => {
             <div className="flex flex-col gap-2 w-full md:flex-row md:w-auto">
               <div className="flex items-center rounded-3xl border-gray-500 p-3 border flex-shrink-0">
                 <span className="mr-2">Option 1:</span>
-                <select className="border-none focus:outline-none rounded-md font-bold">
+                <select className="border-none focus:outline-none rounded-md font-bold bg-transparent">
                   <option>Option 1</option>
                   <option>Option 2</option>
                   <option>Option 3</option>
@@ -350,7 +350,7 @@ const AllCourses = () => {
               </div>
               <div className="flex items-center rounded-3xl border-gray-500 p-3 border flex-shrink-0">
                 <span className="mr-2">Option 2:</span>
-                <select className="border-none focus:outline-none rounded-md font-bold">
+                <select className="border-none focus:outline-none rounded-md font-bold bg-transparent">
                   <option>Option 1</option>
                   <option>Option 2</option>
                   <option>Option 3</option>
