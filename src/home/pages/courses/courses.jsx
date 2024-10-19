@@ -16,9 +16,9 @@ function Cources() {
 
   return (
     <>
-      <div>
+      <div className="md:pt-4">
         {/* <!-- @New Banner --> */}
-        <section class="bg-gray-200 final m-auto mt-8 pb-8 rounded-md h-auto shadow-lg">
+        <section class="bg-gray-200 final m-auto  pb-8 rounded-md h-auto shadow-lg">
           {/* <!-- @First Card Section --> */}
           <div class="w-11/12 md:w-11/12 m-auto pt-4 hidden md:block">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

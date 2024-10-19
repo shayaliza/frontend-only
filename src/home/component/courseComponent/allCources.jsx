@@ -220,52 +220,60 @@ const AllCourses = () => {
     // Add more course objects as needed
   ];
   const Card = ({ course }) => (
-    <div
-      className="cardCourse border border-black h-auto pb-4 w-full"
-      data-tags={course.tags}
-    >
+    <div className="border pb-2 border-gray-200 shadow-lg rounded-xl overflow-hidden w-full lg:w-[350px] mb-4 lg:mb-0 transition duration-300 ease-in-out  hover:shadow-2xl">
       <div className="flex flex-col">
         <img
           src={course.image}
-          className="w-full object-cover h-[210px] md:w-[350px]"
-          alt="Course"
+          className="w-full object-cover h-[210px] rounded-t-xl"
+          alt="Course Banner"
         />
-        <div className="font-bold text-lg ml-2 my-2">{course.title}</div>
-        <div className="flex flex-row ml-2">
-          <div className="mr-2">
-            <img
-              src={course.profileImage}
-              className="rounded-full h-[60px] w-[60px]"
-              alt="Profile"
-            />
-          </div>
+        <div className="font-bold text-lg ml-4 my-3 text-gray-800">
+          {course.title}
+        </div>
+        <div className="flex items-center ml-4">
+          <img
+            src={course.profileImage}
+            className="rounded-full h-[60px] w-[60px] mr-4"
+            alt="Instructor Profile"
+          />
           <div className="flex flex-col">
-            <div className="font-bold text-sm">{course.provider}</div>
-            <div className="text-sm text-gray-500">{course.type}</div>
-            <div className="text-xs text-gray-500">
+            <div className="font-bold text-sm text-gray-700">
+              {course.provider}
+            </div>
+            <div className="text-xs text-gray-500">{course.type}</div>
+            <div className="text-xs text-gray-400">
               {course.enrollment} enrolled | {course.duration}
             </div>
           </div>
         </div>
-        <div className="flex flex-row mt-3 text-sm justify-center gap-4 lg:text-xs">
-          {course.details.map((detail, index) => (
-            <div key={index} className="flex gap-1">
-              <img src={detail.icon} alt={detail.label} />
-              <div className="text-[#f4b9cd] font-bold">{detail.label}</div>
-            </div>
-          ))}
+
+        <div className="flex flex-row mt-4 justify-center gap-6 text-xs">
+          <div className="flex gap-1 items-center">
+            <img src={time} alt="Time Icon" className="w-4 h-4" />
+            <div className="text-pink-500 font-semibold">12 Courses</div>
+          </div>
+          <div className="flex gap-1 items-center">
+            <img src={time} alt="Time Icon" className="w-4 h-4" />
+            <div className="text-pink-500 font-semibold">12 Courses</div>
+          </div>
+          <div className="flex gap-1 items-center">
+            <img src={time} alt="Time Icon" className="w-4 h-4" />
+            <div className="text-pink-500 font-semibold">12 Courses</div>
+          </div>
         </div>
-        <div className="flex ml-2 mt-3 gap-2 flex-wrap">
+
+        <div className="flex ml-4 mt-3 gap-2">
           {course.tags.map((tag, index) => (
             <div
+              className="px-4 py-1 bg-orange-500 text-xs text-white rounded-full"
               key={index}
-              className="px-4 bg-orange-500 text-sm text-white rounded-lg"
             >
               {tag}
             </div>
           ))}
         </div>
-        <div className="flex mt-3 ml-4 justify-between items-center">
+
+        <div className="flex mt-4 ml-4 justify-between items-center px-4">
           <div className="flex flex-col">
             <div className="flex">
               {course.level.map((icon, index) => (
@@ -278,21 +286,18 @@ const AllCourses = () => {
                 />
               ))}
             </div>
-            <div className="text-sm font-semibold">{course.levelText}</div>
+            <div className="text-sm font-semibold text-gray-600 mt-1">
+              {course.levelText}
+            </div>
           </div>
           <div className="mr-4">
-            <div className="border border-black px-2 py-2 font-bold flex items-center cursor-pointer">
-              <div className="flex gap-1" onClick={handleClick}>
-                <div>Get Started</div>
-                {/* <img
-                  width="28"
-                  height="28"
-                  src="https://img.icons8.com/ultraviolet/40/long-arrow-right.png"
-                  alt="arrow"
-                /> */}
-                <FaArrowRight className="mt-1" />
-              </div>
-            </div>
+            <button
+              className="border border-gray-300 px-4 py-2 font-bold flex items-center gap-1 rounded-lg transition hover:bg-gray-100 hover:border-gray-500"
+              onClick={handleClick}
+            >
+              Get Started
+              <FaArrowRight className="text-xs" />
+            </button>
           </div>
         </div>
       </div>
