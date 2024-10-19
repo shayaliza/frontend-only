@@ -1,5 +1,6 @@
 import axiosInstance from "./../Interceptor/axiosInstance";
-const URL = "https://moviesnap.in/career_service/";
+const URL = "https://snapgpt.online/";
+
 // https://moviesnap.in/career_service/api/course/creator/courses/==
 const getCreaterCourseFetch = async () => {
   try {
