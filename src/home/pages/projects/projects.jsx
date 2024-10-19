@@ -1,6 +1,8 @@
 import React from "react";
 import { FaClock, FaDownload, FaUserFriends } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { cn } from "../../../lib/utils";
+import GridPattern from "../../../components/ui/grid-pattern";
 
 function Projects() {
   const navigate = useNavigate();
@@ -28,59 +30,74 @@ function Projects() {
   };
   const MainCard = () => {
     return (
-      <div className="bg-card p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-2">Multiplayer Game - Connect4</h2>
-        <p className="text-gray-500 mb-4">
+      <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl">
+        <h2 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">
+          Multiplayer Game - Connect4
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-4">
           If you ever wondered how multiplayer games are made or wanted to make
-          a game for your weekend, this is the project for you. In this python
-          project you will be creating a multiplayer Connect4 game for you and
-          your friends using fundamentals of PyGame, Sockets and game
+          a game for your weekend, this is the project for you. In this Python
+          project, you will be creating a multiplayer Connect4 game for you and
+          your friends using the fundamentals of PyGame, Sockets, and game
           development.
         </p>
         <div className="mb-4">
-          <span className="font-semibold">Author:</span> Apoorv Goyal{" "}
-          <FaUserFriends className="inline-block ml-1" />
+          <span className="font-semibold dark:text-white">Author:</span>
+          <span className="text-gray-600 dark:text-gray-300">Apoorv Goyal</span>
+          <FaUserFriends className="inline-block ml-1 dark:text-white" />
         </div>
         <div className="mb-4">
-          <span className="font-semibold">Collaborator(s):</span> Kevin Paulose,
-          Kiran <FaUserFriends className="inline-block ml-1" />
+          <span className="font-semibold dark:text-white">
+            Collaborator(s):
+          </span>{" "}
+          <span className="text-gray-600 dark:text-gray-300">
+            {" "}
+            Kevin Paulose, Kiran{" "}
+          </span>
+          <FaUserFriends className="inline-block ml-1 dark:text-white" />
         </div>
         <div className="mb-4">
-          <span className="font-semibold">Prerequisite(s):</span> Python
+          <span className="font-semibold dark:text-white">
+            Prerequisite(s):
+          </span>{" "}
+          <span className="text-gray-600 dark:text-gray-300">Python</span>
         </div>
-        <div className="flex flex-row items-center mb-4 bg-gray-100 w-max p-2 rounded-md">
-          <div className="mr-2 flex flex-row gap-2 ">
+        <div className="flex flex-row items-center mb-4 bg-gray-100 dark:bg-gray-800 p-2 rounded-md">
+          <div className="mr-2 flex flex-row gap-2 text-gray-700 dark:text-gray-300">
             <FaClock className="mt-1" />
             <div>25 hours</div>
           </div>
-          <span className="text-muted-foreground">
+          <span className="text-gray-500 dark:text-gray-400">
             | Difficulty: Intermediate
           </span>
         </div>
-        <h3 className="font-semibold mb-2 text-gray-700">
+        <h3 className="font-semibold mb-2 text-gray-700 dark:text-gray-300">
           Skills to be Learned
         </h3>
-        <div className="flex flex-wrap gap-2 mb-4 text-gray-700">
-          <span className="px-2 py-1 rounded bg-gray-200">Pygame</span>
-          <span className="bg-gray-200 px-2 py-1 rounded">
-            Game Development
-          </span>
-          <span className="bg-gray-200 px-2 py-1 rounded">
-            Networking Fundamentals
-          </span>
-          <span className="bg-gray-200 px-2 py-1 rounded">
-            Socket Communication
-          </span>
-          <span className="bg-gray-200 px-2 py-1 rounded">Game Engine</span>
+        <div className="flex flex-wrap gap-2 mb-4">
+          {[
+            "Pygame",
+            "Game Development",
+            "Networking Fundamentals",
+            "Socket Communication",
+            "Game Engine",
+          ].map((skill) => (
+            <span
+              key={skill}
+              className="px-2 py-1 rounded bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            >
+              {skill}
+            </span>
+          ))}
         </div>
         <div className="flex space-x-4">
           <button
-            className="px-4 py-2 rounded border-green-600 text-green-600 hover:bg-green-400/10 border"
+            className="px-4 py-2 rounded border border-green-600 text-green-600 hover:bg-green-400/10 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-400/20 transition duration-300"
             onClick={handleClick}
           >
             View Project
           </button>
-          <button className="px-4 py-2 rounded flex items-center bg-green-600 text-white ">
+          <button className="px-4 py-2 rounded flex items-center bg-green-600 text-white hover:bg-green-500 transition duration-300">
             <FaDownload className="mr-2" /> Download Project
           </button>
         </div>
@@ -89,38 +106,48 @@ function Projects() {
   };
   return (
     <>
-      <div className="final m-auto flex flex-row  bg-gradient-to-r rounded-lg text-white from-[#f4b9cd] to-[#8677ae]  md:mt-5 mt-1 ">
-        <div className="xl:w-1/2 w-full md:p-8 p-6">
-          <div className="md:text-5xl text-2xl font-bold mt-4 ">
-            Learn Programming by Building projects
-          </div>
-          <div className="mt-4 text-sm">
-            Explore reputable programs, distinguished careers, and resources you
-            may need along the way. we give you the information, tools, and
-            support you need to quickly get into a tech career. Find the right
-            carrer for you and make a change.
-          </div>
-          <div className=" px-4 py-2 rounded-md mt-4 text-white bg-orange-600 w-max ">
-            Start Building Projects
-          </div>
-        </div>
-        <div className="xl:w-1/2 hidden">
-          <div className="grid grid-cols-2 gap-4  my-4 mr-2">
-            <CareerCard />
-            <CareerCard />
-            <CareerCard />
-            <CareerCard />
+      <div className="final md:pt-4">
+        <div
+          className="relative flex size-full overflow-hidden rounded-lg border bg-gradient-to-l from-pink-50 to-blue-50
+    dark:bg-gradient-to-l dark:from-gray-500 dark:via-gray-700 dark:to-gray-900
+      dark:bg-blackTheme p-8 md:shadow-xl"
+        >
+          <GridPattern
+            width={20}
+            height={20}
+            x={-1}
+            y={-1}
+            className={cn(
+              "[mask-image:linear-gradient(to_bottom_left,white,transparent,transparent)] "
+            )}
+          />
+          <div className="w-2/3 mx-0 md:p-0 p-6 text-black dark:text-white">
+            <div className="md:text-5xl text-2xl font-bold mt-4 ">
+              Learn Programming by Building projects
+            </div>
+            <div className="mt-4 text-sm">
+              Explore reputable programs, distinguished careers, and resources
+              you may need along the way. we give you the information, tools,
+              and support you need to quickly get into a tech career. Find the
+              right carrer for you and make a change.
+            </div>
+
+            <div className="md:pt-8 pt-2 ">Start Building Projects</div>
           </div>
         </div>
       </div>
       <div className="final px-4">
-        <div className="text-3xl font-bold mt-6 mb-4">Featured Projects</div>
+        <div className="text-3xl font-bold mt-6 mb-4 text-black dark:text-white">
+          Featured Projects
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 m-auto mt-4">
           <MainCard />
           <MainCard />
         </div>
-        <div className="text-3xl font-bold mt-6 mb-4">All Projects</div>
-        <div class="sticky  top-0 z-10 flex flex-wrap gap-2 mb-2 max-w-[1150px] mx-auto px-4 py-2 bg-white  overflow-hidden md:overflow-auto md:h-auto">
+        <div className="text-3xl font-bold mt-6 mb-4 text-black dark:text-white">
+          All Projects
+        </div>
+        <div class="sticky  top-0 z-10 flex flex-wrap gap-2 mb-2 max-w-[1150px] mx-auto px-4 py-2  overflow-hidden md:overflow-auto md:h-auto">
           <div
             class="tagCourse p-3 bg-black text-white rounded-md flex-shrink-0"
             data-tag="all"
