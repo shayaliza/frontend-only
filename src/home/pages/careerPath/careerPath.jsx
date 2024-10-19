@@ -2,62 +2,90 @@ import React from "react";
 import { FaBook, FaClipboardCheck, FaProjectDiagram } from "react-icons/fa";
 import { FaRightLong, FaRightToBracket } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { cn } from "../../../lib/utils";
+import GridPattern from "../../../components/ui/grid-pattern";
+import profile from "../../assets/profile.png";
 
 function CareerPath() {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/dashboard/career/details");
   };
+
   const CareerCard = () => {
+    const handleClick = () => {
+      navigate("/dashboard/career/details");
+    };
+
     return (
-      <div className="bg-white rounded-lg border-black border p-6 shadow-md">
-        <h2 className="text-lg font-bold text-gray-800 mb-2">
-          Full-Stack Engineer
-        </h2>
-        <p className="text-black text-sm pt-4 pb-4">
-          A full-stack engineer can get a project done from start to finish,
-          back-end to front-end.
-        </p>
-        <div className="flex gap-2">
-          <img
-            src="/src/assets/profile.png"
-            alt="profile"
-            className="h-10 w-10 rounded-full mr-2"
-          />
-          <div className="flex flex-col ">
-            <div className="text-sm font-semibold">Techsnap</div>
-            <div className="text-xs">company</div>
-          </div>
-        </div>
-        <div className="flex flex-col mt-4">
-          <div className="flex gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <FaBook />
-              <span>12 Courses</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaProjectDiagram />
-              <span>3 Projects</span>
+      <div>
+        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-2xl dark:border-gray-600 p-6 transition-all duration-300 hover:shadow-lg">
+          <h2 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
+            Full-Stack Engineer
+          </h2>
+          <p className="text-black dark:text-gray-300 text-sm pt-4 pb-4">
+            A full-stack engineer can get a project done from start to finish,
+            back-end to front-end.
+          </p>
+          <div className="flex gap-2">
+            <img
+              src={profile}
+              alt="profile"
+              className="h-10 w-10 rounded-full border-2 border-gray-300 dark:border-gray-600"
+            />
+            <div className="flex flex-col">
+              <div className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                Techsnap
+              </div>
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                Company
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-sm pt-3">
-            <FaClipboardCheck />
-            <span>3 Skill Assessments</span>
+          <div className="flex flex-col mt-4">
+            <div className="flex gap-4 text-sm">
+              <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                <FaBook />
+                <span>12 Courses</span>
+              </div>
+              <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                <FaProjectDiagram />
+                <span>3 Projects</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-sm pt-3 text-gray-600 dark:text-gray-400">
+              <FaClipboardCheck />
+              <span>3 Skill Assessments</span>
+            </div>
           </div>
-        </div>
-        <div
-          className="bg-blue-800 mt-8 text-white text-sm py-2 px-4 rounded-lg text-center font-bold"
-          onClick={handleClick}
-        >
-          View careerpath
+          <div
+            className="bg-blue-800 mt-8 text-white text-sm py-2 px-4 rounded-lg text-center font-bold hover:bg-blue-700 transition duration-300"
+            onClick={handleClick}
+          >
+            View Career Path
+          </div>
         </div>
       </div>
     );
   };
+
   return (
-    <div className=" w-full">
-      <div className="final m-auto  bg-gradient-to-r rounded-lg text-white from-[#f4b9cd] to-[#8677ae]  md:mt-5 mt-1 ">
-        <div className="lg:w-1/2 w-full md:p-8 p-6">
+    <div className="final md:pt-4">
+      <div
+        className="relative flex size-full overflow-hidden rounded-lg border bg-gradient-to-l from-pink-50 to-blue-50
+    dark:bg-gradient-to-l dark:from-gray-500 dark:via-gray-700 dark:to-gray-900
+      dark:bg-blackTheme p-8 md:shadow-xl"
+      >
+        <GridPattern
+          width={20}
+          height={20}
+          x={-1}
+          y={-1}
+          className={cn(
+            "[mask-image:linear-gradient(to_bottom_left,white,transparent,transparent)] "
+          )}
+        />
+        <div className="w-2/3 mx-0 md:p-0 p-6 text-black dark:text-white">
           <div className="md:text-5xl text-2xl font-bold mt-4 ">
             Discover your path and land on your dream career
           </div>
@@ -68,23 +96,26 @@ function CareerPath() {
             carrer for you and make a change.
           </div>
 
-          <div className="md:pt-8 pt-2 text-black">
+          <div className="md:pt-8 pt-2 ">
             Create Possibilities For Your Future.
           </div>
         </div>
-        <div className="w-1/2"></div>
       </div>
       <div className="final w-11/12 m-auto  hidden md:block">
-        <div className="text-3xl font-bold mt-6 mb-4">Featured careerpaths</div>
+        <div className="text-3xl font-bold mt-6 mb-4 text-black dark:text-white">
+          Featured careerpaths
+        </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 ">
           <CareerCard />
           <CareerCard />
           <CareerCard />
         </div>
-        <div className="text-3xl font-bold mt-6 mb-4">All careerpaths</div>
+        <div className="text-3xl font-bold mt-6 mb-4 text-black dark:text-white">
+          All careerpaths
+        </div>
 
         {/* Tags */}
-        <div class="sticky  top-0 z-10 flex flex-wrap gap-2 mb-8 final mx-auto px-4 py-2 bg-white h-14 overflow-hidden md:overflow-auto md:h-auto">
+        <div class="sticky  top-0 z-10 flex flex-wrap gap-2 mb-10 final mx-auto px-4 py-2  h-14 overflow-hidden md:overflow-auto md:h-auto">
           <div
             class="tagCourse p-3 bg-black text-white rounded-md flex-shrink-0"
             data-tag="all"

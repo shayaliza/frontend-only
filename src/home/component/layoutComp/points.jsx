@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useRef } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import coinImage from "./../../assets/coin (3).png";
 import { FaArrowUpLong } from "react-icons/fa6";
 
@@ -51,15 +49,17 @@ function Points() {
   return (
     <>
       <div
-        className={`points relative items-center max-[900px]:hidden  w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer `}
+        className={`points relative items-center max-[900px]:hidden w-[180px] rounded-full px-3 py-2 mr-4 cursor-pointer ${
+          isGoalsVisible ? "blackTheme" : ""
+        }`}
         onClick={toggleGoals}
         ref={goalsRef}
       >
         <div className="flex justify-between">
-          <p className="flex items-center font-medium text-base mr-2">
+          <p className="flex items-center font-medium text-base mr-2 text-black dark:text-white ">
             <span className="mr-1">🔥</span> 365
           </p>
-          <p className="flex items-center font-medium text-base">
+          <p className="flex items-center font-medium text-base text-black dark:text-white ">
             <span className="mr-1">🎯</span> 36935
           </p>
         </div>
@@ -149,7 +149,7 @@ function Points() {
                           style={{ width: "10%" }}
                         ></div>
                       </div>
-                      <button className="bg-[#21dde0] text-white font-bold py-2 px-4 rounded mt-2 w-full">
+                      <button className="bg-[#21dde0] text-black dark:text-white  dark:text-white font-bold py-2 px-4 rounded mt-2 w-full">
                         Achieve Score
                       </button>
                     </div>
@@ -161,10 +161,10 @@ function Points() {
         )}
       </div>
 
-      <div ref={powerRef} className={`score relative flex items-center mr-2 `}>
+      <div ref={powerRef} className={`score relative flex items-center mr-2`}>
         <div>
           <p
-            className="flex items-center font-medium text-base mr-3 shock cursor-pointer"
+            className="flex items-center font-medium text-base mr-3 shock cursor-pointer text-black dark:text-white "
             onClick={togglePower}
           >
             <span>⚡</span> 200
@@ -187,32 +187,26 @@ function Points() {
               <div className="power_item h-[40px] font-bold">
                 <p>Current xp : 10</p>
               </div>
-              <div className="buttons">
-                <button className="hover:bg-blue-700 text-white font-semibold px-4 rounded h-[30px] bg-[#34b2bb]">
-                  Redeem
-                </button>
+              <div className="power_item h-[40px] font-bold">
+                <p>Rank : 25</p>
               </div>
             </div>
           </div>
         )}
       </div>
-      <div
-        //  className="score relative flex items-center mr-4"
-        className={`score relative flex items-center mr-2 `}
-      >
-        <div ref={coinRef}>
-          <p
-            className="flex items-center font-medium text-base coin cursor-pointer"
+
+      <div ref={coinRef} className={`coin relative flex items-center`}>
+        <div>
+          <img
+            src={coinImage}
+            className="w-[30px] h-[30px] cursor-pointer"
             onClick={toggleCoin}
-          >
-            <img src={coinImage} alt="Coin" className="w-6 h-6 mr-1.5" />
-            <span>36912</span>
-          </p>
+          />
         </div>
         {isCoinVisible && (
           <div>
             <div
-              className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-16 right-[-110%] w-[200px] z-50 bg-white text-center justify-between text-base"
+              className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-16 right-[-20%] w-[200px] z-50 bg-white text-center justify-between text-base"
               style={{
                 boxShadow:
                   "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
@@ -220,16 +214,14 @@ function Points() {
             >
               <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[45%] rotate-45 content-['']"></div>
 
-              <div className="power_item h-[40px] font-bold">
-                <p>Total Coins : 36912</p>
+              <div className="coin_item h-[40px] font-bold">
+                <p>Coins: 999</p>
               </div>
-              <div className="power_item h-[40px] font-bold">
-                <p>Coins left: 2000</p>
+              <div className="coin_item h-[40px] font-bold">
+                <p>Levels: 10</p>
               </div>
-              <div className="buttons">
-                <button className="hover:bg-blue-700 text-white font-semibold px-4 rounded h-[30px] bg-[#34b2bb]">
-                  Redeem
-                </button>
+              <div className="coin_item h-[40px] font-bold">
+                <p>Max Level: 50</p>
               </div>
             </div>
           </div>

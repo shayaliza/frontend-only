@@ -10,6 +10,7 @@ import { SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "../../pages/accountSettings/ThemeToggle";
 
 const Header = ({ toggleMobileMenu }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
@@ -24,7 +25,7 @@ const Header = ({ toggleMobileMenu }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  // Toggle dropdown menu
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -32,7 +33,6 @@ const Header = ({ toggleMobileMenu }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -44,21 +44,23 @@ const Header = ({ toggleMobileMenu }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Common class names for the header background and text
+  const headerClasses = "fixed py-2 text-lg w-full z-50 transition-colors";
+  const bgColorClass = "bg-white dark:bg-blackTheme"; // Change header background color
+  const textColorClass = "text-black dark:text-white"; // Change text color
+
   if (isMobile) {
     return (
-      <header
-        className="bg-white fixed py-2 text-lg w-full z-50"
-        style={{ boxShadow: "0 6px 16px -1px rgba(0, 0, 0, 0.3)" }}
-      >
+      <header className={`${headerClasses} ${bgColorClass}`}>
         <div className="relative mx-auto flex justify-between items-center max-[900px]:min-h-[45px]">
           <div className="flex items-center" onClick={toggleDropdown}>
-            <img src={Image} alt="Logo" className="w-32 h-12 object-contain" />
+            <img src={Image} alt="Logo" className="w-32 h-12 object-contain " />
             <div className="relative" ref={dropdownRef}>
               <button onClick={toggleDropdown} className="p-2">
-                <IoIosArrowDropdown size={24} />
+                <IoIosArrowDropdown size={24} className={textColorClass} />
               </button>
               {isDropdownOpen && (
-                <div className="absolute top-12 -right-10 mt-2 w-48  bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg  rounded-lg z-[999]">
+                <div className="absolute top-12 -right-10 mt-2 w-48 bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[999]">
                   <ul className="list-none p-2 m-0">
                     <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
                       Follower
@@ -83,11 +85,12 @@ const Header = ({ toggleMobileMenu }) => {
           <div className="flex items-center mr-4">
             <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
               <SearchIcon
-                className="mr-2"
+                className={`mr-2 ${textColorClass}`}
                 onClick={() => navigate("/search")}
               />
               <IoIosNotificationsOutline
                 size={28}
+                className={textColorClass}
                 onClick={() => navigate("/dashboard/notification")}
               />
               <ProfileIconMobile />
@@ -98,12 +101,8 @@ const Header = ({ toggleMobileMenu }) => {
     );
   }
 
-  // return the desktop version of the header
   return (
-    <header
-      className="bg-white fixed py-2 text-lg w-full z-50"
-      style={{ boxShadow: "0 6px 16px -1px rgba(0, 0, 0, 0.3)" }}
-    >
+    <header className={`${headerClasses} ${bgColorClass}`}>
       <div className="relative mx-auto flex justify-between items-center max-[900px]:min-h-[45px]">
         <div
           className="flex items-center"
@@ -113,10 +112,13 @@ const Header = ({ toggleMobileMenu }) => {
           <img
             src={Image}
             alt="Logo"
-            className="w-32 h-12 object-contain hidden md:block"
+            className="w-32 h-12 object-contain md:block dark:invert"
           />
+          <button onClick={toggleDropdown} className="p-2">
+            <IoIosArrowDropdown size={24} className={textColorClass} />
+          </button>
           {isDropdownOpen && (
-            <div className="absolute top-16 left-2 mt-2 w-48  bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg  rounded-lg z-[999]">
+            <div className="absolute top-16 left-2 mt-2 w-48 bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[999]">
               <ul className="list-none p-2 m-0">
                 <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
                   Follower
@@ -139,6 +141,9 @@ const Header = ({ toggleMobileMenu }) => {
         </div>
         <div className="flex items-center mr-4">
           <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
+            <div>
+              <ThemeToggle />
+            </div>
             <Points />
             <ProfileIcon />
           </div>
