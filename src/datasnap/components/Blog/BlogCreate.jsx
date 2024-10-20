@@ -92,9 +92,9 @@ function BlogCreate() {
   }, []);
 
   return (
-    <div className={`w-full ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-gray-300"}  border border-gray-200`}>
-      <div className="p-2">
-        <div className={`hidden ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-gray-300"}  border border-gray-200 shadow-sm lg:block sticky top-0 z-50`}>
+    <div className={`w-full ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-gray-300"}`}>
+      <div className="">
+        <div className={`hidden ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-gray-300"}  border-b border-gray-800 shadow-sm lg:block sticky top-0 z-50`}>
           <div className="flex flex-col md:flex-row justify-between items-center border-b px-4 md:px-8 py-4">
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mb-4 md:mb-0">
               <a href="#" className="text-blue-600 hover:underline">
@@ -146,7 +146,7 @@ function BlogCreate() {
 
         <div className="p-4 md:p-8 flex flex-col lg:flex-row">
           <div className="flex-1 lg:pr-8 mb-8 lg:mb-0">
-            <div className={`p-4 ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-700 text-gray-300"}  border border-gray-200 rounded-lg mb-4`}>
+            <div className={`p-4 ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-700 text-gray-300"}  border border-gray-600 rounded-lg mb-4`}>
               {bannerImage ? (
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center items-center">
                   <img
