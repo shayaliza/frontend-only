@@ -30,7 +30,7 @@ const TagProfile = () => {
       <div className="flex items-center space-x-4">
         {/* Profile Image */}
         <img
-          src="https://via.placeholder.com/200"
+          src="https://dummyimage.com/200x200/ddd"
           alt="Profile"
           className=" rounded-full object-cover"
         />
