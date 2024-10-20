@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useToast } from "../components/ui/use-toast";
 import { createACourceFetch } from "../fetching/createSnap/courses";
 
-
 const CoursePopup = ({ isOpen, togglePopup, setFilteredCourses, setData }) => {
   const { toast } = useToast();
 
@@ -40,41 +39,51 @@ const CoursePopup = ({ isOpen, togglePopup, setFilteredCourses, setData }) => {
       data
     );
 
-    const res = await createACourceFetch(
-      mobileBannerImage,
-      desktopBannerImage,
-      data
-    );
+    // const res = await createACourceFetch(
+    //   mobileBannerImage,
+    //   desktopBannerImage,
+    //   data
+    // );
 
     // Check if the response is valid
-    if (res && res.data) {
-      console.log(res.data, "data we got in createACourseFetch");
+    // if (res && res.data) {
+    // console.log(res.data, "data we got in createACourseFetch");
+    const res = {
+      data: {
+        id: 1,
+        title: "ReactJS",
+        description: "The most popular JavaScript framework",
+        level: "beginner",
+        status: "released",
+        mobile_banner_image: "https://placeimg.com/640/480/animals",
+        desktop_banner_image: "https://placeimg.com/640/480/animals",
+      },
+    };
+    // Update state with the new course data
+    setData((prevData) => {
+      // Ensure prevData is in the expected format
+      const results = Array.isArray(prevData.results)
+        ? [...prevData.results, res.data]
+        : [res.data];
+      return { ...prevData, results };
+    });
 
-      // Update state with the new course data
-      setData((prevData) => {
-        // Ensure prevData is in the expected format
-        const results = Array.isArray(prevData.results)
-          ? [...prevData.results, res.data]
-          : [res.data];
-        return { ...prevData, results };
-      });
+    setFilteredCourses((prevFilteredCourses) => [
+      ...prevFilteredCourses,
+      res.data,
+    ]);
 
-      setFilteredCourses((prevFilteredCourses) => [
-        ...prevFilteredCourses,
-        res.data,
-      ]);
-
-      toast({
-        title: "Added the course",
-      });
-      togglePopup(); // Close the popup after adding the course
-    } else {
-      toast({
-        title: "Failed to add the course",
-        description: res.error || "Something went wrong!",
-        status: "error",
-      });
-    }
+    toast({
+      title: "Added the course",
+    });
+    togglePopup(); // Close the popup after adding the course
+    // } else {
+    //   toast({
+    //     title: "Failed to add the course",
+    //     description: res.error || "Something went wrong!",
+    //     status: "error",
+    //   });
+    // }
   };
 
   if (!isOpen) return null;

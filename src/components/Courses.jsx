@@ -7,7 +7,6 @@ import CoursePopup from "../popups/CoursePopup";
 import EditCoursePopup from "../popups/EditCoursePopup";
 import img from "../assets/rsc/c1.avif";
 
-
 const dummyCourses = [
   {
     id: "html",
@@ -36,7 +35,8 @@ const dummyCourses = [
   {
     id: 4,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -52,7 +52,8 @@ const dummyCourses = [
   {
     id: 6,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -60,7 +61,8 @@ const dummyCourses = [
   {
     id: 7,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -68,7 +70,8 @@ const dummyCourses = [
   {
     id: 8,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -76,7 +79,8 @@ const dummyCourses = [
   {
     id: 9,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -84,7 +88,8 @@ const dummyCourses = [
   {
     id: 10,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -92,7 +97,8 @@ const dummyCourses = [
   {
     id: 11,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -100,7 +106,8 @@ const dummyCourses = [
   {
     id: 12,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -108,7 +115,8 @@ const dummyCourses = [
   {
     id: 13,
     title: "UI/UX Design Principles",
-    description: "Master the fundamentals of user interface and user experience design",
+    description:
+      "Master the fundamentals of user interface and user experience design",
     level: "beginner",
     status: "released",
     mobile_banner_image: img,
@@ -263,7 +271,9 @@ const CourseList = () => {
                   <p className="text-gray-600 mb-4">{course.description}</p>
                   <div className="flex justify-between items-center">
                     <div className="text-gray-600 text-sm">
-                      {course.level.charAt(0).toUpperCase() + course.level.slice(1)} | {course.status}
+                      {course.level.charAt(0).toUpperCase() +
+                        course.level.slice(1)}{" "}
+                      | {course.status}
                     </div>
                     <div className="flex items-center space-x-2">
                       <motion.button
@@ -298,12 +308,16 @@ const CourseList = () => {
         isOpen={isAddCoursePopup}
         togglePopup={toggleAddCoursePopup}
         addNewCourse={addNewCourse}
+        setFilteredCourses={setFilteredCourses}
+        setData={setData}
       />
       {currentCourse && (
         <EditCoursePopup
           isOpen={isEditCoursePopup}
           togglePopup={() => toggleEditCoursePopup(currentCourse)}
           course={currentCourse}
+          setFilteredCourses={setFilteredCourses}
+          setData={setData}
         />
       )}
     </motion.div>
