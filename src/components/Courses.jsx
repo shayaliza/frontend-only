@@ -6,129 +6,14 @@ import { useToast } from "../components/ui/use-toast";
 import CoursePopup from "../popups/CoursePopup";
 import EditCoursePopup from "../popups/EditCoursePopup";
 import img from "../assets/rsc/c1.avif";
-
-const dummyCourses = [
-  {
-    id: "html",
-    title: "Introduction to HTML",
-    description: "Learn the basics of html and build your first app",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 2,
-    title: "Advanced JavaScript Concepts",
-    description: "Deep dive into advanced JavaScript topics",
-    level: "advanced",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 3,
-    title: "Python for Data Science",
-    description: "Learn Python programming for data analysis and visualization",
-    level: "intermediate",
-    status: "draft",
-    mobile_banner_image: img,
-  },
-  {
-    id: 4,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 5,
-    title: "Machine Learning Fundamentals",
-    description: "Introduction to machine learning algorithms and applications",
-    level: "intermediate",
-    status: "draft",
-    mobile_banner_image: img,
-  },
-  {
-    id: 6,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 7,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 8,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 9,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 10,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 11,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 12,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-  {
-    id: 13,
-    title: "UI/UX Design Principles",
-    description:
-      "Master the fundamentals of user interface and user experience design",
-    level: "beginner",
-    status: "released",
-    mobile_banner_image: img,
-  },
-];
+import { getCreaterCourseFetch } from "../fetching/createSnap/courses";
 
 const CourseList = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCourses, setFilteredCourses] = useState(dummyCourses);
-  const [data, setData] = useState({ results: dummyCourses });
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [data, setData] = useState([]);
   const [isAddCoursePopup, setIsAddCoursePopup] = useState(false);
   const [isEditCoursePopup, setIsEditCoursePopup] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
@@ -143,13 +28,13 @@ const CourseList = () => {
     setIsEditCoursePopup(!isEditCoursePopup);
   };
 
-  useEffect(() => {
-    setFilteredCourses(
-      data.results.filter((course) =>
-        course.title.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [searchTerm, data]);
+  // useEffect(() => {
+  //   setFilteredCourses(
+  //     data.results.filter((course) =>
+  //       course.title.toLowerCase().includes(searchTerm.toLowerCase())
+  //     )
+  //   );
+  // }, [searchTerm, data]);
 
   const handleCourse = (courseId) => {
     navigate(`/createsnap/course/${courseId}/started/`);
@@ -176,6 +61,20 @@ const CourseList = () => {
       newCourse,
     ]);
   };
+
+  const AllCourses = async () => {
+    const res = await getCreaterCourseFetch();
+    if (res && res.data) {
+      console.log(res.data.results, "data we got in getCreaterCourseFetch");
+      setData(res.data.results);
+      setFilteredCourses(res.data.results);
+    }
+  };
+
+  console.log(data, filteredCourses, "data and filtered courses");
+  useEffect(() => {
+    AllCourses();
+  }, []);
 
   return (
     <motion.div
@@ -243,64 +142,65 @@ const CourseList = () => {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         <AnimatePresence>
-          {filteredCourses
-            .filter((course) =>
-              activeTab === "draft"
-                ? course.status === "draft"
-                : course.status === "released"
-            )
-            .map((course) => (
-              <motion.div
-                key={course.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-102"
-              >
-                <img
-                  className="w-full h-40 object-cover"
-                  src={course.mobile_banner_image || img}
-                  alt={`${course.title} Cover`}
-                />
-                <div className="p-5">
-                  <h2 className="font-bold text-xl mb-2 text-gray-800">
-                    {course.title}
-                  </h2>
-                  <p className="text-gray-600 mb-4">{course.description}</p>
-                  <div className="flex justify-between items-center">
-                    <div className="text-gray-600 text-sm">
-                      {course.level.charAt(0).toUpperCase() +
-                        course.level.slice(1)}{" "}
-                      | {course.status}
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="flex items-center bg-indigo-500 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-indigo-600 transition duration-300"
-                        onClick={() => handleCourse(course.id)}
-                      >
-                        Get Started <FaArrowRight className="ml-1" />
-                      </motion.button>
-                      <button
-                        className="text-blue-600 hover:text-blue-800"
-                        onClick={() => toggleEditCoursePopup(course)}
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="text-red-600 hover:text-red-800"
-                        onClick={() => handleDelete(course.id)}
-                      >
-                        <FaTrash />
-                      </button>
+          {filteredCourses &&
+            filteredCourses
+              // .filter((course) =>
+              //   activeTab === "draft"
+              //     ? course.status === "draft"
+              //     : course.status === "released"
+              // )
+              .map((course) => (
+                <motion.div
+                  key={course.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-102"
+                >
+                  <img
+                    className="w-full h-40 object-cover"
+                    src={course.mobile_banner_image || img}
+                    alt={`${course.title} Cover`}
+                  />
+                  <div className="p-5">
+                    <h2 className="font-bold text-xl mb-2 text-gray-800">
+                      {course.title}
+                    </h2>
+                    <p className="text-gray-600 mb-4">{course.description}</p>
+                    <div className="flex justify-between items-center">
+                      <div className="text-gray-600 text-sm">
+                        {course.level.charAt(0).toUpperCase() +
+                          course.level.slice(1)}{" "}
+                        | {course.status}
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="flex items-center bg-indigo-500 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-indigo-600 transition duration-300"
+                          onClick={() => handleCourse(course.id)}
+                        >
+                          Get Started <FaArrowRight className="ml-1" />
+                        </motion.button>
+                        <button
+                          className="text-blue-600 hover:text-blue-800"
+                          onClick={() => toggleEditCoursePopup(course)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="text-red-600 hover:text-red-800"
+                          onClick={() => handleDelete(course.id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
         </AnimatePresence>
       </motion.div>
 

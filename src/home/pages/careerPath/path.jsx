@@ -6,7 +6,7 @@ function Path() {
   const navigate = useNavigate();
   return (
     <section class="p-4">
-      <div className="timeline_title h-[150px] max-w-[1200px] mx-auto relative flex items-center text-[1.6rem] sm:h-auto sm:text-[20px]">
+      <div className="timeline_title h-[150px] max-w-[1200px] mx-auto relative flex items-center text-[1.6rem] sm:h-auto sm:text-[20px] text-black dark:text-white">
         <h1>START YOUR JOURNEY</h1>
       </div>
 
