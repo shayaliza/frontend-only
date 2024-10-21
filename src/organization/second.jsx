@@ -87,7 +87,7 @@ function Second() {
       </div>
 
       {/* Right section */}
-      <div className="lg:w-1/3 w-full bg-yellow-400 flex items-center justify-center lg:min-h-full">
+      <div className="lg:w-1/3 w-full hidden bg-yellow-400 md:flex items-center justify-center lg:min-h-full">
         <div className="relative">
           <img
             src="https://dummyimage.com/400x400/00ff00"

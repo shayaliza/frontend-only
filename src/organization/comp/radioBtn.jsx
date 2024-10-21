@@ -2,7 +2,7 @@ import React from "react";
 
 const RadioGroup = ({ options, selectedOption, onChange }) => {
   return (
-    <div className="mb-8 flex flex-col lg:flex-row flex-wrap gap-4 w-9/12">
+    <div className="mb-8 flex flex-row flex-wrap gap-4 w-9/12 ">
       {options.map((option) => (
         <label
           key={option.value}

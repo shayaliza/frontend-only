@@ -117,7 +117,7 @@ function Fifth() {
       </div>
 
       {/* Right section */}
-      <div className="lg:w-1/3 w-full bg-green-500 flex items-center justify-center lg:min-h-full">
+      <div className="hidden lg:w-1/3 w-full bg-green-500 md:flex items-center justify-center lg:min-h-full">
         <div className="relative">
           <img
             src="https://dummyimage.com/400x400/00ff00"

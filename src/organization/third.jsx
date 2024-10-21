@@ -65,7 +65,7 @@ function Third() {
       </div>
 
       {/* Right section */}
-      <div className="lg:w-1/3 w-full bg-yellow-500 flex items-center justify-center lg:min-h-full">
+      <div className="lg:w-1/3 w-full hidden bg-yellow-500 md:flex items-center justify-center lg:min-h-full">
         <div className="relative">
           <img
             src="https://dummyimage.com/400x400/00ff00"

@@ -72,6 +72,11 @@ function ProfileIconMobile() {
                   </p>
                 </div>
                 <div className="profile_item p-2 font-bold">
+                  <p>
+                    <Link to="/organization/first">Create org</Link>
+                  </p>
+                </div>
+                <div className="profile_item p-2 font-bold">
                   <div className="flex">
                     <span>Notification</span>
                     <span>

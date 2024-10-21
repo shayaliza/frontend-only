@@ -54,7 +54,7 @@ function Sixth() {
       </div>
 
       {/* Right section */}
-      <div className="lg:w-1/2 w-full bg-gradient-to-r from-white to-blue-200 flex items-center justify-center lg:min-h-full">
+      <div className=" hidden lg:w-1/2 w-full bg-gradient-to-r from-white to-blue-200 md:flex items-center justify-center lg:min-h-full">
         <div className="relative">
           <img
             src="https://dummyimage.com/400x400/00ff00"
