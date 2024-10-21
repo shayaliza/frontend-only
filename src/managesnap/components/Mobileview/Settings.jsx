@@ -20,7 +20,7 @@ import { useTheme } from "../../../DarkMode/ThemeProvider";
 function SettingsPage() {
   const {theme} = useTheme();
   return (
-    <div className={`bg-background ${theme == 'dark' ? "text-white" : "text-black"}`}>
+    <div className={`bg-background`}>
       {/* <div className="flex items-center h-16 justify-between mb-2 p-3 shadow bg-gray-50">
         <h1 className="text-xl font-bold text-black">Settings</h1>
         <button className="text-black">

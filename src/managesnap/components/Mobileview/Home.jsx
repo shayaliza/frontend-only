@@ -65,7 +65,7 @@ function Channels() {
   };
 
   return (
-    <div id="sidebar" className={`sm:w-full ${theme == "dark" ? "text-white" : "text-black"} min-h-screen overflow-auto py-2`}>
+    <div id="sidebar" className={`sm:w-full min-h-screen overflow-auto py-2`}>
       <div className="flex-1 px-4">
         {channels.map((channelGroup, index) => (
           <div key={index} className="mb-4">

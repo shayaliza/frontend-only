@@ -377,7 +377,7 @@ function Chat() {
   }, []);
 
   const handleNavigationBack = () => {
-    navigate(type === "channel" ? "/channels" : "/dms");
+    navigate(type === "channel" ? "/managesnap/channels" : "/managesnap/dms");
   };
 
   const textareaRef = useRef(null);
@@ -456,7 +456,7 @@ function Chat() {
   return (
     <>
       <div
-  className={`flex flex-col ${theme == 'dark' ? "text-white" : "text-black"} ${isReactionOpen ? "overflow-hidden" : "overflow-auto"} min-h-screen pb-20 pt-4`}
+  className={`flex flex-col ${isReactionOpen ? "overflow-hidden" : "overflow-auto"} min-h-screen pb-20 pt-4`}
 >
   <div className="border-b fixed top-0 h-16 left-0 right-0 z-50">
     <div className="p-4 flex justify-between items-center bg-background border-b border-gray-500">
@@ -493,7 +493,7 @@ function Chat() {
     </div>
   </div>
 
-  <div className={`flex-grow ${isReactionOpen ? "overflow-hidden" : "overflow-auto"} px-4 pt-14 pb-2 mt-4`}>
+  <div className={`flex-grow ${isReactionOpen ? "overflow-hidden" : "overflow-auto"} px-4 pt-12 pb-2 mt-4`}>
     <div className="space-y-4">
       {messages.map((message) => (
         <div

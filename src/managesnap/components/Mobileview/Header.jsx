@@ -87,7 +87,7 @@ function Header() {
           </div>
         </div>
         <div className="flex items-center space-x-4 mb-2">
-          <div className={`flex items-center flex-grow ${theme == "dark" ? '': "bg-gray-300"}  p-2 rounded-full shadow-md border border-gray-400`}>
+          <div className={`flex items-center flex-grow p-2 rounded-full shadow-md border border-gray-400`}>
             <FaSearch className="mr-2 w-5 h-5" />
             <input
               type="text"

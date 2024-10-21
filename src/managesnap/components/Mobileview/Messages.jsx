@@ -208,7 +208,7 @@ function DirectMessages() {
   }, [scrollPosition]);
 
   return (
-    <div className={`flex ${theme == 'dark' ? "text-white" : "text-black"}`}>
+    <div className={`flex`}>
       <div className="p-2 flex flex-col space-y-1 overflow-x-auto">
         <h1 className="text-2xl font-bold my-1 pl-3">Direct Messages</h1>
         <div className="overflow-x-auto p-2">

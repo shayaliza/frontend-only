@@ -24,7 +24,7 @@ function Notification() {
     switch (activeTab) {
       case 'All':
         return (
-          <div className={`flex flex-col space-y-4 mt-4 ${theme == 'dark' ? 'text-white' : 'text-gray-800'} bg-background`}>
+          <div className={`flex flex-col space-y-4 mt-4bg-background`}>
             <div className="flex justify-between items-center ">
               <span className="font-medium">#Channel Invitation</span>
               <span className="text-sm">Jul 27</span>
