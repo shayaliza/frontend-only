@@ -126,7 +126,7 @@ const ProfileMobile = React.lazy(() =>
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
-import Main from "./managesnap/components/Main";
+
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
