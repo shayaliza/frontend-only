@@ -1,11 +1,13 @@
 import React from "react";
 import { HelpCircle, ChartArea, FileQuestion, PencilIcon, Cog } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "../DarkMode/ThemeProvider";
 
 function BottomBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname.split('/').pop(); 
+  const {theme} = useTheme();
 
   const tabs = [
     { name: "analytics", icon: ChartArea, label: "Analytics" },
@@ -20,7 +22,7 @@ function BottomBar() {
   };
 
   return (
-    <div className="fixed bottom-0 w-full bg-white border-t border-gray-300 z-30 shadow-lg flex justify-around items-center px-4 pb-2 safe-bottom">
+    <div className={`fixed bottom-0 w-full ${theme === "dark" ? "bg-black" : "bg-white"} border-t border-gray-300 z-30 shadow-lg flex justify-around items-center px-4 pb-2 safe-bottom`}>
       {tabs.map((tab) => {
         const isActive = currentPath === tab.name;
 

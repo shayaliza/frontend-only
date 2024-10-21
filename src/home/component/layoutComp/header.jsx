@@ -139,7 +139,7 @@ const Header = ({ toggleMobileMenu }) => {
                   <Link to="/datasnap">Datasnap</Link>
                 </li>
                 <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                  <Link to="/managesnap">Managesnap</Link>
+                  <Link to="/managesnap/channels">Managesnap</Link>
                 </li>
               </ul>
             </div>

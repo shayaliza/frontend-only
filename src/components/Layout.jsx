@@ -81,22 +81,22 @@ function Layout() {
     setIsAddCareerPathPopup(!isAddCareerPathPopup);
   };
 
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        setRefreshKey((prevKey) => prevKey + 1);
-        setIsRefreshing(false);
-        resolve();
-      }, 2000);
-    });
-  };
+  // const handleRefresh = () => {
+  //   setIsRefreshing(true);
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       setRefreshKey((prevKey) => prevKey + 1);
+  //       setIsRefreshing(false);
+  //       resolve();
+  //     }, 2000);
+  //   });
+  // };
 
   return (
     <div className="flex overflow-hidden">
       <Sidebar isPanelOpen={isPanelOpen} toggleSidebar={toggleSidebar} />
       <div className={`flex flex-col w-full ${isPanelOpen ? "blur" : ""}`}>
-        <div className="h-20 z-20">
+        <div className="h-[58px] z-20">
           <Header
             handlePanel={handlePanel}
             profileOpen={profileOpen}
@@ -105,7 +105,7 @@ function Layout() {
             toggleProfile={toggleProfile}
           />
         </div>
-        <PullToRefresh
+        {/* <PullToRefresh
           pullDownContent={<PullContent />}
           releaseContent={<CustomSpinner pullProgress={1} isRefreshing={true} />}
           refreshContent={<CustomSpinner pullProgress={1} isRefreshing={true} />}
@@ -118,8 +118,8 @@ function Layout() {
             pullProgress: (y) => y / 70,
             isRefreshing: isRefreshing
           }}
-        >
-          <div className={`lg:pl-56 flex-1 overflow-y-auto min-h-screen flex-grow max-w-[1500px] 2xl:mx-auto z-0 `}>
+        > */}
+          <div className={`lg:pl-56 flex-1 overflow-y-auto flex-grow max-w-[1500px] 2xl:mx-auto z-0 `}>
             <Outlet
               key={refreshKey}
               context={{
@@ -127,7 +127,7 @@ function Layout() {
               }}
             />
           </div>
-        </PullToRefresh>
+        {/* </PullToRefresh> */}
         <div className="h-16 lg:hidden">
           <BottomBar />
         </div>

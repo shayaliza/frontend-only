@@ -69,6 +69,16 @@ import BlogBookmarks from "./datasnap/components/Bookmarks";
 import BlogSearch from "./datasnap/components/Search";
 import BlogCreate from "./datasnap/components/Blog/BlogCreate";
 import BlogDetails from "./datasnap/components/Details";
+import MSMobileLayout from "./managesnap/components/Mobileview/Layout";
+import MSMobileChannels from "./managesnap/components/Mobileview/Home";
+import MSMobileMessages from "./managesnap/components/Mobileview/Messages";
+import MSMobileCalendar from "./managesnap/components/Mobileview/Calendar";
+import MSMobileNotification from "./managesnap/components/Mobileview/Notification";
+import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
+import MSMobileChat from "./managesnap/components/Mobileview/Chat";
+import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
+import MSMobileSearch from "./managesnap/components/Mobileview/Search";
+import MSDesktopLayout from "./managesnap/components/Layout";
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -126,7 +136,7 @@ const ProfileMobile = React.lazy(() =>
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
-
+import Main from "./managesnap/components/Main";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -307,9 +317,51 @@ function AppRoutes() {
                   <Route path="fourth" element={<Fourth />} />
                 </Route>
 
-
-
-                
+                {isMobile ? (
+                  <>
+                    <Route path="/managesnap" element={<MSMobileLayout />}>
+                      <Route
+                        index
+                        element={<Navigate to="channels" replace />}
+                      />
+                      <Route path="channels" element={<MSMobileChannels />} />
+                      <Route path="dms" element={<MSMobileMessages />} />
+                      <Route path="calendar" element={<MSMobileCalendar />} />
+                      <Route
+                        path="notifications"
+                        element={<MSMobileNotification />}
+                      />
+                      <Route path="settings" element={<MSMobileSettings />} />
+                    </Route>
+                    <Route
+                      path="/managesnap/chat/:type/:id"
+                      element={<MSMobileChat />}
+                    />
+                    <Route
+                      path="/managesnap/profile/:id"
+                      element={<MSMobileProfile />}
+                    />
+                    <Route
+                      path="/managesnap/search"
+                      element={<MSMobileSearch />}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Route
+                      path="/managesnap/channels"
+                      element={<MSDesktopLayout />}
+                    />
+                    <Route
+                      path="/managesnap/channels/:channelName"
+                      element={<MSDesktopLayout />}
+                    />
+                    <Route
+                      path="/managesnap/direct/:dmName"
+                      element={<MSDesktopLayout />}
+                    />
+                  </>
+                )}
 
                 <Route path="/createsnap" element={<Layout />}>
                   <Route

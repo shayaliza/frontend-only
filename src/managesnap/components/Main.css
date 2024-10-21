@@ -1,0 +1,89 @@
+.fc .fc-toolbar {
+    background-color: #444791;
+    color: #ffffff;
+  }
+  
+  .fc .fc-event {
+    background-color: #0078d4;
+    border: none;
+    color: white;
+    padding: 5px;
+  }
+  
+  .fc .fc-day-today {
+    background-color: #e5e5e5;
+  }
+
+  @keyframes moveLine {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .dark{
+    background-color: black;
+  }
+  
+  body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  
+  .spin {
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  
+  .element {
+    transform: translateZ(0);
+  }
+  
+  .resizable-divider {
+    width: 1px;
+    background-color: #d1d5db !important;
+    cursor: ew-resize; 
+  }
+  
+  .resizable-divider:hover {
+    background-color: #a1a1a1; 
+  }
+  
+  body.splash-screen .fade-out {
+    animation: fadeOut 1s ease-out forwards;
+  }
+  
+  .custom-scroll::-webkit-scrollbar{
+    display: block;
+  }
+  
+  .react-calendar__month-view__days__day--weekend {
+    color: black;
+  }
+  
+  .react-calendar__tile--now {
+    background: none;
+  }
+  
+  .react-calendar__month-view__days__day--neighboringMonth{
+    color: transparent;
+  }
+  
+  .react-calendar__tile--active {
+    background: #006edc;
+    color: white;
+  }
+  
+  ::-webkit-scrollbar{
+    display: none;
+  }
