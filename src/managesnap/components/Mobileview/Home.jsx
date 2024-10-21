@@ -52,7 +52,7 @@ function Channels() {
   const {theme, setTheme} = useTheme();
 
   const handleNavigation = (channel) => {
-    navigate(`/chat/channel/${channel.id}`, { 
+    navigate(`/managesnap/chat/channel/${channel.id}`, { 
       state: { 
         channelName: channel.name, 
         memberCount: channel.memberCount 
@@ -65,7 +65,7 @@ function Channels() {
   };
 
   return (
-    <div id="sidebar" className={`sm:w-full min-h-screen ${theme == "dark" ? "text-gray-300" : "text-gray-700"} overflow-auto py-2`}>
+    <div id="sidebar" className={`sm:w-full min-h-screen text-gray-700 dark:text-gray-300 overflow-auto py-2`}>
       <div className="flex-1 px-4">
         {channels.map((channelGroup, index) => (
           <div key={index} className="mb-4">

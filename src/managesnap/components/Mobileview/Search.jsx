@@ -33,7 +33,7 @@ function Search() {
   const [activeTab, setActiveTab] = useState('Recents');
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate("/channels")
+    navigate(-1)
   }
 
   const renderIcon = (type) => {

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../DarkMode/ThemeProvider';
 import { ModeToggle } from '../../DarkMode/ToggleMode';
 import { FaUserCircle } from 'react-icons/fa';
+import { IoIosArrowDropdown } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
 const mockData = [
   { id: 1, name: 'Home', path: '/' },
@@ -14,6 +16,7 @@ const mockData = [
 
 function Header() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(mockData);
   const {theme, setTheme} = useTheme();
@@ -52,16 +55,43 @@ function Header() {
   };
 
   return (
-    <div className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b ${theme == "dark" ? "bg-black text-gray-300" : "text-gray-700"}`}>
+    <div className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b text-gray-700 dark:text-gray-300 ${theme == "dark" ? "bg-black" : "text-gray-700"}`}>
       <div className="absolute right-4 top-4">
         <ModeToggle/>
       </div>
       <div className="absolute left-4 top-3 ">
-        <div className="flex space-x-4 items-center mb-6">
+        <div className="relative flex space-x-4 items-center mb-6">
           <div className="bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">
             <FaUserCircle />
           </div>
           <span className="ml-3 text-2xl font-semibold">snapthetech</span>
+          <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="p-2">
+            <IoIosArrowDropdown size={24} />
+          </button>
+          {isDropdownOpen && (
+                <div className="absolute top-12 -right-10 mt-2 w-48 bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[999]">
+                  <ul className="list-none p-2 m-0">
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      Follower
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      Following
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/dashboard/profile">Home</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/createsnap/analytics">Createsnap</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/datasnap">Datasnap</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/managesnap">Managesnap</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
         </div>
       </div>
       <div className="w-2/3 mx-auto px-4 flex justify-center">
