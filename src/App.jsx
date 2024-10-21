@@ -137,6 +137,15 @@ const SkillPathMoreDetails = React.lazy(() =>
 const CareerPathMoreDetails = React.lazy(() =>
   import("./home/pages/careerPath/moreDetails")
 );
+
+//@ Organizations Imports
+const OrganizationLayout = React.lazy(() => import("./organization/layout"));
+const OrganizationFirst = React.lazy(() => import("./organization/first"));
+const OrganizationSecond = React.lazy(() => import("./organization/second"));
+const OrganizationThird = React.lazy(() => import("./organization/third"));
+const OrganizationFourth = React.lazy(() => import("./organization/fourth"));
+const OrganizationFifth = React.lazy(() => import("./organization/fifth"));
+const OrganizationSixth = React.lazy(() => import("./organization/sixth"));
 // setting up interceptors
 setupInterceptors();
 function AppRoutes() {
@@ -356,6 +365,15 @@ function AppRoutes() {
                 <Route path="ds/search" element={<BlogSearch />} />
               </>
 
+              {/* Organization or WorkSpace Routes */}
+              <Route path="/organization" element={<OrganizationLayout />}>
+                <Route index path="first" element={<OrganizationFirst />} />
+                <Route path="second" element={<OrganizationSecond />} />
+                <Route path="third" element={<OrganizationThird />} />
+                <Route path="fourth" element={<OrganizationFourth />} />
+                <Route path="fifth" element={<OrganizationFifth />} />
+                <Route path="sixth" element={<OrganizationSixth />} />
+              </Route>
               <Route path="*" element={<h1>Page Not Found</h1>} />
             </Routes>
           </Router>

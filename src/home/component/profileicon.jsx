@@ -44,14 +44,19 @@ function ProfileIcon() {
                 </p>
               </div>
               <div className="profile_item p-2 font-bold">
+                <p>
+                  <Link to="/organization/first">Create org</Link>
+                </p>
+              </div>
+              {/* <div className="profile_item p-2 font-bold">
                 <p>Dashboard</p>
               </div>
               <div className="profile_item p-2 font-bold">
                 <p>Profile</p>
-              </div>
-              <div className="profile_item p-2 font-bold">
+              </div> */}
+              {/* <div className="profile_item p-2 font-bold">
                 <p>Settings</p>
-              </div>
+              </div> */}
               <div className="profile_item p-2 font-bold">
                 <Link to="/detailsPages/first">Support</Link>
               </div>
