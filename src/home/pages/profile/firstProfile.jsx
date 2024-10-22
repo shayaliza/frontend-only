@@ -293,7 +293,7 @@ const ProfilePage = () => {
         <div className="max-w-holder w-full mx-auto max_width_holder max-w-[1400px] max-[1500px]:max-w-[1100px] overflow-x-hidden overflow-y-scroll">
           <div className="max-w-7xl mx-auto p-4">
             <BannerEditProfile
-              profileImg={`https://moviesnap.in/${data.profile_pic}`}
+              profileImg={`https://snapgpt.online/${data.profile_pic}`}
             />
             {/* <div onClick={changeREfressToekn}>Chagne Refress Token</div> */}
             {/* <div onClick={changeAccessToekn}>Change Access Token</div> */}
