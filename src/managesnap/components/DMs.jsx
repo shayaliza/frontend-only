@@ -1,108 +1,453 @@
-import { useState } from 'react';
-import { Send, Plus, Smile, AtSign, Link, Image, Code, Bold, Italic, Search } from 'lucide-react';
-import { useTheme } from '../../DarkMode/ThemeProvider';
+import { useState } from "react";
+import {
+  Send,
+  Paperclip,
+  Smile,
+  AtSign,
+  Link,
+  Image,
+  Code,
+  Bold,
+  Italic,
+  Search,
+  MoreVertical,
+  Edit2,
+  Trash2,
+  Reply,
+  Pin,
+  ThumbsUp,
+  Heart,
+  Star,
+  Plus,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
+import { Switch } from "../../components/ui/Switch";
 
-const DirectMessageInterface = () => {
+const REACTIONS = [
+  { emoji: "👍", name: "thumbsup" },
+  { emoji: "❤️", name: "heart" },
+  { emoji: "😊", name: "smile" },
+  { emoji: "🎉", name: "party" },
+  { emoji: "🔥", name: "fire" },
+  { emoji: "👏", name: "clap" },
+];
+
+const DMs = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const {theme} = useTheme();
+  const [messageInput, setMessageInput] = useState("");
+  const [messages, setMessages] = useState({});
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [pinnedMessages, setPinnedMessages] = useState([]);
 
   const users = [
-    { id: 1, name: 'Kunal Dugar', timestamp: 'September 4th', status: 'joined Slack — take a second to say hello.' },
-    { id: 2, name: 'Techsnap', timestamp: 'August 14th', status: 'testpro.html' },
-    { id: 3, name: 'shayaliza', timestamp: 'July 31st', status: 'joined Slack — take a second to say hello.' },
-    { id: 4, name: 'Ankit', timestamp: 'July 31st', status: 'joined Slack — take a second to say hello.' }
+    {
+      id: 1,
+      name: "Kunal Dugar",
+      avatar: "/api/placeholder/32/32",
+      status: "online",
+      lastSeen: "Active now",
+      timestamp: "Sep 4",
+    },
+    {
+      id: 2,
+      name: "Techsnap",
+      avatar: "/api/placeholder/32/32",
+      status: "away",
+      lastSeen: "2h ago",
+      timestamp: "Aug 14",
+    },
   ];
 
-  const filteredUsers = users.filter(user =>
+  const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  return (
-    <div className="flex h-[calc(100vh-56px)] text-gray-700 dark:text-gray-300">
-      <div className="w-1/3 border-r">
-        <div className="p-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-3.5" size={16} />
-            <input
-              type="text"
-              placeholder="Find a DM"
-              className={`w-full pl-10 p-2 border rounded-full focus:outline-none ${theme == "dark" ? "bg-black" : "bg-white"}`}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </div>
+  const [isChecked, setIsChecked] = useState(false);
 
-        <div className="overflow-y-auto p-2">
-          {filteredUsers.map(user => (
-            <div
-              key={user.id}
-              onClick={() => setSelectedUser(user)}
-              className="p-2 cursor-pointer"
-            >
-              <div className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-gray-300" />
-                <div className="ml-2">
-                  <div className="text-sm font-medium">{user.name}</div>
-                  <div className="text-xs">{user.status}</div>
-                </div>
-                <div className="ml-auto text-xs">{user.timestamp}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+  const toggleSwitch = () => {
+    setIsChecked((prev) => !prev);
+  };
 
-      <div className="flex-1">
-        {selectedUser ? (
-          <div className="h-full flex flex-col">
-            <div className="p-4 border-b">
-              <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-gray-300" />
-                <div className="ml-3">
-                  <div className="font-medium">{selectedUser.name}</div>
-                  <div className="text-sm">Active</div>
-                </div>
-              </div>
-            </div>
+  const handleSendMessage = () => {
+    if (messageInput.trim() === "") return;
 
-            <div className="flex-1 overflow-y-auto p-4">
-            </div>
+    const newMessage = {
+      id: Date.now(),
+      text: messageInput,
+      timestamp: new Date().toLocaleTimeString(),
+      status: "sent",
+      reactions: {},
+      sender: "me",
+      replyTo: replyingTo,
+    };
 
-            <div className="p-4 border-t">
-              <div className="flex items-end border rounded-lg">
-                <div className="flex-1 p-2">
-                  <div className="flex items-center gap-2 mb-2">
-                    <button className="p-1 rounded"><Bold size={16} /></button>
-                    <button className="p-1 rounded"><Italic size={16} /></button>
-                    <button className="p-1 rounded"><Link size={16} /></button>
-                    <button className="p-1 rounded"><Code size={16} /></button>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Message"
-                    className="w-full bg-transparent outline-none"
-                  />
-                </div>
-                <div className="flex items-center p-2 gap-2">
-                  <button className="p-1 rounded"><Plus size={16} /></button>
-                  <button className="p-1 rounded"><Smile size={16} /></button>
-                  <button className="p-1 rounded"><AtSign size={16} /></button>
-                  <button className="p-1 rounded"><Image size={16} /></button>
-                  <button className="p-1 rounded"><Send size={16} /></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="h-full flex items-center justify-center">
-            Select a conversation to start messaging
+    setMessages((prevMessages) => ({
+      ...prevMessages,
+      [selectedUser.id]: [...(prevMessages[selectedUser.id] || []), newMessage],
+    }));
+
+    setMessageInput("");
+    setEditingMessageId(null);
+    setReplyingTo(null);
+
+    setTimeout(() => {
+      const receivedMessage = {
+        id: Date.now() + 1,
+        text: "This is a sample response",
+        timestamp: new Date().toLocaleTimeString(),
+        status: "received",
+        reactions: {},
+        sender: "them",
+      };
+
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [selectedUser.id]: [
+          ...(prevMessages[selectedUser.id] || []),
+          receivedMessage,
+        ],
+      }));
+    }, 1000);
+  };
+
+  const handleReaction = (messageId, reaction) => {
+    setMessages((prevMessages) => {
+      const userMessages = [...(prevMessages[selectedUser.id] || [])];
+      const messageIndex = userMessages.findIndex((m) => m.id === messageId);
+
+      if (messageIndex !== -1) {
+        const message = userMessages[messageIndex];
+        const currentReactions = { ...message.reactions };
+
+        if (currentReactions[reaction]) {
+          delete currentReactions[reaction];
+        } else {
+          currentReactions[reaction] = 1;
+        }
+
+        userMessages[messageIndex] = {
+          ...message,
+          reactions: currentReactions,
+        };
+      }
+
+      return {
+        ...prevMessages,
+        [selectedUser.id]: userMessages,
+      };
+    });
+  };
+
+  const handlePinMessage = (messageId) => {
+    setPinnedMessages((prev) => {
+      if (prev.includes(messageId)) {
+        return prev.filter((id) => id !== messageId);
+      }
+      return [...prev, messageId];
+    });
+  };
+
+  const handleReply = (message) => {
+    setReplyingTo(message);
+    document.querySelector("textarea")?.focus();
+  };
+
+  const ReactionBar = ({ message }) => (
+    <div className="absolute bottom-0 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border">
+      {REACTIONS.map((reaction) => (
+        <button
+          key={reaction.name}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleReaction(message.id, reaction.emoji);
+          }}
+          className="hover:bg-gray-100 dark:hover:bg-gray-700 p-1 rounded-full transition-colors"
+        >
+          {reaction.emoji}
+        </button>
+      ))}
+    </div>
+  );
+
+  const MessageBubble = ({ message }) => {
+    const isMe = message.sender === "me";
+    const isPinned = pinnedMessages.includes(message.id);
+    const replyingToMessage = message.replyTo
+      ? messages[selectedUser.id]?.find((m) => m.id === message.replyTo.id)
+      : null;
+
+    return (
+      <div
+        className={`group relative flex flex-col gap-1 mb-4 max-w-[40%] ${
+          isMe ? "ml-auto" : "mr-auto"
+        }`}
+      >
+        {replyingToMessage && (
+          <div
+            className={`text-xs opacity-75 mb-1 ${
+              isMe ? "text-right" : "text-left"
+            }`}
+          >
+            Replying to: {replyingToMessage.text.substring(0, 30)}...
           </div>
         )}
+
+        <div
+          className={`flex items-start gap-2 ${
+            isMe ? "flex-row-reverse" : "flex-row"
+          }`}
+        >
+          <div className="flex-1 relative group">
+            {isPinned && (
+              <Pin className="absolute -top-4 -left-4 h-3 w-3 text-gray-500" />
+            )}
+
+            <div
+              className={`relative rounded-2xl px-4 py-2 ${
+                isMe
+                  ? "bg-blue-500 text-white before:absolute before:right-[-6px] before:top-[50%] before:border-8 before:border-transparent before:border-l-blue-500"
+                  : "bg-gray-100 dark:bg-gray-800 before:absolute before:left-[-6px] before:top-[50%] before:border-8 before:border-transparent before:border-r-gray-100 dark:before:border-r-gray-800"
+              }`}
+            >
+              {message.text}
+            </div>
+
+            {Object.entries(message.reactions).length > 0 && (
+              <div
+                className={`flex gap-1 mt-1 ${
+                  isMe ? "justify-end" : "justify-start"
+                }`}
+              >
+                {Object.entries(message.reactions).map(([reaction, count]) => (
+                  <span
+                    key={reaction}
+                    className="bg-white dark:bg-gray-800 px-2 py-0.5 rounded-full text-xs border"
+                  >
+                    {reaction}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div
+              className={`mt-1 text-xs opacity-50 flex gap-1 items-center ${
+                isMe ? "justify-end" : "justify-start"
+              }`}
+            >
+              {message.timestamp}
+              {message.status === "sent" && <span>✓</span>}
+            </div>
+
+            <ReactionBar message={message} />
+          </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100"
+              >
+                <MoreVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align={isMe ? "end" : "start"}>
+              <DropdownMenuItem onClick={() => handleReply(message)}>
+                <Reply className="mr-2 h-4 w-4" />
+                Reply
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handlePinMessage(message.id)}>
+                <Pin className="mr-2 h-4 w-4" />
+                {isPinned ? "Unpin" : "Pin"}
+              </DropdownMenuItem>
+              {isMe && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => handleEditMessage(message.id)}
+                  >
+                    <Edit2 className="mr-2 h-4 w-4" />
+                    Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleDeleteMessage(message.id)}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <TooltipProvider>
+      <div className="flex h-[calc(100vh-56px)] text-gray-800 dark:text-gray-200">
+        <div className="w-1/3 border-r flex flex-col">
+          <div className="p-4">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-xl font-bold">Direct Messages</span>
+            <div className="flex items-center space-x-2">
+                <div
+                  onClick={toggleSwitch}
+                  className={`relative inline-block w-10 h-6 rounded-full transition-colors hover:cursor-pointer ${
+                    isChecked ? "bg-blue-500" : "bg-gray-300"
+                  }`}
+                >
+                  <span
+                    className={`absolute left-1 top-1 block w-4 h-4 rounded-full bg-white transition-transform ${
+                      isChecked ? "translate-x-4" : "translate-x-0"
+                    }`}
+                  />
+                </div>
+              <label htmlFor="airplane-mode">Unread</label>
+            </div>
+          </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50" />
+              <input
+                type="text"
+                placeholder="Search dms"
+                className="w-full pl-10 pr-4 py-2 border rounded-full bg-transparent"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            {filteredUsers.map((user) => (
+              <button
+                key={user.id}
+                onClick={() => setSelectedUser(user)}
+                className="w-full px-4 py-3 flex items-center gap-3 hover:bg-accent transition-colors hover:bg-gray-600"
+              >
+                <Avatar className="border border-gray-300">
+                  <AvatarImage src={user.avatar} />
+                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div className="flex-1 text-left">
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">{user.name}</span>
+                    <span className="text-xs opacity-50">{user.timestamp}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      variant={
+                        user.status === "online" ? "default" : "secondary"
+                      }
+                    >
+                      {user.lastSeen}
+                    </Badge>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col">
+          {selectedUser ? (
+            <>
+              <div className="p-4 border-b flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Avatar className="border">
+                    <AvatarImage src={selectedUser.avatar} />
+                    <AvatarFallback>
+                      {selectedUser.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h2 className="font-medium">{selectedUser.name}</h2>
+                    <p className="text-sm opacity-50">
+                      {selectedUser.lastSeen}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-4">
+                {(messages[selectedUser.id] || []).map((message) => (
+                  <MessageBubble key={message.id} message={message} />
+                ))}
+              </div>
+
+              <div className="p-4 border-t">
+                {replyingTo && (
+                  <div className="mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Reply className="h-4 w-4" />
+                      <span className="text-sm">Replying to message</span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setReplyingTo(null)}
+                    >
+                      ×
+                    </Button>
+                  </div>
+                )}
+
+                <div className="flex items-end gap-2">
+                  <div className="flex-1">
+                    <textarea
+                      value={messageInput}
+                      onChange={(e) => setMessageInput(e.target.value)}
+                      placeholder="Type a message..."
+                      className="w-full p-3 rounded-lg border bg-transparent resize-none focus:outline-none"
+                      rows={2}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendMessage();
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="flex gap-2 mb-3">
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <Paperclip className="h-4 w-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Attach file</TooltipContent>
+                    </Tooltip>
+                    <Button onClick={handleSendMessage}>
+                      <Send className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="flex-1 flex items-center justify-center opacity-50">
+              Select a conversation to start messaging
+            </div>
+          )}
+        </div>
+      </div>
+    </TooltipProvider>
   );
 };
 
-export default DirectMessageInterface;
+export default DMs;

@@ -1,11 +1,15 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { HomeIcon, BellIcon, CogIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 function Sidebar() {
+  const location = useLocation();
+  const currentPath = location.pathname.split('/').pop();
+
   const icons = [
-    { id: 'home-tooltip', icon: <HomeIcon className="w-6 h-6 text-white mb-1" />, label: 'channels', tooltip: 'Home', path: '/managesnap/channels' },
+    { id: 'home-tooltip', icon: <HomeIcon className="w-6 h-6 mb-1" />, label: 'channels', tooltip: 'Home', path: '/managesnap/channels' },
     { 
       id: 'custom-tooltip', 
       icon: (
@@ -15,7 +19,7 @@ function Sidebar() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="w-6 h-6 mb-1 text-white"
+          className="w-6 h-6 mb-1"
         >
           <path
             strokeLinecap="round"
@@ -28,26 +32,30 @@ function Sidebar() {
       tooltip: 'DMs', 
       path: '/managesnap/dms' 
     },
-    { id: 'bell-tooltip', icon: <BellIcon className="w-6 h-6 text-white mb-1" />, label: 'Notifications', tooltip: 'Notifications', path: '/managesnap/notifications' },
-    { id: 'cog-tooltip', icon: <CogIcon className="w-6 h-6 text-white mb-1" />, label: 'Settings', tooltip: 'Settings', path: '/managesnap/settings' }
+    { id: 'bell-tooltip', icon: <BellIcon className="w-6 h-6 mb-1" />, label: 'Notifications', tooltip: 'Notifications', path: '/managesnap/notifications' },
+    { id: 'cog-tooltip', icon: <CogIcon className="w-6 h-6 mb-1" />, label: 'Settings', tooltip: 'Settings', path: '/managesnap/settings' }
   ];
 
   return (
     <aside className="hidden lg:flex flex-col items-center p-4 space-y-6 bg-zinc-900 shadow-md w-16">
-      {icons.map(({ id, icon, label, tooltip, path }) => (
-        <Link to={path} key={id}>
-          <div
-            className="group relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full bg-gray-700 hover:bg-gray-600 transition"
-            aria-label={label}
-            role="button"
-          >
-            {icon}
-            <ReactTooltip id={id} place="right" type="light" effect="solid">
-              {tooltip}
-            </ReactTooltip>
-          </div>
-        </Link>
-      ))}
+      {icons.map(({ id, icon, label, tooltip, path }) => {
+        const isActive = currentPath === path.split('/').pop(); 
+        return (
+          <Link to={path} key={id}>
+            <div
+              className={`group relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full transition 
+                ${isActive ? 'bg-gray-600' : 'bg-gray-700 hover:bg-gray-600'}`}
+              aria-label={label}
+              role="button"
+            >
+              {React.cloneElement(icon, { className: `${isActive ? 'text-black' : 'text-white'} w-6 h-6 mb-1` })}
+              <ReactTooltip id={id} place="right" type="light" effect="solid">
+                {tooltip}
+              </ReactTooltip>
+            </div>
+          </Link>
+        );
+      })}
     </aside>
   );
 }
