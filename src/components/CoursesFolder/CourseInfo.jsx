@@ -3,7 +3,42 @@ import { FaTrash } from "react-icons/fa";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+import {
+  getCoursePrequisite,
+  createCoursePrequisite,
+  delCoursePrequisite,
+} from "./../../fetching/createSnap/prequisite";
+
+import {
+  getCourseSkill,
+  createCourseSkill,
+  updateCourseSkill,
+  delCourseSkill,
+} from "./../../fetching/createSnap/skills"; // Import the skill functions
+import { getOneCourseFetch } from "../../fetching/createSnap/courses";
+
 function CourseDetails() {
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const prerequisitesResponse = await getCoursePrequisite(courseId);
+  //       setPrerequisites(prerequisitesResponse.data.results);
+  //       console.log(prerequisitesResponse.data);
+
+  //       const skillsResponse = await getCourseSkill(courseId);
+  //       setSkills(skillsResponse.data.results);
+
+  //       // Get Cousse Name
+  //       const response = await getOneCourseFetch(courseId);
+  //       setTittle(response.data.course.title);
+  //     } catch (error) {
+  //       console.error("Failed to fetch data", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [courseId]);
+
   const [skills, setSkills] = useState([
     "Understanding of React Hooks",
     "State Management with Context API",
