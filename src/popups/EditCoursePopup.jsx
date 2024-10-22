@@ -66,16 +66,18 @@ const EditCoursePopup = ({
       console.log(res.data, "data we got in updateCourseFetch");
 
       setData((prevData) => {
-        const results = prevData.results.map((item) =>
+        const results = prevData.results?.map((item) =>
           item.id === course.id ? res.data : item
         );
         return { ...prevData, results };
       });
 
-      setFilteredCourses((prevFilteredCourses) =>
-        prevFilteredCourses.map((item) =>
-          item.id === course.id ? res.data : item
-        )
+      setFilteredCourses(
+        (prevFilteredCourses) =>
+          prevFilteredCourses &&
+          prevFilteredCourses.map((item) =>
+            item.id === course.id ? res.data : item
+          )
       );
 
       toast({

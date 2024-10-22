@@ -4,7 +4,6 @@ const URL = "https://snapgpt.online/career_service/";
 // https://moviesnap.in/career_service/api/course/creator/courses/==
 const getCreaterCourseFetch = async () => {
   try {
-    console.log(`this is the url  ${URL}api/course/creator/courses/`);
     const response = await axiosInstance.get(
       `${URL}api/course/creator/courses/`
     );
@@ -19,9 +18,9 @@ const createACourceFetch = async (
   desktopBannerImage,
   data
 ) => {
-  console.log(data, "data we got in createACourceFetch");
-  console.log(mobileBannerImage, "mobileBannerImage");
-  console.log(desktopBannerImage, "desktopBannerImage");
+  // console.log(data, "data we got in createACourceFetch");
+  // console.log(mobileBannerImage, "mobileBannerImage");
+  // console.log(desktopBannerImage, "desktopBannerImage");
   const formData = new FormData();
 
   Object.keys(data).forEach((key) => {

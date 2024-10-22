@@ -6,7 +6,10 @@ import { useToast } from "../components/ui/use-toast";
 import CoursePopup from "../popups/CoursePopup";
 import EditCoursePopup from "../popups/EditCoursePopup";
 import img from "../assets/rsc/c1.avif";
-import { getCreaterCourseFetch } from "../fetching/createSnap/courses";
+import {
+  deleteOneCourseFetch,
+  getCreaterCourseFetch,
+} from "../fetching/createSnap/courses";
 
 const CourseList = () => {
   const navigate = useNavigate();
@@ -28,25 +31,23 @@ const CourseList = () => {
     setIsEditCoursePopup(!isEditCoursePopup);
   };
 
-  // useEffect(() => {
-  //   setFilteredCourses(
-  //     data.results.filter((course) =>
-  //       course.title.toLowerCase().includes(searchTerm.toLowerCase())
-  //     )
-  //   );
-  // }, [searchTerm, data]);
-
   const handleCourse = (courseId) => {
     navigate(`/createsnap/course/${courseId}/started/`);
   };
 
   const handleDelete = async (courseId) => {
-    setData((prevData) => ({
-      results: prevData.results.filter((course) => course.id !== courseId),
-    }));
-    setFilteredCourses((prevFilteredCourses) =>
-      prevFilteredCourses.filter((course) => course.id !== courseId)
-    );
+    const res = await deleteOneCourseFetch(courseId);
+    if (res && res.status === 204) {
+      setData((prevData) => ({
+        results: prevData.results?.filter((course) => course.id !== courseId),
+      }));
+      setFilteredCourses(
+        (prevFilteredCourses) =>
+          prevFilteredCourses &&
+          prevFilteredCourses.filter((course) => course.id !== courseId)
+      );
+    }
+
     toast({
       title: "Course deleted successfully",
     });
@@ -65,13 +66,13 @@ const CourseList = () => {
   const AllCourses = async () => {
     const res = await getCreaterCourseFetch();
     if (res && res.data) {
-      console.log(res.data.results, "data we got in getCreaterCourseFetch");
+      // console.log(res.data.results, "data we got in getCreaterCourseFetch");
       setData(res.data.results);
       setFilteredCourses(res.data.results);
     }
   };
 
-  console.log(data, filteredCourses, "data and filtered courses");
+  // console.log(data, filteredCourses, "data and filtered courses");
   useEffect(() => {
     AllCourses();
   }, []);
@@ -143,64 +144,58 @@ const CourseList = () => {
       >
         <AnimatePresence>
           {filteredCourses &&
-            filteredCourses
-              // .filter((course) =>
-              //   activeTab === "draft"
-              //     ? course.status === "draft"
-              //     : course.status === "released"
-              // )
-              .map((course) => (
-                <motion.div
-                  key={course.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-102"
-                >
-                  <img
-                    className="w-full h-40 object-cover"
-                    src={course.mobile_banner_image || img}
-                    alt={`${course.title} Cover`}
-                  />
-                  <div className="p-5">
-                    <h2 className="font-bold text-xl mb-2 text-gray-800">
-                      {course.title}
-                    </h2>
-                    <p className="text-gray-600 mb-4">{course.description}</p>
-                    <div className="flex justify-between items-center">
-                      <div className="text-gray-600 text-sm">
-                        {course.level.charAt(0).toUpperCase() +
-                          course.level.slice(1)}{" "}
-                        | {course.status}
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="flex items-center bg-indigo-500 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-indigo-600 transition duration-300"
-                          onClick={() => handleCourse(course.id)}
-                        >
-                          Get Started <FaArrowRight className="ml-1" />
-                        </motion.button>
-                        <button
-                          className="text-blue-600 hover:text-blue-800"
-                          onClick={() => toggleEditCoursePopup(course)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="text-red-600 hover:text-red-800"
-                          onClick={() => handleDelete(course.id)}
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
+            filteredCourses.map((course) => (
+              <motion.div
+                key={course.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-102"
+              >
+                <img
+                  className="w-full h-40 object-cover"
+                  src={course.mobile_banner_image || img}
+                  alt={`${course.title} Cover`}
+                />
+                <div className="p-5">
+                  <h2 className="font-bold text-xl mb-2 text-gray-800">
+                    {course.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4">{course.description}</p>
+                  <div className="flex justify-between items-center">
+                    <div className="text-gray-600 text-sm">
+                      {course.level.charAt(0).toUpperCase() +
+                        course.level.slice(1)}{" "}
+                      | {course.status}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex items-center bg-indigo-500 text-white px-3 py-1 rounded-lg text-sm shadow-sm hover:bg-indigo-600 transition duration-300"
+                        onClick={() => handleCourse(course.id)}
+                      >
+                        Get Started <FaArrowRight className="ml-1" />
+                      </motion.button>
+                      <button
+                        className="text-blue-600 hover:text-blue-800"
+                        onClick={() => toggleEditCoursePopup(course)}
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        className="text-red-600 hover:text-red-800"
+                        onClick={() => handleDelete(course.id)}
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
-                </motion.div>
-              ))}
+                </div>
+              </motion.div>
+            ))}
         </AnimatePresence>
       </motion.div>
 
