@@ -60,7 +60,7 @@ function Header() {
         <ModeToggle/>
       </div>
       <div className="absolute left-4 top-3 ">
-        <div className="relative flex space-x-4 items-center mb-6">
+        <div className="relative flex space-x-2 items-center mb-6">
           <div className="bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">
             <FaUserCircle />
           </div>

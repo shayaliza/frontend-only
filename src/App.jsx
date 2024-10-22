@@ -78,7 +78,8 @@ import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
 import MSMobileChat from "./managesnap/components/Mobileview/Chat";
 import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
 import MSMobileSearch from "./managesnap/components/Mobileview/Search";
-import MSDesktopLayout from "./managesnap/components/Layout";
+import MSDesktopLayout from "./managesnap/components/HomeLayout";
+import MSDesktopDMs from "./managesnap/components/DMsLayout"
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -359,6 +360,10 @@ function AppRoutes() {
                     <Route
                       path="/managesnap/direct/:dmName"
                       element={<MSDesktopLayout />}
+                    />
+                    <Route
+                      path="/managesnap/dms"
+                      element={<MSDesktopDMs />}
                     />
                   </>
                 )}

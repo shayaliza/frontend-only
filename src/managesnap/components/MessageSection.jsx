@@ -114,7 +114,7 @@ function ChatInterface({toggleProfileSectionVisibility}) {
   return (
     <div className={`flex h-[calc(100vh-56px)] ${theme == "dark" ? "bg-black" : "" }`}>
       <div className="flex flex-col w-full h-full text-gray-700 dark:text-gray-300">
-        <div className="header p-4 flex justify-between items-center border shadow-md">
+        <div className="header p-4 flex justify-between items-center border-b shadow-md">
           <div className="flex items-center mx-4 cursor-pointer" onClick={toggleProfileSectionVisibility}>
             <img
               src={currentUser.photo}

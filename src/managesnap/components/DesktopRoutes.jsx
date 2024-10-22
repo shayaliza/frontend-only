@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import Layout from "./Layout";
+import Layout from "./HomeLayout";
 import Search from "./Search";
 
 function DesktopRoutes() {

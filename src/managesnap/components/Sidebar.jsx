@@ -1,10 +1,11 @@
 import React from 'react';
 import { HomeIcon, BellIcon, CogIcon } from '@heroicons/react/outline';
+import { Link } from 'react-router-dom';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 function Sidebar() {
   const icons = [
-    { id: 'home-tooltip', icon: <HomeIcon className="w-6 h-6 text-white mb-1" />, label: 'Home', tooltip: 'Home' },
+    { id: 'home-tooltip', icon: <HomeIcon className="w-6 h-6 text-white mb-1" />, label: 'channels', tooltip: 'Home', path: '/managesnap/channels' },
     { 
       id: 'custom-tooltip', 
       icon: (
@@ -23,27 +24,29 @@ function Sidebar() {
           />
         </svg>
       ), 
-      label: 'Custom Icon', 
-      tooltip: 'Custom' 
+      label: 'dms', 
+      tooltip: 'DMs', 
+      path: '/managesnap/dms' 
     },
-    { id: 'bell-tooltip', icon: <BellIcon className="w-6 h-6 text-white mb-1" />, label: 'Notifications', tooltip: 'Notifications' },
-    { id: 'cog-tooltip', icon: <CogIcon className="w-6 h-6 text-white mb-1" />, label: 'Settings', tooltip: 'Settings' }
+    { id: 'bell-tooltip', icon: <BellIcon className="w-6 h-6 text-white mb-1" />, label: 'Notifications', tooltip: 'Notifications', path: '/managesnap/notifications' },
+    { id: 'cog-tooltip', icon: <CogIcon className="w-6 h-6 text-white mb-1" />, label: 'Settings', tooltip: 'Settings', path: '/managesnap/settings' }
   ];
 
   return (
     <aside className="hidden lg:flex flex-col items-center p-4 space-y-6 bg-zinc-900 shadow-md w-16">
-      {icons.map(({ id, icon, label, tooltip }) => (
-        <div
-          key={id}
-          className="group relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full bg-gray-700 hover:bg-gray-600 transition"
-          aria-label={label}
-          role="button"
-        >
-          {icon}
-          <ReactTooltip id={id} place="right" type="light" effect="solid">
-            {tooltip}
-          </ReactTooltip>
-        </div>
+      {icons.map(({ id, icon, label, tooltip, path }) => (
+        <Link to={path} key={id}>
+          <div
+            className="group relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full bg-gray-700 hover:bg-gray-600 transition"
+            aria-label={label}
+            role="button"
+          >
+            {icon}
+            <ReactTooltip id={id} place="right" type="light" effect="solid">
+              {tooltip}
+            </ReactTooltip>
+          </div>
+        </Link>
       ))}
     </aside>
   );

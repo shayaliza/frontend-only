@@ -1,5 +1,5 @@
 import React from "react";
-import { HelpCircle, ChartArea, FileQuestion, PencilIcon, Cog } from "lucide-react";
+import { HelpCircle, AreaChart, FileQuestion, PencilIcon, Cog } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../DarkMode/ThemeProvider";
 
@@ -10,7 +10,7 @@ function BottomBar() {
   const {theme} = useTheme();
 
   const tabs = [
-    { name: "analytics", icon: ChartArea, label: "Analytics" },
+    { name: "analytics", icon: AreaChart, label: "Analytics" },
     { name: "manage", icon: Cog, label: "Manage"},
     { name: "create", icon: PencilIcon, label: "Create" },
     { name: "doubts", icon: FileQuestion, label: "Doubts" },
