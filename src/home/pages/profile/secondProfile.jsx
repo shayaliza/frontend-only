@@ -61,18 +61,18 @@ const SecondProfilePage = () => {
     ],
   });
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // const fetchData = async () => {
-  //   const id = await getUserId(reduxAccessToken);
-  //   await getProfile(id).then((res) => {
-  //     // console.log(res);
-  //     setData(res);
-  //     // console.log(data);
-  //   });
-  // };
+  const fetchData = async () => {
+    const id = await getUserId(reduxAccessToken);
+    await getProfile(id).then((res) => {
+      // console.log(res);
+      setData(res);
+      // console.log(data);
+    });
+  };
 
   return (
     <div className="flex flex-col">
@@ -107,16 +107,16 @@ const SecondProfilePage = () => {
 
                     <div className="ml-4">
                       <h2 className="text-lg font-semibold text-foreground">
-                        {/* {data?.full_name} */}
-                        Full Name
+                        {data?.full_name}
+                        {/* Full Name */}
                       </h2>
-                      <p className="text-muted-foreground">@saketh33</p>
-                      {/* <p className="text-muted-foreground">{data?.bio}</p> */}
+                      <p className="text-muted-foreground">{/* @saketh33 */}</p>
+                      <p className="text-muted-foreground">{data?.bio}</p>
                       <p className="text-muted-foreground">
-                        {/* {data?.city} {data?.state}
-                        {""}
-                        {data?.country} */}
-                        City, State, Country
+                        {data?.city}
+                        {data?.state}
+                        {""} {data?.country}
+                        {/* City, State, Country */}
                       </p>
                     </div>
                   </div>
@@ -151,9 +151,9 @@ const SecondProfilePage = () => {
                     </h2>
                     <div className={"text-muted-foreground flex flex-col"}>
                       <div>
-                        {/* {data?.bio} */}
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Omnis, architecto.
+                        {data?.bio}
+                        {/* Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Omnis, architecto. */}
                       </div>
                       <span className="text-blue-800  text-sm mt-2 hover:underline">
                         SEE MORE

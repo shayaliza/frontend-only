@@ -1,6 +1,6 @@
 import axiosInstance from "./Interceptor/axiosInstance";
 // import { getUserId } from "./decodingJwt";
-const URL = "https://moviesnap.in/";
+const URL = "https://snapgpt.online/";
 
 // const getToken = () => {
 //   const storedData = localStorage.getItem("techsnap");
