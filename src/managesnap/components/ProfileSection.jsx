@@ -19,7 +19,7 @@ import img1 from "../assets/man1.jpg";
 import img2 from "../assets/man2.jpg";
 import img3 from "../assets/man3.jpg";
 
-function Profile({toggleProfileSectionVisibility, setIsProfileSectionVisible, isProfileSectionVisible}) {
+function Profile({userId, setIsProfileSectionVisible, isProfileSectionVisible}) {
   const menuItems = [
     {
       icon: <FaUserAlt className="text-xl" />,
@@ -117,7 +117,7 @@ function Profile({toggleProfileSectionVisibility, setIsProfileSectionVisible, is
   }, [id, location.state]);
 
   return (
-    <div className={`relative h-[calc(100vh-56px)] max-w-[450px] ${theme == "dark" ? "bg-black": ""} overflow-auto`}>
+    <div className={`relative h-[calc(100vh-56px)] max-w-[450px] text-gray-700 dark:text-gray-300 ${theme == "dark" ? "bg-black": ""} overflow-auto`}>
       {profileInfo && (
         <div className="p-8 w-full">
           <div className="flex flex-col items-center space-y-6">
@@ -135,7 +135,7 @@ function Profile({toggleProfileSectionVisibility, setIsProfileSectionVisible, is
               )}
               <div className="flex flex-col">
                 <span className="text-xl font-semibold">
-                  {profileInfo.name}
+                  {userId}
                 </span>
                 <span className="text-lg">Designation</span>
               </div>

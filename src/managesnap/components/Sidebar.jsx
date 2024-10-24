@@ -43,15 +43,20 @@ function Sidebar() {
         return (
           <Link to={path} key={id}>
             <div
+              data-tooltip-id={id}  
+              data-tooltip-content={tooltip}
               className={`group relative flex items-center justify-center w-12 h-12 cursor-pointer rounded-full transition 
                 ${isActive ? 'bg-gray-600' : 'bg-gray-700 hover:bg-gray-600'}`}
               aria-label={label}
               role="button"
             >
               {React.cloneElement(icon, { className: `${isActive ? 'text-black' : 'text-white'} w-6 h-6 mb-1` })}
-              <ReactTooltip id={id} place="right" type="light" effect="solid">
-                {tooltip}
-              </ReactTooltip>
+              <ReactTooltip 
+                id={id}
+                place="right"
+                content={tooltip}
+                className="z-50"
+              />
             </div>
           </Link>
         );

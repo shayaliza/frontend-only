@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Send,
   Paperclip,
@@ -37,6 +37,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { Switch } from "../../components/ui/Switch";
+import ProfileSection from "./ProfileSection";
 
 const REACTIONS = [
   { emoji: "👍", name: "thumbsup" },
@@ -55,10 +56,11 @@ const DMs = () => {
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [replyingTo, setReplyingTo] = useState(null);
   const [pinnedMessages, setPinnedMessages] = useState([]);
+  const [profileUserId, setProfileUserId] = useState(null);
 
   const users = [
     {
-      id: 1,
+      id: "Kunal",
       name: "Kunal Dugar",
       avatar: "/api/placeholder/32/32",
       status: "online",
@@ -66,7 +68,7 @@ const DMs = () => {
       timestamp: "Sep 4",
     },
     {
-      id: 2,
+      id: "Techsnap",
       name: "Techsnap",
       avatar: "/api/placeholder/32/32",
       status: "away",
@@ -74,6 +76,58 @@ const DMs = () => {
       timestamp: "Aug 14",
     },
   ];
+
+  const [isResizingLeft, setIsResizingLeft] = useState(false);
+  const [isResizingRight, setIsResizingRight] = useState(false);
+  const [dmListWidth, setDmListWidth] = useState(360);
+  const [profileSectionWidth, setProfileSectionWidth] = useState(300);
+  const [isProfileSectionVisible, setIsProfileSectionVisible] = useState(false);
+
+  const dmListRef = useRef(null);
+  const messageSectionRef = useRef(null);
+  const profileSectionRef = useRef(null);
+  const leftDividerRef = useRef(null);
+  const rightDividerRef = useRef(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (isResizingLeft) {
+        const newWidth = e.clientX - dmListRef.current.getBoundingClientRect().left;
+        if (newWidth > 200 && newWidth < 400) {
+          setDmListWidth(newWidth);
+        }
+      } else if (isResizingRight) {
+        const containerWidth = messageSectionRef.current.parentElement.offsetWidth;
+        const newWidth = containerWidth - e.clientX;
+        if (newWidth > 230 && newWidth < 400) {
+          setProfileSectionWidth(newWidth);
+        }
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizingLeft(false);
+      setIsResizingRight(false);
+    };
+
+    if (isResizingLeft || isResizingRight) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      document.body.classList.add('selecting-none');
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      document.body.classList.remove('selecting-none');
+    };
+  }, [isResizingLeft, isResizingRight]);
+
+  const toggleProfileSectionVisibility = (userId) => {
+    setIsProfileSectionVisible(!isProfileSectionVisible);
+    setProfileUserId(userId);  
+  };
+
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -303,7 +357,9 @@ const DMs = () => {
   return (
     <TooltipProvider>
       <div className="flex h-[calc(100vh-56px)] text-gray-800 dark:text-gray-200">
-        <div className="w-1/3 border-r flex flex-col">
+        <div className="w-1/4 border-r flex flex-col"
+        ref={dmListRef} 
+        style={{ width: `${dmListWidth}px` }} >
           <div className="p-4">
           <div className="flex justify-between items-center mb-4">
             <span className="text-xl font-bold">Direct Messages</span>
@@ -364,12 +420,18 @@ const DMs = () => {
             ))}
           </div>
         </div>
-        <div className="flex-1 flex flex-col">
+        <div
+        ref={leftDividerRef}
+        className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
+        onMouseDown={() => setIsResizingLeft(true)}
+      />
+        <div className="flex-1 flex flex-col"
+        ref={messageSectionRef}>
           {selectedUser ? (
             <>
               <div className="p-4 border-b flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Avatar className="border">
+                  <Avatar className="border cursor-pointer" onClick={() => toggleProfileSectionVisibility(selectedUser.id)}>
                     <AvatarImage src={selectedUser.avatar} />
                     <AvatarFallback>
                       {selectedUser.name.charAt(0)}
@@ -445,6 +507,28 @@ const DMs = () => {
             </div>
           )}
         </div>
+        {isProfileSectionVisible && (
+        <div
+          ref={rightDividerRef}
+          className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
+          onMouseDown={() => setIsResizingRight(true)}
+        />
+      )}
+
+      {isProfileSectionVisible && (
+        <div 
+          ref={profileSectionRef} 
+          style={{ width: `${profileSectionWidth}px` }} 
+          className="flex-shrink-0 border-l border-gray-600 overflow-y-auto"
+        >
+          <ProfileSection
+            userId={profileUserId} 
+            onToggleVisibility={toggleProfileSectionVisibility}
+            setIsProfileSectionVisible={setIsProfileSectionVisible}
+            isProfileSectionVisible={isProfileSectionVisible}
+          />
+        </div>
+      )}
       </div>
     </TooltipProvider>
   );

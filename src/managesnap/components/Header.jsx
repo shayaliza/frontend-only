@@ -56,7 +56,7 @@ function Header() {
 
   return (
     <div className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b text-gray-700 dark:text-gray-300 ${theme == "dark" ? "bg-black" : "text-gray-700"}`}>
-      <div className="absolute right-4 top-4">
+      <div className="absolute right-4 top-2.5">
         <ModeToggle/>
       </div>
       <div className="absolute left-4 top-3 ">
