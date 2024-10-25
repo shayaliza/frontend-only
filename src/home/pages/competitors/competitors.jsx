@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const cardData = [
@@ -108,9 +109,11 @@ const CompetitionSection = () => {
               competitions. Find help in the documentation or learn about
               Community Competitions.
             </p>
-            <button className="w-[200px] h-[40px] mt-4 bg-black text-sm text-white font-semibold rounded-full">
-              Host a Competition
-            </button>
+            <Link to={"/competitions/host"}>
+              <button className="w-[200px] h-[40px] mt-4 bg-black text-sm text-white font-semibold rounded-full">
+                Host a Competition
+              </button>
+            </Link>
           </div>
           <div className="right w-2/5">
             <img
