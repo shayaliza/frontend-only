@@ -71,219 +71,224 @@ function TrendingProject() {
         //   grabCursor={true}
       >
         <SwiperSlide>
-          <div class=" bg-white   mb-20 shadow-md flex flex-col">
-            <div class="h-[150px] max-[900px]:mb-4">
-              <img src={BannerImage} alt="card" class="h-[150px] " />
+          <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
+            <div className="h-[150px] max-[900px]:mb-4">
+              <img
+                src={BannerImage}
+                alt="card"
+                className="h-full w-full object-cover"
+              />
             </div>
-            <div class="flex flex-col justify-between">
-              <div class="title p-4 pb-2">
-                <p class="font-bold text-lg">Introduction to Python</p>
+            <div className="flex flex-col justify-between">
+              <div className="p-4 pb-2">
+                <p className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  Introduction to Python
+                </p>
               </div>
-
-              <div class="icons flex justify-between p-2 px-4">
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+              <div className="flex justify-between p-2 px-4">
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
               </div>
-              <div class=" flex items-center px-4 pt-2 text-xs">
-                <p class="text-gray-700 font-semibold">Author:</p>
-                <div class="name flex items-center ml-2">
-                  <span>
-                    <img src={coinLogo} alt="indian" class="w-4 h-4" />
-                  </span>
-                  <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
+              <div className="flex items-center px-4 pt-2 text-xs">
+                <p className="text-gray-700 dark:text-gray-400 font-semibold">
+                  Author:
+                </p>
+                <div className="flex items-center ml-2">
+                  <img src={coinLogo} alt="author" className="w-4 h-4 mr-1" />
+                  <h3 className="text-gray-700 dark:text-gray-300 font-semibold">
+                    Alan Biju
+                  </h3>
                 </div>
               </div>
-              <div class=" px-4 text-sm pt-1">
-                <div class="tags_box flex items-center">
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>React</p>
+              <div className="px-4 text-sm pt-1">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    React
                   </div>
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>Kodo</p>
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    Kodo
                   </div>
                 </div>
               </div>
-              <button class="w-[90%] mx-auto bg-white text-black h-9 border border-black font-semibold rounded-md mt-4">
+              <button className="w-[90%] mx-auto bg-white dark:bg-gray-700 text-black dark:text-gray-200 h-9 border border-black dark:border-gray-500 font-semibold rounded-md mt-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 View in Detail
               </button>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div class=" bg-white    mb-20 shadow-md flex flex-col">
-            <div class="h-[150px] max-[900px]:mb-4">
-              <img src={BannerImage} alt="card" class="h-[150px] " />
+          <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
+            <div className="h-[150px] max-[900px]:mb-4">
+              <img
+                src={BannerImage}
+                alt="card"
+                className="h-full w-full object-cover"
+              />
             </div>
-            <div class="flex flex-col justify-between">
-              <div class="title p-4 pb-2">
-                <p class="font-bold text-lg">Introduction to Python</p>
+            <div className="flex flex-col justify-between">
+              <div className="p-4 pb-2">
+                <p className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  Introduction to Python
+                </p>
               </div>
-
-              <div class="icons flex justify-between p-2 px-4">
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+              <div className="flex justify-between p-2 px-4">
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
               </div>
-              <div class=" flex items-center px-4 pt-2 text-xs">
-                <p class="text-gray-700 font-semibold">Author:</p>
-                <div class="name flex items-center ml-2">
-                  <span>
-                    <img src={coinLogo} alt="indian" class="w-4 h-4" />
-                  </span>
-                  <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
+              <div className="flex items-center px-4 pt-2 text-xs">
+                <p className="text-gray-700 dark:text-gray-400 font-semibold">
+                  Author:
+                </p>
+                <div className="flex items-center ml-2">
+                  <img src={coinLogo} alt="author" className="w-4 h-4 mr-1" />
+                  <h3 className="text-gray-700 dark:text-gray-300 font-semibold">
+                    Alan Biju
+                  </h3>
                 </div>
               </div>
-              <div class=" px-4 text-sm pt-1">
-                <div class="tags_box flex items-center">
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>React</p>
+              <div className="px-4 text-sm pt-1">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    React
                   </div>
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>Kodo</p>
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    Kodo
                   </div>
                 </div>
               </div>
-              <button class="w-[90%] mx-auto bg-white text-black h-9 border border-black font-semibold rounded-md mt-4">
+              <button className="w-[90%] mx-auto bg-white dark:bg-gray-700 text-black dark:text-gray-200 h-9 border border-black dark:border-gray-500 font-semibold rounded-md mt-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 View in Detail
               </button>
             </div>
           </div>
-        </SwiperSlide>
+        </SwiperSlide>{" "}
         <SwiperSlide>
-          <div class=" bg-white    mb-20 shadow-md flex flex-col">
-            <div class="flex flex-col justify-between">
-              <div class="h-[150px] max-[900px]:mb-4">
-                <img src={BannerImage} alt="card" class="h-[150px] " />
+          <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
+            <div className="h-[150px] max-[900px]:mb-4">
+              <img
+                src={BannerImage}
+                alt="card"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col justify-between">
+              <div className="p-4 pb-2">
+                <p className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  Introduction to Python
+                </p>
               </div>
-              <div class="title p-4 pb-2">
-                <p class="font-bold text-lg">Introduction to Python</p>
-              </div>
-              <div class="icons flex justify-between p-2 px-4">
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+              <div className="flex justify-between p-2 px-4">
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
               </div>
-              <div class=" flex items-center px-4 pt-2 text-xs">
-                <p class="text-gray-700 font-semibold">Author:</p>
-                <div class="name flex items-center ml-2">
-                  <span>
-                    <img src={coinLogo} alt="indian" class="w-4 h-4" />
-                  </span>
-                  <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
+              <div className="flex items-center px-4 pt-2 text-xs">
+                <p className="text-gray-700 dark:text-gray-400 font-semibold">
+                  Author:
+                </p>
+                <div className="flex items-center ml-2">
+                  <img src={coinLogo} alt="author" className="w-4 h-4 mr-1" />
+                  <h3 className="text-gray-700 dark:text-gray-300 font-semibold">
+                    Alan Biju
+                  </h3>
                 </div>
               </div>
-              <div class=" px-4 text-sm pt-1">
-                <div class="tags_box flex items-center">
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>React</p>
+              <div className="px-4 text-sm pt-1">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    React
                   </div>
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>Kodo</p>
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    Kodo
                   </div>
                 </div>
               </div>
-              <button class="w-[90%] mx-auto bg-white text-black h-9 border border-black font-semibold rounded-md mt-4">
+              <button className="w-[90%] mx-auto bg-white dark:bg-gray-700 text-black dark:text-gray-200 h-9 border border-black dark:border-gray-500 font-semibold rounded-md mt-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 View in Detail
               </button>
             </div>
           </div>
-        </SwiperSlide>
+        </SwiperSlide>{" "}
         <SwiperSlide>
-          <div class=" bg-white    mb-20 shadow-md flex flex-col">
-            <div class="h-[150px] max-[900px]:mb-4">
-              <img src={BannerImage} alt="card" class="h-[150px] " />
+          <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
+            <div className="h-[150px] max-[900px]:mb-4">
+              <img
+                src={BannerImage}
+                alt="card"
+                className="h-full w-full object-cover"
+              />
             </div>
-            <div class="flex flex-col justify-between">
-              <div class="title p-4 pb-2">
-                <p class="font-bold text-lg">Introduction to Python f</p>
+            <div className="flex flex-col justify-between">
+              <div className="p-4 pb-2">
+                <p className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                  Introduction to Python
+                </p>
               </div>
-
-              <div class="icons flex justify-between p-2 px-4">
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+              <div className="flex justify-between p-2 px-4">
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
-                <div class="icon_item flex items-center text-xs">
-                  <span>
-                    <img src={cardTimeLogo} alt="time" class="w-5 h-5" />
-                  </span>
+                <div className="flex items-center text-xs text-gray-600 dark:text-gray-300">
+                  <img src={cardTimeLogo} alt="time" className="w-5 h-5 mr-2" />
                   <p>16 hours</p>
                 </div>
               </div>
-              <div class=" flex items-center px-4 pt-2 text-xs">
-                <p class="text-gray-700 font-semibold">Author:</p>
-                <div class="name flex items-center ml-2">
-                  <span>
-                    <img src={coinLogo} alt="indian" class="w-4 h-4" />
-                  </span>
-                  <h3 class="text-gray-700 font-semibold">Alan Biju</h3>
+              <div className="flex items-center px-4 pt-2 text-xs">
+                <p className="text-gray-700 dark:text-gray-400 font-semibold">
+                  Author:
+                </p>
+                <div className="flex items-center ml-2">
+                  <img src={coinLogo} alt="author" className="w-4 h-4 mr-1" />
+                  <h3 className="text-gray-700 dark:text-gray-300 font-semibold">
+                    Alan Biju
+                  </h3>
                 </div>
               </div>
-              <div class=" px-4 text-sm pt-1">
-                <div class="tags_box flex items-center">
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>React</p>
+              <div className="px-4 text-sm pt-1">
+                <div className="flex items-center space-x-2">
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    React
                   </div>
-                  <div class="tags text-purple-600 text-xs rounded-lg mr-2">
-                    <p>Kodo</p>
+                  <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
+                    Kodo
                   </div>
                 </div>
               </div>
-              <button class="w-[90%] mx-auto bg-white text-black h-9 border border-black font-semibold rounded-md mt-4">
+              <button className="w-[90%] mx-auto bg-white dark:bg-gray-700 text-black dark:text-gray-200 h-9 border border-black dark:border-gray-500 font-semibold rounded-md mt-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 View in Detail
               </button>
             </div>

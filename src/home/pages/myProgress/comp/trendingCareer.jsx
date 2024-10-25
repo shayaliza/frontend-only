@@ -55,123 +55,135 @@ function TrendingCareer() {
       //   grabCursor={true}
     >
       <SwiperSlide>
-        <div class="m-2 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] bg-white rounded-lg m-25 flex flex-col">
-          <div class=" bg-red-500 flex flex-col justify-between p-3 rounded-t-lg">
-            <div class="flex justify-between mb-4">
-              <h1 class="text-lg">Data Scientist</h1>
-              <p class="bg-white text-red-400 px-2 text-sm">Free</p>
+        <div className="m-4 bg-white dark:bg-gray-800 rounded-lg flex flex-col">
+          <div className="bg-red-500 flex flex-col justify-between p-4 rounded-t-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-lg font-semibold text-white">
+                Data Scientist
+              </h1>
+              <p className="bg-white dark:bg-gray-700 text-red-500 px-3 py-1 rounded-full text-xs font-medium">
+                Free
+              </p>
             </div>
-            <div class=" flex justify-between items-end">
-              <div class=" flex items-center">
-                <img src={timeLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">15 hours</p>
+            <div className="flex justify-between items-center gap-4">
+              <div className="flex items-center">
+                <img src={timeLogo} alt="time" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">15 hours</p>
               </div>
-              <div class=" flex items-center">
-                <img src={lessonLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">9 lessons</p>
+              <div className="flex items-center">
+                <img src={lessonLogo} alt="lessons" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">9 lessons</p>
               </div>
-              <div class=" flex items-center">
-                <img src={coinLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">779 coins</p>
+              <div className="flex items-center">
+                <img src={coinLogo} alt="coins" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">779 coins</p>
               </div>
             </div>
           </div>
-          <div class=" p-2">
-            <p class="text-gray-700 text-[0.8rem] m-2">
+          <div className="p-4">
+            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
               maxime esse blanditiis vitae animi eaque adipisci, beatae
               laboriosam vel hic illum eum omnis consequuntur quas.
             </p>
-
-            <div class="mt-2">✔ Free Career HandBook</div>
-
-            <div class="mt-2">✔ Free Career HandBook</div>
-            <div class="mt-2">✔ Free Career HandBook</div>
+            <div className="mt-2 text-gray-600 dark:text-gray-400 flex flex-col space-y-2 text-sm">
+              <div>✔ Free Career Handbook</div>
+              <div>✔ Lifetime Access</div>
+              <div>✔ Industry Recognized Certificate</div>
+            </div>
           </div>
-          <div class=" flex items-center justify-center h-16">
-            <button class="w-5/6 h-10 border border-black rounded-md text-black font-semibold hover:bg-gray-200">
+          <div className="flex items-center justify-center p-4">
+            <button className="w-full h-10 border border-black dark:border-gray-500 rounded-md text-black dark:text-gray-200 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
               Start Course
             </button>
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div class="m-2 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] bg-white rounded-lg m-25 flex flex-col">
-          <div class=" bg-red-500 flex flex-col justify-between p-3 rounded-t-lg">
-            <div class="flex justify-between mb-4">
-              <h1 class="text-lg">Data Scientist</h1>
-              <p class="bg-white text-red-400 px-2 text-sm">Free</p>
+        <div className="m-4 bg-white dark:bg-gray-800 rounded-lg flex flex-col">
+          <div className="bg-red-500 flex flex-col justify-between p-4 rounded-t-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-lg font-semibold text-white">
+                Data Scientist
+              </h1>
+              <p className="bg-white dark:bg-gray-700 text-red-500 px-3 py-1 rounded-full text-xs font-medium">
+                Free
+              </p>
             </div>
-            <div class=" flex justify-between items-end">
-              <div class=" flex items-center">
-                <img src={timeLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">15 hours</p>
+            <div className="flex justify-between items-center gap-4">
+              <div className="flex items-center">
+                <img src={timeLogo} alt="time" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">15 hours</p>
               </div>
-              <div class=" flex items-center">
-                <img src={lessonLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">9 lessons</p>
+              <div className="flex items-center">
+                <img src={lessonLogo} alt="lessons" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">9 lessons</p>
               </div>
-              <div class=" flex items-center">
-                <img src={coinLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">779 coins</p>
+              <div className="flex items-center">
+                <img src={coinLogo} alt="coins" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">779 coins</p>
               </div>
             </div>
           </div>
-          <div class=" p-2">
-            <p class="text-gray-700 text-[0.8rem] m-2">
+          <div className="p-4">
+            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
               maxime esse blanditiis vitae animi eaque adipisci, beatae
               laboriosam vel hic illum eum omnis consequuntur quas.
             </p>
-
-            <div class="mt-2">✔ Free Career HandBook</div>
-
-            <div class="mt-2">✔ Free Career HandBook</div>
-            <div class="mt-2">✔ Free Career HandBook</div>
+            <div className="mt-2 text-gray-600 dark:text-gray-400 flex flex-col space-y-2 text-sm">
+              <div>✔ Free Career Handbook</div>
+              <div>✔ Lifetime Access</div>
+              <div>✔ Industry Recognized Certificate</div>
+            </div>
           </div>
-          <div class=" flex items-center justify-center h-16">
-            <button class="w-5/6 h-10 border border-black rounded-md text-black font-semibold hover:bg-gray-200">
+          <div className="flex items-center justify-center p-4">
+            <button className="w-full h-10 border border-black dark:border-gray-500 rounded-md text-black dark:text-gray-200 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
               Start Course
             </button>
           </div>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div class="m-2 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] bg-white rounded-lg m-25 flex flex-col">
-          <div class=" bg-red-500 flex flex-col justify-between p-3 rounded-t-lg">
-            <div class="flex justify-between mb-4">
-              <h1 class="text-lg">Data Scientist</h1>
-              <p class="bg-white text-red-400 px-2 text-sm">Free</p>
+        <div className="m-4 bg-white dark:bg-gray-800 rounded-lg flex flex-col">
+          <div className="bg-red-500 flex flex-col justify-between p-4 rounded-t-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-lg font-semibold text-white">
+                Data Scientist
+              </h1>
+              <p className="bg-white dark:bg-gray-700 text-red-500 px-3 py-1 rounded-full text-xs font-medium">
+                Free
+              </p>
             </div>
-            <div class=" flex justify-between items-end">
-              <div class=" flex items-center">
-                <img src={timeLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">15 hours</p>
+            <div className="flex justify-between items-center gap-4">
+              <div className="flex items-center">
+                <img src={timeLogo} alt="time" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">15 hours</p>
               </div>
-              <div class=" flex items-center">
-                <img src={lessonLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">9 lessons</p>
+              <div className="flex items-center">
+                <img src={lessonLogo} alt="lessons" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">9 lessons</p>
               </div>
-              <div class=" flex items-center">
-                <img src={coinLogo} alt="time" class="w-5 h-5" />
-                <p class="white text-sm ml-2">779 coins</p>
+              <div className="flex items-center">
+                <img src={coinLogo} alt="coins" className="w-5 h-5" />
+                <p className="text-white text-sm ml-2">779 coins</p>
               </div>
             </div>
           </div>
-          <div class=" p-2">
-            <p class="text-gray-700 text-[0.8rem] m-2">
+          <div className="p-4">
+            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
               maxime esse blanditiis vitae animi eaque adipisci, beatae
               laboriosam vel hic illum eum omnis consequuntur quas.
             </p>
-
-            <div class="mt-2">✔ Free Career HandBook</div>
-
-            <div class="mt-2">✔ Free Career HandBook</div>
-            <div class="mt-2">✔ Free Career HandBook</div>
+            <div className="mt-2 text-gray-600 dark:text-gray-400 flex flex-col space-y-2 text-sm">
+              <div>✔ Free Career Handbook</div>
+              <div>✔ Lifetime Access</div>
+              <div>✔ Industry Recognized Certificate</div>
+            </div>
           </div>
-          <div class=" flex items-center justify-center h-16">
-            <button class="w-5/6 h-10 border border-black rounded-md text-black font-semibold hover:bg-gray-200">
+          <div className="flex items-center justify-center p-4">
+            <button className="w-full h-10 border border-black dark:border-gray-500 rounded-md text-black dark:text-gray-200 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
               Start Course
             </button>
           </div>
