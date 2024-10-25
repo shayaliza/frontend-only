@@ -123,7 +123,7 @@ const CompetitionSection = () => {
             />
           </div>
         </div>
-        <div className="tab flex border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white max-[900px]:px-0">
+        <div className="tab flex border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white dark:bg-transparent max-[900px]:px-0">
           <button
             className={`tablinks hover:bg-gray-200 text-xl px-6 py-2 ${
               activeTab === "active"
