@@ -78,7 +78,9 @@ import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
 import MSMobileChat from "./managesnap/components/Mobileview/Chat";
 import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
 import MSMobileSearch from "./managesnap/components/Mobileview/Search";
-import MSDesktopLayout from "./managesnap/components/HomeLayout";
+import MSLayout from "./managesnap/components/MSLayout"
+import MSHome from "./managesnap/components/MessageSection"
+import MSDMs from "./managesnap/components/DMs"
 import MSDesktopDMs from "./managesnap/components/DMsLayout"
 import { useState } from "react";
 import { useEffect } from "react";
