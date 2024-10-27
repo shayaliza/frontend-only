@@ -14,14 +14,7 @@ import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import "./../../../pages/myFeed/component/swiper.css";
 
-import {
-  FaHeart,
-  FaDownload,
-  FaUsers,
-  FaBookReader,
-  FaStar,
-  FaBookOpen,
-} from "react-icons/fa";
+import { FaStar, FaBookOpen } from "react-icons/fa";
 
 const Card = () => {
   return (

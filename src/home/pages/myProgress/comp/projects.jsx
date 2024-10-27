@@ -1,77 +1,59 @@
 import React from "react";
 import { useState } from "react";
-import pylogo from "../../../assets/python_logo.png";
+import { FaCertificate, FaUserGraduate } from "react-icons/fa";
+
 function Projects() {
   const [activeTab, setActiveTab] = useState("inProgress");
+  const Card = () => {
+    return (
+      <div className="relative bg-white shadow-md border border-black rounded-lg  mx-auto w-[320px] mb-3">
+        {/* Left and Bottom Borders */}
+        <div className="absolute -left-2 -bottom-2 h-full w-full border-l-2 border-b-2 border-black rounded-lg pointer-events-none"></div>
+
+        {/* Content */}
+        <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
+          <div className="text-sm font-semibold text-white uppercase tracking-wider">
+            Career path
+          </div>
+        </div>
+        <div className="px-6 pb-4">
+          <h2 className="text-2xl font-bold mt-4">Full-Stack Engineer</h2>
+          <p className="text-gray-700 mt-2 text-sm">
+            A full-stack engineer can get a project done from start to finish,
+            back-end to front-end.
+          </p>
+          <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+          <div className="text-gray-600">
+            Includes <span className="font-semibold">51 Courses</span>
+          </div>
+          <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+          <div className="text-gray-600 flex items-center">
+            <FaCertificate className="h-4 w-4 mr-2" />
+            With{" "}
+            <span className="font-semibold ml-1">
+              Professional Certification
+            </span>
+          </div>
+          <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+          <div className="text-gray-600 flex items-center justify-between">
+            <div className="flex items-center">
+              <FaUserGraduate className="h-4 w-4 mr-2" />
+              <span className="font-semibold pr-1">Beginner </span>
+              <span>Friendly</span>
+            </div>
+            <span className="ml-auto font-semibold">150 hrs</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
   const renderContent = () => {
     if (activeTab === "inProgress") {
       return (
         <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1 ">
-          <div class=" dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 2</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
-
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 2</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
-
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 2</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
+          <Card />
+          <Card />
+          <Card />
         </div>
       );
     } else if (activeTab === "completed") {

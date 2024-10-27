@@ -1,86 +1,66 @@
 import React from "react";
 import { useState } from "react";
-import pylogo from "../../../assets/python_logo.png";
+import { BsFillEmojiSmileFill } from "react-icons/bs";
+
 function Certificate() {
   const [activeTab, setActiveTab] = useState("inProgress");
+  const Card = () => {
+    return (
+      <div className="flex items-center justify-cente dark-mode:bg-gray-900">
+        <div className="relative bg-white shadow-lg rounded-lg p-6 w-[300px] h-[280px] dark-mode:bg-gray-800">
+          {/* Free Badge */}
+          <div className="absolute top-4 right-4 bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">
+            Free
+          </div>
+
+          {/* SVG Icons */}
+          <div className="absolute top-0 left-0 p-2 text-green-300 opacity-15">
+            <BsFillEmojiSmileFill size={55} />
+          </div>
+          <div className="absolute bottom-0 right-0 p-2 text-pink-300 opacity-15">
+            <BsFillEmojiSmileFill size={55} />
+          </div>
+
+          {/* Centered Card Content */}
+          <div className="flex flex-col items-center justify-center h-full text-center">
+            <p className="text-xs text-gray-400">Frontend</p>
+            <h1 className="text-lg font-semibold my-1 text-gray-800 dark-mode:text-white">
+              E-commerce
+            </h1>
+            <div className="flex gap-5 mt-2">
+              <div className="flex flex-col">
+                <div>Rating</div>
+                <div>5.0</div>
+              </div>
+              <div className="flex flex-col">
+                <div>Enrolled</div>
+                <div>23k</div>
+              </div>
+              <div className="flex flex-col">
+                <div>Lesson</div>
+                <div>5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   const renderContent = () => {
     if (activeTab === "inProgress") {
       return (
         <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1 ">
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 5</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
-
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 5</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
-
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 5</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
+          <Card />
+          <Card />
+          <Card />
         </div>
       );
     } else if (activeTab === "completed") {
       return (
-        <div>
-          <div class="flex justify-center my-5 items-center h-64 bg-[rgba(4, 4, 255, 0.048)] border border-dotted border-black dark:text-white">
-            <h6 class="">No Completed Projects</h6>
-          </div>
-          {/* Add more completed content here */}
+        <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1 ">
+          <Card />
+          <Card />
+          <Card />
         </div>
       );
     }
