@@ -87,13 +87,19 @@ export default function TrendingProject() {
             slidesPerView: 2,
             spaceBetween: 30,
           },
-          // when window width is >= 768px
-          768: {
+          1000: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+          },
+          1200: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          1400: {
             slidesPerView: 3,
             spaceBetween: 40,
           },
-          // when window width is >= 1024px
-          1024: {
+          1500: {
             slidesPerView: 3.5,
             spaceBetween: 50,
           },
