@@ -18,7 +18,7 @@ import { FaStar, FaBookOpen } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="bg-white border  rounded-lg p-6 mx-auto ">
+    <div className="bg-white border  rounded-lg p-6 mx-auto w-[320px]">
       <img src={BannerImage} className="w-full h-[150px] rounded-md" />
       <div className="mt-4 font-semibold text-lg ">
         Project Name Project Name Project Name Project
@@ -94,7 +94,7 @@ export default function TrendingProject() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
             spaceBetween: 50,
           },
         }}

@@ -17,7 +17,7 @@ import BannerImage from "./images/session.jpeg";
 
 const Card = () => {
   return (
-    <div className="bg-white border mx-auto rounded-lg">
+    <div className="bg-white border mx-auto rounded-lg w-[320px]">
       <img src={BannerImage} className="w-full h-[180px] rounded-md" />
       <div className="p-4">
         <div className="flex justify-between text-gray-600 my-2 text-sm">
@@ -84,7 +84,7 @@ export default function TrendingSessiions() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
             spaceBetween: 50,
           },
         }}

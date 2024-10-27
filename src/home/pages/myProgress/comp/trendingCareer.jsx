@@ -68,7 +68,7 @@ function TrendingCareer() {
         className="w-[95%]"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={20}
-        slidesPerView={3.5}
+        slidesPerView={3}
         // navigation
         navigation={{
           nextEl: ".my-swiper-button-next-uni",

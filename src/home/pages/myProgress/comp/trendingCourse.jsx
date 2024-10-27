@@ -17,7 +17,7 @@ import "./../../../pages/myFeed/component/swiper.css";
 
 const Card = () => {
   return (
-    <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden w-[320px]">
       <div className="h-[150px] max-[900px]:mb-4">
         <img
           src={BannerImage}
@@ -106,7 +106,7 @@ export default function TrendingCourse() {
           // when window width is >= 1024px
           1024: {
             slidesPerView: 3.5,
-            spaceBetween: 20,
+            spaceBetween: 50,
           },
         }}
         //   pagination={{ clickable: true }}

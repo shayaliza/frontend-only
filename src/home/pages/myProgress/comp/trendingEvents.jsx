@@ -17,7 +17,7 @@ import BannerImage from "./images/event.jpeg";
 
 const Card = () => {
   return (
-    <div className="mx-auto">
+    <div className="mx-auto w-[320px]">
       <img src={BannerImage} className="w-full h-[350px] rounded-md" />
       <div className="">
         <div className="flex justify-between text-gray-600 my-2 text-sm">
@@ -73,7 +73,7 @@ export default function TrendingEvents() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
             spaceBetween: 50,
           },
         }}

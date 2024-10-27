@@ -18,7 +18,7 @@ import "./../../../pages/myFeed/component/swiper.css";
 
 const Card = () => {
   return (
-    <div className="flex items-center justify-cente dark-mode:bg-gray-900 mx-auto">
+    <div className="flex items-center justify-cente dark-mode:bg-gray-900 mx-auto w-[320px]">
       <div className="relative bg-white shadow-lg rounded-lg p-6 w-[320px] h-[280px] dark-mode:bg-gray-800 mx-auto">
         {/* Free Badge */}
         <div className="absolute top-4 right-4 bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">
@@ -97,7 +97,7 @@ export default function TrendingAss() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
             spaceBetween: 50,
           },
         }}

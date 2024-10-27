@@ -18,7 +18,7 @@ import { FaHeart, FaDownload, FaUsers, FaBookReader } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md mx-auto">
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md mx-auto w-[320px]">
       {/* Header Section */}
       <div className="flex items-center justify-between mb-4">
         <img
@@ -78,7 +78,7 @@ export default function TrendingSkillPath() {
       <Swiper
         className="w-[95%]"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        spaceBetween={50}
+        spaceBetween={20}
         slidesPerView={3}
         // navigation
         navigation={{
@@ -104,7 +104,7 @@ export default function TrendingSkillPath() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3.5,
             spaceBetween: 50,
           },
         }}
