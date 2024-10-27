@@ -12,49 +12,53 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { FaStar } from "react-icons/fa";
+import { BsFillEmojiSmileFill } from "react-icons/bs";
 import "./../../../pages/myFeed/component/swiper.css";
-
-import { FaCertificate, FaUserGraduate } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="bg-white shadow-md border  rounded-lg  mx-auto w-[320px] mb-3 hover:drop-shadow-2xl">
-      {/* Content */}
-      <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
-        <div className="text-sm font-semibold text-white uppercase tracking-wider">
-          {/* Career path */}
+    <div className="flex items-center justify-cente dark-mode:bg-gray-900 mx-auto">
+      <div className="relative bg-white shadow-lg rounded-lg p-6 w-[320px] h-[280px] dark-mode:bg-gray-800 mx-auto">
+        {/* Free Badge */}
+        <div className="absolute top-4 right-4 bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">
+          Free
         </div>
-      </div>
-      <div className="px-6 pb-4">
-        <h2 className="text-2xl font-bold mt-4">Full-Stack Engineer</h2>
-        <p className="text-gray-700 mt-2 text-sm">
-          A full-stack engineer can get a project done from start to finish,
-          back-end to front-end.
-        </p>
-        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
-        <div className="text-gray-600">
-          Includes <span className="font-semibold">51 Courses</span>
+
+        {/* SVG Icons */}
+        <div className="absolute top-0 left-0 p-2 text-green-300 opacity-15">
+          <BsFillEmojiSmileFill size={55} />
         </div>
-        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
-        <div className="text-gray-600 flex items-center">
-          <FaCertificate className="h-4 w-4 mr-2" />
-          With{" "}
-          <span className="font-semibold ml-1">Professional Certification</span>
+        <div className="absolute bottom-0 right-0 p-2 text-pink-300 opacity-15">
+          <BsFillEmojiSmileFill size={55} />
         </div>
-        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
-        <div className="text-gray-600 flex items-center justify-between">
-          <div className="flex items-center">
-            <FaUserGraduate className="h-4 w-4 mr-2" />
-            <span className="font-semibold pr-1">Beginner </span>
-            <span>Friendly</span>
+
+        {/* Centered Card Content */}
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <p className="text-xs text-gray-400">Frontend</p>
+          <h1 className="text-lg font-semibold my-1 text-gray-800 dark-mode:text-white">
+            E-commerce
+          </h1>
+          <div className="flex gap-5 mt-2">
+            <div className="flex flex-col">
+              <div>Rating</div>
+              <div>5.0</div>
+            </div>
+            <div className="flex flex-col">
+              <div>Enrolled</div>
+              <div>23k</div>
+            </div>
+            <div className="flex flex-col">
+              <div>Lesson</div>
+              <div>5</div>
+            </div>
           </div>
-          <span className="ml-auto font-semibold">150 hrs</span>
         </div>
       </div>
     </div>
   );
 };
-function TrendingCareer() {
+export default function TrendingAss() {
   return (
     <div className="swiper-container relative">
       <div className="my-swiper-button-next-uni">
@@ -67,8 +71,8 @@ function TrendingCareer() {
       <Swiper
         className="w-[95%]"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={3.5}
+        spaceBetween={50}
+        slidesPerView={3}
         // navigation
         navigation={{
           nextEl: ".my-swiper-button-next-uni",
@@ -93,7 +97,7 @@ function TrendingCareer() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3.5,
+            slidesPerView: 3,
             spaceBetween: 50,
           },
         }}
@@ -122,5 +126,3 @@ function TrendingCareer() {
     </div>
   );
 }
-
-export default TrendingCareer;

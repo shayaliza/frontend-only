@@ -12,7 +12,7 @@ function MyBuddy() {
           </div>
           <div className="w-full mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black dark:border-white rounded-lg p-4">
+              <div class="flex flex-col justify-between h-[170px] bg-gray-100 shadow-xl  dark:border-white rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] dark:text-white text-lg">
                   <span>
                     <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
@@ -23,7 +23,7 @@ function MyBuddy() {
                 <h1 class="text-md dark:text-white">CareerPaths : 2</h1>
                 <h1 class="text-md dark:text-white">Projects : 5</h1>
               </div>
-              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black dark:border-white rounded-lg p-4">
+              <div class="flex flex-col justify-between h-[170px] bg-gray-100 shadow-xl  dark:border-white rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] dark:text-white text-lg">
                   <span>
                     <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
@@ -34,7 +34,7 @@ function MyBuddy() {
                 <h1 class="text-md dark:text-white">CareerPaths : 2</h1>
                 <h1 class="text-md dark:text-white">Projects : 5</h1>
               </div>
-              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black dark:border-white rounded-lg p-4">
+              <div class="flex flex-col justify-between h-[170px] bg-gray-100 shadow-xl  dark:border-white rounded-lg p-4">
                 <h2 class="flex items-center mb-2 text-[#7933ff] dark:text-white text-lg">
                   <span>
                     <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}

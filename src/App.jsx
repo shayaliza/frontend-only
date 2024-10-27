@@ -1,65 +1,11 @@
 import React, { Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import { FaSpinner } from "react-icons/fa";
+
 import { isIOSMobileOrTablet } from "./utils/isIOSMobileOrTablet";
 import SplashScreen from "./SplashScreen";
-import Courses from "./home/pages/courses/courses";
-import SignIn from "./home/pages/authentication/signin";
-import SignUp from "./home/pages/authentication/signup";
-import CareerPath from "./home/pages/careerPath/careerPath";
-import Projects from "./home/pages/projects/projects";
-import ProjectDetails from "./home/pages/projects/details";
-import CareerDetails from "./home/pages/careerPath/details";
-import CourseDetails from "./home/pages/courses/details";
-import MyProgress from "./home/pages/myProgress/myprogress";
-import MyFeed from "./home/pages/myFeed/myfeed";
-import MyFeedDetail from "./home/pages/myFeed/component/feedDetail";
-import Topics from "./home/pages/topics/topics";
-import Competitors from "./home/pages/competitors/competitors";
-import LiveEvent from "./home/pages/liveEvent/liveEvent";
-import LeaderBoard from "./home/pages/leaderboard/leaderboard";
-import ForgotPassword from "./home/pages/authentication/forgotpass";
-import LearnModule from "./home/pages/LearningModule/LearnModule";
-import Assement from "./home/pages/assesment/assement";
-import Catalog from "./home/pages/catalog/catalog";
-import AssementDetails from "./home/pages/assesment/deatils";
-import SkillPath from "./home/pages/skillPath/skillPath";
-import SkillPathDetails from "./home/pages/skillPath/detail";
-import ProfilePage from "./home/pages/profile/firstProfile";
-import SecondProfilePage from "./home/pages/profile/secondProfile";
-import Layout from "./components/Layout";
-import Careerpath from "./components/Careerpath";
-import CPLayout from "./components/CareerPathFolder/CareerPathLayout";
-import Info from "./components/CareerPathFolder/Info";
-import AddTimeline from "./components/CareerPathFolder/AddTimeline";
-import Html from "./components/CareerPathFolder/Html";
-import Viewtimeline from "./components/CareerPathFolder/Viewtimeline";
-import Quiz from "./components/CoursesFolder/Quiz";
-import Course from "./components/Courses";
-import CourseLayout from "./components/CoursesFolder/CourseLayout";
-import CourseInfo from "./components/CoursesFolder/CourseInfo";
-import CourseBanner from "./components/CoursesFolder/Banner";
-import CourseSetting from "./components/CoursesFolder/CourseSetting";
-import AddProject from "./components/CoursesFolder/AddProject";
-import AttachAssessment from "./components/CoursesFolder/AttachAssessment";
-import CourseStructure from "./components/CoursesFolder/CourseStructure";
-import Introduction from "./components/CoursesFolder/Introduction";
-import Analytics from "./components/Analytics";
-import Users from "./components/CoursesFolder/Users";
-import Video from "./components/CoursesFolder/Video";
-import Test from "./components/CoursesFolder/Test";
-import Text from "./components/CoursesFolder/Text";
-import PracticeText from "./components/CoursesFolder/PracticeText";
-import CourseTestimonial from "./components/CoursesFolder/CourseTestimonials";
-import { FaSpinner } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import VerifyEmailToken from "./home/pages/authentication/verifyEmailToken";
-import SendMail from "./home/pages/authentication/sendMail";
 import setupInterceptors from "./fetching/Interceptor/interceptors";
 import DataSnapLayout from "./datasnap/components/Layout";
 import BlogHome from "./datasnap/components/Home";
@@ -81,8 +27,7 @@ import MSMobileSearch from "./managesnap/components/Mobileview/Search";
 import MSLayout from "./managesnap/components/MSLayout"
 import MSHome from "./managesnap/components/MessageSection"
 import MSDMs from "./managesnap/components/DMs"
-import MSNotification from "./managesnap/components/Activity"
-import MSSettings from "./managesnap/components/Settings"
+import MSDesktopDMs from "./managesnap/components/DMsLayout"
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -140,6 +85,7 @@ const ProfileMobile = React.lazy(() =>
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
+import Main from "./managesnap/components/Main";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -163,19 +109,7 @@ const OrganizationSixth = React.lazy(() => import("./organization/sixth"));
 // setting up interceptors
 setupInterceptors();
 function AppRoutes() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showSplash, setShowSplash] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const splashScreenShown = sessionStorage.getItem("splashScreenShown");
 
@@ -193,7 +127,6 @@ function AppRoutes() {
     }
   }, [showSplash]);
 
-  const loggedIn = useSelector((state) => state.user.loggedIn);
   return (
     <div className="">
       {showSplash ? (
@@ -374,14 +307,10 @@ function AppRoutes() {
                       element={<MSDMs />}
                     />
                     <Route
-                      path="notificaions"
-                      element={<MSNotification />}
+                      path="/managesnap/dms"
+                      element={<MSDesktopDMs />}
                     />
-                    <Route
-                      path="settings"
-                      element={<MSSettings />}
-                    />
-                    </Route>
+                  </>
                 )}
 
                 <Route path="/createsnap" element={<Layout />}>

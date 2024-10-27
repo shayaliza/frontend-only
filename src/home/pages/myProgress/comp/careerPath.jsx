@@ -1,77 +1,57 @@
 import React from "react";
 import { useState } from "react";
-import pylogo from "../../../assets/python_logo.png";
+import { FaStar, FaBookOpen } from "react-icons/fa";
 function CareerPath() {
   const [activeTab, setActiveTab] = useState("inProgress");
+  const Card = () => {
+    return (
+      <div className="bg-white border border-black rounded-lg p-6 max-w-xs ">
+        {/* <img
+          src="https://dummyimage.com/100/200/fff"
+          className="w-full h-[150px] rounded-md"
+        /> */}
+        <div className="mt-4 font-semibold text-lg ">
+          Project Name Project Name Project Name Project
+        </div>
+        <div className="mt-1 text-gray-500">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat...
+        </div>
+        <div className="flex text-xs gap-2 my-3">
+          <div className="flex items-center">
+            <FaStar className="text-yellow-300" />
+            <span className="ml-2 text-gray-700">4</span>
+          </div>
+          <div className="flex items-center">
+            <FaBookOpen className="text-blue-500" />
+            <span className="ml-2 text-gray-700">8 Chapters</span>
+          </div>
+          <div className="flex items-center">
+            <FaBookOpen className="text-blue-500" />
+            <span className="ml-2 text-gray-700">Intermediate</span>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <img
+            src={
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+            }
+            className="rounded-full h-10 w-10"
+          />
+          <div className="text-sm">
+            <div>Name</div>
+            <div>Description</div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   const renderContent = () => {
     if (activeTab === "inProgress") {
       return (
         <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1 ">
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 4</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
-
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 4</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
-
-          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
-            <div class="flex items-center p-4">
-              <img
-                src={pylogo}
-                alt="course-logo"
-                class="w-7 h-7 mr-4 rounded-2xl"
-              />
-              <h1 class="text-base font-bold">Introduction to Python 4</h1>
-            </div>
-            <div class="p-4">
-              <p class="text-gray-700 text-[0.8rem]">
-                Master the basics of data analysis in Python. Expand your
-                skillset by learning scientific computing with numpy.
-              </p>
-            </div>
-            <div class="p-4 text-center">
-              <button class="bg-[#cd27ff] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full">
-                Go to Course
-              </button>
-            </div>
-          </div>
+          <Card />
+          <Card />
+          <Card />
         </div>
       );
     } else if (activeTab === "completed") {

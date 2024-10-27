@@ -13,48 +13,28 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import "./../../../pages/myFeed/component/swiper.css";
-
-import { FaCertificate, FaUserGraduate } from "react-icons/fa";
+import BannerImage from "./images/event.jpeg";
 
 const Card = () => {
   return (
-    <div className="bg-white shadow-md border  rounded-lg  mx-auto w-[320px] mb-3 hover:drop-shadow-2xl">
-      {/* Content */}
-      <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
-        <div className="text-sm font-semibold text-white uppercase tracking-wider">
-          {/* Career path */}
+    <div className="mx-auto">
+      <img src={BannerImage} className="w-full h-[350px] rounded-md" />
+      <div className="">
+        <div className="flex justify-between text-gray-600 my-2 text-sm">
+          <div>28942 students</div>
+          <div>1h 13m</div>
+        </div>
+        <div className=" mb-4 font-semibold text-lg ">
+          Project Name Project Name Project Name Project
         </div>
       </div>
-      <div className="px-6 pb-4">
-        <h2 className="text-2xl font-bold mt-4">Full-Stack Engineer</h2>
-        <p className="text-gray-700 mt-2 text-sm">
-          A full-stack engineer can get a project done from start to finish,
-          back-end to front-end.
-        </p>
-        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
-        <div className="text-gray-600">
-          Includes <span className="font-semibold">51 Courses</span>
-        </div>
-        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
-        <div className="text-gray-600 flex items-center">
-          <FaCertificate className="h-4 w-4 mr-2" />
-          With{" "}
-          <span className="font-semibold ml-1">Professional Certification</span>
-        </div>
-        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
-        <div className="text-gray-600 flex items-center justify-between">
-          <div className="flex items-center">
-            <FaUserGraduate className="h-4 w-4 mr-2" />
-            <span className="font-semibold pr-1">Beginner </span>
-            <span>Friendly</span>
-          </div>
-          <span className="ml-auto font-semibold">150 hrs</span>
-        </div>
+      <div className="flex items-center justify-center border-black  border-2 p-2">
+        Book A Seat
       </div>
     </div>
   );
 };
-function TrendingCareer() {
+export default function TrendingEvents() {
   return (
     <div className="swiper-container relative">
       <div className="my-swiper-button-next-uni">
@@ -67,8 +47,8 @@ function TrendingCareer() {
       <Swiper
         className="w-[95%]"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={3.5}
+        spaceBetween={50}
+        slidesPerView={3}
         // navigation
         navigation={{
           nextEl: ".my-swiper-button-next-uni",
@@ -93,7 +73,7 @@ function TrendingCareer() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3.5,
+            slidesPerView: 3,
             spaceBetween: 50,
           },
         }}
@@ -122,5 +102,3 @@ function TrendingCareer() {
     </div>
   );
 }
-
-export default TrendingCareer;
