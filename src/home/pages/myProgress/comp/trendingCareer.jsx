@@ -11,185 +11,118 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import timeLogo from "../../../assets/time.svg";
-import lessonLogo from "../../../assets/lessons.svg";
-import coinLogo from "../../../assets/coin.svg";
+import { GrNext, GrPrevious } from "react-icons/gr";
+import "./../../../pages/myFeed/component/swiper.css";
 
+import { FaCertificate, FaUserGraduate } from "react-icons/fa";
+
+const Card = () => {
+  return (
+    <div className="relative bg-white shadow-md border border-black rounded-lg  mx-auto w-[320px] mb-3">
+      {/* Left and Bottom Borders */}
+      <div className="absolute -left-2 -bottom-2 h-full w-full border-l-2 border-b-2 border-black rounded-lg pointer-events-none"></div>
+
+      {/* Content */}
+      <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
+        <div className="text-sm font-semibold text-white uppercase tracking-wider">
+          Career path
+        </div>
+      </div>
+      <div className="px-6 pb-4">
+        <h2 className="text-2xl font-bold mt-4">Full-Stack Engineer</h2>
+        <p className="text-gray-700 mt-2 text-sm">
+          A full-stack engineer can get a project done from start to finish,
+          back-end to front-end.
+        </p>
+        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+        <div className="text-gray-600">
+          Includes <span className="font-semibold">51 Courses</span>
+        </div>
+        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+        <div className="text-gray-600 flex items-center">
+          <FaCertificate className="h-4 w-4 mr-2" />
+          With{" "}
+          <span className="font-semibold ml-1">Professional Certification</span>
+        </div>
+        <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+        <div className="text-gray-600 flex items-center justify-between">
+          <div className="flex items-center">
+            <FaUserGraduate className="h-4 w-4 mr-2" />
+            <span className="font-semibold pr-1">Beginner </span>
+            <span>Friendly</span>
+          </div>
+          <span className="ml-auto font-semibold">150 hrs</span>
+        </div>
+      </div>
+    </div>
+  );
+};
 function TrendingCareer() {
   return (
-    <Swiper
-      className="swiper-container"
-      modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-      spaceBetween={50}
-      slidesPerView={3}
-      navigation
-      breakpoints={{
-        // when window width is >= 320px
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-        },
-        // when window width is >= 480px
-        480: {
-          slidesPerView: 2,
-          spaceBetween: 30,
-        },
-        // when window width is >= 768px
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 40,
-        },
-        // when window width is >= 1024px
-        1024: {
-          slidesPerView: 3,
-          spaceBetween: 50,
-        },
-      }}
-      //   pagination={{ clickable: true }}
-      //   scrollbar={{ draggable: true }}
-      //   autoplay={{
-      //     delay: 3000,
-      //     disableOnInteraction: false,
-      //   }}
-      //   loop={true}
-      //   grabCursor={true}
-    >
-      <SwiperSlide>
-        <div className="m-4 bg-white dark:bg-gray-800 rounded-lg flex flex-col">
-          <div className="bg-red-500 flex flex-col justify-between p-4 rounded-t-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-lg font-semibold text-white">
-                Data Scientist
-              </h1>
-              <p className="bg-white dark:bg-gray-700 text-red-500 px-3 py-1 rounded-full text-xs font-medium">
-                Free
-              </p>
-            </div>
-            <div className="flex justify-between items-center gap-4">
-              <div className="flex items-center">
-                <img src={timeLogo} alt="time" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">15 hours</p>
-              </div>
-              <div className="flex items-center">
-                <img src={lessonLogo} alt="lessons" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">9 lessons</p>
-              </div>
-              <div className="flex items-center">
-                <img src={coinLogo} alt="coins" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">779 coins</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-4">
-            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
-              maxime esse blanditiis vitae animi eaque adipisci, beatae
-              laboriosam vel hic illum eum omnis consequuntur quas.
-            </p>
-            <div className="mt-2 text-gray-600 dark:text-gray-400 flex flex-col space-y-2 text-sm">
-              <div>✔ Free Career Handbook</div>
-              <div>✔ Lifetime Access</div>
-              <div>✔ Industry Recognized Certificate</div>
-            </div>
-          </div>
-          <div className="flex items-center justify-center p-4">
-            <button className="w-full h-10 border border-black dark:border-gray-500 rounded-md text-black dark:text-gray-200 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-              Start Course
-            </button>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="m-4 bg-white dark:bg-gray-800 rounded-lg flex flex-col">
-          <div className="bg-red-500 flex flex-col justify-between p-4 rounded-t-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-lg font-semibold text-white">
-                Data Scientist
-              </h1>
-              <p className="bg-white dark:bg-gray-700 text-red-500 px-3 py-1 rounded-full text-xs font-medium">
-                Free
-              </p>
-            </div>
-            <div className="flex justify-between items-center gap-4">
-              <div className="flex items-center">
-                <img src={timeLogo} alt="time" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">15 hours</p>
-              </div>
-              <div className="flex items-center">
-                <img src={lessonLogo} alt="lessons" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">9 lessons</p>
-              </div>
-              <div className="flex items-center">
-                <img src={coinLogo} alt="coins" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">779 coins</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-4">
-            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
-              maxime esse blanditiis vitae animi eaque adipisci, beatae
-              laboriosam vel hic illum eum omnis consequuntur quas.
-            </p>
-            <div className="mt-2 text-gray-600 dark:text-gray-400 flex flex-col space-y-2 text-sm">
-              <div>✔ Free Career Handbook</div>
-              <div>✔ Lifetime Access</div>
-              <div>✔ Industry Recognized Certificate</div>
-            </div>
-          </div>
-          <div className="flex items-center justify-center p-4">
-            <button className="w-full h-10 border border-black dark:border-gray-500 rounded-md text-black dark:text-gray-200 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-              Start Course
-            </button>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="m-4 bg-white dark:bg-gray-800 rounded-lg flex flex-col">
-          <div className="bg-red-500 flex flex-col justify-between p-4 rounded-t-lg">
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-lg font-semibold text-white">
-                Data Scientist
-              </h1>
-              <p className="bg-white dark:bg-gray-700 text-red-500 px-3 py-1 rounded-full text-xs font-medium">
-                Free
-              </p>
-            </div>
-            <div className="flex justify-between items-center gap-4">
-              <div className="flex items-center">
-                <img src={timeLogo} alt="time" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">15 hours</p>
-              </div>
-              <div className="flex items-center">
-                <img src={lessonLogo} alt="lessons" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">9 lessons</p>
-              </div>
-              <div className="flex items-center">
-                <img src={coinLogo} alt="coins" className="w-5 h-5" />
-                <p className="text-white text-sm ml-2">779 coins</p>
-              </div>
-            </div>
-          </div>
-          <div className="p-4">
-            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia
-              maxime esse blanditiis vitae animi eaque adipisci, beatae
-              laboriosam vel hic illum eum omnis consequuntur quas.
-            </p>
-            <div className="mt-2 text-gray-600 dark:text-gray-400 flex flex-col space-y-2 text-sm">
-              <div>✔ Free Career Handbook</div>
-              <div>✔ Lifetime Access</div>
-              <div>✔ Industry Recognized Certificate</div>
-            </div>
-          </div>
-          <div className="flex items-center justify-center p-4">
-            <button className="w-full h-10 border border-black dark:border-gray-500 rounded-md text-black dark:text-gray-200 font-semibold hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-              Start Course
-            </button>
-          </div>
-        </div>
-      </SwiperSlide>
-    </Swiper>
+    <div className="swiper-container relative">
+      <div className="my-swiper-button-next-uni">
+        <GrNext size={25} />
+      </div>
+      <div className="my-swiper-button-prev-uni">
+        <GrPrevious size={25} />
+      </div>
+
+      <Swiper
+        className="w-[95%]"
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        spaceBetween={50}
+        slidesPerView={3}
+        // navigation
+        navigation={{
+          nextEl: ".my-swiper-button-next-uni",
+          prevEl: ".my-swiper-button-prev-uni",
+          disabledClass: "swiper-button-disabled",
+        }}
+        breakpoints={{
+          // when window width is >= 320px
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          // when window width is >= 480px
+          480: {
+            slidesPerView: 2,
+            spaceBetween: 30,
+          },
+          // when window width is >= 768px
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 40,
+          },
+          // when window width is >= 1024px
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 50,
+          },
+        }}
+        //   pagination={{ clickable: true }}
+        //   scrollbar={{ draggable: true }}
+        //   autoplay={{
+        //     delay: 3000,
+        //     disableOnInteraction: false,
+        //   }}
+        //   loop={true}
+        //   grabCursor={true}
+      >
+        <SwiperSlide>
+          <Card />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Card />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Card />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Card />
+        </SwiperSlide>
+      </Swiper>
+    </div>
   );
 }
 

@@ -12,57 +12,60 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
-import BannerImage from "../../../assets/banner.png";
-import coinLogo from "../../../assets/coin.svg";
-import cardTimeLogo from "../../../assets/card_time.svg";
 import "./../../../pages/myFeed/component/swiper.css";
+
+import { FaHeart, FaDownload, FaUsers, FaBookReader } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
-      <div className="h-[150px] max-[900px]:mb-4">
+    <div className="bg-white border border-gray-200 rounded-lg p-6 max-w-xs shadow-md">
+      {/* Header Section */}
+      <div className="flex items-center justify-between mb-4">
         <img
-          src={BannerImage}
-          alt="card"
-          className="h-full w-full object-cover"
+          src="https://dummyimage.com/48x48" // Replace with actual icon/image URL
+          alt="App Icon"
+          className="h-8 w-8"
         />
+        <div className="flex items-center text-gray-500 text-sm">
+          <FaHeart className="mr-1" />
+          4.9
+        </div>
       </div>
-      <div className="flex justify-between text-gray-600  text-sm px-4 my-2">
-        <div>28942 students</div>
-        <div>1h 13m</div>
-      </div>
-      <div className="flex flex-col justify-between">
-        <div className="px-4 pb-2">
-          <p className="font-bold text-lg text-gray-900 dark:text-gray-100">
-            Introduction to Python
-          </p>
+
+      {/* Title */}
+      <h2 className="text-lg font-semibold">Frontend Developer</h2>
+
+      {/* Stats Section */}
+      <div className="flex justify-between items-center mt-4">
+        <div className="text-gray-600">
+          <p className="text-xs">Enrolled</p>
+          <div className="flex items-center mt-1">
+            <FaUsers className="h-4 w-4 mr-1 text-gray-500" />
+            <span>9.2k</span>
+          </div>
         </div>
 
-        <div className="flex gap-2 items-center px-4 py-2">
-          <img src="https://dummyimage.com/38/38" className="rounded-full" />
-          <div className="text-sm">
-            <div>Author Name</div>
-            {/* <div>Description</div> */}
+        <div className="text-gray-600">
+          <p className="text-xs">Lessons</p>
+          <div className="flex items-center mt-1">
+            <FaBookReader className="h-4 w-4 mr-1 text-gray-500" />
+            <span>90</span>
           </div>
         </div>
-        <div className="px-4 text-sm pt-1">
-          <div className="flex items-center space-x-2">
-            <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
-              React
-            </div>
-            <div className="bg-purple-600 text-white px-2 py-1 rounded-lg text-xs font-medium">
-              Kodo
-            </div>
-          </div>
-        </div>
-        <button className="w-[90%] mx-auto bg-white dark:bg-gray-700 text-black dark:text-gray-200 h-9 border border-black dark:border-gray-500 font-semibold rounded-md mt-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition">
-          View in Detail
+      </div>
+      <div className="border-b-2 my-2 border-gray-300 border-dashed "></div>
+
+      {/* Download Section */}
+      <div className="mt-2 flex items-center justify-between">
+        <span className="text-gray-600 text-sm">Frontend Developer</span>
+        <button className="flex items-center px-3 py-1 bg-black text-white rounded-md text-sm font-semibold">
+          Start
         </button>
       </div>
     </div>
   );
 };
-export default function TrendingCourse() {
+export default function TrendingSkillPath() {
   return (
     <div className="swiper-container relative">
       <div className="my-swiper-button-next-uni">
