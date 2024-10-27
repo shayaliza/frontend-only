@@ -20,7 +20,7 @@ const Card = () => {
   return (
     <div className="bg-white shadow-md border  rounded-lg  mx-auto w-[320px] mb-3 hover:drop-shadow-2xl">
       {/* Content */}
-      <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
+      <div className="relative border-b pb-4 bg-gradient-to-tr from-[#E2B5E3] to-[#8E57FD] rounded-t-lg px-6 py-2">
         <div className="text-sm font-semibold text-white uppercase tracking-wider">
           {/* Career path */}
         </div>
