@@ -4,23 +4,23 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 
 const channels = [
-  "# test-tasks",
-  "# datasnap",
-  "# evalsnap",
-  "# general",
-  "# hiresnap",
-  "# ideas",
-  "# managesnap",
-  "# moviesnap",
-  "# techsnap"
+  { id: "C0876", name: "# test-tasks" },
+  { id: "C0877", name: "# datasnap" },
+  { id: "C0878", name: "# evalsnap" },
+  { id: "C0879", name: "# general" },
+  { id: "C0880", name: "# hiresnap" },
+  { id: "C0881", name: "# ideas" },
+  { id: "C0882", name: "# managesnap" },
+  { id: "C0883", name: "# moviesnap" },
+  { id: "C0884", name: "# techsnap" }
 ];
 
 const directMessages = [
-  "Bala Murali Krishna",
-  "Saketh33",
-  "Samarth Gupta",
-  "Tanvi Sharma",
-  "Vignesh Reddy"
+  { id: "D08976", name: "Bala Murali Krishna" },
+  { id: "D08977", name: "Saketh33" },
+  { id: "D08978", name: "Samarth Gupta" },
+  { id: "D08979", name: "Tanvi Sharma" },
+  { id: "D08980", name: "Vignesh Reddy" }
 ];
 
 function ChannelsSidebar() {
@@ -29,13 +29,13 @@ function ChannelsSidebar() {
   const navigate = useNavigate(); 
 
   const handleChannelClick = (channel) => {
-    const channelName = channel.replace('#', '').trim();
-    navigate(`/managesnap/channels/${channelName}`);
+    const channelId = channel.id; 
+    navigate(`/managesnap/home/${channelId}`); 
   };
 
-  const handleDirectMessageClick = (username) => {
-    const dmName = username.replace(/\s+/g, '_').trim();
-    navigate(`/managesnap/direct/${dmName}`);
+  const handleDMClick = (dm) => {
+    const dmId = dm.id; 
+    navigate(`/managesnap/home/${dmId}`); 
   };
 
   return (
@@ -51,13 +51,13 @@ function ChannelsSidebar() {
           </div>
           <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showChannels ? 'max-h-[1000px]' : 'max-h-0'}`}>
             <div id="channels" className="mt-2">
-              {channels.map((channel, index) => (
+              {channels.map((channel) => (
                 <div
-                  key={index}
+                  key={channel.id}
                   onClick={() => handleChannelClick(channel)} 
-                  className={`p-3 rounded cursor-pointer hover:bg-gray-500 transition ${index === 0 ? 'channel-active' : 'channel'}`}
+                  className={`p-3 rounded cursor-pointer hover:bg-gray-500 transition`}
                 >
-                  <span className="text-white">{channel}</span>
+                  <span className="text-white">{channel.name}</span>
                 </div>
               ))}
             </div>
@@ -73,16 +73,16 @@ function ChannelsSidebar() {
           </div>
           <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showDirectMessages ? 'max-h-[1000px]' : 'max-h-0'}`}>
             <div id="directMessages" className="mt-2">
-              {directMessages.map((message, index) => (
+              {directMessages.map((message) => (
                 <div
-                  key={index}
-                  onClick={() => handleDirectMessageClick(message)}  
+                  key={message.id}
+                  onClick={() => handleDMClick(message)}  
                   className={`flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-gray-500 transition`}
                 >
                   <div className="bg-gray-500 w-8 h-8 rounded-full flex items-center justify-center text-xl">
                     <FaUserCircle />
                   </div>
-                  <span className="text-white">{message}</span>
+                  <span className="text-white">{message.name}</span>
                 </div>
               ))}
             </div>

@@ -9,7 +9,7 @@ function Sidebar() {
   const currentPath = location.pathname.split('/').pop();
 
   const icons = [
-    { id: 'home-tooltip', icon: <HomeIcon className="w-6 h-6 mb-1" />, label: 'channels', tooltip: 'Home', path: '/managesnap/channels' },
+    { id: 'home-tooltip', icon: <HomeIcon className="w-6 h-6 mb-1" />, label: 'Home', tooltip: 'Home', path: '/managesnap/home' },
     { 
       id: 'custom-tooltip', 
       icon: (

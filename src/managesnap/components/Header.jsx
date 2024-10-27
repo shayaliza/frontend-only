@@ -16,10 +16,11 @@ const mockData = [
 
 function Header() {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState(mockData);
-  const {theme, setTheme} = useTheme();
+  const [showCustomSearch, setShowCustomSearch] = useState(false);
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
@@ -38,28 +39,46 @@ function Header() {
 
   const handleFocus = () => {
     setIsDropdownVisible(true);
+    setFilteredData(mockData);
+    setShowCustomSearch(false);
   };
 
   const handleSearch = (e) => {
     const term = e.target.value;
     setSearchTerm(term);
+    
+    if (term.trim() === '') {
+      setFilteredData(mockData);
+      setShowCustomSearch(false);
+      return;
+    }
+
     const filtered = mockData.filter(item =>
       item.name.toLowerCase().includes(term.toLowerCase())
     );
+    
     setFilteredData(filtered);
+    setShowCustomSearch(filtered.length === 0);
   };
 
   const handleSelect = (path) => {
     setIsDropdownVisible(false);
+    setSearchTerm('');
     navigate(path);
   };
 
+  const handleCustomSearch = () => {
+    setIsDropdownVisible(false);
+    setSearchTerm('');
+    navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
+  };
+
   return (
-    <div className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b text-gray-700 dark:text-gray-300 ${theme == "dark" ? "bg-black" : "text-gray-700"}`}>
+    <div className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b text-gray-700 dark:text-gray-300 ${theme === "dark" ? "bg-black" : "text-gray-700"}`}>
       <div className="absolute right-4 top-2.5">
         <ModeToggle/>
       </div>
-      <div className="absolute left-4 top-3 ">
+      <div className="absolute left-4 top-3">
         <div className="relative flex space-x-2 items-center mb-6">
           <div className="bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">
             <FaUserCircle />
@@ -69,33 +88,33 @@ function Header() {
             <IoIosArrowDropdown size={24} />
           </button>
           {isDropdownOpen && (
-                <div className="absolute top-12 -right-10 mt-2 w-48 bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[999]">
-                  <ul className="list-none p-2 m-0">
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      Follower
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      Following
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/dashboard/profile">Home</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/createsnap/analytics">Createsnap</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/datasnap">Datasnap</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/managesnap">Managesnap</Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
+            <div className="absolute top-12 -right-10 mt-2 w-48 bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[999]">
+              <ul className="list-none p-2 m-0">
+                <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                  Follower
+                </li>
+                <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                  Following
+                </li>
+                <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                  <Link to="/dashboard/profile">Home</Link>
+                </li>
+                <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                  <Link to="/createsnap/analytics">Createsnap</Link>
+                </li>
+                <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                  <Link to="/datasnap">Datasnap</Link>
+                </li>
+                <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                  <Link to="/managesnap">Managesnap</Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
       </div>
       <div className="w-2/3 mx-auto px-4 flex justify-center">
-        <div className="relative w-1/2 border rounded-full" ref={dropdownRef} >
+        <div className="relative w-1/2 border rounded-full" ref={dropdownRef}>
           <input 
             type="text" 
             name="search" 
@@ -107,20 +126,31 @@ function Header() {
             onChange={handleSearch}
             value={searchTerm}
           />
-          <button className="absolute top-1/2 right-4 transform -translate-y-1/2">
+          <button 
+            className="absolute top-1/2 right-4 transform -translate-y-1/2"
+            onClick={showCustomSearch ? handleCustomSearch : undefined}
+          >
             <SearchIcon className="w-5 h-5"/>
           </button>
           {isDropdownVisible && (
-            <div className={`absolute top-full left-0 w-full mt-1 shadow-lg rounded-lg ${theme == "dark" ?  "bg-black" : "bg-white"} border`}>
+            <div className={`absolute top-full left-0 w-full mt-1 shadow-lg rounded-lg ${theme === "dark" ? "bg-black" : "bg-white"} border`}>
               {filteredData.map((item) => (
                 <div
                   key={item.id}
-                  className={`px-4 py-2 ${theme == "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200" }  cursor-pointer`}
+                  className={`px-4 py-2 ${theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"} cursor-pointer`}
                   onClick={() => handleSelect(item.path)}
                 >
                   {item.name}
                 </div>
               ))}
+              {showCustomSearch && searchTerm && (
+                <div
+                  className={`px-4 py-2 ${theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"} cursor-pointer`}
+                  onClick={handleCustomSearch}
+                >
+                  Search for "{searchTerm}"
+                </div>
+              )}
             </div>
           )}
         </div>
