@@ -78,8 +78,10 @@ import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
 import MSMobileChat from "./managesnap/components/Mobileview/Chat";
 import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
 import MSMobileSearch from "./managesnap/components/Mobileview/Search";
-import MSDesktopLayout from "./managesnap/components/HomeLayout";
-import MSDesktopDMs from "./managesnap/components/DMsLayout";
+import MSLayout from "./managesnap/components/MSLayout"
+import MSHome from "./managesnap/components/MessageSection"
+import MSDMs from "./managesnap/components/DMs"
+import MSDesktopDMs from "./managesnap/components/DMsLayout"
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -138,7 +140,6 @@ const ProfileMobile = React.lazy(() =>
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
 import Main from "./managesnap/components/Main";
-import CreateCompetition from "./home/pages/competitors/hosting";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -358,20 +359,24 @@ function AppRoutes() {
                     />
                   </>
                 ) : (
-                  <>
                     <Route
-                      path="/managesnap/channels"
-                      element={<MSDesktopLayout />}
+                      path="/managesnap"
+                      element={<MSLayout />}
+                    >
+                      <Route
+                      path="home"
+                      element={<MSHome/>}
+                    />
+                    <Route path="home/:channelId" element={<MSHome />} />
+                    <Route path="home/:chatId" element={<MSHome />} />
+                    <Route
+                      path="dms"
+                      element={<MSDMs />}
                     />
                     <Route
-                      path="/managesnap/channels/:channelName"
-                      element={<MSDesktopLayout />}
+                      path="/managesnap/dms"
+                      element={<MSDesktopDMs />}
                     />
-                    <Route
-                      path="/managesnap/direct/:dmName"
-                      element={<MSDesktopLayout />}
-                    />
-                    <Route path="/managesnap/dms" element={<MSDesktopDMs />} />
                   </>
                 )}
 
