@@ -13,8 +13,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import BannerImage from "../../../assets/banner.png";
-import coinLogo from "../../../assets/coin.svg";
-import cardTimeLogo from "../../../assets/card_time.svg";
 import "./../../../pages/myFeed/component/swiper.css";
 
 const Card = () => {
@@ -39,7 +37,13 @@ const Card = () => {
         </div>
 
         <div className="flex gap-2 items-center px-4 py-2">
-          <img src="https://dummyimage.com/38/38" className="rounded-full" />
+          {/* <img src="https://dummyimage.com/38/38" className="rounded-full" /> */}
+          <img
+            src={
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+            }
+            className="rounded-full h-10 w-10"
+          />
           <div className="text-sm">
             <div>Author Name</div>
             {/* <div>Description</div> */}

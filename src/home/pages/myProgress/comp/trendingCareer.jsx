@@ -18,14 +18,14 @@ import { FaCertificate, FaUserGraduate } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="relative bg-white shadow-md border border-black rounded-lg  mx-auto w-[320px] mb-3">
+    <div className="bg-white shadow-md border  rounded-lg  mx-auto w-[320px] mb-3 hover:drop-shadow-2xl">
       {/* Left and Bottom Borders */}
-      <div className="absolute -left-2 -bottom-2 h-full w-full border-l-2 border-b-2 border-black rounded-lg pointer-events-none"></div>
+      {/* <div className="absolute -left-2 -bottom-2 h-full w-full border-l-2 border-b-2 border-black rounded-lg pointer-events-none"></div> */}
 
       {/* Content */}
       <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
         <div className="text-sm font-semibold text-white uppercase tracking-wider">
-          Career path
+          {/* Career path */}
         </div>
       </div>
       <div className="px-6 pb-4">

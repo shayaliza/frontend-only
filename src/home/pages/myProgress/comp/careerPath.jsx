@@ -6,10 +6,10 @@ function CareerPath() {
   const Card = () => {
     return (
       <div className="bg-white border border-black rounded-lg p-6 max-w-xs ">
-        <img
+        {/* <img
           src="https://dummyimage.com/100/200/fff"
           className="w-full h-[150px] rounded-md"
-        />
+        /> */}
         <div className="mt-4 font-semibold text-lg ">
           Project Name Project Name Project Name Project
         </div>
@@ -31,7 +31,12 @@ function CareerPath() {
           </div>
         </div>
         <div className="flex gap-2">
-          <img src="https://dummyimage.com/38/38" className="rounded-full" />
+          <img
+            src={
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+            }
+            className="rounded-full h-10 w-10"
+          />
           <div className="text-sm">
             <div>Name</div>
             <div>Description</div>

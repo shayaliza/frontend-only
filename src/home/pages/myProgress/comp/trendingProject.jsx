@@ -13,16 +13,13 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import "./../../../pages/myFeed/component/swiper.css";
-
+import BannerImage from "./images/project.jpeg";
 import { FaStar, FaBookOpen } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="bg-white border border-black rounded-lg p-6 max-w-xs ">
-      <img
-        src="https://dummyimage.com/100/200/fff"
-        className="w-full h-[150px] rounded-md"
-      />
+    <div className="bg-white border  rounded-lg p-6 mx-auto ">
+      <img src={BannerImage} className="w-full h-[150px] rounded-md" />
       <div className="mt-4 font-semibold text-lg ">
         Project Name Project Name Project Name Project
       </div>
@@ -44,10 +41,15 @@ const Card = () => {
         </div>
       </div>
       <div className="flex gap-2">
-        <img src="https://dummyimage.com/38/38" className="rounded-full" />
+        <img
+          src={
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+          }
+          className="rounded-full h-10 w-10"
+        />
         <div className="text-sm">
-          <div>Name</div>
-          <div>Description</div>
+          <div>Anna Doe</div>
+          <div>Professional Artist</div>
         </div>
       </div>
     </div>

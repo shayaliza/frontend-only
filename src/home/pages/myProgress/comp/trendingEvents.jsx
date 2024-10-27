@@ -13,14 +13,12 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import "./../../../pages/myFeed/component/swiper.css";
+import BannerImage from "./images/event.jpeg";
 
 const Card = () => {
   return (
-    <div className="">
-      <img
-        src="https://dummyimage.com/300/300/fff"
-        className="w-full h-[350px] rounded-md"
-      />
+    <div className="mx-auto">
+      <img src={BannerImage} className="w-full h-[350px] rounded-md" />
       <div className="">
         <div className="flex justify-between text-gray-600 my-2 text-sm">
           <div>28942 students</div>

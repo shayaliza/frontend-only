@@ -18,8 +18,8 @@ import "./../../../pages/myFeed/component/swiper.css";
 
 const Card = () => {
   return (
-    <div className="flex items-center justify-cente dark-mode:bg-gray-900">
-      <div className="relative bg-white shadow-lg rounded-lg p-6 w-[300px] h-[280px] dark-mode:bg-gray-800">
+    <div className="flex items-center justify-cente dark-mode:bg-gray-900 mx-auto">
+      <div className="relative bg-white shadow-lg rounded-lg p-6 w-[320px] h-[280px] dark-mode:bg-gray-800 mx-auto">
         {/* Free Badge */}
         <div className="absolute top-4 right-4 bg-green-400 text-white px-2 py-1 rounded-full text-xs font-semibold">
           Free

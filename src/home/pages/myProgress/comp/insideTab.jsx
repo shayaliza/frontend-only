@@ -8,13 +8,13 @@ function InsideTab() {
   const Card = () => {
     return (
       <div className="bg-white dark:bg-gray-800 pb-4 shadow-md rounded-lg flex flex-col overflow-hidden">
-        <div className="h-[150px] max-[900px]:mb-4">
+        {/* <div className="h-[150px] max-[900px]:mb-4">
           <img
             src={BannerImage}
             alt="card"
             className="h-full w-full object-cover"
           />
-        </div>
+        </div> */}
         <div className="flex justify-between text-gray-600  text-sm px-4 my-2">
           <div>28942 students</div>
           <div>1h 13m</div>
@@ -27,7 +27,13 @@ function InsideTab() {
           </div>
 
           <div className="flex gap-2 items-center px-4 py-2">
-            <img src="https://dummyimage.com/38/38" className="rounded-full" />
+            <img
+              src={
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+              }
+              className="rounded-full h-10 w-10"
+            />
+
             <div className="text-sm">
               <div>Author Name</div>
               {/* <div>Description</div> */}

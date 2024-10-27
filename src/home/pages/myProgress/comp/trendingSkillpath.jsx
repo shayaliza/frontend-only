@@ -18,7 +18,7 @@ import { FaHeart, FaDownload, FaUsers, FaBookReader } from "react-icons/fa";
 
 const Card = () => {
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 max-w-xs shadow-md">
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-md mx-auto">
       {/* Header Section */}
       <div className="flex items-center justify-between mb-4">
         <img

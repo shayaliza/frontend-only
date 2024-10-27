@@ -13,14 +13,12 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import "./../../../pages/myFeed/component/swiper.css";
+import BannerImage from "./images/session.jpeg";
 
 const Card = () => {
   return (
-    <div className="bg-white border border-black rounded-lg">
-      <img
-        src="https://dummyimage.com/300/300/fff"
-        className="w-full h-[180px] rounded-md"
-      />
+    <div className="bg-white border mx-auto rounded-lg">
+      <img src={BannerImage} className="w-full h-[180px] rounded-md" />
       <div className="p-4">
         <div className="flex justify-between text-gray-600 my-2 text-sm">
           <div>28942 students</div>
@@ -31,9 +29,15 @@ const Card = () => {
         </div>
 
         <div className="flex gap-2 items-center">
-          <img src="https://dummyimage.com/38/38" className="rounded-full" />
+          <img
+            src={
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+            }
+            className="rounded-full h-10 w-10"
+          />
           <div className="text-sm">
-            <div>Name</div>
+            <div>Anna Doe</div>
+
             {/* <div>Description</div> */}
           </div>
         </div>
