@@ -1,6 +1,6 @@
 // Comment.js
 import React, { useState } from "react";
-import { FaReply } from "react-icons/fa";
+import { FaReply, FaThumbsUp, FaShare } from "react-icons/fa"; // Add icons here
 import CommentList from "./commentList";
 
 const Comment = ({ comment, addReply, depth = 0 }) => {
@@ -15,10 +15,19 @@ const Comment = ({ comment, addReply, depth = 0 }) => {
 
   return (
     <div
-      className="pl-4 border-l border-gray-300 ml-4"
+      className="relative pl-4 ml-4"
       style={{ marginLeft: `${depth * 16}px` }}
     >
-      {" "}
+      {/* Curved Line */}
+      <div
+        className="absolute top-0 left-0 h-full w-4 transform -translate-x-4"
+        style={{
+          borderLeft: "2px solid gray", // Vertical line
+          //   borderTop: "2px solid gray", // Horizontal top connector
+          //   borderTopLeftRadius: "10px", // Curve at the top-left
+        }}
+      ></div>
+
       {/* User avatar and name */}
       <div className="flex items-center mb-2 space-x-2">
         <img
@@ -40,12 +49,31 @@ const Comment = ({ comment, addReply, depth = 0 }) => {
         {comment.text}
       </p>
       {/* Reply button */}
-      <button
+      {/* <button
         className="text-xs text-blue-500 hover:underline mt-1 flex items-center ml-10"
         onClick={() => setShowReplyBox(!showReplyBox)}
       >
         <FaReply className="mr-1" /> Reply
-      </button>
+      </button> */}
+      <div className="flex items-center space-x-4 ml-10 mt-1">
+        {/* Like button */}
+        <button className="text-xs text-blue-500 hover:underline flex items-center">
+          <FaThumbsUp className="mr-1" /> Like
+        </button>
+
+        {/* Share button */}
+        <button className="text-xs text-blue-500 hover:underline flex items-center">
+          <FaShare className="mr-1" /> Share
+        </button>
+
+        {/* Reply button */}
+        <button
+          className="text-xs text-blue-500 hover:underline flex items-center"
+          onClick={() => setShowReplyBox(!showReplyBox)}
+        >
+          <FaReply className="mr-1" /> Reply
+        </button>
+      </div>
       {/* Reply input box */}
       {showReplyBox && (
         <div className="mt-2 relative ml-10">
