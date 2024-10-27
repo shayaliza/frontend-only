@@ -14,6 +14,8 @@ import MSMobileSearch from "@/managesnap/components/Mobileview/Search";
 import MSLayout from "@/managesnap/components/MSLayout";
 import MSHome from "@/managesnap/components/MessageSection";
 import MSDMs from "@/managesnap/components/DMs";
+import MSNotifications from "../managesnap/components/Activity"
+import MSSettings from "@/managesnap/components/Settings"
 // import MSDesktopDMs from "@/managesnap/components/DMsLayout";
 
 export default function ManageSnapRoutes() {
@@ -48,10 +50,13 @@ export default function ManageSnapRoutes() {
         </>
       ) : (
         <Route path="/managesnap" element={<MSLayout />}>
+          <Route index element={<Navigate to="home" replace />} />
           <Route path="home" element={<MSHome />} />
           <Route path="home/:channelId" element={<MSHome />} />
           <Route path="home/:chatId" element={<MSHome />} />
           <Route path="dms" element={<MSDMs />} />
+          <Route path="notifications" element={<MSNotifications />} />
+          <Route path="settings" element={<MSSettings />} />
           {/* <Route path="/managesnap/dms" element={<MSDesktopDMs />} /> */}
         </Route>
       )}
