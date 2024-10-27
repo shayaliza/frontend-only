@@ -231,7 +231,7 @@ const Header = ({ toggleMobileMenu }) => {
                     animate="visible"
                     transition={{ duration: 0.2, delay: 0.5 }} // Delay for this item
                   >
-                    <Link to="/managesnap/channels">Managesnap</Link>
+                    <Link to="/managesnap">Managesnap</Link>
                   </motion.li>
                 </ul>
               </motion.div>

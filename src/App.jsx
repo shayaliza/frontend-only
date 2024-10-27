@@ -27,7 +27,8 @@ import MSMobileSearch from "./managesnap/components/Mobileview/Search";
 import MSLayout from "./managesnap/components/MSLayout"
 import MSHome from "./managesnap/components/MessageSection"
 import MSDMs from "./managesnap/components/DMs"
-import MSDesktopDMs from "./managesnap/components/DMsLayout"
+import MSNotification from "./managesnap/components/Activity"
+import MSSettings from "./managesnap/components/Settings"
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -85,7 +86,6 @@ const ProfileMobile = React.lazy(() =>
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
-import Main from "./managesnap/components/Main";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -307,10 +307,14 @@ function AppRoutes() {
                       element={<MSDMs />}
                     />
                     <Route
-                      path="/managesnap/dms"
-                      element={<MSDesktopDMs />}
+                      path="notifications"
+                      element={<MSNotification />}
                     />
-                  </>
+                    <Route
+                      path="settings"
+                      element={<MSSettings />}
+                    />
+                    </Route>
                 )}
 
                 <Route path="/createsnap" element={<Layout />}>
