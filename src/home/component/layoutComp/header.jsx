@@ -5,7 +5,7 @@ import ProfileIcon from "../profileicon";
 import Image from "./../../assets/icon.svg";
 import ProfileIconMobile from "../profileicoMobile";
 import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
-
+import { ModeToggle } from "../../../DarkMode/ToggleMode";
 import { useRef } from "react";
 import { SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -241,7 +241,8 @@ const Header = ({ toggleMobileMenu }) => {
         <div className="flex items-center mr-4 ">
           <div className="Icons flex items-center min-[900px]:mr-4 justify-end">
             <div>
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
+              <ModeToggle />
             </div>
             <Points />
             <ProfileIcon />
