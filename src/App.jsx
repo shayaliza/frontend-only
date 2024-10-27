@@ -69,19 +69,19 @@ import BlogBookmarks from "./datasnap/components/Bookmarks";
 import BlogSearch from "./datasnap/components/Search";
 import BlogCreate from "./datasnap/components/Blog/BlogCreate";
 import BlogDetails from "./datasnap/components/Details";
-import MSMobileLayout from "./managesnap/components/Mobileview/Layout";
-import MSMobileChannels from "./managesnap/components/Mobileview/Home";
-import MSMobileMessages from "./managesnap/components/Mobileview/Messages";
-import MSMobileCalendar from "./managesnap/components/Mobileview/Calendar";
-import MSMobileNotification from "./managesnap/components/Mobileview/Notification";
-import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
-import MSMobileChat from "./managesnap/components/Mobileview/Chat";
-import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
-import MSMobileSearch from "./managesnap/components/Mobileview/Search";
-import MSLayout from "./managesnap/components/MSLayout"
-import MSHome from "./managesnap/components/MessageSection"
-import MSDMs from "./managesnap/components/DMs"
-import MSDesktopDMs from "./managesnap/components/DMsLayout"
+// import MSMobileLayout from "./managesnap/components/Mobileview/Layout";
+// import MSMobileChannels from "./managesnap/components/Mobileview/Home";
+// import MSMobileMessages from "./managesnap/components/Mobileview/Messages";
+// import MSMobileCalendar from "./managesnap/components/Mobileview/Calendar";
+// import MSMobileNotification from "./managesnap/components/Mobileview/Notification";
+// import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
+// import MSMobileChat from "./managesnap/components/Mobileview/Chat";
+// import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
+// import MSMobileSearch from "./managesnap/components/Mobileview/Search";
+// import MSLayout from "./managesnap/components/MSLayout";
+// import MSHome from "./managesnap/components/MessageSection";
+// import MSDMs from "./managesnap/components/DMs";
+// import MSDesktopDMs from "./managesnap/components/DMsLayout";
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -139,7 +139,7 @@ const ProfileMobile = React.lazy(() =>
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
-import Main from "./managesnap/components/Main";
+// import Main from "./managesnap/components/Main";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -219,10 +219,10 @@ function AppRoutes() {
               <Route path="testpage2" element={<TestPage2 />} />
               {/*// All Dashboard Routes //*/}
               <>
-                <Route
+                {/* <Route
                   path="competitions/host"
                   element={<CreateCompetition />}
-                />
+                /> */}
                 {loggedIn && (
                   <Route path="/dashboard" element={<MainLayout />}>
                     <Route path="job" element={<Job />} />
@@ -329,7 +329,7 @@ function AppRoutes() {
                   <Route path="fourth" element={<Fourth />} />
                 </Route>
 
-                {isMobile ? (
+                {/* {isMobile ? (
                   <>
                     <Route path="/managesnap" element={<MSMobileLayout />}>
                       <Route
@@ -378,7 +378,7 @@ function AppRoutes() {
                       element={<MSDesktopDMs />}
                     />
                   </>
-                )}
+                )} */}
 
                 <Route path="/createsnap" element={<Layout />}>
                   <Route
