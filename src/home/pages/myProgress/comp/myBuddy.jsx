@@ -6,44 +6,44 @@ function MyBuddy() {
       {/* <div className="h-12  text-black p-2">Your buddy</div> */}
       <div class="flex flex-col gap-4 mt-2 ">
         <div class="rounded-lg mb-2">
-          <div class="mb-4 flex justify-between w-full mx-auto">
-            <h1 class="text-xl font-bold">Your buddy</h1>
-            <p class="text-gray-600">Need help?</p>
+          <div class="mb-4 flex justify-between w-full mx-auto ">
+            <h1 class="text-xl font-bold dark:text-white">Your buddy</h1>
+            <p class="text-gray-600 dark:text-white">Need help?</p>
           </div>
           <div className="w-full mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
-              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
-                <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
+              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black dark:border-white rounded-lg p-4">
+                <h2 class="flex items-center mb-2 text-[#7933ff] dark:text-white text-lg">
                   <span>
                     <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
                   </span>
                   Enrolled
                 </h2>
-                <h1 class="text-md">Courses : 4</h1>
-                <h1 class="text-md">CareerPaths : 2</h1>
-                <h1 class="text-md">Projects : 5</h1>
+                <h1 class="text-md dark:text-white">Courses : 4</h1>
+                <h1 class="text-md dark:text-white">CareerPaths : 2</h1>
+                <h1 class="text-md dark:text-white">Projects : 5</h1>
               </div>
-              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
-                <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
+              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black dark:border-white rounded-lg p-4">
+                <h2 class="flex items-center mb-2 text-[#7933ff] dark:text-white text-lg">
                   <span>
                     <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
                   </span>
                   Enrolled
                 </h2>
-                <h1 class="text-md">Courses : 4</h1>
-                <h1 class="text-md">CareerPaths : 2</h1>
-                <h1 class="text-md">Projects : 5</h1>
+                <h1 class="text-md dark:text-white">Courses : 4</h1>
+                <h1 class="text-md dark:text-white">CareerPaths : 2</h1>
+                <h1 class="text-md dark:text-white">Projects : 5</h1>
               </div>
-              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black rounded-lg p-4">
-                <h2 class="flex items-center mb-2 text-[#7933ff] text-lg">
+              <div class="flex flex-col justify-between h-[170px] border-2 shadow-xl border-black dark:border-white rounded-lg p-4">
+                <h2 class="flex items-center mb-2 text-[#7933ff] dark:text-white text-lg">
                   <span>
                     <img src={enrollImage} alt="enroll" class="h-4 w-4 mr-2" />{" "}
                   </span>
                   Enrolled
                 </h2>
-                <h1 class="text-md">Courses : 4</h1>
-                <h1 class="text-md">CareerPaths : 2</h1>
-                <h1 class="text-md">Projects : 5</h1>
+                <h1 class="text-md dark:text-white">Courses : 4</h1>
+                <h1 class="text-md dark:text-white">CareerPaths : 2</h1>
+                <h1 class="text-md dark:text-white">Projects : 5</h1>
               </div>
             </div>
           </div>

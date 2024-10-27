@@ -7,7 +7,7 @@ function CareerPath() {
     if (activeTab === "inProgress") {
       return (
         <div className="grid grid-cols-3 gap-4 max-[900px]:grid-cols-1 ">
-          <div class=" flex flex-col justify-around rounded-lg shadow-xl my-5 ">
+          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
                 src={pylogo}
@@ -29,7 +29,7 @@ function CareerPath() {
             </div>
           </div>
 
-          <div class="bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 ">
+          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
                 src={pylogo}
@@ -51,7 +51,7 @@ function CareerPath() {
             </div>
           </div>
 
-          <div class="bg-white flex flex-col justify-around rounded-lg shadow-xl my-5 ">
+          <div class="dark:bg-gray-200 flex flex-col justify-around rounded-lg shadow-xl my-5 ">
             <div class="flex items-center p-4">
               <img
                 src={pylogo}
@@ -77,7 +77,7 @@ function CareerPath() {
     } else if (activeTab === "completed") {
       return (
         <div>
-          <div class="flex justify-center my-5 items-center h-64 bg-[rgba(4, 4, 255, 0.048)] border border-dotted border-black">
+          <div class="flex justify-center my-5 items-center h-64 bg-[rgba(4, 4, 255, 0.048)] border border-dotted border-black dark:text-white">
             <h6 class="">No Completed Projects</h6>
           </div>
           {/* Add more completed content here */}
@@ -87,28 +87,29 @@ function CareerPath() {
   };
   return (
     <div>
-      <div className=" mt-5 border-b border-black flex space-x-4 mb-4 ">
+      <div className="mt-5 border-b border-black dark:border-gray-600 flex space-x-4 mb-4 ">
         <button
-          className={` pb-3  rounded text-lg font-semibold ${
+          className={`pb-3 rounded text-lg font-semibold ${
             activeTab === "inProgress"
-              ? " text-[#cd27ff] border-black border-b-2"
-              : " text-black "
+              ? "text-[#cd27ff] border-black dark:border-gray-300 border-b-2"
+              : "text-black dark:text-gray-300"
           }`}
           onClick={() => setActiveTab("inProgress")}
         >
           In Progress
         </button>
         <button
-          className={`tab pb-3 rounded text-lg font-semibold ${
+          className={`pb-3 rounded text-lg font-semibold ${
             activeTab === "completed"
-              ? " text-[#cd27ff] border-black border-b-2"
-              : "text-black "
+              ? "text-[#cd27ff] border-black dark:border-gray-300 border-b-2"
+              : "text-black dark:text-gray-300"
           }`}
           onClick={() => setActiveTab("completed")}
         >
           Completed
         </button>
       </div>
+
       <div className="">{renderContent()}</div>
     </div>
   );

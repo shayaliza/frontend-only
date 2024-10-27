@@ -28,19 +28,19 @@ function MyProgress() {
   const ActiveComponent = tabs.find((tab) => tab.name === activeTab).component;
 
   return (
-    <div className="bg-[#f6f6f6]">
+    <div className="bg-[#f6f6f6] dark:bg-transparent">
       <div className="final flex flex-row gap-4">
         {/* Left Column */}
         <div className="w-full">
           <div className="flex flex-col  ">
-            <div className="flex flex-col gap-3 sm:flex-row bg-white rounded overflow-hidden justify-evenly font-bold mt-5 text-center  w-full">
+            <div className="flex flex-col gap-3 sm:flex-row bg-white dark:bg-transparent rounded overflow-hidden justify-evenly font-bold mt-5 text-center w-full">
               {tabs.map((tab) => (
                 <button
                   key={tab.name}
-                  className={`px-4 py-3 w-full  hover:bg-[#cd27ff]  hover:text-white transition ease delay-150 cursor-pointer ${
+                  className={`px-4 py-3 w-full hover:bg-[#cd27ff] hover:text-white transition ease delay-150 cursor-pointer ${
                     activeTab === tab.name
                       ? "bg-[#cd27ff] text-white"
-                      : "text-black bg-gray-300"
+                      : "text-black bg-gray-300 dark:text-gray-300 dark:bg-gray-700"
                   }`}
                   onClick={() => setActiveTab(tab.name)}
                 >
@@ -48,6 +48,7 @@ function MyProgress() {
                 </button>
               ))}
             </div>
+
             <div className="">
               <div className="flex flex-col ">
                 {/* <InsideTab /> */}
@@ -55,7 +56,7 @@ function MyProgress() {
 
                 {/* Test */}
                 {isVisible && (
-                  <div className="my_progress_third_card my-8 bg-[#7933ff] text-white p-5 flex flex-col relative">
+                  <div className="my_progress_third_card my-8 bg-[#7933ff] dark:bg-gray-800 text-white p-5 flex flex-col relative">
                     <h1 className="text-lg w-9/12 font-medium">
                       Please take your skill test so that we can improve your
                       recommendations and can suggest you better content or

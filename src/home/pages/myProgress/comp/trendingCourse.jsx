@@ -73,144 +73,200 @@ function TrendingCourse() {
         //   grabCursor={true}
       >
         <SwiperSlide>
-          <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
-            <div class=" flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg flex flex-col justify-between p-4">
+            <div className="flex items-center justify-between">
               <img
                 src={pyLogo}
                 alt="course-logo"
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
               />
-              <div class="resolution bg-yellow-300 px-2 py-1 rounded-sm">
-                <p class="text-xs font-semibold">1250xp</p>
+              <div className="bg-yellow-300 dark:bg-yellow-500 px-2 py-1 rounded-sm">
+                <p className="text-xs font-semibold text-gray-900 dark:text-gray-800">
+                  1250xp
+                </p>
               </div>
             </div>
-            <div class=" mt-4">
-              <h1 class="text-lg font-semibold">Introduction to SQL</h1>
-              <div class="my_progess_trending_card_options_holder flex items-center mt-2">
-                <div class="flex items-center mr-4">
-                  <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">15 hours</p>
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Introduction to SQL
+              </h1>
+              <div className="flex items-center mt-2 space-x-4">
+                <div className="flex items-center">
+                  <img src={timeLogo} alt="time" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    15 hours
+                  </p>
                 </div>
-                <div class=" flex items-center mr-4">
-                  <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">9 lessons</p>
+                <div className="flex items-center">
+                  <img
+                    src={lessonLogo}
+                    alt="lessons"
+                    className="w-4 h-4 mr-2"
+                  />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    9 lessons
+                  </p>
                 </div>
-                <div class=" flex items-center">
-                  <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">779 coins</p>
+                <div className="flex items-center">
+                  <img src={coinLogo} alt="coins" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    779 coins
+                  </p>
                 </div>
               </div>
             </div>
-            <div class=" mt-4 pt-4 border-t border-gray-200">
-              <button class="w-full bg-white text-black font-semibold py-2 px-4 border border-black rounded-md hover:bg-gray-100">
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <button className="w-full bg-white dark:bg-gray-700 text-black dark:text-gray-200 font-semibold py-2 px-4 border border-black dark:border-gray-500 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 Start Course
               </button>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
-            <div class=" flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg flex flex-col justify-between p-4">
+            <div className="flex items-center justify-between">
               <img
                 src={pyLogo}
                 alt="course-logo"
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
               />
-              <div class="resolution bg-yellow-300 px-2 py-1 rounded-sm">
-                <p class="text-xs font-semibold">1250xp</p>
+              <div className="bg-yellow-300 dark:bg-yellow-500 px-2 py-1 rounded-sm">
+                <p className="text-xs font-semibold text-gray-900 dark:text-gray-800">
+                  1250xp
+                </p>
               </div>
             </div>
-            <div class=" mt-4">
-              <h1 class="text-lg font-semibold">Introduction to SQL</h1>
-              <div class="my_progess_trending_card_options_holder flex items-center mt-2">
-                <div class="flex items-center mr-4">
-                  <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">15 hours</p>
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Introduction to SQL
+              </h1>
+              <div className="flex items-center mt-2 space-x-4">
+                <div className="flex items-center">
+                  <img src={timeLogo} alt="time" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    15 hours
+                  </p>
                 </div>
-                <div class=" flex items-center mr-4">
-                  <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">9 lessons</p>
+                <div className="flex items-center">
+                  <img
+                    src={lessonLogo}
+                    alt="lessons"
+                    className="w-4 h-4 mr-2"
+                  />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    9 lessons
+                  </p>
                 </div>
-                <div class=" flex items-center">
-                  <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">779 coins</p>
+                <div className="flex items-center">
+                  <img src={coinLogo} alt="coins" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    779 coins
+                  </p>
                 </div>
               </div>
             </div>
-            <div class=" mt-4 pt-4 border-t border-gray-200">
-              <button class="w-full bg-white text-black font-semibold py-2 px-4 border border-black rounded-md hover:bg-gray-100">
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <button className="w-full bg-white dark:bg-gray-700 text-black dark:text-gray-200 font-semibold py-2 px-4 border border-black dark:border-gray-500 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 Start Course
               </button>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
-            <div class=" flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg flex flex-col justify-between p-4">
+            <div className="flex items-center justify-between">
               <img
                 src={pyLogo}
                 alt="course-logo"
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
               />
-              <div class="resolution bg-yellow-300 px-2 py-1 rounded-sm">
-                <p class="text-xs font-semibold">1250xp</p>
+              <div className="bg-yellow-300 dark:bg-yellow-500 px-2 py-1 rounded-sm">
+                <p className="text-xs font-semibold text-gray-900 dark:text-gray-800">
+                  1250xp
+                </p>
               </div>
             </div>
-            <div class=" mt-4">
-              <h1 class="text-lg font-semibold">Introduction to SQL</h1>
-              <div class="my_progess_trending_card_options_holder flex items-center mt-2">
-                <div class="flex items-center mr-4">
-                  <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">15 hours</p>
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Introduction to SQL
+              </h1>
+              <div className="flex items-center mt-2 space-x-4">
+                <div className="flex items-center">
+                  <img src={timeLogo} alt="time" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    15 hours
+                  </p>
                 </div>
-                <div class=" flex items-center mr-4">
-                  <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">9 lessons</p>
+                <div className="flex items-center">
+                  <img
+                    src={lessonLogo}
+                    alt="lessons"
+                    className="w-4 h-4 mr-2"
+                  />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    9 lessons
+                  </p>
                 </div>
-                <div class=" flex items-center">
-                  <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">779 coins</p>
+                <div className="flex items-center">
+                  <img src={coinLogo} alt="coins" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    779 coins
+                  </p>
                 </div>
               </div>
             </div>
-            <div class=" mt-4 pt-4 border-t border-gray-200">
-              <button class="w-full bg-white text-black font-semibold py-2 px-4 border border-black rounded-md hover:bg-gray-100">
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <button className="w-full bg-white dark:bg-gray-700 text-black dark:text-gray-200 font-semibold py-2 px-4 border border-black dark:border-gray-500 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 Start Course
               </button>
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div class=" bg-white rounded-lg shadow-lg flex flex-col justify-between p-4">
-            <div class=" flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg flex flex-col justify-between p-4">
+            <div className="flex items-center justify-between">
               <img
                 src={pyLogo}
                 alt="course-logo"
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
               />
-              <div class="resolution bg-yellow-300 px-2 py-1 rounded-sm">
-                <p class="text-xs font-semibold">1250xp</p>
+              <div className="bg-yellow-300 dark:bg-yellow-500 px-2 py-1 rounded-sm">
+                <p className="text-xs font-semibold text-gray-900 dark:text-gray-800">
+                  1250xp
+                </p>
               </div>
             </div>
-            <div class=" mt-4">
-              <h1 class="text-lg font-semibold">Introduction to SQL</h1>
-              <div class="my_progess_trending_card_options_holder flex items-center mt-2">
-                <div class="flex items-center mr-4">
-                  <img src={timeLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">15 hours</p>
+            <div className="mt-4">
+              <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Introduction to SQL
+              </h1>
+              <div className="flex items-center mt-2 space-x-4">
+                <div className="flex items-center">
+                  <img src={timeLogo} alt="time" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    15 hours
+                  </p>
                 </div>
-                <div class=" flex items-center mr-4">
-                  <img src={lessonLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">9 lessons</p>
+                <div className="flex items-center">
+                  <img
+                    src={lessonLogo}
+                    alt="lessons"
+                    className="w-4 h-4 mr-2"
+                  />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    9 lessons
+                  </p>
                 </div>
-                <div class=" flex items-center">
-                  <img src={coinLogo} alt="time" class="w-4 h-4 mr-2" />
-                  <p class="text-sm font-semibold text-gray-600">779 coins</p>
+                <div className="flex items-center">
+                  <img src={coinLogo} alt="coins" className="w-4 h-4 mr-2" />
+                  <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+                    779 coins
+                  </p>
                 </div>
               </div>
             </div>
-            <div class=" mt-4 pt-4 border-t border-gray-200">
-              <button class="w-full bg-white text-black font-semibold py-2 px-4 border border-black rounded-md hover:bg-gray-100">
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <button className="w-full bg-white dark:bg-gray-700 text-black dark:text-gray-200 font-semibold py-2 px-4 border border-black dark:border-gray-500 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition">
                 Start Course
               </button>
             </div>

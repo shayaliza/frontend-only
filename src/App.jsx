@@ -78,9 +78,8 @@ import MSMobileSettings from "./managesnap/components/Mobileview/Settings";
 import MSMobileChat from "./managesnap/components/Mobileview/Chat";
 import MSMobileProfile from "./managesnap/components/Mobileview/Profile";
 import MSMobileSearch from "./managesnap/components/Mobileview/Search";
-import MSDesktopLayout from "./managesnap/components/MSLayout"
-import MSHome from "./managesnap/components/MessageSection"
-import MSDMs from "./managesnap/components/DMs"
+import MSDesktopLayout from "./managesnap/components/HomeLayout";
+import MSDesktopDMs from "./managesnap/components/DMsLayout"
 import { useState } from "react";
 import { useEffect } from "react";
 import Create from "./components/Create";
@@ -138,7 +137,7 @@ const ProfileMobile = React.lazy(() =>
 );
 import MyFeedDetailMobile from "./home/pages/mobile/myFeed/component/feedDetail";
 import TagProfile from "./home/pages/topics/oneTopic";
-import MSLayout from "./managesnap/components/MSLayout";
+import Main from "./managesnap/components/Main";
 
 // const EditProfileMobile = React.lazy(() =>
 //   import("./home/pages/mobile/profile/firstProfile")
@@ -218,6 +217,10 @@ function AppRoutes() {
               <Route path="testpage2" element={<TestPage2 />} />
               {/*// All Dashboard Routes //*/}
               <>
+                <Route
+                  path="competitions/host"
+                  element={<CreateCompetition />}
+                />
                 {loggedIn && (
                   <Route path="/dashboard" element={<MainLayout />}>
                     <Route path="job" element={<Job />} />
@@ -242,6 +245,11 @@ function AppRoutes() {
                     <Route path="topics/oneTopic" element={<TagProfile />} />
 
                     <Route path="competitions" element={<Competitors />} />
+                    {/* <Route
+                      path="competitions/host"
+                      element={<CreateCompetition />}
+                    /> */}
+
                     <Route
                       path="competitions/competitionPage"
                       element={<Planet />}
@@ -363,11 +371,11 @@ function AppRoutes() {
                       path="dms"
                       element={<MSDMs />}
                     />
-                    {/* <Route
+                    <Route
                       path="/managesnap/dms"
                       element={<MSDesktopDMs />}
-                    /> */}
-                    </Route>
+                    />
+                  </>
                 )}
 
                 <Route path="/createsnap" element={<Layout />}>

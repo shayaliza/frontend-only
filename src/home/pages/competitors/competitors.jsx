@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const cardData = [
@@ -108,9 +109,11 @@ const CompetitionSection = () => {
               competitions. Find help in the documentation or learn about
               Community Competitions.
             </p>
-            <button className="w-[200px] h-[40px] mt-4 bg-black text-sm text-white font-semibold rounded-full">
-              Host a Competition
-            </button>
+            <Link to={"/competitions/host"}>
+              <button className="w-[200px] h-[40px] mt-4 bg-black text-sm text-white font-semibold rounded-full">
+                Host a Competition
+              </button>
+            </Link>
           </div>
           <div className="right w-2/5">
             <img
@@ -120,7 +123,7 @@ const CompetitionSection = () => {
             />
           </div>
         </div>
-        <div className="tab flex border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white max-[900px]:px-0">
+        <div className="tab flex border-b-2 mt-1 sticky top-0 px-10 z-50 bg-white dark:bg-transparent max-[900px]:px-0">
           <button
             className={`tablinks hover:bg-gray-200 text-xl px-6 py-2 ${
               activeTab === "active"

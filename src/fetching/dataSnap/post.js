@@ -1,5 +1,5 @@
 import axiosInstance from "./../Interceptor/axiosInstance";
-const URL = "https://snapgpt.online";
+const URL = "https://snapgpt.online/blog_service";
 
 const GetAllBlogs = async () => {
   try {
