@@ -179,7 +179,7 @@ function Points() {
                   "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
               }}
             >
-              <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[45%] rotate-45 content-['']"></div>
+              <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[50%] rotate-45 content-['']"></div>
 
               <div className="power_item h-[40px] font-bold">
                 <p>Highest xp : 200</p>
@@ -206,13 +206,13 @@ function Points() {
         {isCoinVisible && (
           <div>
             <div
-              className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-16 right-[-20%] w-[200px] z-50 bg-white text-center justify-between text-base"
+              className="coin_dropDown flex flex-col p-4 rounded-lg absolute top-16 right-0 w-[200px] z-50 bg-white text-center justify-between text-base"
               style={{
                 boxShadow:
                   "0 -5px 10px -5px rgba(0, 0, 0, 0.35), 5px 0 10px -5px rgba(0, 0, 0, 0.35), -5px 0 10px -5px rgba(0, 0, 0, 0.35)",
               }}
             >
-              <div className="absolute w-5 h-5 bg-inherit top-[-10px] left-[45%] rotate-45 content-['']"></div>
+              <div className="absolute w-5 h-5 bg-inherit top-[-10px] right-4 rotate-45 content-[''] "></div>
 
               <div className="coin_item h-[40px] font-bold">
                 <p>Coins: 999</p>
