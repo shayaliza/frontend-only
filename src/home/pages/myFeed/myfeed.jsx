@@ -4,6 +4,7 @@ import StartPost from "./component/startpost";
 import FirstPost from "./component/firstpost";
 import NewPost from "./component/newPost";
 import bannerImage from "./../../assets/banner.png";
+import CommentSection from "./component/comment/commentSection";
 
 function MyFeed() {
   const [showNewPost, setShowNewPost] = useState(false);
@@ -44,6 +45,7 @@ function MyFeed() {
               handleCloseNewPost={handleCloseNewPost}
               showNewPost={showNewPost}
             />
+            <CommentSection />
             <FirstPost images={images2} />
             <FirstPost images={images} />
             <FirstPost images={images3} />
