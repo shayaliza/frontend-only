@@ -17,6 +17,19 @@ const CommentSection = () => {
             { id: 3, text: "This is a reply to the reply.", replies: [] },
           ],
         },
+        {
+          id: 3,
+          text: "This is a reply to the main comment.",
+          replies: [
+            {
+              id: 4,
+              text: "This is a reply to the reply.",
+              replies: [
+                { id: 5, text: "This is a reply to the reply.", replies: [] },
+              ],
+            },
+          ],
+        },
       ],
     },
   ]);
