@@ -105,8 +105,8 @@ export default function TrendingCourse() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
-            spaceBetween: 50,
+            slidesPerView: 3.5,
+            spaceBetween: 20,
           },
         }}
         //   pagination={{ clickable: true }}

@@ -19,9 +19,6 @@ import { FaCertificate, FaUserGraduate } from "react-icons/fa";
 const Card = () => {
   return (
     <div className="bg-white shadow-md border  rounded-lg  mx-auto w-[320px] mb-3 hover:drop-shadow-2xl">
-      {/* Left and Bottom Borders */}
-      {/* <div className="absolute -left-2 -bottom-2 h-full w-full border-l-2 border-b-2 border-black rounded-lg pointer-events-none"></div> */}
-
       {/* Content */}
       <div className="relative border-b pb-4 bg-black rounded-t-lg px-6 py-2">
         <div className="text-sm font-semibold text-white uppercase tracking-wider">
@@ -70,8 +67,8 @@ function TrendingCareer() {
       <Swiper
         className="w-[95%]"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        spaceBetween={50}
-        slidesPerView={3}
+        spaceBetween={20}
+        slidesPerView={3.5}
         // navigation
         navigation={{
           nextEl: ".my-swiper-button-next-uni",
@@ -96,7 +93,7 @@ function TrendingCareer() {
           },
           // when window width is >= 1024px
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
             spaceBetween: 50,
           },
         }}
