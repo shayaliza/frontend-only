@@ -11,10 +11,10 @@ export default function CalendarComponent() {
   const [modalOpen, setModalOpen] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
   const [eventType, setEventType] = useState("");
-  const [eventStart, setEventStart] = useState(new Date());
-  const [eventEnd, setEventEnd] = useState(new Date());
   const [filterType, setFilterType] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null); // New state for the selected event
+  const [eventStart, setEventStart] = useState(new Date()); // Add state for event start time
+  const [eventEnd, setEventEnd] = useState(new Date()); // Add state for event end time
 
   const meetingTypes = ["Interview", "Team Meeting", "Other"];
 
@@ -26,10 +26,10 @@ export default function CalendarComponent() {
   };
 
   const handleSelect = ({ start, end }) => {
-    setEventStart(start);
-    setEventEnd(end);
     setEventTitle("");
     setEventType("");
+    setEventStart(start); // Set start date from the selected slot
+    setEventEnd(end); // Set end date from the selected slot
     setSelectedEvent(null); // Reset for new events
     setModalOpen(true);
   };
@@ -38,8 +38,8 @@ export default function CalendarComponent() {
     setSelectedEvent(event);
     setEventTitle(event.title);
     setEventType(event.type);
-    setEventStart(event.start);
-    setEventEnd(event.end);
+    setEventStart(event.start); // Set start date for editing
+    setEventEnd(event.end); // Set end date for editing
     setModalOpen(true);
   };
 
@@ -48,7 +48,13 @@ export default function CalendarComponent() {
       // Update the existing event
       const updatedEvents = events.map((event) =>
         event === selectedEvent
-          ? { ...event, title: eventTitle, type: eventType }
+          ? {
+              ...event,
+              title: eventTitle,
+              type: eventType,
+              start: eventStart,
+              end: eventEnd,
+            }
           : event
       );
       setEvents(updatedEvents);
@@ -57,8 +63,8 @@ export default function CalendarComponent() {
       const newEvent = {
         title: eventTitle,
         type: eventType,
-        start: eventStart,
-        end: eventEnd,
+        start: eventStart, // Set start from the state
+        end: eventEnd, // Set end from the state
         allDay: false,
       };
       setEvents([...events, newEvent]);
@@ -100,6 +106,7 @@ export default function CalendarComponent() {
   const eventPropGetter = (event) => ({
     onClick: (e) => handleEventSelect(event),
     className: "relative", // To position the edit and delete icons
+    ...eventStyleGetter(event), // Apply event styles
   });
 
   return (
@@ -180,14 +187,6 @@ export default function CalendarComponent() {
                 </option>
               ))}
             </select>
-            <div className="flex justify-between mb-2">
-              <span>Start:</span>
-              <span>{eventStart.toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between mb-4">
-              <span>End:</span>
-              <span>{eventEnd.toLocaleString()}</span>
-            </div>
             <button
               onClick={handleAddOrUpdateEvent}
               className="bg-blue-500 text-white px-4 py-2 rounded"
