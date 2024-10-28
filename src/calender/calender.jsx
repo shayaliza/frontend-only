@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { FaEdit, FaTrash } from "react-icons/fa"; // Import the edit and delete icons
 
 const localizer = momentLocalizer(moment);
 
@@ -69,6 +70,11 @@ export default function CalendarComponent() {
     setSelectedEvent(null); // Reset the selected event
   };
 
+  const handleDeleteEvent = (event) => {
+    const updatedEvents = events.filter((e) => e !== event);
+    setEvents(updatedEvents);
+  };
+
   const handleFilterChange = (e) => {
     setFilterType(e.target.value);
   };
@@ -90,6 +96,11 @@ export default function CalendarComponent() {
       },
     };
   };
+
+  const eventPropGetter = (event) => ({
+    onClick: (e) => handleEventSelect(event),
+    className: "relative", // To position the edit and delete icons
+  });
 
   return (
     <div className="h-screen p-4 bg-gray-100">
@@ -115,9 +126,33 @@ export default function CalendarComponent() {
         endAccessor="end"
         selectable
         onSelectSlot={handleSelect}
-        onSelectEvent={handleEventSelect} // Handle event selection for editing
         style={{ height: 500, margin: "50px" }}
-        eventPropGetter={eventStyleGetter} // Use the custom style getter
+        eventPropGetter={eventPropGetter} // Use the custom style getter
+        components={{
+          event: ({ event }) => (
+            <div className="flex justify-between items-center">
+              <span>{event.title}</span>
+              <div className="flex items-center">
+                <FaEdit
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering the event select
+                    handleEventSelect(event);
+                  }}
+                  className="ml-2 text-white cursor-pointer"
+                  size={14}
+                />
+                <FaTrash
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering the event select
+                    handleDeleteEvent(event);
+                  }}
+                  className="ml-2 text-white cursor-pointer"
+                  size={14}
+                />
+              </div>
+            </div>
+          ),
+        }}
       />
 
       {modalOpen && (
