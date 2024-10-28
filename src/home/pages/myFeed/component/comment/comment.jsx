@@ -126,7 +126,7 @@ const Comment = ({
   };
 
   return (
-    <div className="relative mt-4" style={{ marginLeft: `${depth * 20}px` }}>
+    <div className="relative mt-4" style={{ marginLeft: `${depth}px` }}>
       <div
         className={`comment  comment-container ${
           isLast ? "last-comment" : ""
