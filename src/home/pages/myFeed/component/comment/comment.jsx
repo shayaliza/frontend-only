@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaReply, FaThumbsUp, FaShare } from "react-icons/fa";
 import CommentList from "./commentList";
+import "./comment.css";
 
 const Comment = ({ comment, addReply, depth = 0 }) => {
   const [showReplyBox, setShowReplyBox] = useState(false);
+  const [repliesToShow, setRepliesToShow] = useState(1); // Show 1 nested comment initially
   const [replyText, setReplyText] = useState("");
 
   const handleReply = () => {
@@ -11,101 +13,84 @@ const Comment = ({ comment, addReply, depth = 0 }) => {
     setReplyText("");
     setShowReplyBox(false);
   };
+  const showMoreReplies = () => {
+    setRepliesToShow((prev) => prev + 1);
+  };
 
   return (
-    <div className="relative pl-4" style={{ marginLeft: `${depth * 16}px` }}>
-      {/* Connector Line */}
-
-      {depth == 1 && (
-        <>
-          <div className="absolute -left-1 -top-10  w-1 h-full bg-gray-300 z-0 "></div>
-          {/* Horizontal Line */}
-          <div className="absolute -left-0 top-4 w-2 h-1 bg-gray-300 z-0"></div>
-        </>
-      )}
-      {depth == 2 && (
-        <>
-          {/* Vertical Line */}
-          <div className="absolute -left-5 -top-10 w-1 h-[60px] bg-red-300 z-0"></div>
-          {/* Horizontal Line */}
-          <div
-            className={`absolute -left-4 top-4  h-1 bg-red-300 z-0 w-6`}
-          ></div>
-        </>
-      )}
-      {depth == 3 && (
-        <>
-          {/* Vertical Line */}
-          <div className="absolute -left-8 -top-10 w-1 h-[60px] bg-blue-300 z-0"></div>
-          {/* Horizontal Line */}
-          <div className="absolute -left-7 top-4 w-9 h-1 bg-blue-300 z-0"></div>
-        </>
-      )}
-
-      {/* User avatar and name */}
-      <div className="flex items-center mb-2 space-x-2">
-        <img
-          src={
-            comment.avatar ||
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
-          }
-          alt="Avatar"
-          className="w-8 h-8 rounded-full"
-        />
-        <div>
-          <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
-            {comment.username || "Anonymous"}
-          </span>
-        </div>
-      </div>
-
+    <div className={`flex mt-4`} style={{ marginLeft: `${depth * 16}px` }}>
       {/* Comment content */}
-      <p className="text-sm text-gray-700 dark:text-gray-300 ml-10">
-        {comment.text}
-      </p>
-
-      {/* Action Buttons */}
-      <div className="flex items-center space-x-4 ml-10 mt-1">
-        <button className="text-xs text-blue-500 hover:underline flex items-center">
-          <FaThumbsUp className="mr-1" /> Like
-        </button>
-        <button className="text-xs text-blue-500 hover:underline flex items-center">
-          <FaShare className="mr-1" /> Share
-        </button>
-        <button
-          className="text-xs text-blue-500 hover:underline flex items-center"
-          onClick={() => setShowReplyBox(!showReplyBox)}
-        >
-          <FaReply className="mr-1" /> Reply
-        </button>
-      </div>
-
-      {/* Reply input box */}
-      {showReplyBox && (
-        <div className="mt-2 relative ml-10">
-          <textarea
-            value={replyText}
-            onChange={(e) => setReplyText(e.target.value)}
-            className="w-full p-2 text-sm border rounded resize-none pr-12"
-            placeholder="Write your reply..."
-          ></textarea>
-          <button
-            onClick={handleReply}
-            className="absolute bottom-2 right-2 text-xs text-white bg-blue-500 px-2 py-1 rounded"
-          >
-            Submit
-          </button>
+      <div className="relative w-full">
+        <div className="flex flex-col mb-2 border-gray-200 border-2 rounded-2xl p-3 w-full">
+          <div className="flex items-center space-x-2">
+            <img
+              src={
+                comment.avatar ||
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjrWdH1kcSOptxTJvewZ8d6TIy84-yIoOIEjC8OYljd3LZaarqejCI1njtYhROEXhOCE&usqp=CAU"
+              }
+              alt="Avatar"
+              className="w-8 h-8 rounded-full"
+            />
+            <div>
+              <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                {comment.username || "Anonymous"}
+              </span>
+            </div>
+          </div>
+          <p className="text-sm text-gray-700 dark:text-gray-300 ml-10">
+            {comment.text}
+          </p>
+          {/* Action Buttons */}
+          <div className="flex items-center space-x-4 ml-10 mt-0">
+            <button className="text-xs text-blue-500 hover:underline flex items-center">
+              <FaThumbsUp className="mr-1" /> Like
+            </button>
+            <button className="text-xs text-blue-500 hover:underline flex items-center">
+              <FaShare className="mr-1" /> Share
+            </button>
+            <button
+              className="text-xs text-blue-500 hover:underline flex items-center"
+              onClick={() => setShowReplyBox(!showReplyBox)}
+            >
+              <FaReply className="mr-1" /> Reply
+            </button>
+          </div>
         </div>
-      )}
 
-      {/* Render nested comments */}
-      {comment.replies && comment.replies.length > 0 && (
-        <CommentList
-          comments={comment.replies}
-          addReply={addReply}
-          depth={depth + 1}
-        />
-      )}
+        {/* Reply input box */}
+        {showReplyBox && (
+          <div className="mt-2 relative ml-10">
+            <textarea
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+              className="w-full p-2 text-sm border rounded resize-none pr-12"
+              placeholder="Write your reply..."
+            ></textarea>
+            <button
+              onClick={handleReply}
+              className="absolute bottom-2 right-2 text-xs text-white bg-blue-500 px-2 py-1 rounded"
+            >
+              Submit
+            </button>
+          </div>
+        )}
+        {comment.replies && comment.replies.length > 0 && (
+          <>
+            <CommentList
+              comments={comment.replies.slice(0, repliesToShow)}
+              depth={depth + 1}
+            />
+            {repliesToShow < comment.replies.length && (
+              <button
+                onClick={showMoreReplies}
+                className="ml-10 mt-2 text-blue-500 hover:underline text-xs"
+              >
+                Show More Replies
+              </button>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

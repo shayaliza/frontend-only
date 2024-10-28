@@ -1,0 +1,8 @@
+.comment-line {
+  position: absolute;
+  width: 2px;
+  background-color: #e2e8f0; /* Light gray line */
+  left: 20px; /* Adjust to align with nested comments */
+  top: 0;
+  bottom: 0;
+}
