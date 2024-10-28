@@ -1,0 +1,8 @@
+/* CalendarComponent.css */
+.rbc-month-view {
+  border: 1px solid #e2e8f0; /* Month view border */
+}
+
+.rbc-month-row {
+  height: 100px; /* Increase the height of each row */
+}
