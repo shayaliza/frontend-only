@@ -131,7 +131,7 @@ const Comment = ({
         className={`comment  comment-container ${
           isLast ? "last-comment" : ""
         } ${hasReplies ? "has-replies" : ""}`}
-        style={{ marginLeft: `${depth * 16}px` }}
+        style={{ marginLeft: `${depth * 3}px` }}
       >
         <div className="w-full">
           <div className="flex flex-col mb-2 border-gray-200 border-2 rounded-2xl p-3 w-full">
