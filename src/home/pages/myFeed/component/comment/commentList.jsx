@@ -10,6 +10,8 @@ const CommentList = ({ comments, addReply, depth }) => (
         comment={comment}
         addReply={addReply}
         depth={depth}
+        length={comments.length}
+        index={index}
         isLast={index === comments.length - 1} // Check if it's the last comment at this level
       />
     ))}

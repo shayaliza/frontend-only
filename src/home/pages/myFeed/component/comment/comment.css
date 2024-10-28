@@ -1,8 +1,48 @@
-.comment-line {
+.comment {
+  position: relative;
+  padding-left: 24px; /* Space for the line */
+}
+
+.comment::before {
+  content: "";
   position: absolute;
-  width: 2px;
-  background-color: #e2e8f0; /* Light gray line */
-  left: 20px; /* Adjust to align with nested comments */
   top: 0;
-  bottom: 0;
+  left: -12px;
+  width: 1px;
+  height: 100%;
+  background-color: gray;
+  transform: translateX(calc(-100% + 8px)); /* Adjust based on depth */
+}
+
+.comment::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 12px;
+  width: 24px;
+  height: 1px;
+  background-color: #a0aec0;
+  transform: translateX(calc(-100% + 8px));
+}
+
+/* Adjusting the left margin dynamically based on depth */
+.comment.depth-1 {
+  margin-left: 20px;
+}
+
+.comment.depth-2 {
+  margin-left: 40px;
+}
+.comment-container.has-replies::before {
+  content: "";
+  position: absolute;
+  left: -10px; /* Adjust to position it correctly */
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: #ccc;
+}
+
+.comment-container.last-comment::before {
+  height: 25%;
 }
