@@ -85,7 +85,6 @@ const dms = [
   },
 ];
 
-// Dummy data for Channels
 const channels = [
   {
     id: "msg1",
@@ -192,10 +191,15 @@ function Chat({ toggleProfileSectionVisibility }) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
   useEffect(() => {
-    isChannelChat ? setMessages(channels) : setMessages(dms);
-  }, [channels, dms]);
+    if (isChannelChat) {
+      setMessages(channels);
+    } else {
+      setMessages(dms);
+    }
+  }, [isChannelChat, channels, dms]); 
+  
+ 
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
