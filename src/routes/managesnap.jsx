@@ -12,7 +12,7 @@ import MSMobileProfile from "@/managesnap/components/Mobileview/Profile";
 import MSMobileSearch from "@/managesnap/components/Mobileview/Search";
 
 import MSLayout from "@/managesnap/components/MSLayout";
-import MSHome from "@/managesnap/components/MessageSection";
+import MSHome from "@/managesnap/components/Home";
 import MSDMs from "@/managesnap/components/DMs";
 import MSNotifications from "../managesnap/components/Activity"
 import MSSettings from "@/managesnap/components/Settings"

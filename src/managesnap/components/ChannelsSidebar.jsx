@@ -39,7 +39,7 @@ function ChannelsSidebar() {
   };
 
   return (
-    <div id="sidebar" className="sm:w-full flex flex-col bg-zinc-950 h-[calc(100vh-56px)] overflow-y-auto border-r">
+    <div id="sidebar" className="relative w-full flex flex-col bg-zinc-950 h-[calc(100vh-56px)] overflow-y-auto border-r">
       <div className="flex-1 p-4">
         <div className="mb-4 flex flex-col">
           <div 
@@ -55,9 +55,9 @@ function ChannelsSidebar() {
                 <div
                   key={channel.id}
                   onClick={() => handleChannelClick(channel)} 
-                  className={`p-3 rounded cursor-pointer hover:bg-gray-500 transition`}
+                  className="p-2 rounded cursor-pointer hover:bg-gray-500 transition"
                 >
-                  <span className="text-white">{channel.name}</span>
+                  <span className="text-white text-sm">{channel.name}</span>
                 </div>
               ))}
             </div>
@@ -77,12 +77,12 @@ function ChannelsSidebar() {
                 <div
                   key={message.id}
                   onClick={() => handleDMClick(message)}  
-                  className={`flex items-center space-x-3 p-3 rounded cursor-pointer hover:bg-gray-500 transition`}
+                  className="flex items-center space-x-3 p-2 rounded cursor-pointer hover:bg-gray-500 transition"
                 >
                   <div className="bg-gray-500 w-8 h-8 rounded-full flex items-center justify-center text-xl">
                     <FaUserCircle />
                   </div>
-                  <span className="text-white">{message.name}</span>
+                  <span className="text-white text-sm">{message.name}</span>
                 </div>
               ))}
             </div>
@@ -90,7 +90,7 @@ function ChannelsSidebar() {
         </div>
       </div>
 
-      <div className="lg:flex items-center p-4 hidden">
+      <div className="sticky bottom-0 w-full bg-zinc-950 flex items-center p-4">
         <button className="bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center text-xl hover:bg-gray-500 transition">
           <AiOutlinePlus />
         </button>
@@ -102,4 +102,4 @@ function ChannelsSidebar() {
   );
 }
 
-export default ChannelsSidebar;
+export default ChannelsSidebar

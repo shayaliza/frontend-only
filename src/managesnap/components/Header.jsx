@@ -145,10 +145,11 @@ function Header() {
               ))}
               {showCustomSearch && searchTerm && (
                 <div
-                  className={`px-4 py-2 ${theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"} cursor-pointer`}
+                  className={`px-4 py-2 flex space-x-2 items-center ${theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"} cursor-pointer`}
                   onClick={handleCustomSearch}
                 >
-                  Search for "{searchTerm}"
+                  <SearchIcon className='w-4 h-4 mt-1.5'/>
+                  <span>{searchTerm}</span>
                 </div>
               )}
             </div>

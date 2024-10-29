@@ -168,6 +168,7 @@ const DMs = () => {
         timestamp: new Date().toLocaleTimeString(),
         status: "received",
         reactions: {},
+        imageUrl : "https://img.freepik.com/free-photo/photorealistic-view-tree-nature-with-branches-trunk_23-2151478040.jpg",
         sender: "them",
       };
 
@@ -274,13 +275,38 @@ const DMs = () => {
             )}
 
             <div
-              className={`relative rounded-2xl px-4 py-2 ${
+              className={`relative rounded-2xl p-2 ${
                 isMe
                   ? "bg-blue-500 text-white before:absolute before:right-[-6px] before:top-[50%] before:border-8 before:border-transparent before:border-l-blue-500"
                   : "bg-gray-100 dark:bg-gray-800 before:absolute before:left-[-6px] before:top-[50%] before:border-8 before:border-transparent before:border-r-gray-100 dark:before:border-r-gray-800"
               }`}
             >
-              {message.text}
+              {message.imageUrl && (
+                <div className="relative rounded-lg overflow-hidden flex-grow">
+                  <img
+                    src={message.imageUrl}
+                    alt="Sent image"
+                    className="w-full h-auto object-cover"
+                  />
+                </div>
+            )}
+
+            {message.url && !message.imageUrl && (
+              <div className="relative rounded-lg overflow-hidden p-2 max-w-max text-blue-600">
+                <a
+                  href={message.url}
+                >
+                  {message.url}
+                </a>
+              </div>
+            )}
+
+            {!message.imageUrl && !message.url && (
+              <div
+              >
+                {message.text}
+              </div>
+            )}
             </div>
 
             {Object.entries(message.reactions).length > 0 && (
