@@ -10,6 +10,7 @@ const Comment = ({
   depth = 0,
   isLast = false,
   hasReplies = false,
+  isThereIndentComments = false,
   index,
   length,
 }) => {
@@ -61,7 +62,9 @@ const Comment = ({
           <div className="grid grid-cols-12 items-stretch z-20">
             {/* First part with vertical line */}
             <div className="flex justify-center col-span-1 h-full ">
-              <div className="h-full border-l-2 border-gray-500"></div>
+              {isThereIndentComments && (
+                <div className="h-full border-l-2 border-blue-500"></div>
+              )}
             </div>
 
             {/* Second part with the comment text */}
@@ -87,6 +90,7 @@ const Comment = ({
                     comments={comment.replies.slice(0, repliesToShow)}
                     addReply={addReply} // Pass addReply to CommentList
                     depth={depth + 1}
+                    isThereIndentComments={isThereIndentComments}
                   />
                 </>
               )}
@@ -95,22 +99,30 @@ const Comment = ({
           {/* This is last layout */}
           <div className="grid grid-cols-12 items-stretch ">
             {/* First part with vertical line */}
-            <div className="flex justify-center col-span-1 h-full pl-[14px]  -ml-[19px]">
-              <div
-                className="box-border h-md border-0 border-tone-4 border-solid border-red-900
+            {isThereIndentComments && (
+              <>
+                <div className="flex justify-center col-span-1 h-full pl-[14px]  -ml-[19px]">
+                  <div
+                    className="box-border h-md border-0 border-tone-4 border-solid border-red-900
                 border-b-[2px] cursor-pointer w-[calc(50%+0.5px)] border-l-[2px]
                 rounded-bl-[11px] mb-2 -mr-[30px]  mx-0"
-              ></div>
-            </div>
+                  ></div>
+                </div>
+              </>
+            )}
 
             {/* Second part with the comment text */}
             <div className="col-span-11 ">
               <div>
                 <div className="inline-flex items-center">
-                  <div className="w-4 border-t-2 border-red-600 -mt-[1px]"></div>
-                  <div className="ml-2">
-                    <AiFillPlusCircle />
-                  </div>
+                  {isThereIndentComments && (
+                    <>
+                      <div className="w-4 border-t-2 border-red-600 -mt-[1.5px]"></div>
+                      <div className="ml-2">
+                        <AiFillPlusCircle />
+                      </div>
+                    </>
+                  )}
                   {comment.replies && comment.replies.length > 0 && (
                     <>
                       {repliesToShow < comment.replies.length && (
