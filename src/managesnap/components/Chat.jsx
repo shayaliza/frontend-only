@@ -559,6 +559,7 @@ function Chat({ toggleProfileSectionVisibility }) {
             ref={fileInputRef}
             className="hidden"
             accept=""
+            multiple
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) handleFileUpload(file);
@@ -704,13 +705,15 @@ function ChatMessage({
         )}
 
         {message.fileUrl && (
-          <a
-            href={message.fileUrl}
-            download
-            className="text-blue-500 underline"
-          >
-            {message.content}
-          </a>
+        <a
+        href={message.fileUrl}
+        download
+        rel="noopener noreferrer"
+        className="text-red-600 underline"
+      >
+        {message.content}
+      </a>
+      
         )}
 
         {message.url && !message.imageUrl && (
@@ -721,7 +724,7 @@ function ChatMessage({
           ref={contentRef}
           className={`${
             showFullContent ? "" : "max-h-32"
-          } overflow-hidden transition-all duration-200`}
+          } overflow-hidden transition-all duration-200 whitespace-pre`}
         >
           {message.content}
         </div>
@@ -818,7 +821,7 @@ function ChatMessage({
               </div>
             ) : (
               <div className="relative flex items-start">
-                <div className="flex-1 mb-1">{renderContent()}</div>
+                <div className="flex-1 mb-4">{renderContent()}</div>
                 <div className="absolute bottom-0 right-1 text-xs">
                   {renderTimestamp()}
                 </div>
