@@ -13,6 +13,8 @@ import { IoIosNotifications, IoIosNotificationsOutline } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import ThemeToggle from "../../pages/accountSettings/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
+import { SlCalender } from "react-icons/sl";
+import { MdOutlineSupportAgent } from "react-icons/md";
 
 const Header = ({ toggleMobileMenu }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
@@ -244,6 +246,20 @@ const Header = ({ toggleMobileMenu }) => {
               {/* <ThemeToggle /> */}
               <ModeToggle />
             </div>
+            <SlCalender
+              size={20}
+              className="mx-4 dark:text-white"
+              onClick={() => {
+                navigate("/calender");
+              }}
+            />
+            <MdOutlineSupportAgent
+              size={25}
+              className="mx-3 dark:text-white"
+              onClick={() => {
+                navigate("/detailsPages/first");
+              }}
+            />
             <Points />
             <ProfileIcon />
           </div>

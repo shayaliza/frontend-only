@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaReply, FaThumbsUp, FaShare } from "react-icons/fa";
 import CommentList from "./commentList";
+import { AiFillPlusCircle } from "react-icons/ai";
 // import "./comment.css";
 
 const Comment = ({
@@ -106,8 +107,10 @@ const Comment = ({
             <div className="col-span-11 ">
               <div>
                 <div className="inline-flex items-center">
-                  <div className="w-4 border-t-2 border-red-600 mt-[7px]"></div>
-                  <div className="">icon</div>
+                  <div className="w-4 border-t-2 border-red-600 -mt-[1px]"></div>
+                  <div className="ml-2">
+                    <AiFillPlusCircle />
+                  </div>
                   {comment.replies && comment.replies.length > 0 && (
                     <>
                       {repliesToShow < comment.replies.length && (
