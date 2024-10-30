@@ -114,3 +114,7 @@ body.splash-screen .fade-out {
   border-radius: 20px;
   border: transparent;
 }
+
+.msg-scrollbar::-webkit-scrollbar{
+  display: none;
+}
