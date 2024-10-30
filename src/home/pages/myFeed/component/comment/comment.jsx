@@ -41,7 +41,7 @@ const Comment = ({
         <div className="w-full grid grid-row relative ">
           <div className="grid grid-cols-12 items-stretch z-20 ">
             {/* First part with vertical line */}
-            <div className="flex justify-center col-span-1 h-full">
+            <div className="flex justify-center col-span-1 h-full ">
               <img
                 src={comment.avatar || "https://..."}
                 alt="Avatar"
@@ -57,18 +57,14 @@ const Comment = ({
             </div>
           </div>
 
-          {/* <div className="flex flex-col mb-2  rounded-2xl p-3 w-full border-red-300 border"> */}
-          {/* <div className="text-sm text-gray-700 dark:text-gray-300 ml-10 border-red-300 border">
-              {comment.text}
-            </div> */}
           <div className="grid grid-cols-12 items-stretch z-20">
             {/* First part with vertical line */}
-            <div className="flex justify-center col-span-1 h-full">
+            <div className="flex justify-center col-span-1 h-full ">
               <div className="h-full border-l-2 border-gray-500"></div>
             </div>
 
             {/* Second part with the comment text */}
-            <div className="col-span-11  ">
+            <div className="col-span-11 ">
               <div> {comment.text}</div>
               <div className="flex items-center space-x-4 mt-0">
                 <button className="text-xs text-blue-500 hover:underline flex items-center">
@@ -91,14 +87,6 @@ const Comment = ({
                     addReply={addReply} // Pass addReply to CommentList
                     depth={depth + 1}
                   />
-                  {/* {repliesToShow < comment.replies.length && (
-                    <button
-                      onClick={showMoreReplies}
-                      className="mt-2 text-blue-500 hover:underline text-xs"
-                    >
-                      Show More Replies
-                    </button>
-                  )} */}
                 </>
               )}
             </div>
@@ -120,14 +108,18 @@ const Comment = ({
                 <div className="inline-flex items-center">
                   <div className="w-4 border-t-2 border-red-600 mt-[7px]"></div>
                   <div className="">icon</div>
-                  {/* {comment.replies && comment.replies.length > 0 && (
-                    <button
-                      onClick={showMoreReplies}
-                      className="text-blue-500 hover:underline text-xs ml-1"
-                    >
-                      Show More Replies
-                    </button>
-                  )} */}
+                  {comment.replies && comment.replies.length > 0 && (
+                    <>
+                      {repliesToShow < comment.replies.length && (
+                        <button
+                          onClick={showMoreReplies}
+                          className="text-blue-500 hover:underline text-xs ml-1"
+                        >
+                          Show More Replies
+                        </button>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
