@@ -41,6 +41,7 @@ import {
   FileIcon,
   PinIcon,
   PaperclipIcon,
+  ReplyIcon,
 } from "lucide-react";
 
 const currentUser = {
@@ -78,7 +79,7 @@ const dms = [
   {
     id: "msg3",
     user: "User",
-    photo: img3,
+    photo: img,
     url:"https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg",
     timestamp: "2024-10-24T09:10:00",
     reactions: [{ emoji: "☕", count: 2 }],
@@ -267,67 +268,104 @@ function Chat({ toggleProfileSectionVisibility }) {
     e.preventDefault();
 
     const files = Array.from(e.dataTransfer.files);
-    const imageFiles = files.filter((file) => file.type.startsWith("image"));
 
-    for (const file of imageFiles) {
-      await handleImageUpload(file);
-    }
-  };
+    await handleFileUpload(files);
+};
 
-  const handleFileUpload = async (file) => {
-    if (!file) return;
+
+  const handleFileUpload = async (files) => {
+    if (!files || files.length === 0) return;
 
     setIsUploading(true);
     setUploadProgress(0);
-    const reader = new FileReader();
+    const filesArray = Array.from(files);
+    const totalFiles = filesArray.length;
+    let processedFiles = 0;
 
-    reader.onload = async (e) => {
-      for (let i = 0; i <= 100; i += 20) {
-        setUploadProgress(i);
-        await new Promise((resolve) => setTimeout(resolve, 200));
-      }
-      let newMessage;
+    for (const file of filesArray) {
+        const reader = new FileReader();
 
-      if (file.type.startsWith("image/")) {
-        newMessage = createMessage({
-          content: "", 
-          imageUrl: e.target.result,
-        });
-      } else if (file.type === "application/pdf") {
-        newMessage = createMessage({
-          content: `${file.name} (PDF) uploaded.`,
-          fileUrl: e.target.result, 
-          fileType: file.type,
-        });
-      } else if (
-        file.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-        file.type === "application/msword"
-      ) {
-        newMessage = createMessage({
-          content: `${file.name} (Word Document) uploaded.`,
-          fileUrl: e.target.result, 
-          fileType: file.type,
-        });
-      } else {
-        newMessage = createMessage({
-          content: `${file.name}`,
-          fileUrl: e.target.result, 
-          fileType: file.type,
-        });
-      }
+        await new Promise((resolve, reject) => {
+            reader.onload = async (e) => {
+                try {
+                    const baseProgress = (processedFiles / totalFiles) * 100;
+                    for (let i = 0; i <= 100; i += 20) {
+                        const currentFileProgress = (i / 100) * (100 / totalFiles);
+                        setUploadProgress(Math.min(Math.round(baseProgress + currentFileProgress), 100));
+                        await new Promise((res) => setTimeout(res, 200));
+                    }
 
-      setMessages((prev) => [...prev, newMessage]);
-      setIsUploading(false);
-      setUploadProgress(0);
-    };
+                    let newMessage;
+                    if (file.type.startsWith("image/")) {
+                        newMessage = createMessage({
+                            content: "",
+                            imageUrl: e.target.result,
+                            fileName: file.name,
+                            fileSize: file.size,
+                            fileType: file.type
+                        });
+                    } else if (file.type === "application/pdf") {
+                        newMessage = createMessage({
+                            content: `${file.name} (PDF) uploaded.`,
+                            fileUrl: e.target.result,
+                            fileType: file.type,
+                            fileName: file.name,
+                            fileSize: file.size
+                        });
+                    } else if (
+                        file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                        file.type === "application/msword"
+                    ) {
+                        newMessage = createMessage({
+                            content: `${file.name} (Word Document) uploaded.`,
+                            fileUrl: e.target.result,
+                            fileType: file.type,
+                            fileName: file.name,
+                            fileSize: file.size
+                        });
+                    } else {
+                        newMessage = createMessage({
+                            content: `${file.name}`,
+                            fileUrl: e.target.result,
+                            fileType: file.type,
+                            fileName: file.name,
+                            fileSize: file.size
+                        });
+                    }
 
-    if (file.type.startsWith("image/")) {
-      reader.readAsDataURL(file); 
-    } else {
-      reader.readAsArrayBuffer(file); 
+                    setMessages((prev) => [...prev, newMessage]);
+                    processedFiles++;
+
+                    if (processedFiles === totalFiles) {
+                        setIsUploading(false);
+                        setUploadProgress(0);
+                    }
+
+                    resolve();
+                } catch (error) {
+                    reject(error);
+                }
+            };
+
+            reader.onerror = () => {
+                reject(new Error(`Error reading file: ${file.name}`));
+            };
+
+            if (file.type.startsWith("image/")) {
+                reader.readAsDataURL(file);
+            } else {
+                reader.readAsArrayBuffer(file);
+            }
+        }).catch(error => {
+            console.error(`Error processing file ${file.name}:`, error);
+            setMessages(prev => [...prev, createMessage({
+                content: `Error uploading ${file.name}: ${error.message}`,
+                type: 'error'
+            })]);
+        });
     }
-  };
+};
+
 
   const createMessage = ({
     content = null,
@@ -438,12 +476,13 @@ function Chat({ toggleProfileSectionVisibility }) {
         </div>
       </div>
 
-      <div className="flex-grow overflow-auto p-4">
-        {messages.map((message) => (
+      <div className="flex-grow overflow-y-auto overflow-x-hidden px-6 py-4">
+        {messages.map((message, index) => (
           <ChatMessage
             key={message.id}
             message={message}
             isCurrentUser={message.user === "You"}
+            previousMessage={index > 0 ? messages[index - 1] : null}
             onReply={setReplyToMessage}
             onEdit={(messageId, content) => {
               setEditingMessageId(messageId);
@@ -558,9 +597,10 @@ function Chat({ toggleProfileSectionVisibility }) {
             type="file"
             ref={fileInputRef}
             className="hidden"
-            accept=""
+            accept="image/*,.pdf,.doc,.docx"
+            multiple
             onChange={(e) => {
-              const file = e.target.files?.[0];
+              const file = e.target.files;
               if (file) handleFileUpload(file);
             }}
           />
@@ -616,6 +656,7 @@ function Chat({ toggleProfileSectionVisibility }) {
 
 function ChatMessage({
   message,
+  previousMessage, 
   isCurrentUser,
   onReply,
   onEdit,
@@ -637,6 +678,51 @@ function ChatMessage({
     }
   }, [message.content]);
 
+  const shouldShowTimestamp = () => {
+    if (!previousMessage) return true;
+
+    const currentMessageTime = new Date(message.timestamp);
+    const previousMessageTime = new Date(previousMessage.timestamp);
+
+    return (
+      previousMessage.user !== message.user ||
+      currentMessageTime - previousMessageTime > 120000 ||
+      currentMessageTime.toDateString() !== previousMessageTime.toDateString()
+    );
+  };
+
+  const renderTimestamp = () => {
+    if (!shouldShowTimestamp()) return null;
+
+    const now = new Date();
+    const messageDate = new Date(message.timestamp);
+    const diffInHours = (now - messageDate) / (1000 * 60 * 60);
+
+    let formattedTime;
+    if (diffInHours < 24) {
+      formattedTime = message.timestamp;
+    } else if (diffInHours < 48) {
+      formattedTime = "Yesterday";
+    } else if (isCurrentUser) {
+      formattedTime = now.toLocaleTimeString();
+    } else {
+      formattedTime = `${messageDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })}, ${messageDate.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}`;
+    }
+
+    return (
+      <span className="text-xs opacity-70">
+        {formattedTime}
+        {message.edited && " (edited)"}
+      </span>
+    );
+  };
+
   const shareMessage = async () => {
     try {
       let shareData = {
@@ -654,7 +740,6 @@ function ChatMessage({
         await navigator.clipboard.writeText(
           `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
         );
-
         alert("Message copied to clipboard!");
       }
       setIsShareOpen(false);
@@ -665,7 +750,7 @@ function ChatMessage({
 
   const renderContent = () => {
     return (
-      <div className="space-y-2">
+      <div className="space-y-2 msg-scrollbar">
         {message.replyTo && (
           <div className="bg-black/10 dark:bg-white/10 rounded p-2 text-sm">
             <div className="text-xs opacity-70">
@@ -707,7 +792,8 @@ function ChatMessage({
           <a
             href={message.fileUrl}
             download
-            className="text-blue-500 underline"
+            rel="noopener noreferrer"
+            className="text-red-600 underline break-all"
           >
             {message.content}
           </a>
@@ -721,7 +807,7 @@ function ChatMessage({
           ref={contentRef}
           className={`${
             showFullContent ? "" : "max-h-32"
-          } overflow-hidden transition-all duration-200`}
+          } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
         >
           {message.content}
         </div>
@@ -740,131 +826,105 @@ function ChatMessage({
     );
   };
 
-  const renderTimestamp = () => {
-    const now = new Date();
-    const messageDate = new Date(message.timestamp);
-    // console.log(messageDate);
-    const diffInHours = (now - messageDate) / (1000 * 60 * 60);
-    // console.log(diffInHours);
-    // console.log(messageDate.toLocaleDateString());
-
-    let formattedTime;
-    if (diffInHours < 24) {
-      formattedTime = message.timestamp;
-    } else if (diffInHours < 48) {
-      formattedTime = "Yesterday";
-    } else if (isCurrentUser) {
-      formattedTime = now.toLocaleTimeString();
-    } else {
-      formattedTime = `${messageDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      })}, ${messageDate.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}`;
-    }
-    // console.log(formattedTime);
-
-    return (
-      <span className="text-xs opacity-70">
-        {formattedTime}
-        {message.edited && " (edited)"}
-      </span>
-    );
-  };
-
   return (
     <div
-      className={`group relative mb-6 flex items-start gap-2 my-8 ${
-        isCurrentUser ? "flex-row-reverse" : "flex-row"
+      className={`group relative w-full px-2 mb-6 my-8 ${
+        isCurrentUser ? "items-end" : "items-start"
       }`}
     >
-      {!isCurrentUser && isChannelChat && (
-        <Avatar className="w-8 h-8 border border-gray-500 flex-shrink-0">
-          <AvatarImage src={message.photo} alt={message.user} />
-          {/* <AvatarFallback>{message.user[0]}</AvatarFallback> */}
-        </Avatar>
-      )}
-
-      <div className="relative max-w-[70%] min-w-[240px]">
-        {message.isPinned && (
-          <div className="absolute -top-6 left-0 flex items-center text-xs text-muted-foreground">
-            <Pin className="w-3 h-3 mr-1" /> Pinned
-          </div>
-        )}
-
-        <Card
-          className={`border-0 ${
-            isCurrentUser
-              ? "bg-blue-500 text-white dark:bg-blue-700"
-              : "bg-gray-200 dark:bg-gray-700"
-          } ${
-            isCurrentUser
-              ? "rounded-t-lg rounded-bl-lg"
-              : "rounded-t-lg rounded-br-lg"
-          }`}
-        >
-          <CardContent className="p-3">
-            {isChannelChat ? (
-              <div className="">
-                <div className="flex justify-between items-start mb-1">
-                  <span className="font-medium text-sm">
-                    {isCurrentUser ? "You" : message.user}
-                  </span>
-                  <div className="flex flex-end">{renderTimestamp()}</div>
-                </div>
-                {renderContent()}
-              </div>
-            ) : (
-              <div className="relative flex items-start">
-                <div className="flex-1 mb-1">{renderContent()}</div>
-                <div className="absolute bottom-0 right-1 text-xs">
-                  {renderTimestamp()}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {message.reactions.length > 0 && (
-          <div className="flex flex-wrap gap-1 mt-2 z-50">
-            {message.reactions.map((reaction, index) => (
-              <Badge
-                key={`${reaction.emoji}-${index}`}
-                variant="secondary"
-                className="text-xs py-0.5 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600"
-                onClick={() => onReact(message.id, reaction.emoji)}
-              >
-                {reaction.emoji}
-              </Badge>
-            ))}
-          </div>
-        )}
-
-        <div className="absolute -bottom-12 z-50 left-0 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border">
-          {reactionTypes.map((reaction) => (
-            <button
-              key={reaction.label}
-              onClick={() => onReact(message.id, reaction.emoji)}
-              className="hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-full transition-colors"
-              title={reaction.label}
-            >
-              {reaction.emoji}
-            </button>
-          ))}
+      <div className={`flex w-full mb-1 ${isCurrentUser ? "justify-end" : "justify-start"} px-2`}>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          {!isCurrentUser && isChannelChat && (
+            <span className="font-medium">
+              {message.user}
+            </span>
+          )}
+          <div className="ml-8">{renderTimestamp()}</div>
         </div>
       </div>
 
-      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-        <MessageOptions
-          message={message}
-          onReply={onReply}
-          onEdit={onEdit}
-          onPin={onPin}
-          isCurrentUser={isCurrentUser}
-          onShare={shareMessage}
-        />
+      <div className={`flex items-start gap-2 ${
+        isCurrentUser ? "flex-row-reverse" : "flex-row"
+      }`}>
+        {!isCurrentUser &&  (
+          <Avatar className="w-8 h-8 border border-gray-500 flex-shrink-0">
+            <AvatarImage src={message.photo} alt={message.user} />
+          </Avatar>
+        )}
+
+        <div className="relative max-w-2xl">
+          {message.isPinned && (
+            <div className="absolute -top-10 -left-10 flex items-center text-xs text-muted-foreground">
+              <Pin className="w-3 h-3 mr-1" /> Pinned
+            </div>
+          )}
+
+          <Card
+            className={`border-0 ${
+              isCurrentUser
+                ? "bg-blue-500 text-white dark:bg-blue-700"
+                : "bg-gray-200 dark:bg-gray-700"
+            } ${
+              isCurrentUser
+                ? "rounded-t-lg rounded-bl-lg"
+                : "rounded-t-lg rounded-br-lg"
+            }`}
+          >
+            <CardContent className="p-3">
+              {isChannelChat ? (
+                <div className="space-y-1">
+                  {renderContent()}
+                </div>
+              ) : (
+                <div className="relative">
+                  <div className="w-full">
+                    {renderContent()}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {message.reactions.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-2 z-20">
+              {message.reactions.map((reaction, index) => (
+                <Badge
+                  key={`${reaction.emoji}-${index}`}
+                  variant="secondary"
+                  className="text-xs py-0.5 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600"
+                  onClick={() => onReact(message.id, reaction.emoji)}
+                >
+                  {reaction.emoji}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          <div className={`absolute ${isCurrentUser ? "-top-12 right-0" : "-top-12 -right-20" } z-30  opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border`}>
+            {reactionTypes.map((reaction) => (
+              <button
+                key={reaction.label}
+                onClick={() => onReact(message.id, reaction.emoji)}
+                className="hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-full transition-colors"
+                title={reaction.label}
+              >
+                {reaction.emoji}
+              </button>
+            ))}
+            <ReplyIcon onClick={() => onReply(message)}/>
+          </div>
+        </div>
+
+        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <MessageOptions
+            message={message}
+            onReply={onReply}
+            onEdit={onEdit}
+            onPin={onPin}
+            isCurrentUser={isCurrentUser}
+            onShare={shareMessage}
+          />
+        </div>
       </div>
     </div>
   );
@@ -886,9 +946,6 @@ function MessageOptions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => onReply(message)}>
-          <Reply className="mr-2 h-4 w-4" /> Reply
-        </DropdownMenuItem>
         {isCurrentUser && (
           <DropdownMenuItem onClick={() => onEdit(message.id, message.content)}>
             <Edit className="mr-2 h-4 w-4" /> Edit
