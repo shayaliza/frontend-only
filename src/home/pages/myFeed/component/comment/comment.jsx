@@ -68,7 +68,7 @@ const Comment = ({
           </div>
 
           {isThereIndentComments && (
-            <div className="h-16 bg-blue-200">
+            <div className="h-16 ">
               {isThereIndentComments && (
                 <>
                   <div className="flex justify-center col-span-1 h-full">
@@ -170,6 +170,7 @@ const Comment = ({
                   </div>
                 </div>
               )}
+              {/* )} */}
             </>
           )}
         </div>
