@@ -15,16 +15,13 @@ const Comment = ({
   length,
 }) => {
   const [showReplyBox, setShowReplyBox] = useState(false);
-  const [repliesToShow, setRepliesToShow] = useState(2);
+  const [repliesToShow, setRepliesToShow] = useState(1);
   const [showReplies, setShowReplies] = useState(false); // Toggle state for replies
-
   const [replyText, setReplyText] = useState("");
 
   const toggleReplies = () => {
     setShowReplies(!showReplies);
-    if (!showReplies)
-      setRepliesToShow(comment.replies.length); // Show all replies
-    else setRepliesToShow(1); // Hide replies
+    if (!showReplies) setRepliesToShow(1); // Reset to initial count on close
   };
   const handleReply = () => {
     addReply(replyText, comment.id);
@@ -36,6 +33,9 @@ const Comment = ({
     // setRepliesToShow((prev) => prev + 1);
     setRepliesToShow((prev) => prev + 2);
   };
+  const remainingReplies = comment.replies
+    ? comment.replies.length - repliesToShow
+    : 0;
 
   return (
     <div className="w-full ">
@@ -150,13 +150,22 @@ const Comment = ({
                       <div className="ml-2">
                         <AiFillPlusCircle />
                       </div>
-
+                      {/* 
                       <button
                         onClick={showMoreReplies}
                         className="text-blue-500 hover:underline text-xs ml-1"
                       >
                         Show More Replies
-                      </button>
+                      </button> */}
+                      {repliesToShow < comment.replies.length && (
+                        <button
+                          onClick={showMoreReplies}
+                          className="text-blue-500 hover:underline text-xs mt-2"
+                        >
+                          Show {remainingReplies} More Reply
+                          {remainingReplies > 1 ? "ies" : ""}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

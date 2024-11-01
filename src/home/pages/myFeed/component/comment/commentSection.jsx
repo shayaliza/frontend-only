@@ -4,7 +4,7 @@ import CommentList from "./commentList";
 
 const CommentSection = () => {
   const [replyText, setReplyText] = useState("");
-  const [commentsToShow, setCommentsToShow] = useState(0);
+  const [commentsToShow, setCommentsToShow] = useState(2);
 
   const [comments, setComments] = useState([
     {
@@ -35,7 +35,8 @@ const CommentSection = () => {
         if (comment.id === parentId) {
           return {
             ...comment,
-            replies: [...(comment.replies || []), newReply],
+            replies: [newReply, ...(comment.replies || [])],
+            // replies: [...(comment.replies || []), newReply],
           };
         }
         if (comment.replies && comment.replies.length > 0) {
