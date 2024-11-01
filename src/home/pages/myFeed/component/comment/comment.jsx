@@ -143,7 +143,7 @@ const Comment = ({
           {comment.replies && comment.replies.length > 0 && (
             <>
               {repliesToShow < comment.replies.length && (
-                <div className="h-16 bg-blue-300">
+                <div className="h-16 ">
                   <div className="mt-[14px]">
                     <div className="inline-flex items-center ">
                       <div className="w-4 border-t-2 border-black "></div>
