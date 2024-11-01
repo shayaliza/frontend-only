@@ -4,7 +4,7 @@ import CommentList from "./commentList";
 
 const CommentSection = () => {
   const [replyText, setReplyText] = useState("");
-  const [commentsToShow, setCommentsToShow] = useState(2);
+  const [commentsToShow, setCommentsToShow] = useState(0);
 
   const [comments, setComments] = useState([
     {
@@ -13,23 +13,7 @@ const CommentSection = () => {
       username: "Current User",
       avatar:
         "https://imgs.search.brave.com/tnB2-jbfu1vbrOSPZ61dovkB4at9PsdBBKfSDnZ7iFU/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDYxMTMz/MjUuanBn",
-      replies: [
-        {
-          id: 2,
-          text: "This is a nested reply responding to the initial reply, adding more context or discussion to the original comment to the original comment.",
-
-          username: "Jane Smith",
-          avatar:
-            "https://imgs.search.brave.com/faNfydMERz5NzaWKzuOOa5WZtOZF36N2u0iv35M9iVg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzg1LzQ2/LzMwLzg1NDYzMDQw/MTA5MWE5ZDkzOGRm/NDYzOGMxOWI2ZGMy/LmpwZw",
-        },
-        {
-          id: 5,
-          text: "This is a nested reply responding to the initial reply, adding more context or discussion to the original comment to the original comment.",
-          username: "Jane Smith",
-          avatar:
-            "https://imgs.search.brave.com/faNfydMERz5NzaWKzuOOa5WZtOZF36N2u0iv35M9iVg/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzg1LzQ2/LzMwLzg1NDYzMDQw/MTA5MWE5ZDkzOGRm/NDYzOGMxOWI2ZGMy/LmpwZw",
-        },
-      ],
+      replies: [],
     },
   ]);
 
