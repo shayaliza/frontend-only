@@ -270,6 +270,44 @@ function BlogEdit() {
               className="h-full bg-white outline-none border-none"
             />
           </div>
+          {/* Status */}
+          <div
+            className={`p-4 ${
+              theme === "dark"
+                ? "bg-black text-white"
+                : "bg-gray-700 text-gray-300"
+            } border border-gray-600 rounded-lg mb-4`}
+          >
+            <h4 className="text-lg font-semibold">Status</h4>
+            <div className="flex mt-2">
+              <div className="flex items-center mr-4">
+                <input
+                  type="radio"
+                  name="status"
+                  id="draft"
+                  value="draft"
+                  checked={status === "draft"}
+                  onChange={(e) => setStatus(e.target.value)}
+                />
+                <label htmlFor="draft" className="ml-2 text-gray-300">
+                  Draft
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  name="status"
+                  id="published"
+                  value="published"
+                  checked={status === "published"}
+                  onChange={(e) => setStatus(e.target.value)}
+                />
+                <label htmlFor="published" className="ml-2 text-gray-300">
+                  Published
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="lg:w-1/3">

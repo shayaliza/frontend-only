@@ -46,6 +46,12 @@ function Sidebar({ isOpen, setIsOpen }) {
               Drafts
             </Link>
           </div>
+          <div className={getLinkClass("/publised")}>
+            <FaPenAlt className="w-6 h-6 mr-4 text-blue-400" />
+            <Link to="publised" className="text-lg font-medium">
+              Publised
+            </Link>
+          </div>
           <div className={getLinkClass("/bookmarks")}>
             <FaBookmark className="w-6 h-6 mr-4 text-blue-400" />
             <Link to="bookmarks" className="text-lg font-medium">

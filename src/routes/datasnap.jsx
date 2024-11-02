@@ -5,6 +5,7 @@ import DataSnapLayout from "@/datasnap/components/Layout";
 import BlogHome from "@/datasnap/components/Home";
 import BlogExplore from "@/datasnap/components/Explore";
 import BlogDrafts from "@/datasnap/components/Drafts";
+import BlogPublised from "@/datasnap/components/Publised";
 import BlogBookmarks from "@/datasnap/components/Bookmarks";
 import BlogSearch from "@/datasnap/components/Search";
 import BlogCreate from "@/datasnap/components/Blog/BlogCreate";
@@ -20,6 +21,7 @@ export default function DataSnapRoutes() {
         <Route path="home" element={<BlogHome />} />
         <Route path="explore" element={<BlogExplore />} />
         <Route path="drafts" element={<BlogDrafts />} />
+        <Route path="publised" element={<BlogPublised />} />
         <Route path="bookmarks" element={<BlogBookmarks />} />
         <Route path="detail" element={<BlogDetails />} />
       </Route>
