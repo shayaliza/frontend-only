@@ -8,6 +8,8 @@ import BlogDrafts from "@/datasnap/components/Drafts";
 import BlogBookmarks from "@/datasnap/components/Bookmarks";
 import BlogSearch from "@/datasnap/components/Search";
 import BlogCreate from "@/datasnap/components/Blog/BlogCreate";
+import BlogEdit from "@/datasnap/components/Blog/BlogEdit";
+
 import BlogDetails from "@/datasnap/components/Details";
 import { Navigate } from "react-router-dom";
 export default function DataSnapRoutes() {
@@ -22,6 +24,7 @@ export default function DataSnapRoutes() {
         <Route path="detail" element={<BlogDetails />} />
       </Route>
       <Route path="ds/create" element={<BlogCreate />} />
+      <Route path="/ds/edit/:id" element={<BlogEdit />} />
       <Route path="ds/search" element={<BlogSearch />} />
     </Routes>
   );
