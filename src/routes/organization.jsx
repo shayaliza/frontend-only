@@ -11,6 +11,9 @@ const OrganizationThird = React.lazy(() => import("@/organization/third"));
 const OrganizationFourth = React.lazy(() => import("@/organization/fourth"));
 const OrganizationFifth = React.lazy(() => import("@/organization/fifth"));
 const OrganizationSixth = React.lazy(() => import("@/organization/sixth"));
+const OrganizationSeventh = React.lazy(() => import("@/organization/seven"));
+const OrganizationEighth = React.lazy(() => import("@/organization/eight"));
+
 export default function OrgnaizationRoutes() {
   return (
     <Routes>
@@ -21,6 +24,8 @@ export default function OrgnaizationRoutes() {
         <Route path="fourth" element={<OrganizationFourth />} />
         <Route path="fifth" element={<OrganizationFifth />} />
         <Route path="sixth" element={<OrganizationSixth />} />
+        <Route path="seven" element={<OrganizationSeventh />} />
+        <Route path="eight" element={<OrganizationEighth />} />
       </Route>
     </Routes>
   );

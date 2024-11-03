@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createOrganization } from "../fetching/organization/organization";
 import { useDispatch } from "react-redux";
-import { setOrganizationId } from "../features/organization/workspaceSlice";
+import { useSelector } from "react-redux";
+import { setChannelId } from "../features/organization/workspaceSlice";
+import { createChannel } from "../fetching/organization/channel";
 
-function Sixth() {
+function Eight() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [is_private, setIsPrivate] = useState(false);
+  const workspaceId = useSelector((state) => state.workspace.workSpaceId);
 
   const handleClick = async () => {
     alert(name, description);
 
-    const res = await createOrganization(name, description);
+    const res = await createChannel(name, workspaceId, description, is_private);
     if (res.data) {
       console.log(res.data);
-      dispatch(setOrganizationId(res.data.id));
-      navigate("/organization/seventh");
+      dispatch(setChannelId(res.data.id));
     }
   };
 
@@ -33,7 +35,7 @@ function Sixth() {
 
           {/* Heading Section */}
           <h1 className="text-2xl lg:text-3xl font-semibold mb-8">
-            What is your Orgnaization name?
+            What is your Channel name?
           </h1>
           <div className="text-gray-600 ">
             Give it a name. You can change it later.
@@ -41,18 +43,27 @@ function Sixth() {
           <div>
             <input
               type="text"
-              placeholder="Organization name"
+              placeholder="Channel name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-4 py-2 mt-8"
             />
             <input
               type="text"
-              placeholder="Organization description"
+              placeholder="Channel description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-4 py-2 mt-8"
             />
+            <input
+              type="checkbox"
+              checked={is_private}
+              onChange={(e) => setIsPrivate(e.target.checked)}
+              className="w-full border border-gray-300 rounded-md px-4 py-2 mt-8"
+            />
+            <label htmlFor="is_private" className="text-gray-600 font-medium">
+              Private
+            </label>
           </div>
         </div>
 
@@ -86,4 +97,4 @@ function Sixth() {
   );
 }
 
-export default Sixth;
+export default Eight;
