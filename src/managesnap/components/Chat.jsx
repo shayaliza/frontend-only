@@ -47,15 +47,15 @@ import {
 const currentUser = {
   id: 1,
   name: "You",
-  photo: "/api/placeholder/32/32",
+  photo: img,
 };
 
 const reactionTypes = [
   { emoji: "👍", label: "Like" },
-  { emoji: "❤️", label: "Love" },
   { emoji: "😄", label: "Haha" },
   { emoji: "😢", label: "Sad" },
-  { emoji: "😠", label: "Angry" },
+  { emoji: "😄", label: "Haha" },
+  { emoji: "😢", label: "Sad" },
 ];
 
 // Dummy data for Direct Messages (DMs)
@@ -833,13 +833,13 @@ function ChatMessage({
       }`}
     >
       <div className={`flex w-full mb-1 ${isCurrentUser ? "justify-end" : "justify-start"} px-2`}>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground ml-8">
           {!isCurrentUser && isChannelChat && (
             <span className="font-medium">
               {message.user}
             </span>
           )}
-          <div className="ml-8">{renderTimestamp()}</div>
+          {renderTimestamp()}
         </div>
       </div>
 
@@ -900,7 +900,8 @@ function ChatMessage({
             </div>
           )}
 
-          <div className={`absolute ${isCurrentUser ? "-top-12 right-0" : "-top-12 -right-20" } z-30  opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border`}>
+          <div className={`absolute ${isCurrentUser ? "-top-12 right-0" : "-top-12 -right-20" } z-30  opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}>
+            <div className="border-r border-gray-500">
             {reactionTypes.map((reaction) => (
               <button
                 key={reaction.label}
@@ -911,11 +912,20 @@ function ChatMessage({
                 {reaction.emoji}
               </button>
             ))}
+            </div>
             <ReplyIcon onClick={() => onReply(message)}/>
+            <MessageOptions
+            message={message}
+            onReply={onReply}
+            onEdit={onEdit}
+            onPin={onPin}
+            isCurrentUser={isCurrentUser}
+            onShare={shareMessage}
+          />
           </div>
         </div>
 
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
           <MessageOptions
             message={message}
             onReply={onReply}
@@ -924,7 +934,7 @@ function ChatMessage({
             isCurrentUser={isCurrentUser}
             onShare={shareMessage}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

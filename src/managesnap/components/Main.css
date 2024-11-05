@@ -118,3 +118,7 @@ body.splash-screen .fade-out {
 .msg-scrollbar::-webkit-scrollbar{
   display: none;
 }
+
+.channel-scrollbar::-webkit-scrollbar{
+  display: none;
+}

@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaUserCircle, FaCog } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import img from "../assets/man1.jpg"
+import img2 from "../assets/man2.jpg"
+import img3 from "../assets/man3.jpg"
+import img4 from "../assets/women1.jpg"
+import img5 from "../assets/img1.png"
 
 const channels = [
   { id: "C0876", name: "# test-tasks" },
@@ -16,11 +21,11 @@ const channels = [
 ];
 
 const directMessages = [
-  { id: "D08976", name: "Bala Murali Krishna" },
-  { id: "D08977", name: "Saketh33" },
-  { id: "D08978", name: "Samarth Gupta" },
-  { id: "D08979", name: "Tanvi Sharma" },
-  { id: "D08980", name: "Vignesh Reddy" }
+  { id: "D08976", name: "Bala Murali Krishna", photo: img5 },
+  { id: "D08977", name: "Saketh33", photo: img },
+  { id: "D08978", name: "Samarth Gupta", photo: img2 },
+  { id: "D08979", name: "Tanvi Sharma", photo: img4 },
+  { id: "D08980", name: "Vignesh Reddy", photo: img3 }
 ];
 
 function ChannelsSidebar() {
@@ -39,7 +44,7 @@ function ChannelsSidebar() {
   };
 
   return (
-    <div id="sidebar" className="relative w-full flex flex-col bg-zinc-950 h-[calc(100vh-56px)] overflow-y-auto border-r">
+    <div id="sidebar" className="relative w-full flex flex-col bg-zinc-950 h-[calc(100vh-56px)] overflow-y-auto border-r channel-scrollbar">
       <div className="flex-1 p-4">
         <div className="mb-4 flex flex-col">
           <div 
@@ -79,9 +84,7 @@ function ChannelsSidebar() {
                   onClick={() => handleDMClick(message)}  
                   className="flex items-center space-x-3 p-2 rounded cursor-pointer hover:bg-gray-500 transition"
                 >
-                  <div className="bg-gray-500 w-8 h-8 rounded-full flex items-center justify-center text-xl">
-                    <FaUserCircle />
-                  </div>
+                    <img src={message.photo} alt="" className='w-8 h-8 rounded-full' />
                   <span className="text-white text-sm">{message.name}</span>
                 </div>
               ))}

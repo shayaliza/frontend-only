@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useLocation } from 'react-router-dom';
 import { HomeIcon, BellIcon, CogIcon } from '@heroicons/react/outline';
 import { Link } from 'react-router-dom';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import logo from "../assets/faviconmobile.png"
 
 function Sidebar() {
   const location = useLocation();
@@ -37,7 +44,9 @@ function Sidebar() {
   ];
 
   return (
-    <aside className="hidden lg:flex flex-col items-center p-4 space-y-6 bg-zinc-900 shadow-md w-16">
+    <>
+    <div className="flex flex-col justify-between px-2 py-4 bg-zinc-900 shadow-md w-16">
+    <aside className="flex flex-col items-center space-y-6">
       {icons.map(({ id, icon, label, tooltip, path }) => {
         const isActive = currentPath === path.split('/').pop(); 
         return (
@@ -62,6 +71,11 @@ function Sidebar() {
         );
       })}
     </aside>
+    <div className="w-full bg-transparent cursor-pointer mb-10">
+    <img src={logo} alt="" className='w-12 h-12 rounded-md' />
+  </div>
+  </div>
+  </>
   );
 }
 

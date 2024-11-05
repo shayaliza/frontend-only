@@ -6,6 +6,7 @@ import { ModeToggle } from '../../DarkMode/ToggleMode';
 import { FaUserCircle } from 'react-icons/fa';
 import { IoIosArrowDropdown } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import logo from "../assets/faviconmobile.png"
 
 const mockData = [
   { id: 1, name: 'Home', path: '/' },
@@ -80,11 +81,9 @@ function Header() {
       </div>
       <div className="absolute left-4 top-3">
         <div className="relative flex space-x-2 items-center mb-6">
-          <div className="bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center text-xl">
-            <FaUserCircle />
-          </div>
+          <img src={logo} alt="logo" className='w-10 h-10 rounded-full object-fit' />
           <span className="ml-3 text-2xl font-semibold">snapthetech</span>
-          <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="p-2">
+          <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="mt-2 mr-2">
             <IoIosArrowDropdown size={24} />
           </button>
           {isDropdownOpen && (
