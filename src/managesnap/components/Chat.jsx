@@ -1,48 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { FaShare } from "react-icons/fa";
 import img from "../assets/man1.jpg";
 import img2 from "../assets/man2.jpg";
 import img3 from "../assets/man3.jpg";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/Dialog";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Badge } from "@/components/ui/badge";
-import {
-  MessageSquare,
-  Smile,
-  Send,
-  MoreVertical,
-  Pin,
-  Edit,
-  Reply,
-  X,
-  Image as ImageIcon,
-  Link as LinkIcon,
-  Download,
-  Copy,
-  FileIcon,
-  PinIcon,
-  PaperclipIcon,
-  ReplyIcon,
-} from "lucide-react";
+import ChatMessage from "./ChatComps/ChatMessages";
+import MessageComposer from "./ChatComps/MessageComposer";
+import FilePreview from "./ChatComps/FilePreview";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { MessageSquare, Phone, Video, Users, Mail, MapPin, Clock, Check } from "lucide-react";
+
+
+const ALLOWED_FILE_TYPES = [
+  'image/jpeg', 
+  'image/png', 
+  'image/gif', 
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'text/plain'
+];
+
+
 
 const currentUser = {
   id: 1,
@@ -50,15 +31,6 @@ const currentUser = {
   photo: img,
 };
 
-const reactionTypes = [
-  { emoji: "👍", label: "Like" },
-  { emoji: "😄", label: "Haha" },
-  { emoji: "😢", label: "Sad" },
-  { emoji: "😄", label: "Haha" },
-  { emoji: "😢", label: "Sad" },
-];
-
-// Dummy data for Direct Messages (DMs)
 const dms = [
   {
     id: "msg1",
@@ -80,7 +52,8 @@ const dms = [
     id: "msg3",
     user: "User",
     photo: img,
-    url:"https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg",
+    content:"hi",
+    url: "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg",
     timestamp: "2024-10-24T09:10:00",
     reactions: [{ emoji: "☕", count: 2 }],
   },
@@ -113,75 +86,25 @@ const channels = [
   },
 ];
 
-function ImagePreviewModal({ isOpen, onClose, imageUrl, onDownload, onShare }) {
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-auto max-h-screen overflow-hidden">
-        <DialogHeader>
-          <DialogTitle>Image Preview</DialogTitle>
-        </DialogHeader>
-        <div className="relative flex items-center justify-center h-full">
-          <img
-            src={imageUrl}
-            alt="Preview"
-            className="max-w-full max-h-full object-contain rounded-lg"
-          />
-          <div className="absolute bottom-4 right-4 flex gap-2">
-            <Button variant="secondary" size="sm" onClick={onDownload}>
-              <Download className="w-4 h-4 mr-2" />
-              Download
-            </Button>
-            <Button variant="secondary" size="sm" onClick={onShare}>
-              <FaShare className="w-4 h-4 mr-2" />
-              Share
-            </Button>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
 
-function LinkPreviewCard({ url }) {
-  const [preview, setPreview] = useState(null);
 
-  useEffect(() => {
-    setPreview({
-      title: "Sample Link Title",
-      description: "This is a sample description for the link preview...",
-      image: url,
-    });
-  }, [url]);
-
-  if (!preview) return null;
-
-  return (
-    <div className="border rounded-lg p-2 mt-2 max-w-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-      <a href={url} target="_blank" rel="noopener noreferrer">
-        <img
-          src={preview.image}
-          alt={preview.title}
-          className="w-full h-24 object-cover rounded-lg mb-2"
-        />
-        <h4 className="font-medium text-sm">{preview.title}</h4>
-        <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
-          {preview.description}
-        </p>
-      </a>
-    </div>
-  );
-}
 
 function Chat({ toggleProfileSectionVisibility }) {
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [replyToMessage, setReplyToMessage] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+
   const fileInputRef = useRef(null);
   const messagesEndRef = useRef(null);
   const location = useLocation();
@@ -192,23 +115,52 @@ function Chat({ toggleProfileSectionVisibility }) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
   useEffect(() => {
     if (isChannelChat) {
       setMessages(channels);
     } else {
       setMessages(dms);
     }
-  }, [isChannelChat, channels, dms]); 
-  
- 
+  }, [isChannelChat]); 
+
+  useEffect(() => {
+    return () => {
+      selectedFiles.forEach(file => {
+        if (file.preview) URL.revokeObjectURL(file.preview);
+        if (file.url) URL.revokeObjectURL(file.url);
+      });
+    };
+  }, [selectedFiles]);
+
+  useEffect(() => {
+    return () => {
+      messages.forEach(message => {
+        if (message.fileUrl?.startsWith('blob:')) {
+          URL.revokeObjectURL(message.fileUrl);
+        }
+        if (message.imageUrl?.startsWith('blob:')) {
+          URL.revokeObjectURL(message.imageUrl);
+        }
+      });
+    };
+  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const resetTextareaHeight = () => {
+    const textarea = document.getElementById("message-textarea");
+    if (textarea) {
+      textarea.style.height = "auto";
+    }
+  };
+
   const handlePaste = async (e) => {
     const items = Array.from(e.clipboardData.items);
     let imageItem, fileItem, text;
+    
     items.forEach((item) => {
       if (item.type.startsWith("image")) {
         imageItem = item.getAsFile();
@@ -239,139 +191,92 @@ function Chat({ toggleProfileSectionVisibility }) {
     }
   };
 
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer.files);
+    await handleFileUpload(files);
+  };
+
   const handleImageUpload = async (file) => {
     if (!file) return;
-
-    setIsUploading(true);
-    setUploadProgress(0);
+    
     const reader = new FileReader();
     reader.onload = async (e) => {
+      setIsUploading(true);
+      setUploadProgress(0);
+
       for (let i = 0; i <= 100; i += 20) {
         setUploadProgress(i);
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 200));
       }
 
-      const newMessage = createMessage({
-        content: "",
-        imageUrl: e.target.result,
-      });
+      const fileObject = {
+        id: Math.random().toString(36).substring(7),
+        file: file,
+        preview: e.target.result,
+        type: file.type,
+        name: file.name,
+        size: formatFileSize(file.size),
+        url: URL.createObjectURL(file)
+      };
 
-      setMessages((prev) => [...prev, newMessage]);
+      setSelectedFiles(prev => [...prev, fileObject]);
       setIsUploading(false);
       setUploadProgress(0);
     };
 
-    reader.readAsDataURL(file);
+
   };
 
-  const handleDrop = async (e) => {
-    e.preventDefault();
+  const handleFileSelection = (files) => {
+    Array.from(files).forEach(file => {
+      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        alert(`File type ${file.type} is not supported`);
+        return;
+      }
 
-    const files = Array.from(e.dataTransfer.files);
-
-    await handleFileUpload(files);
-};
-
+      const fileObject = {
+        id: Math.random().toString(36).substring(7),
+        file: file,
+        type: file.type,
+        name: file.name,
+        size: formatFileSize(file.size),
+        preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : null,
+        blobUrl: URL.createObjectURL(file)
+      };
+  
+      setSelectedFiles(prev => [...prev, fileObject]);
+    });
+  };
 
   const handleFileUpload = async (files) => {
     if (!files || files.length === 0) return;
+    handleFileSelection(files);
+  };
 
-    setIsUploading(true);
-    setUploadProgress(0);
-    const filesArray = Array.from(files);
-    const totalFiles = filesArray.length;
-    let processedFiles = 0;
-
-    for (const file of filesArray) {
-        const reader = new FileReader();
-
-        await new Promise((resolve, reject) => {
-            reader.onload = async (e) => {
-                try {
-                    const baseProgress = (processedFiles / totalFiles) * 100;
-                    for (let i = 0; i <= 100; i += 20) {
-                        const currentFileProgress = (i / 100) * (100 / totalFiles);
-                        setUploadProgress(Math.min(Math.round(baseProgress + currentFileProgress), 100));
-                        await new Promise((res) => setTimeout(res, 200));
-                    }
-
-                    let newMessage;
-                    if (file.type.startsWith("image/")) {
-                        newMessage = createMessage({
-                            content: "",
-                            imageUrl: e.target.result,
-                            fileName: file.name,
-                            fileSize: file.size,
-                            fileType: file.type
-                        });
-                    } else if (file.type === "application/pdf") {
-                        newMessage = createMessage({
-                            content: `${file.name} (PDF) uploaded.`,
-                            fileUrl: e.target.result,
-                            fileType: file.type,
-                            fileName: file.name,
-                            fileSize: file.size
-                        });
-                    } else if (
-                        file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                        file.type === "application/msword"
-                    ) {
-                        newMessage = createMessage({
-                            content: `${file.name} (Word Document) uploaded.`,
-                            fileUrl: e.target.result,
-                            fileType: file.type,
-                            fileName: file.name,
-                            fileSize: file.size
-                        });
-                    } else {
-                        newMessage = createMessage({
-                            content: `${file.name}`,
-                            fileUrl: e.target.result,
-                            fileType: file.type,
-                            fileName: file.name,
-                            fileSize: file.size
-                        });
-                    }
-
-                    setMessages((prev) => [...prev, newMessage]);
-                    processedFiles++;
-
-                    if (processedFiles === totalFiles) {
-                        setIsUploading(false);
-                        setUploadProgress(0);
-                    }
-
-                    resolve();
-                } catch (error) {
-                    reject(error);
-                }
-            };
-
-            reader.onerror = () => {
-                reject(new Error(`Error reading file: ${file.name}`));
-            };
-
-            if (file.type.startsWith("image/")) {
-                reader.readAsDataURL(file);
-            } else {
-                reader.readAsArrayBuffer(file);
-            }
-        }).catch(error => {
-            console.error(`Error processing file ${file.name}:`, error);
-            setMessages(prev => [...prev, createMessage({
-                content: `Error uploading ${file.name}: ${error.message}`,
-                type: 'error'
-            })]);
-        });
-    }
-};
-
+  const removePreviewFile = (id) => {
+    setSelectedFiles(prev => {
+      const fileToRemove = prev.find(f => f.id === id);
+      if (fileToRemove?.url) {
+        URL.revokeObjectURL(fileToRemove.url);
+      }
+      if (fileToRemove?.preview) {
+        URL.revokeObjectURL(fileToRemove.preview);
+      }
+      return prev.filter(f => f.id !== id);
+    });
+  };
 
   const createMessage = ({
     content = null,
     imageUrl = null,
-    fileUrl = null, 
+    linkUrl = null,
+    fileUrl = null,
+    fileName = null,
+    fileSize = null,
+    fileType = null,
   }) => {
+    const links = content?.match(URL_REGEX) || [];
     return {
       id: Date.now(),
       user: currentUser.name,
@@ -381,48 +286,172 @@ function Chat({ toggleProfileSectionVisibility }) {
       photo: currentUser.photo,
       isPinned: false,
       imageUrl,
+      linkUrl,
       fileUrl,
+      fileName,
+      fileSize,
+      fileType,
+      links: links.map(url => ({
+        url,
+        type: getLinkType(url)
+      })),
       replyTo: replyToMessage
         ? {
             id: replyToMessage.id,
             user: replyToMessage.user,
             content: replyToMessage.content,
+            imageUrl: replyToMessage.imageUrl,
+            fileUrl: replyToMessage.fileUrl,   
+            fileName: replyToMessage.fileName,
+            fileType: replyToMessage.fileType
           }
         : null,
     };
   };
-  
+
+const [messageStatuses, setMessageStatuses] = useState(new Map());
+const [onlineUsers, setOnlineUsers] = useState(new Set());
+
+const updateMessageStatus = (messageId, status, seenBy = []) => {
+  setMessageStatuses(prev => new Map(prev).set(messageId, { status, seenBy }));
+};
+
+useEffect(() => {
+  const handleMessageDelivery = async (messageId) => {
+    updateMessageStatus(messageId, 'sending');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    updateMessageStatus(messageId, 'delivered');
+    if (Math.random() > 0.5) { 
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      updateMessageStatus(messageId, 'seen', [
+        { id: 2, name: 'User 2', avatar: 'avatar2.jpg' },
+      ]);
+    }
+  };
+  messages.forEach(message => {
+    if (!messageStatuses.has(message.id)) {
+      handleMessageDelivery(message.id);
+    }
+  });
+}, [messages]);
+
 
   const sendMessage = () => {
-    if (!messageInput.trim() && !selectedImage) return;
+    if (!messageInput.trim() && selectedFiles.length === 0) return;
+    const extractUrls = (text) => {
+      const URL_REGEX = /(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/g;
+      const matches = text.match(URL_REGEX) || [];
+      
+      return matches.map(url => {
+        let type = 'url';
 
+        if (/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/.test(url)) {
+          type = 'youtube';
+        }
+
+        else if (/twitter\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+/.test(url)) {
+          type = 'twitter';
+        }
+
+        else if (/spotify\.com\/(?:track|album|playlist|artist)\/([a-zA-Z0-9]+)/.test(url)) {
+          type = 'spotify';
+        }
+
+        else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+          type = 'image';
+        }
+
+        else if (/\.(mp4|webm|ogg)$/i.test(url)) {
+          type = 'video';
+        }
+        
+        return { url, type };
+      });
+    };
+  
     if (editingMessageId) {
-      setMessages(
-        messages.map((msg) =>
-          msg.id === editingMessageId ? { ...msg, content: messageInput } : msg
-        )
-      );
+      setMessages(messages.map((msg) => {
+        if (msg.id === editingMessageId) {
+          const extractedUrls = extractUrls(messageInput);
+          return {
+            ...msg,
+            content: messageInput,
+            links: extractedUrls,
+            edited: true,
+          };
+        }
+        return msg;
+      }));
       setEditingMessageId(null);
     } else {
-      const newMessage = createMessage({
-        content: messageInput,
-        imageUrl: selectedImage,
-      });
-      setMessages([...messages, newMessage]);
+      if (selectedFiles.length > 0) {
+        selectedFiles.forEach(fileData => {
+          const extractedUrls = extractUrls(messageInput);
+          const newMessageId = Date.now();
+          const newMessage = {
+            id: Date.now(),
+            user: currentUser.name,
+            content: messageInput,
+            reactions: [],
+            photo: currentUser.photo,
+            isPinned: false,
+            links: extractedUrls,
+            imageUrl: fileData.type.startsWith('image/') ? fileData.preview : null,
+            fileUrl: fileData.blobUrl,
+            fileName: fileData.name,
+            fileType: fileData.type,
+            fileSize: fileData.size,
+            replyTo: replyToMessage
+              ? {
+                  id: replyToMessage.id,
+                  user: replyToMessage.user,
+                  content: replyToMessage.content,
+                  imageUrl: replyToMessage.imageUrl,
+                  fileUrl: replyToMessage.fileUrl,
+                  fileName: replyToMessage.fileName,
+                  fileType: replyToMessage.fileType
+                }
+              : null,
+          };
+          setMessages(prev => [...prev, newMessage]);
+          updateMessageStatus(newMessageId, 'sending');
+        });
+      }
+
+      if (messageInput.trim() && selectedFiles.length === 0) {
+        const newMessageId = Date.now();
+        const extractedUrls = extractUrls(messageInput);
+        const newMessage = {
+          id: Date.now(),
+          user: currentUser.name,
+          content: messageInput,
+          reactions: [],
+          photo: currentUser.photo,
+          isPinned: false,
+          links: extractedUrls,
+          replyTo: replyToMessage
+            ? {
+                id: replyToMessage.id,
+                user: replyToMessage.user,
+                content: replyToMessage.content,
+                imageUrl: replyToMessage.imageUrl,
+                fileUrl: replyToMessage.fileUrl,
+                fileName: replyToMessage.fileName,
+                fileType: replyToMessage.fileType
+              }
+            : null,
+        };
+        setMessages(prev => [...prev, newMessage]);
+        updateMessageStatus(newMessageId, 'sending');
+      }
     }
 
     setMessageInput("");
-    setSelectedImage(null);
+    setSelectedFiles([]);
     setReplyToMessage(null);
     resetTextareaHeight();
   };
-
-  const resetTextareaHeight = () => {
-    const textarea = document.getElementById("message-textarea");
-    if (textarea) {
-      textarea.style.height = "auto";
-    }
-  };
+  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -457,6 +486,33 @@ function Chat({ toggleProfileSectionVisibility }) {
     }
   };
 
+  const renderFilePreview = () => (
+    <div className="p-4 border-t">
+      <div className="flex flex-wrap gap-2">
+        {selectedFiles.map((file) => (
+          <FilePreview
+            key={file.id}
+            file={file}
+            onRemove={removePreviewFile}
+          />
+        ))}
+      </div>
+    </div>
+  );
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+const timeoutRef = useRef(null);
+
+const handleMouseEnter = () => {
+  if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  setIsProfileOpen(true);
+};
+
+const handleMouseLeave = () => {
+  timeoutRef.current = setTimeout(() => {
+    setIsProfileOpen(false);
+  }, 300);
+};
+
   return (
     <div
       className="flex flex-col h-full text-black dark:text-white"
@@ -465,14 +521,116 @@ function Chat({ toggleProfileSectionVisibility }) {
     >
       <div className="p-4 flex justify-between items-center border-b shadow-md">
         <div
-          className="flex items-center cursor-pointer"
+          className="flex items-center cursor-pointer space-x-2"
           onClick={toggleProfileSectionVisibility}
         >
-          <Avatar className="w-12 h-12 border border-gray-500 mr-4">
-            <AvatarImage src={currentUser.photo} alt="Profile" />
-            <AvatarFallback>YR</AvatarFallback>
-          </Avatar>
+          <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+          <PopoverTrigger asChild>
+            <div
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <Avatar 
+                className="w-12 h-12 border border-gray-500 cursor-pointer hover:opacity-90"
+                onClick={toggleProfileSectionVisibility}
+              >
+                <AvatarImage src={currentUser.photo} alt="Profile" />
+                <AvatarFallback>
+                  {currentUser.name?.split(' ').map(n => n[0]).join('') || 'U'}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+          </PopoverTrigger>
+          
+          <PopoverContent 
+            className="w-[300px] p-0  text-white shadow-xl"
+            onMouseEnter={() => {
+              if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            }}
+            onMouseLeave={handleMouseLeave}
+          >
+            <div className="p-4 space-y-2 text-black dark:text-white">
+              <div className="flex items-center gap-2">
+                <Avatar className="w-10 h-10">
+                  <AvatarImage src={currentUser.photo} alt={currentUser.name} />
+                  <AvatarFallback>
+                    {currentUser.name?.split(' ').map(n => n[0]).join('') || 'U'}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-semibold">{lastSegment}</h3>
+                    <div className="w-3.5 h-3.5 bg-gray-800 rounded-full flex items-center justify-center">
+                      <Check className="w-2.5 h-2.5 text-green-500" />
+                    </div>
+                  </div>
+                  <p className="text-xs ">Digital Innovation & Technology</p>
+                </div>
+              </div>
+
+              <div className="flex justify-around py-2 text-black dark:text-white">
+                <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                  <MessageSquare className="w-5 h-5" />
+                </button>
+                <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                  <Users className="w-5 h-5" />
+                </button>
+                <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                  <Video className="w-5 h-5" />
+                </button>
+                <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                  <Phone className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-800 p-3 space-y-1.5 text-black dark:text-white">
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <span>Available • Free all day</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-black dark:text-white">
+                <Clock className="w-3.5 h-3.5" />
+                <span>Work hours: 10:00 AM - 7:00 PM</span>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-800 p-3 text-black dark:text-white">
+              <h4 className="text-xs font-medium mb-2">Contact</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2 text-blue-400">
+                  <Mail className="w-4 h-4" />
+                  <a 
+                    href={`mailto:salma.pattan@non.se.com`}
+                    className="text-xs hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    salma.pattan@non.se.com
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 text-blue-400">
+                  <Phone className="w-4 h-4" />
+                  <a 
+                    href="tel:+91566757688"
+                    className="text-xs hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    +91 566757688
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 text-black dark:text-white">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-xs">AVINYA Campus</span>
+                </div>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+
+          <div className="flex flex-col space-y-1">
           <div className="text-lg font-bold">{lastSegment}</div>
+          <span className="font-semibold text-xs">Active 4hr ago</span>
+          </div>
         </div>
       </div>
 
@@ -520,460 +678,24 @@ function Chat({ toggleProfileSectionVisibility }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {isUploading && (
-        <div className="px-4 py-2 bg-blue-50 dark:bg-blue-900">
-          <div className="flex items-center gap-2">
-            <div className="flex-grow bg-gray-200 dark:bg-gray-700 h-2 rounded-full">
-              <div
-                className="bg-blue-500 h-full rounded-full transition-all duration-300"
-                style={{ width: `${uploadProgress}%` }}
-              />
-            </div>
-            <span className="text-sm">{uploadProgress}%</span>
-          </div>
-        </div>
-      )}
+      {selectedFiles.length > 0 && renderFilePreview()}
 
-      <div className="p-4 border-t shadow-md">
-        {replyToMessage && (
-          <div className="mb-2 flex items-center gap-2 bg-muted p-2 rounded">
-            <Reply className="w-4 h-4" />
-            <div className="flex-grow">
-              <div className="text-sm font-medium">{replyToMessage.user}</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">
-                {replyToMessage.content}
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setReplyToMessage(null)}
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
-
-        {selectedImage && (
-          <div className="mb-2 relative">
-            <img
-              src={selectedImage}
-              alt="Selected"
-              className="max-h-32 rounded-lg"
-            />
-            <Button
-              variant="ghost"
-              size="sm"
-              className="absolute top-1 right-1"
-              onClick={() => setSelectedImage(null)}
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
-        )}
-
-        <div className="flex items-center gap-2">
-          <textarea
-            id="message-textarea"
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-            onPaste={handlePaste}
-            onKeyDown={handleKeyDown}
-            className="w-full p-2 bg-transparent rounded-lg focus:outline-none resize-none border border-gray-500"
-            placeholder={
-              editingMessageId ? "Edit your message..." : "Type your message..."
-            }
-            style={{ minHeight: "40px", maxHeight: "200px" }}
-            onInput={(e) => {
-              e.target.style.height = "auto";
-              e.target.style.height = `${Math.min(
-                e.target.scrollHeight,
-                200
-              )}px`;
-            }}
-          />
-
-          <input
-            type="file"
-            ref={fileInputRef}
-            className="hidden"
-            accept="image/*,.pdf,.doc,.docx"
-            multiple
-            onChange={(e) => {
-              const file = e.target.files;
-              if (file) handleFileUpload(file);
-            }}
-          />
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <PaperclipIcon className="h-4 w-4" />
-          </Button>
-
-          <Popover open={showEmojiPicker} onOpenChange={setShowEmojiPicker}>
-            <PopoverTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <Smile className="h-4 w-4" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent>
-              <div className="grid grid-cols-6 gap-2 p-2">
-                {reactionTypes.map((reaction) => (
-                  <button
-                    key={reaction.label}
-                    onClick={() => {
-                      setMessageInput((prev) => prev + reaction.emoji);
-                      setShowEmojiPicker(false);
-                    }}
-                    className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-                  >
-                    {reaction.emoji}
-                  </button>
-                ))}
-              </div>
-            </PopoverContent>
-          </Popover>
-
-          <Button variant="ghost" size="sm" onClick={sendMessage}>
-            <Send className="h-5 w-5" />
-          </Button>
-        </div>
-      </div>
-
-      <ImagePreviewModal
-        isOpen={!!imagePreview}
-        onClose={() => setImagePreview(null)}
-        imageUrl={imagePreview}
-        onDownload={() => downloadImage(imagePreview)}
-        onShare={() => shareImage(imagePreview)}
+      <MessageComposer
+        messageInput={messageInput}
+        setMessageInput={setMessageInput}
+        handleKeyDown={handleKeyDown}
+        handlePaste={handlePaste}
+        editingMessageId={editingMessageId}
+        replyToMessage={replyToMessage}
+        setReplyToMessage={setReplyToMessage}
+        showEmojiPicker={showEmojiPicker}
+        setShowEmojiPicker={setShowEmojiPicker}
+        fileInputRef={fileInputRef}
+        handleFileUpload={handleFileUpload}
+        handleImageUpload={handleImageUpload}
+        sendMessage={sendMessage}
       />
     </div>
-  );
-}
-
-function ChatMessage({
-  message,
-  previousMessage, 
-  isCurrentUser,
-  onReply,
-  onEdit,
-  onPin,
-  onReact,
-  onImageClick,
-  isChannelChat,
-}) {
-  const [isShareOpen, setIsShareOpen] = useState(false);
-  const [showFullContent, setShowFullContent] = useState(false);
-  const contentRef = useRef(null);
-  const [hasOverflow, setHasOverflow] = useState(false);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setHasOverflow(
-        contentRef.current.scrollHeight > contentRef.current.clientHeight
-      );
-    }
-  }, [message.content]);
-
-  const shouldShowTimestamp = () => {
-    if (!previousMessage) return true;
-
-    const currentMessageTime = new Date(message.timestamp);
-    const previousMessageTime = new Date(previousMessage.timestamp);
-
-    return (
-      previousMessage.user !== message.user ||
-      currentMessageTime - previousMessageTime > 120000 ||
-      currentMessageTime.toDateString() !== previousMessageTime.toDateString()
-    );
-  };
-
-  const renderTimestamp = () => {
-    if (!shouldShowTimestamp()) return null;
-
-    const now = new Date();
-    const messageDate = new Date(message.timestamp);
-    const diffInHours = (now - messageDate) / (1000 * 60 * 60);
-
-    let formattedTime;
-    if (diffInHours < 24) {
-      formattedTime = message.timestamp;
-    } else if (diffInHours < 48) {
-      formattedTime = "Yesterday";
-    } else if (isCurrentUser) {
-      formattedTime = now.toLocaleTimeString();
-    } else {
-      formattedTime = `${messageDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      })}, ${messageDate.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}`;
-    }
-
-    return (
-      <span className="text-xs opacity-70">
-        {formattedTime}
-        {message.edited && " (edited)"}
-      </span>
-    );
-  };
-
-  const shareMessage = async () => {
-    try {
-      let shareData = {
-        title: "Shared Message",
-        text: message.content,
-      };
-
-      if (message.imageUrl) {
-        shareData.url = message.imageUrl;
-      }
-
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(
-          `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
-        );
-        alert("Message copied to clipboard!");
-      }
-      setIsShareOpen(false);
-    } catch (error) {
-      console.error("Error sharing:", error);
-    }
-  };
-
-  const renderContent = () => {
-    return (
-      <div className="space-y-2 msg-scrollbar">
-        {message.replyTo && (
-          <div className="bg-black/10 dark:bg-white/10 rounded p-2 text-sm">
-            <div className="text-xs opacity-70">
-              Reply to {message.replyTo.user}
-            </div>
-            <div className="line-clamp-1">{message.replyTo.content}</div>
-          </div>
-        )}
-
-        {message.imageUrl && (
-          <div className="relative group">
-            <img
-              src={message.imageUrl}
-              alt="Shared"
-              className="max-w-sm rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
-              onClick={() => onImageClick(message.imageUrl)}
-            />
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Button
-                variant="secondary"
-                size="sm"
-                className="mr-2"
-                onClick={() => downloadImage(message.imageUrl)}
-              >
-                <Download className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => shareMessage()}
-              >
-                <FaShare className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {message.fileUrl && (
-          <a
-            href={message.fileUrl}
-            download
-            rel="noopener noreferrer"
-            className="text-red-600 underline break-all"
-          >
-            {message.content}
-          </a>
-        )}
-
-        {message.url && !message.imageUrl && (
-          <LinkPreviewCard url={message.url} />
-        )}
-
-        <div
-          ref={contentRef}
-          className={`${
-            showFullContent ? "" : "max-h-32"
-          } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
-        >
-          {message.content}
-        </div>
-
-        {hasOverflow && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowFullContent(!showFullContent)}
-            className="text-xs"
-          >
-            {showFullContent ? "Show less" : "Show more"}
-          </Button>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <div
-      className={`group relative w-full px-2 mb-6 my-8 ${
-        isCurrentUser ? "items-end" : "items-start"
-      }`}
-    >
-      <div className={`flex w-full mb-1 ${isCurrentUser ? "justify-end" : "justify-start"} px-2`}>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground ml-8">
-          {!isCurrentUser && isChannelChat && (
-            <span className="font-medium">
-              {message.user}
-            </span>
-          )}
-          {renderTimestamp()}
-        </div>
-      </div>
-
-      <div className={`flex items-start gap-2 ${
-        isCurrentUser ? "flex-row-reverse" : "flex-row"
-      }`}>
-        {!isCurrentUser &&  (
-          <Avatar className="w-8 h-8 border border-gray-500 flex-shrink-0">
-            <AvatarImage src={message.photo} alt={message.user} />
-          </Avatar>
-        )}
-
-        <div className="relative max-w-2xl">
-          {message.isPinned && (
-            <div className="absolute -top-10 -left-10 flex items-center text-xs text-muted-foreground">
-              <Pin className="w-3 h-3 mr-1" /> Pinned
-            </div>
-          )}
-
-          <Card
-            className={`border-0 ${
-              isCurrentUser
-                ? "bg-blue-500 text-white dark:bg-blue-700"
-                : "bg-gray-200 dark:bg-gray-700"
-            } ${
-              isCurrentUser
-                ? "rounded-t-lg rounded-bl-lg"
-                : "rounded-t-lg rounded-br-lg"
-            }`}
-          >
-            <CardContent className="p-3">
-              {isChannelChat ? (
-                <div className="space-y-1">
-                  {renderContent()}
-                </div>
-              ) : (
-                <div className="relative">
-                  <div className="w-full">
-                    {renderContent()}
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {message.reactions.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-2 z-20">
-              {message.reactions.map((reaction, index) => (
-                <Badge
-                  key={`${reaction.emoji}-${index}`}
-                  variant="secondary"
-                  className="text-xs py-0.5 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600"
-                  onClick={() => onReact(message.id, reaction.emoji)}
-                >
-                  {reaction.emoji}
-                </Badge>
-              ))}
-            </div>
-          )}
-
-          <div className={`absolute ${isCurrentUser ? "-top-12 right-0" : "-top-12 -right-20" } z-30  opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}>
-            <div className="border-r border-gray-500">
-            {reactionTypes.map((reaction) => (
-              <button
-                key={reaction.label}
-                onClick={() => onReact(message.id, reaction.emoji)}
-                className="hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-full transition-colors"
-                title={reaction.label}
-              >
-                {reaction.emoji}
-              </button>
-            ))}
-            </div>
-            <ReplyIcon onClick={() => onReply(message)}/>
-            <MessageOptions
-            message={message}
-            onReply={onReply}
-            onEdit={onEdit}
-            onPin={onPin}
-            isCurrentUser={isCurrentUser}
-            onShare={shareMessage}
-          />
-          </div>
-        </div>
-
-        {/* <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <MessageOptions
-            message={message}
-            onReply={onReply}
-            onEdit={onEdit}
-            onPin={onPin}
-            isCurrentUser={isCurrentUser}
-            onShare={shareMessage}
-          />
-        </div> */}
-      </div>
-    </div>
-  );
-}
-
-function MessageOptions({
-  message,
-  onReply,
-  onEdit,
-  onPin,
-  isCurrentUser,
-  onShare,
-}) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-          <MoreVertical className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {isCurrentUser && (
-          <DropdownMenuItem onClick={() => onEdit(message.id, message.content)}>
-            <Edit className="mr-2 h-4 w-4" /> Edit
-          </DropdownMenuItem>
-        )}
-        <DropdownMenuItem onClick={() => onPin(message.id)}>
-          <Pin className="mr-2 h-4 w-4" /> {message.isPinned ? "Unpin" : "Pin"}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={onShare}>
-          <FaShare className="mr-2 h-4 w-4" /> Share
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => navigator.clipboard.writeText(message.content)}
-        >
-          <Copy className="mr-2 h-4 w-4" /> Copy Text
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 }
 

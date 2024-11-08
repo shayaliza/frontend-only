@@ -1,0 +1,333 @@
+import React, { useState, useRef, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { FaShare } from "react-icons/fa";
+import { Badge } from "@/components/ui/badge";
+import getFileIcon from "./GetFileIcon";
+import MessageOptions from "./MessageOptions";
+import LinkPreviewHandler from "./LinkHandling";
+import { Pin, Download, FileIcon, ReplyIcon, ViewIcon } from "lucide-react";
+import ReactionPicker from "./ReactionPicker";
+import MessageStatus from "./MessageStatus";
+export default function ChatMessage({
+  message,
+  previousMessage,
+  isCurrentUser,
+  messageStatus,
+  onReply,
+  onEdit,
+  onPin,
+  onReact,
+  isChannelChat,
+}) {
+  const [isShareOpen, setIsShareOpen] = useState(false);
+  const [showFullContent, setShowFullContent] = useState(false);
+  const contentRef = useRef(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHasOverflow(
+        contentRef.current.scrollHeight > contentRef.current.clientHeight
+      );
+    }
+  }, [message.content]);
+
+  const shouldShowTimestamp = () => {
+    if (!previousMessage) return true;
+
+    const currentMessageTime = new Date(message.timestamp);
+    const previousMessageTime = new Date(previousMessage.timestamp);
+
+    return (
+      previousMessage.user !== message.user ||
+      currentMessageTime - previousMessageTime > 120000 ||
+      currentMessageTime.toDateString() !== previousMessageTime.toDateString()
+    );
+  };
+
+  const renderTimestamp = () => {
+    if (!shouldShowTimestamp()) return null;
+
+    const now = new Date();
+    const messageDate = new Date(message.timestamp);
+    const diffInHours = (now - messageDate) / (1000 * 60 * 60);
+
+    let formattedTime;
+    if (diffInHours < 24) {
+      formattedTime = message.timestamp;
+    } else if (diffInHours < 48) {
+      formattedTime = "Yesterday";
+    } else if (isCurrentUser) {
+      formattedTime = now.toLocaleTimeString();
+    } else {
+      formattedTime = `${messageDate.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })}, ${messageDate.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}`;
+    }
+
+    return (
+      <span className="text-xs opacity-70">
+        {formattedTime}
+        {message.edited && " (edited)"}
+      </span>
+    );
+  };
+
+  const shareMessage = async () => {
+    try {
+      let shareData = {
+        title: "Shared Message",
+        text: message.content,
+      };
+
+      if (message.imageUrl) {
+        shareData.url = message.imageUrl;
+      }
+
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(
+          `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
+        );
+        alert("Message copied to clipboard!");
+      }
+      setIsShareOpen(false);
+    } catch (error) {
+      console.error("Error sharing:", error);
+    }
+  };
+
+  const renderContent = () => {
+    return (
+      <div className="space-y-2 msg-scrollbar">
+        {message.replyTo && (
+          <div
+            className="bg-black/10 dark:bg-white/10 rounded p-2 text-sm cursor-pointer"
+            onClick={() => {
+              const originalMessage = document.getElementById(
+                `message-${message.replyTo.id}`
+              );
+              originalMessage?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }}
+          >
+            <div className="text-xs opacity-70">
+              Reply to {message.replyTo.user}
+            </div>
+            {message.replyTo.imageUrl ? (
+              <div className="flex items-center gap-2 mt-1">
+                <img
+                  src={message.replyTo.imageUrl}
+                  alt="Reply"
+                  className="h-10 w-10 object-cover rounded"
+                />
+                {console.log(message.replyTo.imageUrl)}
+                <span className="text-sm">Photo</span>
+              </div>
+            ) : message.replyTo.fileUrl ? (
+              <div className="flex items-center gap-2 mt-1">
+                <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded">
+                  <FileIcon className="h-4 w-4" />
+                </div>
+                <span className="text-sm">{message.replyTo.fileName}</span>
+              </div>
+            ) : (
+              <div className="line-clamp-1">{message.replyTo.content}</div>
+            )}
+          </div>
+        )}
+
+        {message.imageUrl && (
+          <div className="relative group">
+            <img
+              src={message.imageUrl}
+              alt="Shared"
+              className="max-w-sm rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+            />
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="mr-2"
+                onClick={() => handleFileDownload(message.imageUrl, "image")}
+              >
+                <Download className="w-4 h-4" />
+              </Button>
+              <Button variant="secondary" size="sm" onClick={shareMessage}>
+                <FaShare className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        )}
+        {message.linkUrl && <LinkHandler content={message.linkUrl} />}
+
+        {!message.imageUrl && message.fileUrl && (
+          <div className="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
+            {getFileIcon(message.fileType)}
+            <div className="flex-1 min-w-0">
+              <div className="font-medium text-sm truncate">
+                {message.fileName}
+              </div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                <span>{message.fileSize}</span>
+                <span>•</span>
+                <span>
+                  {message.fileType?.split("/")[1]?.toUpperCase() || "FILE"}
+                </span>
+              </div>
+            </div>
+            <a
+              href={message.fileUrl}
+              download
+              rel="noopener noreferrer"
+              className="text-red-600 underline break-all opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <Download className="w-4 h-4" />
+            </a>
+            <a
+              href={message.fileUrl}
+              target="_blank"
+              className="text-red-600 underline break-all opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <ViewIcon className="w-4 h-4" />
+            </a>
+          </div>
+        )}
+
+        <div
+          ref={contentRef}
+          className={`${
+            showFullContent ? "" : "max-h-68"
+          } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
+        >
+          <LinkPreviewHandler content={message.content} />
+        </div>
+
+        {hasOverflow && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowFullContent(!showFullContent)}
+            className="text-xs"
+          >
+            {showFullContent ? "Show less" : "Show more"}
+          </Button>
+        )}
+        {isCurrentUser && (
+          <div className="absolute bottom-0 right-0 flex items-center space-x-1 p-1">
+            <MessageStatus 
+              status={messageStatus?.status} 
+              seenBy={messageStatus?.seenBy}
+              isChannelChat={isChannelChat}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div
+      className={`group relative w-full px-2 mb-6 my-8 ${
+        isCurrentUser ? "items-end" : "items-start"
+      }`}
+    >
+      <div
+        className={`flex w-full mb-1 ${
+          isCurrentUser ? "justify-end" : "justify-start"
+        } px-2`}
+      >
+        <div className="flex items-center gap-2 text-xs text-muted-foreground ml-8">
+          {!isCurrentUser && isChannelChat && (
+            <span className="font-medium">{message.user}</span>
+          )}
+          {renderTimestamp()}
+        </div>
+      </div>
+
+      <div
+        className={`flex items-start gap-2 ${
+          isCurrentUser ? "flex-row-reverse" : "flex-row"
+        }`}
+      >
+        {!isCurrentUser && (
+          <Avatar className="w-8 h-8 border border-gray-500 flex-shrink-0">
+            <AvatarImage src={message.photo} alt={message.user} />
+          </Avatar>
+        )}
+
+        <div className="relative max-w-2xl">
+          {message.isPinned && (
+            <div className="absolute -top-10 -left-10 flex items-center text-xs text-muted-foreground">
+              <Pin className="w-3 h-3 mr-1" /> Pinned
+            </div>
+          )}
+
+          <Card
+            className={`border-0 ${
+              isCurrentUser
+                ? "bg-blue-500 text-white dark:bg-blue-700"
+                : "bg-gray-200 dark:bg-gray-700"
+            } ${
+              isCurrentUser
+                ? "rounded-t-lg rounded-bl-lg"
+                : "rounded-t-lg rounded-br-lg"
+            }`}
+          >
+            <CardContent className="p-3">{renderContent()}</CardContent>
+          </Card>
+
+          {message.reactions.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-2 z-20">
+              {message.reactions.map((reaction, index) => (
+                <Badge
+                  key={`${reaction.emoji}-${index}`}
+                  variant="secondary"
+                  className="text-xs py-0.5 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600"
+                  onClick={() => onReact(message.id, reaction.emoji)}
+                >
+                  {reaction.emoji}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          <div
+            className={`absolute ${
+              isCurrentUser ? "-top-12 right-0" : "-top-12 -right-52"
+            } z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}
+          >
+            <div className="border-r border-gray-500">
+              <ReactionPicker onReact={(emoji) => onReact(message.id, emoji)} />
+            </div>
+            <ReplyIcon
+              className="cursor-pointer"
+              onClick={() => onReply(message)}
+            />
+            <FaShare
+              className="ml-2 cursor-pointer"
+              onClick={() => onShare()}
+            />
+            <MessageOptions
+              message={message}
+              onReply={onReply}
+              onEdit={onEdit}
+              onPin={onPin}
+              isCurrentUser={isCurrentUser}
+              onShare={shareMessage}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,68 +1,53 @@
 import { useState, useRef, useEffect } from "react";
-import {
-  Send,
-  Paperclip,
-  Smile,
-  AtSign,
-  Link,
-  Image,
-  Code,
-  Bold,
-  Italic,
-  Search,
-  MoreVertical,
-  Edit2,
-  Trash2,
-  Reply,
-  Pin,
-  ThumbsUp,
-  Heart,
-  Star,
-  Plus,
-} from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
-import { Switch } from "../../components/ui/Switch";
+import { useLocation } from "react-router-dom";
+import {TooltipProvider} from "@/components/ui/tooltip";
 import ProfileSection from "./ProfileSection";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import img from "../assets/man1.jpg";
+import img2 from "../assets/man2.jpg";
+import img3 from "../assets/man3.jpg";
+import ChatMessage from "./ChatComps/ChatMessages";
+import MessageComposer from "./ChatComps/MessageComposer";
+import FilePreview from "./ChatComps/FilePreview";
+import { Search } from "lucide-react";
 
-const REACTIONS = [
-  { emoji: "👍", name: "thumbsup" },
-  { emoji: "❤️", name: "heart" },
-  { emoji: "😊", name: "smile" },
-  { emoji: "🎉", name: "party" },
-  { emoji: "🔥", name: "fire" },
-  { emoji: "👏", name: "clap" },
+const ALLOWED_FILE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "text/plain",
 ];
+
+const currentUser = {
+  id: 1,
+  name: "You",
+  photo: img,
+};
+
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+};
 
 const DMs = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [messageInput, setMessageInput] = useState("");
-  const [messages, setMessages] = useState({});
-  const [editingMessageId, setEditingMessageId] = useState(null);
-  const [replyingTo, setReplyingTo] = useState(null);
-  const [pinnedMessages, setPinnedMessages] = useState([]);
   const [profileUserId, setProfileUserId] = useState(null);
 
   const users = [
     {
       id: "Kunal",
       name: "Kunal Dugar",
-      avatar: "/api/placeholder/32/32",
+      avatar: img2,
       status: "online",
       lastSeen: "Active now",
       timestamp: "Sep 4",
@@ -70,7 +55,7 @@ const DMs = () => {
     {
       id: "Techsnap",
       name: "Techsnap",
-      avatar: "/api/placeholder/32/32",
+      avatar: img3,
       status: "away",
       lastSeen: "2h ago",
       timestamp: "Aug 14",
@@ -92,12 +77,14 @@ const DMs = () => {
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isResizingLeft) {
-        const newWidth = e.clientX - dmListRef.current.getBoundingClientRect().left;
+        const newWidth =
+          e.clientX - dmListRef.current.getBoundingClientRect().left;
         if (newWidth > 200 && newWidth < 400) {
           setDmListWidth(newWidth);
         }
       } else if (isResizingRight) {
-        const containerWidth = messageSectionRef.current.parentElement.offsetWidth;
+        const containerWidth =
+          messageSectionRef.current.parentElement.offsetWidth;
         const newWidth = containerWidth - e.clientX;
         if (newWidth > 230 && newWidth < 400) {
           setProfileSectionWidth(newWidth);
@@ -111,23 +98,22 @@ const DMs = () => {
     };
 
     if (isResizingLeft || isResizingRight) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-      document.body.classList.add('selecting-none');
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+      document.body.classList.add("selecting-none");
     }
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-      document.body.classList.remove('selecting-none');
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      document.body.classList.remove("selecting-none");
     };
   }, [isResizingLeft, isResizingRight]);
 
   const toggleProfileSectionVisibility = (userId) => {
     setIsProfileSectionVisible(!isProfileSectionVisible);
-    setProfileUserId(userId);  
+    setProfileUserId(userId);
   };
-
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -138,258 +124,295 @@ const DMs = () => {
   const toggleSwitch = () => {
     setIsChecked((prev) => !prev);
   };
+  const [messages, setMessages] = useState([]);
+  const [messageInput, setMessageInput] = useState("");
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [replyToMessage, setReplyToMessage] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
-  const handleSendMessage = () => {
-    if (messageInput.trim() === "") return;
+  const fileInputRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  const location = useLocation();
 
-    const newMessage = {
-      id: Date.now(),
-      text: messageInput,
-      timestamp: new Date().toLocaleTimeString(),
-      status: "sent",
-      reactions: {},
-      sender: "me",
-      replyTo: replyingTo,
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    return () => {
+      selectedFiles.forEach((file) => {
+        if (file.preview) URL.revokeObjectURL(file.preview);
+        if (file.url) URL.revokeObjectURL(file.url);
+      });
     };
+  }, [selectedFiles]);
 
-    setMessages((prevMessages) => ({
-      ...prevMessages,
-      [selectedUser.id]: [...(prevMessages[selectedUser.id] || []), newMessage],
-    }));
+  useEffect(() => {
+    return () => {
+      messages.forEach((message) => {
+        if (message.fileUrl?.startsWith("blob:")) {
+          URL.revokeObjectURL(message.fileUrl);
+        }
+        if (message.imageUrl?.startsWith("blob:")) {
+          URL.revokeObjectURL(message.imageUrl);
+        }
+      });
+    };
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const resetTextareaHeight = () => {
+    const textarea = document.getElementById("message-textarea");
+    if (textarea) {
+      textarea.style.height = "auto";
+    }
+  };
+
+  const handlePaste = async (e) => {
+    const items = Array.from(e.clipboardData.items);
+    let imageItem, fileItem, text;
+
+    items.forEach((item) => {
+      if (item.type.startsWith("image")) {
+        imageItem = item.getAsFile();
+      } else if (item.type.startsWith("application/")) {
+        fileItem = item.getAsFile();
+      } else if (item.type === "text/plain") {
+        item.getAsString((str) => {
+          text = str;
+          console.log("Pasted text:", text);
+        });
+      }
+    });
+
+    if (imageItem) {
+      try {
+        await handleImageUpload(imageItem);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    }
+
+    if (fileItem) {
+      try {
+        await handleFileUpload(fileItem);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
+  };
+
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    const files = Array.from(e.dataTransfer.files);
+    await handleFileUpload(files);
+  };
+
+  const handleImageUpload = async (file) => {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      setIsUploading(true);
+      setUploadProgress(0);
+
+      for (let i = 0; i <= 100; i += 20) {
+        setUploadProgress(i);
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+
+      const fileObject = {
+        id: Math.random().toString(36).substring(7),
+        file: file,
+        preview: e.target.result,
+        type: file.type,
+        name: file.name,
+        size: formatFileSize(file.size),
+        url: URL.createObjectURL(file),
+      };
+
+      setSelectedFiles((prev) => [...prev, fileObject]);
+      setIsUploading(false);
+      setUploadProgress(0);
+    };
+  };
+
+  const handleFileSelection = (files) => {
+    Array.from(files).forEach((file) => {
+      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+        alert(`File type ${file.type} is not supported`);
+        return;
+      }
+
+      const fileObject = {
+        id: Math.random().toString(36).substring(7),
+        file: file,
+        type: file.type,
+        name: file.name,
+        size: formatFileSize(file.size),
+        preview: file.type.startsWith("image/")
+          ? URL.createObjectURL(file)
+          : null,
+        blobUrl: URL.createObjectURL(file),
+      };
+
+      setSelectedFiles((prev) => [...prev, fileObject]);
+    });
+  };
+
+  const handleFileUpload = async (files) => {
+    if (!files || files.length === 0) return;
+    handleFileSelection(files);
+  };
+
+  const removePreviewFile = (id) => {
+    setSelectedFiles((prev) => {
+      const fileToRemove = prev.find((f) => f.id === id);
+      if (fileToRemove?.url) {
+        URL.revokeObjectURL(fileToRemove.url);
+      }
+      if (fileToRemove?.preview) {
+        URL.revokeObjectURL(fileToRemove.preview);
+      }
+      return prev.filter((f) => f.id !== id);
+    });
+  };
+
+  const createMessage = ({
+    content = null,
+    imageUrl = null,
+    fileUrl = null,
+    fileName = null,
+    fileSize = null,
+    fileType = null,
+  }) => {
+    return {
+      id: Date.now(),
+      user: currentUser.name,
+      content,
+      timestamp: new Date().toLocaleTimeString(),
+      reactions: [],
+      photo: currentUser.photo,
+      isPinned: false,
+      imageUrl,
+      fileUrl,
+      fileName,
+      fileSize,
+      fileType,
+      replyTo: replyToMessage
+        ? {
+            id: replyToMessage.id,
+            user: replyToMessage.user,
+            content: replyToMessage.content,
+            imageUrl: replyToMessage.imageUrl,
+            fileUrl: replyToMessage.fileUrl,
+            fileName: replyToMessage.fileName,
+            fileType: replyToMessage.fileType,
+          }
+        : null,
+    };
+  };
+
+  const sendMessage = () => {
+    if (!messageInput.trim() && selectedFiles.length === 0) return;
+
+    if (editingMessageId) {
+      setMessages(
+        messages.map((msg) =>
+          msg.id === editingMessageId ? { ...msg, content: messageInput } : msg
+        )
+      );
+      setEditingMessageId(null);
+    } else {
+      selectedFiles.forEach((fileData) => {
+        const newMessage = createMessage({
+          content: messageInput,
+          imageUrl: fileData.type.startsWith("image/")
+            ? fileData.preview
+            : null,
+          fileUrl: fileData.blobUrl,
+          fileName: fileData.name,
+          fileType: fileData.type,
+          fileSize: fileData.size,
+          file: fileData.file,
+        });
+        setMessages((prev) => [...prev, newMessage]);
+      });
+
+      if (messageInput.trim() && selectedFiles.length === 0) {
+        const newMessage = createMessage({
+          content: messageInput,
+        });
+        setMessages((prev) => [...prev, newMessage]);
+      }
+    }
 
     setMessageInput("");
-    setEditingMessageId(null);
-    setReplyingTo(null);
-
-    setTimeout(() => {
-      const receivedMessage = {
-        id: Date.now() + 1,
-        text: "This is a sample response",
-        timestamp: new Date().toLocaleTimeString(),
-        status: "received",
-        reactions: {},
-        imageUrl : "https://img.freepik.com/free-photo/photorealistic-view-tree-nature-with-branches-trunk_23-2151478040.jpg",
-        sender: "them",
-      };
-
-      setMessages((prevMessages) => ({
-        ...prevMessages,
-        [selectedUser.id]: [
-          ...(prevMessages[selectedUser.id] || []),
-          receivedMessage,
-        ],
-      }));
-    }, 1000);
+    setSelectedFiles([]);
+    setReplyToMessage(null);
+    resetTextareaHeight();
   };
 
-  const handleReaction = (messageId, reaction) => {
-    setMessages((prevMessages) => {
-      const userMessages = [...(prevMessages[selectedUser.id] || [])];
-      const messageIndex = userMessages.findIndex((m) => m.id === messageId);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
-      if (messageIndex !== -1) {
-        const message = userMessages[messageIndex];
-        const currentReactions = { ...message.reactions };
+  const downloadImage = (imageUrl) => {
+    const link = document.createElement("a");
+    link.href = imageUrl;
+    link.download = "image.png";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
-        if (currentReactions[reaction]) {
-          delete currentReactions[reaction];
-        } else {
-          currentReactions[reaction] = 1;
-        }
-
-        userMessages[messageIndex] = {
-          ...message,
-          reactions: currentReactions,
-        };
+  const shareImage = async (imageUrl) => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Shared Image",
+          text: "Check out this image!",
+          url: imageUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(imageUrl);
+        alert("Image URL copied to clipboard!");
       }
-
-      return {
-        ...prevMessages,
-        [selectedUser.id]: userMessages,
-      };
-    });
+    } catch (error) {
+      console.error("Error sharing:", error);
+    }
   };
 
-  const handlePinMessage = (messageId) => {
-    setPinnedMessages((prev) => {
-      if (prev.includes(messageId)) {
-        return prev.filter((id) => id !== messageId);
-      }
-      return [...prev, messageId];
-    });
-  };
-
-  const handleReply = (message) => {
-    setReplyingTo(message);
-    document.querySelector("textarea")?.focus();
-  };
-
-  const ReactionBar = ({ message }) => (
-    <div className="absolute bottom-0 translate-y-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border">
-      {REACTIONS.map((reaction) => (
-        <button
-          key={reaction.name}
-          onClick={(e) => {
-            e.stopPropagation();
-            handleReaction(message.id, reaction.emoji);
-          }}
-          className="hover:bg-gray-100 dark:hover:bg-gray-700 p-1 rounded-full transition-colors"
-        >
-          {reaction.emoji}
-        </button>
-      ))}
+  const renderFilePreview = () => (
+    <div className="p-4 border-t">
+      <div className="flex flex-wrap gap-2">
+        {selectedFiles.map((file) => (
+          <FilePreview key={file.id} file={file} onRemove={removePreviewFile} />
+        ))}
+      </div>
     </div>
   );
-
-  const MessageBubble = ({ message }) => {
-    const isMe = message.sender === "me";
-    const isPinned = pinnedMessages.includes(message.id);
-    const replyingToMessage = message.replyTo
-      ? messages[selectedUser.id]?.find((m) => m.id === message.replyTo.id)
-      : null;
-
-    return (
-      <div
-        className={`group relative flex flex-col gap-1 mb-4 max-w-[40%] ${
-          isMe ? "ml-auto" : "mr-auto"
-        }`}
-      >
-        {replyingToMessage && (
-          <div
-            className={`text-xs opacity-75 mb-1 ${
-              isMe ? "text-right" : "text-left"
-            }`}
-          >
-            Replying to: {replyingToMessage.text.substring(0, 30)}...
-          </div>
-        )}
-
-        <div
-          className={`flex items-start gap-2 ${
-            isMe ? "flex-row-reverse" : "flex-row"
-          }`}
-        >
-          <div className="flex-1 relative group">
-            {isPinned && (
-              <Pin className="absolute -top-4 -left-4 h-3 w-3 text-gray-500" />
-            )}
-
-            <div
-              className={`relative rounded-2xl p-2 ${
-                isMe
-                  ? "bg-blue-500 text-white before:absolute before:right-[-6px] before:top-[50%] before:border-8 before:border-transparent before:border-l-blue-500"
-                  : "bg-gray-100 dark:bg-gray-800 before:absolute before:left-[-6px] before:top-[50%] before:border-8 before:border-transparent before:border-r-gray-100 dark:before:border-r-gray-800"
-              }`}
-            >
-              {message.imageUrl && (
-                <div className="relative rounded-lg overflow-hidden flex-grow">
-                  <img
-                    src={message.imageUrl}
-                    alt="Sent image"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-            )}
-
-            {message.url && !message.imageUrl && (
-              <div className="relative rounded-lg overflow-hidden p-2 max-w-max text-blue-600">
-                <a
-                  href={message.url}
-                >
-                  {message.url}
-                </a>
-              </div>
-            )}
-
-            {!message.imageUrl && !message.url && (
-              <div
-              >
-                {message.text}
-              </div>
-            )}
-            </div>
-
-            {Object.entries(message.reactions).length > 0 && (
-              <div
-                className={`flex gap-1 mt-1 ${
-                  isMe ? "justify-end" : "justify-start"
-                }`}
-              >
-                {Object.entries(message.reactions).map(([reaction, count]) => (
-                  <span
-                    key={reaction}
-                    className="bg-white dark:bg-gray-800 px-2 py-0.5 rounded-full text-xs border"
-                  >
-                    {reaction}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div
-              className={`mt-1 text-xs opacity-50 flex gap-1 items-center ${
-                isMe ? "justify-end" : "justify-start"
-              }`}
-            >
-              {message.timestamp}
-              {message.status === "sent" && <span>✓</span>}
-            </div>
-
-            <ReactionBar message={message} />
-          </div>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100"
-              >
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align={isMe ? "end" : "start"}>
-              <DropdownMenuItem onClick={() => handleReply(message)}>
-                <Reply className="mr-2 h-4 w-4" />
-                Reply
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handlePinMessage(message.id)}>
-                <Pin className="mr-2 h-4 w-4" />
-                {isPinned ? "Unpin" : "Pin"}
-              </DropdownMenuItem>
-              {isMe && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={() => handleEditMessage(message.id)}
-                  >
-                    <Edit2 className="mr-2 h-4 w-4" />
-                    Edit
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => handleDeleteMessage(message.id)}
-                  >
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <TooltipProvider>
       <div className="flex h-[calc(100vh-56px)] text-gray-800 dark:text-gray-200">
-        <div className="w-1/4 border-r flex flex-col"
-        ref={dmListRef} 
-        style={{ width: `${dmListWidth}px` }} >
+        <div
+          className="w-1/4 border-r flex flex-col"
+          ref={dmListRef}
+          style={{ width: `${dmListWidth}px` }}
+        >
           <div className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <span className="text-xl font-bold">Direct Messages</span>
-            <div className="flex items-center space-x-2">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-xl font-bold">Direct Messages</span>
+              <div className="flex items-center space-x-2">
                 <div
                   onClick={toggleSwitch}
                   className={`relative inline-block w-10 h-6 rounded-full transition-colors hover:cursor-pointer ${
@@ -402,9 +425,9 @@ const DMs = () => {
                     }`}
                   />
                 </div>
-              <label htmlFor="airplane-mode">Unread</label>
+                <label htmlFor="airplane-mode">Unread</label>
+              </div>
             </div>
-          </div>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 opacity-50" />
               <input
@@ -447,85 +470,98 @@ const DMs = () => {
           </div>
         </div>
         <div
-        ref={leftDividerRef}
-        className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
-        onMouseDown={() => setIsResizingLeft(true)}
-      />
-        <div className="flex-1 flex flex-col"
-        ref={messageSectionRef}>
+          ref={leftDividerRef}
+          className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
+          onMouseDown={() => setIsResizingLeft(true)}
+        />
+        <div
+          className="flex-1 flex flex-col h-full text-black dark:text-white"
+          onDrop={handleDrop}
+          onDragOver={(e) => e.preventDefault()}
+          ref={messageSectionRef}
+        >
           {selectedUser ? (
             <>
-              <div className="p-4 border-b flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Avatar className="border cursor-pointer" onClick={() => toggleProfileSectionVisibility(selectedUser.id)}>
-                    <AvatarImage src={selectedUser.avatar} />
-                    <AvatarFallback>
-                      {selectedUser.name.charAt(0)}
-                    </AvatarFallback>
+              <div className="p-4 flex justify-between items-center border-b shadow-md">
+                <div
+                  className="flex items-center cursor-pointer"
+                  onClick={() =>
+                    toggleProfileSectionVisibility(selectedUser.id)
+                  }
+                >
+                  <Avatar className="w-12 h-12 border border-gray-500 mr-4">
+                    <AvatarImage src={selectedUser.avatar} alt="Profile" />
+                    <AvatarFallback>YR</AvatarFallback>
                   </Avatar>
-                  <div>
-                    <h2 className="font-medium">{selectedUser.name}</h2>
-                    <p className="text-sm opacity-50">
-                      {selectedUser.lastSeen}
-                    </p>
-                  </div>
+                  <div className="text-lg font-bold">{selectedUser.name}</div>
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4">
-                {(messages[selectedUser.id] || []).map((message) => (
-                  <MessageBubble key={message.id} message={message} />
+              <div className="flex-grow overflow-y-auto overflow-x-hidden px-6 py-4">
+                {messages.map((message, index) => (
+                  <ChatMessage
+                    key={message.id}
+                    message={message}
+                    isCurrentUser={message.user === "You"}
+                    previousMessage={index > 0 ? messages[index - 1] : null}
+                    onReply={setReplyToMessage}
+                    onEdit={(messageId, content) => {
+                      setEditingMessageId(messageId);
+                      setMessageInput(content);
+                    }}
+                    onPin={(messageId) => {
+                      setMessages(
+                        messages.map((msg) =>
+                          msg.id === messageId
+                            ? { ...msg, isPinned: !msg.isPinned }
+                            : msg
+                        )
+                      );
+                    }}
+                    onReact={(messageId, reaction) => {
+                      setMessages(
+                        messages.map((msg) =>
+                          msg.id === messageId
+                            ? {
+                                ...msg,
+                                reactions: msg.reactions.some(
+                                  (r) => r.emoji === reaction
+                                )
+                                  ? msg.reactions.filter(
+                                      (r) => r.emoji !== reaction
+                                    )
+                                  : [
+                                      ...msg.reactions,
+                                      { emoji: reaction, count: 1 },
+                                    ],
+                              }
+                            : msg
+                        )
+                      );
+                    }}
+                    onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+                  />
                 ))}
+                <div ref={messagesEndRef} />
               </div>
 
-              <div className="p-4 border-t">
-                {replyingTo && (
-                  <div className="mb-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Reply className="h-4 w-4" />
-                      <span className="text-sm">Replying to message</span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setReplyingTo(null)}
-                    >
-                      ×
-                    </Button>
-                  </div>
-                )}
+              {selectedFiles.length > 0 && renderFilePreview()}
 
-                <div className="flex items-end gap-2">
-                  <div className="flex-1">
-                    <textarea
-                      value={messageInput}
-                      onChange={(e) => setMessageInput(e.target.value)}
-                      placeholder="Type a message..."
-                      className="w-full p-3 rounded-lg border bg-transparent resize-none focus:outline-none"
-                      rows={2}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          handleSendMessage();
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="flex gap-2 mb-3">
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <Paperclip className="h-4 w-4" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>Attach file</TooltipContent>
-                    </Tooltip>
-                    <Button onClick={handleSendMessage}>
-                      <Send className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <MessageComposer
+                messageInput={messageInput}
+                setMessageInput={setMessageInput}
+                handleKeyDown={handleKeyDown}
+                handlePaste={handlePaste}
+                editingMessageId={editingMessageId}
+                replyToMessage={replyToMessage}
+                setReplyToMessage={setReplyToMessage}
+                showEmojiPicker={showEmojiPicker}
+                setShowEmojiPicker={setShowEmojiPicker}
+                fileInputRef={fileInputRef}
+                handleFileUpload={handleFileUpload}
+                handleImageUpload={handleImageUpload}
+                sendMessage={sendMessage}
+              />
             </>
           ) : (
             <div className="flex-1 flex items-center justify-center opacity-50">
@@ -534,27 +570,27 @@ const DMs = () => {
           )}
         </div>
         {isProfileSectionVisible && (
-        <div
-          ref={rightDividerRef}
-          className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
-          onMouseDown={() => setIsResizingRight(true)}
-        />
-      )}
-
-      {isProfileSectionVisible && (
-        <div 
-          ref={profileSectionRef} 
-          style={{ width: `${profileSectionWidth}px` }} 
-          className="flex-shrink-0 border-l border-gray-600 overflow-y-auto"
-        >
-          <ProfileSection
-            userId={profileUserId} 
-            onToggleVisibility={toggleProfileSectionVisibility}
-            setIsProfileSectionVisible={setIsProfileSectionVisible}
-            isProfileSectionVisible={isProfileSectionVisible}
+          <div
+            ref={rightDividerRef}
+            className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
+            onMouseDown={() => setIsResizingRight(true)}
           />
-        </div>
-      )}
+        )}
+
+        {isProfileSectionVisible && (
+          <div
+            ref={profileSectionRef}
+            style={{ width: `${profileSectionWidth}px` }}
+            className="flex-shrink-0 border-l border-gray-600 overflow-y-auto"
+          >
+            <ProfileSection
+              userId={profileUserId}
+              onToggleVisibility={toggleProfileSectionVisibility}
+              setIsProfileSectionVisible={setIsProfileSectionVisible}
+              isProfileSectionVisible={isProfileSectionVisible}
+            />
+          </div>
+        )}
       </div>
     </TooltipProvider>
   );

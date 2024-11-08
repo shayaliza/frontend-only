@@ -93,6 +93,9 @@ const Header = ({ toggleMobileMenu }) => {
                     <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
                       <Link to="/managesnap">Managesnap</Link>
                     </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/ckeditor">CKEditor</Link>
+                    </li>
                   </ul>
                 </div>
               )}
@@ -234,6 +237,15 @@ const Header = ({ toggleMobileMenu }) => {
                     transition={{ duration: 0.2, delay: 0.5 }} // Delay for this item
                   >
                     <Link to="/managesnap">Managesnap</Link>
+                  </motion.li>
+                  <motion.li
+                    className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer"
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ duration: 0.2, delay: 0.5 }} // Delay for this item
+                  >
+                    <Link to="ckeditor">CKEditor</Link>
                   </motion.li>
                 </ul>
               </motion.div>
