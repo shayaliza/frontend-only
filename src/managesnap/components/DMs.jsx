@@ -10,7 +10,6 @@ import img3 from "../assets/man3.jpg";
 import ChatMessage from "./ChatComps/ChatMessages";
 import MessageComposer from "./ChatComps/MessageComposer";
 import FilePreview from "./ChatComps/FilePreview";
-import { Search } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -25,6 +24,11 @@ import {
   MapPin,
   Clock,
   Check,
+  PinIcon,
+  FileIcon,
+  MoreVerticalIcon,
+  Search,
+  X,
 } from "lucide-react";
 
 const ALLOWED_FILE_TYPES = [
@@ -84,6 +88,13 @@ const DMs = () => {
   const [isProfileSectionVisible, setIsProfileSectionVisible] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const timeoutRef = useRef(null);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleClose = () => {
+    setIsSearchVisible(false);
+    setSearchValue("");
+  };
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -512,11 +523,13 @@ const DMs = () => {
             <>
               <div className="p-4 flex justify-between items-center border-b shadow-md">
                 <div
-                  className="flex items-center cursor-pointer space-x-2 mt-1"
+                  className="flex justify-between items-center"
+                >
+                  <div className="flex items-center cursor-pointer space-x-2 mt-1"
                   onClick={() =>
                     toggleProfileSectionVisibility(selectedUser.id)
                   }
-                >
+                  >
                   <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
                     <PopoverTrigger asChild>
                       <div
@@ -634,6 +647,48 @@ const DMs = () => {
                     </PopoverContent>
                   </Popover>
                   <div className="text-lg font-bold">{selectedUser.name}</div>
+                  </div>
+                  <div className="flex items-center space-x-4 mt-2">
+            {!isSearchVisible ? (
+              <button
+                onClick={() => setIsSearchVisible(true)}
+              >
+                <Search className="w-5 h-5 mr-1" />
+              </button>
+            ) : (
+              <div className="relative flex items-center">
+                <div className="absolute left-2">
+                  <Search className="w-4 h-4" />
+                </div>
+                <input
+                  type="text"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  placeholder="Search..."
+                  className="w-48 pl-8 pr-8 py-2 text-sm border rounded-lg focus:outline-none bg-transparent"
+                  autoFocus
+                />
+                <button
+                  onClick={handleClose}
+                  className="absolute right-2 p-1 rounded-full"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
+            <button className="p-1">
+              <PinIcon className="w-5 h-5" />
+            </button>
+
+            <button className="p-1">
+              <FileIcon className="w-5 h-5" />
+            </button>
+
+            <button className="p-1">
+              <MoreVerticalIcon className="w-5 h-5" />
+            </button>
+          </div>
                 </div>
               </div>
 

@@ -23,7 +23,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 function Sidebar() {
   const location = useLocation();
-  const currentPath = location.pathname.split("/").pop();
+  const currentPath = location.pathname;
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const timeoutRef = useRef(null);
 
@@ -45,6 +45,7 @@ function Sidebar() {
       label: "Home",
       tooltip: "Home",
       path: "/managesnap/home",
+      matchPath: "home"
     },
     {
       id: "custom-tooltip",
@@ -67,6 +68,7 @@ function Sidebar() {
       label: "dms",
       tooltip: "DMs",
       path: "/managesnap/dms",
+      matchPath: "dms"
     },
     {
       id: "bell-tooltip",
@@ -74,6 +76,7 @@ function Sidebar() {
       label: "Notifications",
       tooltip: "Notifications",
       path: "/managesnap/notifications",
+      matchPath: "notifications"
     },
     {
       id: "cog-tooltip",
@@ -81,6 +84,7 @@ function Sidebar() {
       label: "Settings",
       tooltip: "Settings",
       path: "/managesnap/settings",
+      matchPath: "settings"
     },
   ];
 
@@ -88,8 +92,8 @@ function Sidebar() {
     <>
       <div className="flex flex-col justify-between px-2 py-4 bg-zinc-900 shadow-md w-16">
         <aside className="flex flex-col items-center space-y-6">
-          {icons.map(({ id, icon, label, tooltip, path }) => {
-            const isActive = currentPath === path.split("/").pop();
+          {icons.map(({ id, icon, label, tooltip, path, matchPath }) => {
+            const isActive = currentPath.includes(matchPath);
             return (
               <Link to={path} key={id}>
                 <div

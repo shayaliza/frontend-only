@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -10,6 +10,7 @@ import LinkPreviewHandler from "./LinkHandling";
 import { Pin, Download, FileIcon, ReplyIcon, ViewIcon } from "lucide-react";
 import ReactionPicker from "./ReactionPicker";
 import MessageStatus from "./MessageStatus";
+import MessageTimestamp from "./MessageTimestamp";
 export default function ChatMessage({
   message,
   previousMessage,
@@ -34,50 +35,6 @@ export default function ChatMessage({
     }
   }, [message.content]);
 
-  const shouldShowTimestamp = () => {
-    if (!previousMessage) return true;
-
-    const currentMessageTime = new Date(message.timestamp);
-    const previousMessageTime = new Date(previousMessage.timestamp);
-
-    return (
-      previousMessage.user !== message.user ||
-      currentMessageTime - previousMessageTime > 120000 ||
-      currentMessageTime.toDateString() !== previousMessageTime.toDateString()
-    );
-  };
-
-  const renderTimestamp = () => {
-    if (!shouldShowTimestamp()) return null;
-
-    const now = new Date();
-    const messageDate = new Date(message.timestamp);
-    const diffInHours = (now - messageDate) / (1000 * 60 * 60);
-
-    let formattedTime;
-    if (diffInHours < 24) {
-      formattedTime = message.timestamp;
-    } else if (diffInHours < 48) {
-      formattedTime = "Yesterday";
-    } else if (isCurrentUser) {
-      formattedTime = now.toLocaleTimeString();
-    } else {
-      formattedTime = `${messageDate.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      })}, ${messageDate.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}`;
-    }
-
-    return (
-      <span className="text-xs opacity-70">
-        {formattedTime}
-        {message.edited && " (edited)"}
-      </span>
-    );
-  };
 
   const shareMessage = async () => {
     try {
@@ -237,7 +194,7 @@ export default function ChatMessage({
 
   return (
     <div
-      className={`group relative w-full px-2 mb-6 my-8 ${
+      className={`group relative w-full px-2 mb-2 my-2 ${
         isCurrentUser ? "items-end" : "items-start"
       }`}
     >
@@ -250,7 +207,10 @@ export default function ChatMessage({
           {!isCurrentUser && isChannelChat && (
             <span className="font-medium">{message.user}</span>
           )}
-          {renderTimestamp()}
+          <MessageTimestamp 
+    message={message}
+    previousMessage={previousMessage}
+/>
         </div>
       </div>
 
