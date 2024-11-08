@@ -19,7 +19,7 @@ import {
   LogOut,
   Plus,
 } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 function Sidebar() {
   const location = useLocation();

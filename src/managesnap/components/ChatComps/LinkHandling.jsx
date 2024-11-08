@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Globe, Video, Music, Image as ImageIcon, Play } from "lucide-react";
 
-// Enhanced YouTube regex to handle all formats
 const YOUTUBE_PATTERNS = [
   /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([^&]+)/,
   /(?:https?:\/\/)?(?:www\.)?youtube\.com\/embed\/([^/?]+)/,
@@ -21,7 +20,6 @@ const getYouTubeVideoId = (url) => {
   for (const pattern of YOUTUBE_PATTERNS) {
     const match = url.match(pattern);
     if (match) {
-      // Remove any additional parameters after the video ID
       return match[1].split('?')[0];
     }
   }
@@ -29,7 +27,6 @@ const getYouTubeVideoId = (url) => {
 };
 
 const getLinkType = (url) => {
-  // Check YouTube first
   if (getYouTubeVideoId(url)) return 'youtube';
   if (TWITTER_REGEX.test(url)) return 'twitter';
   if (SPOTIFY_REGEX.test(url)) return 'spotify';
@@ -61,7 +58,6 @@ const PreviewCard = ({ url, type }) => {
                   }}
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
-                  {/* YouTube Play Button */}
                   <div className="w-16 h-12 bg-red-600 rounded-lg flex items-center justify-center relative group-hover:bg-red-700 transition-colors">
                     <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-white border-b-[10px] border-b-transparent ml-1"></div>
                   </div>
@@ -125,8 +121,7 @@ const PreviewCard = ({ url, type }) => {
                   <Play className="w-8 h-8 text-white" />
                 </div>
               </div>
-            );
-    
+            );  
 
       default:
         return (
@@ -160,11 +155,8 @@ const PreviewCard = ({ url, type }) => {
 
 const LinkPreviewHandler = ({ content }) => {
   const { links, textContent } = useMemo(() => {
-    // Find all URLs in the content
     const matches = content.match(URL_REGEX) || [];
     let processedContent = content;
-    
-    // Replace URLs with a special marker for splitting
     matches.forEach(url => {
       processedContent = processedContent.replace(url, '');
     });
@@ -180,10 +172,7 @@ const LinkPreviewHandler = ({ content }) => {
 
   return (
     <div className="space-y-2">
-      {/* Render the text content without URLs */}
       {textContent && <div className="whitespace-pre-wrap">{textContent}</div>}
-      
-      {/* Render link previews */}
       {links.length > 0 && (
         <div className="space-y-2 mt-2">
           {links.map((link, i) => (

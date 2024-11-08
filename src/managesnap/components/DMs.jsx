@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { useLocation } from "react-router-dom";
-import {TooltipProvider} from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import ProfileSection from "./ProfileSection";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import img from "../assets/man1.jpg";
@@ -11,6 +11,21 @@ import ChatMessage from "./ChatComps/ChatMessages";
 import MessageComposer from "./ChatComps/MessageComposer";
 import FilePreview from "./ChatComps/FilePreview";
 import { Search } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  MessageSquare,
+  Phone,
+  Video,
+  Users,
+  Mail,
+  MapPin,
+  Clock,
+  Check,
+} from "lucide-react";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -67,6 +82,19 @@ const DMs = () => {
   const [dmListWidth, setDmListWidth] = useState(360);
   const [profileSectionWidth, setProfileSectionWidth] = useState(300);
   const [isProfileSectionVisible, setIsProfileSectionVisible] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsProfileOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsProfileOpen(false);
+    }, 300);
+  };
 
   const dmListRef = useRef(null);
   const messageSectionRef = useRef(null);
@@ -484,15 +512,127 @@ const DMs = () => {
             <>
               <div className="p-4 flex justify-between items-center border-b shadow-md">
                 <div
-                  className="flex items-center cursor-pointer"
+                  className="flex items-center cursor-pointer space-x-2 mt-1"
                   onClick={() =>
                     toggleProfileSectionVisibility(selectedUser.id)
                   }
                 >
-                  <Avatar className="w-12 h-12 border border-gray-500 mr-4">
-                    <AvatarImage src={selectedUser.avatar} alt="Profile" />
-                    <AvatarFallback>YR</AvatarFallback>
-                  </Avatar>
+                  <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+                    <PopoverTrigger asChild>
+                      <div
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                      >
+                        <Avatar
+                          className="w-12 h-12 border border-gray-500 cursor-pointer hover:opacity-90"
+                          onClick={toggleProfileSectionVisibility}
+                        >
+                          <AvatarImage src={selectedUser.avatar} alt="Profile" />
+                          <AvatarFallback>
+                            {currentUser.name
+                              ?.split(" ")
+                              .map((n) => n[0])
+                              .join("") || "U"}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                    </PopoverTrigger>
+
+                    <PopoverContent
+                      className="w-[300px] p-0  text-white shadow-xl"
+                      onMouseEnter={() => {
+                        if (timeoutRef.current)
+                          clearTimeout(timeoutRef.current);
+                      }}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <div className="p-4 space-y-2 text-black dark:text-white">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="w-10 h-10">
+                            <AvatarImage
+                              src={selectedUser.avatar}
+                              alt={selectedUser.name}
+                            />
+                            <AvatarFallback>
+                              {selectedUser.name
+                                ?.split(" ")
+                                .map((n) => n[0])
+                                .join("") || "U"}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <div className="flex items-center gap-1.5">
+                              <h3 className="font-semibold">
+                                {selectedUser.name}
+                              </h3>
+                              <div className="w-3.5 h-3.5 bg-gray-800 rounded-full flex items-center justify-center">
+                                <Check className="w-2.5 h-2.5 text-green-500" />
+                              </div>
+                            </div>
+                            <p className="text-xs ">
+                              Digital Innovation & Technology
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-around py-2 text-black dark:text-white">
+                          <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                            <MessageSquare className="w-5 h-5" />
+                          </button>
+                          <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                            <Users className="w-5 h-5" />
+                          </button>
+                          <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                            <Video className="w-5 h-5" />
+                          </button>
+                          <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                            <Phone className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-gray-800 p-3 space-y-1.5 text-black dark:text-white">
+                        <div className="flex items-center gap-2 text-sm">
+                          <div className="w-2 h-2 rounded-full bg-green-500" />
+                          <span>Available • Free all day</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-black dark:text-white">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>Work hours: 10:00 AM - 7:00 PM</span>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-gray-800 p-3 text-black dark:text-white">
+                        <h4 className="text-xs font-medium mb-2">Contact</h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-center gap-2 text-blue-400">
+                            <Mail className="w-4 h-4" />
+                            <a
+                              href={`mailto:salma.pattan@non.se.com`}
+                              className="text-xs hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              user.available@gmail.com
+                            </a>
+                          </div>
+                          <div className="flex items-center gap-2 text-blue-400">
+                            <Phone className="w-4 h-4" />
+                            <a
+                              href="tel:+91566757688"
+                              className="text-xs hover:underline"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              +91 566757688
+                            </a>
+                          </div>
+                          <div className="flex items-center gap-2 text-black dark:text-white">
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-xs">Indian campus</span>
+                          </div>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                   <div className="text-lg font-bold">{selectedUser.name}</div>
                 </div>
               </div>

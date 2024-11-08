@@ -10,7 +10,6 @@ import FilePreview from "./ChatComps/FilePreview";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { MessageSquare, Phone, Video, Users, Mail, MapPin, Clock, Check } from "lucide-react";
 
-
 const ALLOWED_FILE_TYPES = [
   'image/jpeg', 
   'image/png', 
@@ -22,8 +21,6 @@ const ALLOWED_FILE_TYPES = [
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   'text/plain'
 ];
-
-
 
 const currentUser = {
   id: 1,
