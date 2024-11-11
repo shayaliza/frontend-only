@@ -182,7 +182,7 @@ function Chat({ toggleProfileSectionVisibility }) {
     const handleScroll = () => {
       if (!container) return;
       
-      const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100; // 100px threshold
+      const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100; 
       const hasScrollableContent = container.scrollHeight > container.clientHeight;
       
       setScrollButton(hasScrollableContent && !isAtBottom);
@@ -566,7 +566,7 @@ function Chat({ toggleProfileSectionVisibility }) {
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
     >
-      <div className="p-4 flex justify-between items-center border-b shadow-md mb-4">
+      <div className="p-4 flex justify-between items-center border-b shadow-md">
         <div className="w-full flex justify-between items-center">
           <div
             className="flex items-center cursor-pointer space-x-2"
@@ -735,7 +735,7 @@ function Chat({ toggleProfileSectionVisibility }) {
         </div>
       </div>
 
-  <div className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-2"
+  <div className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
   ref={chatContainerRef}>
   {messages.map((message, index) => (
     <ChatMessage
@@ -784,13 +784,8 @@ function Chat({ toggleProfileSectionVisibility }) {
   </div>
   )}
 
-  
-
   <div ref={messagesEndRef} />
 </div>
-
-
-
 
       {selectedFiles.length > 0 && renderFilePreview()}
 

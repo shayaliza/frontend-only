@@ -729,7 +729,7 @@ const DMs = () => {
               </div>
 
               <div
-                className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-8"
+                className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
                 ref={chatContainerRef}
               >
                 {messages.map((message, index) => (
