@@ -26,6 +26,7 @@ import {
   MoreVerticalIcon,
   Search,
   X,
+  ChevronDownIcon,
 } from "lucide-react";
 
 const ALLOWED_FILE_TYPES = [
@@ -117,8 +118,11 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
+  const[scrollButton, setScrollButton] = useState(false);
 
   const fileInputRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const location = useLocation();
 
@@ -126,8 +130,11 @@ function Chat({ toggleProfileSectionVisibility }) {
   const isChannelChat = lastSegment.startsWith("C");
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (shouldScrollToBottom) {
+      scrollToBottom();
+      setShouldScrollToBottom(false);
+    }
+  }, [messages, shouldScrollToBottom]);
 
   useEffect(() => {
     if (isChannelChat) {
@@ -160,8 +167,30 @@ function Chat({ toggleProfileSectionVisibility }) {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = chatContainerRef.current;
+    if (container) {
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
+
+  useEffect(() => {
+    const container = chatContainerRef.current;
+    
+    const handleScroll = () => {
+      if (!container) return;
+      
+      const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100; // 100px threshold
+      const hasScrollableContent = container.scrollHeight > container.clientHeight;
+      
+      setScrollButton(hasScrollableContent && !isAtBottom);
+    };
+    
+    container?.addEventListener('scroll', handleScroll);
+    return () => container?.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const resetTextareaHeight = () => {
     const textarea = document.getElementById("message-textarea");
@@ -351,6 +380,7 @@ function Chat({ toggleProfileSectionVisibility }) {
   }, [messages]);
 
   const sendMessage = () => {
+    setShouldScrollToBottom(true);
     if (!messageInput.trim() && selectedFiles.length === 0) return;
     const extractUrls = (text) => {
       const URL_REGEX = /(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/g;
@@ -705,49 +735,62 @@ function Chat({ toggleProfileSectionVisibility }) {
         </div>
       </div>
 
-      <div className="flex-grow overflow-y-auto overflow-x-hidden px-6 py-2">
-        {messages.map((message, index) => (
-          <ChatMessage
-            key={message.id}
-            message={message}
-            isCurrentUser={message.user === "You"}
-            previousMessage={index > 0 ? messages[index - 1] : null}
-            onReply={setReplyToMessage}
-            onEdit={(messageId, content) => {
-              setEditingMessageId(messageId);
-              setMessageInput(content);
-            }}
-            onPin={(messageId) => {
-              setMessages(
-                messages.map((msg) =>
-                  msg.id === messageId
-                    ? { ...msg, isPinned: !msg.isPinned }
-                    : msg
-                )
-              );
-            }}
-            onReact={(messageId, reaction) => {
-              setMessages(
-                messages.map((msg) =>
-                  msg.id === messageId
-                    ? {
-                        ...msg,
-                        reactions: msg.reactions.some(
-                          (r) => r.emoji === reaction
-                        )
-                          ? msg.reactions.filter((r) => r.emoji !== reaction)
-                          : [...msg.reactions, { emoji: reaction, count: 1 }],
-                      }
-                    : msg
-                )
-              );
-            }}
-            onImageClick={(imageUrl) => setImagePreview(imageUrl)}
-            isChannelChat={isChannelChat}
-          />
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+  <div className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-2"
+  ref={chatContainerRef}>
+  {messages.map((message, index) => (
+    <ChatMessage
+      key={message.id}
+      message={message}
+      isCurrentUser={message.user === "You"}
+      previousMessage={index > 0 ? messages[index - 1] : null}
+      onReply={setReplyToMessage}
+      onEdit={(messageId, content) => {
+        setEditingMessageId(messageId);
+        setMessageInput(content);
+      }}
+      onPin={(messageId) => {
+        setMessages(
+          messages.map((msg) =>
+            msg.id === messageId
+              ? { ...msg, isPinned: !msg.isPinned }
+              : msg
+          )
+        );
+      }}
+      onReact={(messageId, reaction) => {
+        setMessages(
+          messages.map((msg) =>
+            msg.id === messageId
+              ? {
+                  ...msg,
+                  reactions: msg.reactions.some((r) => r.emoji === reaction)
+                    ? msg.reactions.filter((r) => r.emoji !== reaction)
+                    : [...msg.reactions, { emoji: reaction, count: 1 }],
+                }
+              : msg
+          )
+        );
+      }}
+      onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+      isChannelChat={isChannelChat}
+    />
+  ))}
+  {scrollButton && (
+    <div
+    className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+    onClick={() => setShouldScrollToBottom(true)}
+  >
+    <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+  </div>
+  )}
+
+  
+
+  <div ref={messagesEndRef} />
+</div>
+
+
+
 
       {selectedFiles.length > 0 && renderFilePreview()}
 

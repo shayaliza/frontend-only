@@ -96,10 +96,9 @@ const Header = () => {
     <header className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b ${
       theme === "dark" ? "bg-black text-gray-300" : "bg-white text-gray-700"
     }`}>
-      {/* Logo and Navigation */}
       <div className="absolute left-4 top-3">
         <div className="relative flex items-center space-x-2">
-          <img src={logo} alt="snapthetech logo" className="w-10 h-10 rounded-full object-fit" />
+          <img src={logo} alt="snapthetech logo" className="w-10 h-10 rounded-md border border-gray-500 object-fit" />
           <span className="ml-3 text-2xl font-semibold">snapthetech</span>
           <button 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -128,7 +127,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Search Bar */}
       <div className="w-2/3 mx-auto px-4 flex justify-center">
         <div className="relative w-1/2" ref={dropdownRef}>
           <input 
@@ -180,7 +178,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* User Profile and Theme Toggle */}
       <div className="absolute right-4 top-2.5 flex space-x-2">
         <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
           <PopoverTrigger asChild>

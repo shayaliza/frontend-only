@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { FaShare } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import getFileIcon from "./GetFileIcon";
@@ -11,6 +11,7 @@ import { Pin, Download, FileIcon, ReplyIcon, ViewIcon } from "lucide-react";
 import ReactionPicker from "./ReactionPicker";
 import MessageStatus from "./MessageStatus";
 import MessageTimestamp from "./MessageTimestamp";
+
 export default function ChatMessage({
   message,
   previousMessage,
@@ -22,7 +23,6 @@ export default function ChatMessage({
   onReact,
   isChannelChat,
 }) {
-  const [isShareOpen, setIsShareOpen] = useState(false);
   const [showFullContent, setShowFullContent] = useState(false);
   const contentRef = useRef(null);
   const [hasOverflow, setHasOverflow] = useState(false);
@@ -35,8 +35,15 @@ export default function ChatMessage({
     }
   }, [message.content]);
 
+  const handleReaction = (emoji) => {
 
-  const shareMessage = async () => {
+    onReact(message.id, emoji);
+  };
+
+  const shareMessage = async (event) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+
     try {
       let shareData = {
         title: "Shared Message",
@@ -55,7 +62,6 @@ export default function ChatMessage({
         );
         alert("Message copied to clipboard!");
       }
-      setIsShareOpen(false);
     } catch (error) {
       console.error("Error sharing:", error);
     }
@@ -67,7 +73,8 @@ export default function ChatMessage({
         {message.replyTo && (
           <div
             className="bg-black/10 dark:bg-white/10 rounded p-2 text-sm cursor-pointer"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               const originalMessage = document.getElementById(
                 `message-${message.replyTo.id}`
               );
@@ -87,7 +94,6 @@ export default function ChatMessage({
                   alt="Reply"
                   className="h-10 w-10 object-cover rounded"
                 />
-                {console.log(message.replyTo.imageUrl)}
                 <span className="text-sm">Photo</span>
               </div>
             ) : message.replyTo.fileUrl ? (
@@ -125,7 +131,8 @@ export default function ChatMessage({
             </div>
           </div>
         )}
-        {message.linkUrl && <LinkHandler content={message.linkUrl} />}
+
+        {message.linkUrl && <LinkPreviewHandler content={message.linkUrl} />}
 
         {!message.imageUrl && message.fileUrl && (
           <div className="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
@@ -162,9 +169,8 @@ export default function ChatMessage({
 
         <div
           ref={contentRef}
-          className={`${
-            showFullContent ? "" : "max-h-68"
-          } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
+          className={`${showFullContent ? "" : "max-h-68"
+            } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
         >
           <LinkPreviewHandler content={message.content} />
         </div>
@@ -173,16 +179,20 @@ export default function ChatMessage({
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setShowFullContent(!showFullContent)}
+            onClick={(e) => {
+              e.preventDefault();
+              setShowFullContent(!showFullContent);
+            }}
             className="text-xs"
           >
             {showFullContent ? "Show less" : "Show more"}
           </Button>
         )}
+
         {isCurrentUser && (
           <div className="absolute bottom-0 right-0 flex items-center space-x-1 p-1">
-            <MessageStatus 
-              status={messageStatus?.status} 
+            <MessageStatus
+              status={messageStatus?.status}
               seenBy={messageStatus?.seenBy}
               isChannelChat={isChannelChat}
             />
@@ -193,39 +203,30 @@ export default function ChatMessage({
   };
 
   return (
-    <div
-      className={`group relative w-full px-2 mb-2 my-2 ${
-        isCurrentUser ? "items-end" : "items-start"
-      }`}
-    >
-      <div
-        className={`flex w-full mb-1 ${
-          isCurrentUser ? "justify-end" : "justify-start"
-        } px-2`}
-      >
+    <div className={`relative w-full px-2 ${isCurrentUser ? "items-end" : "items-start"
+      }`}>
+      <div className={`flex w-full mb-1 ${isCurrentUser ? "justify-end" : "justify-start"
+        } px-2`}>
         <div className="flex items-center gap-2 text-xs text-muted-foreground ml-8">
           {!isCurrentUser && isChannelChat && (
             <span className="font-medium">{message.user}</span>
           )}
-          <MessageTimestamp 
-    message={message}
-    previousMessage={previousMessage}
-/>
+          <MessageTimestamp
+            message={message}
+            previousMessage={previousMessage}
+          />
         </div>
       </div>
 
-      <div
-        className={`flex items-start gap-2 ${
-          isCurrentUser ? "flex-row-reverse" : "flex-row"
-        }`}
-      >
+      <div className={`flex items-start gap-2 ${isCurrentUser ? "flex-row-reverse" : "flex-row"
+        }`}>
         {!isCurrentUser && (
           <Avatar className="w-8 h-8 border border-gray-500 flex-shrink-0">
             <AvatarImage src={message.photo} alt={message.user} />
           </Avatar>
         )}
 
-        <div className="relative max-w-2xl">
+        <div className="relative max-w-2xl group">
           {message.isPinned && (
             <div className="absolute -top-10 -left-10 flex items-center text-xs text-muted-foreground">
               <Pin className="w-3 h-3 mr-1" /> Pinned
@@ -233,27 +234,25 @@ export default function ChatMessage({
           )}
 
           <Card
-            className={`border-0 ${
-              isCurrentUser
+            className={`border-0 ${isCurrentUser
                 ? "bg-blue-500 text-white dark:bg-blue-700"
                 : "bg-gray-200 dark:bg-gray-700"
-            } ${
-              isCurrentUser
+              } ${isCurrentUser
                 ? "rounded-t-lg rounded-bl-lg"
                 : "rounded-t-lg rounded-br-lg"
-            }`}
+              }`}
           >
             <CardContent className="p-3">{renderContent()}</CardContent>
           </Card>
 
           {message.reactions.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-2 z-20">
+            <div className="flex flex-wrap gap-1 mt-1 z-20">
               {message.reactions.map((reaction, index) => (
                 <Badge
                   key={`${reaction.emoji}-${index}`}
                   variant="secondary"
-                  className="text-xs py-0.5 px-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600"
-                  onClick={() => onReact(message.id, reaction.emoji)}
+                  className="text-xs py-0.5 px-2 cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-600 bg-gray-200"
+                  onClick={(e) => handleReaction(reaction.emoji)}
                 >
                   {reaction.emoji}
                 </Badge>
@@ -261,21 +260,21 @@ export default function ChatMessage({
             </div>
           )}
 
-          <div
-            className={`absolute ${
-              isCurrentUser ? "-top-12 right-0" : "-top-12 -right-52"
-            } z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}
-          >
+          <div className={`absolute ${isCurrentUser ? "-top-12 right-8" : "-top-12 -right-52"
+            } z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}>
             <div className="border-r border-gray-500">
-              <ReactionPicker onReact={(emoji) => onReact(message.id, emoji)} />
+              <ReactionPicker onReact={handleReaction} />
             </div>
             <ReplyIcon
               className="cursor-pointer"
-              onClick={() => onReply(message)}
+              onClick={(e) => {
+                e.preventDefault();
+                onReply(message);
+              }}
             />
             <FaShare
               className="ml-2 cursor-pointer"
-              onClick={() => onShare()}
+              onClick={shareMessage}
             />
             <MessageOptions
               message={message}

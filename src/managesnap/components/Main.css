@@ -122,3 +122,7 @@ body.splash-screen .fade-out {
 .channel-scrollbar::-webkit-scrollbar{
   display: none;
 }
+
+.pin-scrollbar::-webkit-scrollbar{
+  display: none;
+}
