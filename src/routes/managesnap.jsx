@@ -16,6 +16,7 @@ import MSHome from "@/managesnap/components/Home";
 import MSDMs from "@/managesnap/components/DMs";
 import MSNotifications from "../managesnap/components/Activity"
 import MSSettings from "@/managesnap/components/Settings"
+import MSSearch from "../managesnap/components/Search"
 import CKEDitor from "../CKEditor";
 // import MSDesktopDMs from "@/managesnap/components/DMsLayout";
 
@@ -60,6 +61,7 @@ export default function ManageSnapRoutes() {
           <Route path="dms" element={<MSDMs />} />
           <Route path="notifications" element={<MSNotifications />} />
           <Route path="settings" element={<MSSettings />} />
+          <Route path="search" element={<MSSearch />} />
           {/* <Route path="/managesnap/dms" element={<MSDesktopDMs />} /> */}
         </Route>
         </>

@@ -83,12 +83,20 @@ const Header = () => {
       showCustomSearch: false,
       filteredData: NAVIGATION_ITEMS,
     });
-    navigate(path);
+    if (path === '/managesnap/search') {
+      navigate(path, {
+        state: { name: searchState.term.trim() }
+      });
+    } else {
+      navigate(path);
+    }
   };
 
   const handleCustomSearch = () => {
     if (searchState.term.trim()) {
-      handleSearchSelection(`/search?q=${encodeURIComponent(searchState.term)}`);
+      navigate('/managesnap/search', {
+        state: { name: searchState.term.trim() }
+      });
     }
   };
 
@@ -148,7 +156,7 @@ const Header = () => {
           </button>
 
           {searchState.isDropdownVisible && (
-            <div className={`absolute top-full left-0 w-full mt-1 shadow-lg rounded-lg ${
+            <div className={`absolute top-full left-0 w-full mt-1 shadow-lg rounded-lg overflow-auto ${
               theme === "dark" ? "bg-black" : "bg-white"
             } border`}>
               {searchState.filteredData.map((item) => (

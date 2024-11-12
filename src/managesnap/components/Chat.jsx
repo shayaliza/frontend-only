@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import img from "../assets/man1.jpg";
 import img2 from "../assets/man2.jpg";
@@ -119,8 +119,8 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
-  const[scrollButton, setScrollButton] = useState(false);
-
+  const [scrollButton, setScrollButton] = useState(false);
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -171,25 +171,28 @@ function Chat({ toggleProfileSectionVisibility }) {
     if (container) {
       container.scrollTo({
         top: container.scrollHeight,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
 
   useEffect(() => {
     const container = chatContainerRef.current;
-    
+
     const handleScroll = () => {
       if (!container) return;
-      
-      const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100; 
-      const hasScrollableContent = container.scrollHeight > container.clientHeight;
-      
+
+      const isAtBottom =
+        container.scrollHeight - container.scrollTop <=
+        container.clientHeight + 100;
+      const hasScrollableContent =
+        container.scrollHeight > container.clientHeight;
+
       setScrollButton(hasScrollableContent && !isAtBottom);
     };
-    
-    container?.addEventListener('scroll', handleScroll);
-    return () => container?.removeEventListener('scroll', handleScroll);
+
+    container?.addEventListener("scroll", handleScroll);
+    return () => container?.removeEventListener("scroll", handleScroll);
   }, []);
 
   const resetTextareaHeight = () => {
@@ -198,6 +201,14 @@ function Chat({ toggleProfileSectionVisibility }) {
       textarea.style.height = "auto";
     }
   };
+
+  const handleSearch = (lastSegment) => {
+    navigate(`/managesnap/search`, {
+      state: {
+        name: lastSegment,
+      },
+    });
+  }
 
   const handlePaste = async (e) => {
     const items = Array.from(e.clipboardData.items);
@@ -552,13 +563,7 @@ function Chat({ toggleProfileSectionVisibility }) {
     }, 300);
   };
 
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-
-  const handleClose = () => {
-    setIsSearchVisible(false);
-    setSearchValue("");
-  };
 
   return (
     <div
@@ -692,42 +697,15 @@ function Chat({ toggleProfileSectionVisibility }) {
             </div>
           </div>
           <div className="flex items-center space-x-4 mt-2">
-            {!isSearchVisible ? (
-              <button
-                onClick={() => setIsSearchVisible(true)}
-              >
-                <Search className="w-5 h-5 mr-1" />
-              </button>
-            ) : (
-              <div className="relative flex items-center">
-                <div className="absolute left-2">
-                  <Search className="w-4 h-4" />
-                </div>
-                <input
-                  type="text"
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  placeholder="Search..."
-                  className="w-48 pl-8 pr-8 py-2 text-sm border rounded-lg focus:outline-none bg-transparent"
-                  autoFocus
-                />
-                <button
-                  onClick={handleClose}
-                  className="absolute right-2 p-1 rounded-full"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-
+            <button onClick={() => handleSearch(lastSegment)}>
+              <Search className="w-5 h-5 mr-1" />
+            </button>
             <button className="p-1">
               <PinIcon className="w-5 h-5" />
             </button>
-
             <button className="p-1">
               <FileIcon className="w-5 h-5" />
             </button>
-
             <button className="p-1">
               <MoreVerticalIcon className="w-5 h-5" />
             </button>
@@ -735,57 +713,61 @@ function Chat({ toggleProfileSectionVisibility }) {
         </div>
       </div>
 
-  <div className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
-  ref={chatContainerRef}>
-  {messages.map((message, index) => (
-    <ChatMessage
-      key={message.id}
-      message={message}
-      isCurrentUser={message.user === "You"}
-      previousMessage={index > 0 ? messages[index - 1] : null}
-      onReply={setReplyToMessage}
-      onEdit={(messageId, content) => {
-        setEditingMessageId(messageId);
-        setMessageInput(content);
-      }}
-      onPin={(messageId) => {
-        setMessages(
-          messages.map((msg) =>
-            msg.id === messageId
-              ? { ...msg, isPinned: !msg.isPinned }
-              : msg
-          )
-        );
-      }}
-      onReact={(messageId, reaction) => {
-        setMessages(
-          messages.map((msg) =>
-            msg.id === messageId
-              ? {
-                  ...msg,
-                  reactions: msg.reactions.some((r) => r.emoji === reaction)
-                    ? msg.reactions.filter((r) => r.emoji !== reaction)
-                    : [...msg.reactions, { emoji: reaction, count: 1 }],
-                }
-              : msg
-          )
-        );
-      }}
-      onImageClick={(imageUrl) => setImagePreview(imageUrl)}
-      isChannelChat={isChannelChat}
-    />
-  ))}
-  {scrollButton && (
-    <div
-    className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
-    onClick={() => setShouldScrollToBottom(true)}
-  >
-    <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-  </div>
-  )}
+      <div
+        className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
+        ref={chatContainerRef}
+      >
+        {messages.map((message, index) => (
+          <ChatMessage
+            key={message.id}
+            message={message}
+            isCurrentUser={message.user === "You"}
+            previousMessage={index > 0 ? messages[index - 1] : null}
+            onReply={setReplyToMessage}
+            onEdit={(messageId, content) => {
+              setEditingMessageId(messageId);
+              setMessageInput(content);
+            }}
+            onPin={(messageId) => {
+              setMessages(
+                messages.map((msg) =>
+                  msg.id === messageId
+                    ? { ...msg, isPinned: !msg.isPinned }
+                    : msg
+                )
+              );
+            }}
+            onReact={(messageId, reaction) => {
+              setMessages(
+                messages.map((msg) =>
+                  msg.id === messageId
+                    ? {
+                        ...msg,
+                        reactions: msg.reactions.some(
+                          (r) => r.emoji === reaction
+                        )
+                          ? msg.reactions.filter((r) => r.emoji !== reaction)
+                          : [...msg.reactions, { emoji: reaction, count: 1 }],
+                      }
+                    : msg
+                )
+              );
+            }}
+            onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+            isChannelChat={isChannelChat}
+          />
+        ))}
+        {scrollButton && (
+          <div
+            className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+            onClick={() => setShouldScrollToBottom(true)}
+          >
+            <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+          </div>
+        )}
 
-  <div ref={messagesEndRef} />
-</div>
+        <div ref={messagesEndRef} />
+      </div>
 
       {selectedFiles.length > 0 && renderFilePreview()}
 
