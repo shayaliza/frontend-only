@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ProfileSection from "./ProfileSection";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -173,7 +173,7 @@ const DMs = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
-
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -437,6 +437,14 @@ const DMs = () => {
     }
   };
 
+  const handleSearch = (selectedUser) => {
+    navigate(`/managesnap/search`, {
+      state: {
+        name: selectedUser.name,
+      },
+    });
+  }
+
   const downloadImage = (imageUrl) => {
     const link = document.createElement("a");
     link.href = imageUrl;
@@ -687,44 +695,19 @@ const DMs = () => {
                     <div className="text-lg font-bold">{selectedUser.name}</div>
                   </div>
                   <div className="flex items-center space-x-4 mt-2">
-                    {!isSearchVisible ? (
-                      <button onClick={() => setIsSearchVisible(true)}>
-                        <Search className="w-5 h-5 mr-1" />
-                      </button>
-                    ) : (
-                      <div className="relative flex items-center">
-                        <div className="absolute left-2">
-                          <Search className="w-4 h-4" />
-                        </div>
-                        <input
-                          type="text"
-                          value={searchValue}
-                          onChange={(e) => setSearchValue(e.target.value)}
-                          placeholder="Search..."
-                          className="w-48 pl-8 pr-8 py-2 text-sm border rounded-lg focus:outline-none bg-transparent"
-                          autoFocus
-                        />
-                        <button
-                          onClick={handleClose}
-                          className="absolute right-2 p-1 rounded-full"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    )}
-
-                    <button className="p-1">
-                      <PinIcon className="w-5 h-5" />
-                    </button>
-
-                    <button className="p-1">
-                      <FileIcon className="w-5 h-5" />
-                    </button>
-
-                    <button className="p-1">
-                      <MoreVerticalIcon className="w-5 h-5" />
-                    </button>
-                  </div>
+            <button onClick={() => handleSearch(selectedUser)}>
+              <Search className="w-5 h-5 mr-1" />
+            </button>
+            <button className="p-1">
+              <PinIcon className="w-5 h-5" />
+            </button>
+            <button className="p-1">
+              <FileIcon className="w-5 h-5" />
+            </button>
+            <button className="p-1">
+              <MoreVerticalIcon className="w-5 h-5" />
+            </button>
+          </div>
                 </div>
               </div>
 
