@@ -8,7 +8,7 @@ import iconsun from "../assets/rsc/icons8-sun-48.png";
 import profileimg from "../assets/rsc/arnold-francisca-nPhl2x4fk2s-unsplash.jpg";
 import notification from "../assets/rsc/notification-bell.png";
 import { ModeToggle } from "../../DarkMode/ToggleMode";
-import { useTheme } from "../../DarkMode/ThemeProvider";
+import { useTheme } from '../../DarkMode/ThemeProvider';
 import { IoIosArrowDropdown } from "react-icons/io";
 
 function Header({ toggleSidebar }) {
@@ -17,6 +17,7 @@ function Header({ toggleSidebar }) {
   const [activeTab, setActiveTab] = useState("top");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const searchPopupRef = useRef(null);
   const { theme } = useTheme();
   const mainToggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -29,6 +30,9 @@ function Header({ toggleSidebar }) {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsDropdownOpen(false);
+      }
+      if (searchPopupRef.current && !searchPopupRef.current.contains(event.target)) {
+        setSearchOpen(false);
       }
     };
 
@@ -124,16 +128,14 @@ function Header({ toggleSidebar }) {
   return (
     <>
       <div
-        className={`flex justify-between items-center border-b py-4 px-4 lg:px-8 ${
-          theme == "dark" ? "bg-black text-white" : "bg-gray-800 text-gray-300"
-        }`}
+        className={`flex justify-between items-center border-b py-2 px-4 lg:px-8 bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100`}
       >
         <div className="flex items-center space-x-2">
           <img
             src={datasnaplogo}
             alt="datasnap logo"
             className="w-10 cursor-pointer"
-            onClick={() => navigate("/datasnap/home")}
+            onClick={() => navigate("home")}
           />
           <p className="text-xl font-semibold sm:block">datasnap</p>
           <div className="relative" ref={dropdownRef}>
@@ -150,13 +152,10 @@ function Header({ toggleSidebar }) {
                     Following
                   </li>
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    <Link to="/dashboard/profile">Home</Link>
-                  </li>
-                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    <Link to="/createsnap/analytics">Createsnap</Link>
-                  </li>
-                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
                     <Link to="/datasnap">Datasnap</Link>
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/dashboard/profile">Home</Link>
                   </li>
                 </ul>
               </div>
@@ -178,7 +177,7 @@ function Header({ toggleSidebar }) {
             <FaSearch />
           </div>
 
-          <Link to="/ds/create" aria-label="Create Blog Post">
+          <Link to="/create" aria-label="Create Blog Post">
             <img src={writeimg} alt="Create blog post" className="w-6 h-6" />
           </Link>
           <ModeToggle className="hidden lg:block" />
@@ -196,14 +195,10 @@ function Header({ toggleSidebar }) {
             />
             {dropdownOpen && (
               <div
-                className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg py-2 z-50 lg:hidden border border-gray-200 ${
-                  theme == "dark"
-                    ? "bg-black text-white"
-                    : "bg-gray-800 text-gray-300"
-                }`}
+                className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg py-2 z-50 lg:hidden border border-gray-200 bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100`}
               >
                 <Link
-                  to="detail"
+                  to="details"
                   className="block px-4 py-2 hover:bg-gray-100"
                   onClick={() => setDropdownOpen(false)}
                 >
@@ -223,8 +218,9 @@ function Header({ toggleSidebar }) {
       {searchOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
           <div
-            className="relative w-full max-w-2xl mx-auto bg-white border border-slate-200 rounded-lg shadow-lg p-6"
+            className="relative w-full max-w-2xl mx-auto bg-white border border-slate-200 rounded-lg shadow-lg p-6 text-gray-800"
             style={{ top: "-20%" }}
+            ref={searchPopupRef}
           >
             <section className="relative flex w-full">
               <input
@@ -239,13 +235,6 @@ function Header({ toggleSidebar }) {
               />
               <FaSearch className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
             </section>
-            <button
-              className="absolute top-0 right-2 text-2xl text-gray-500 hover:text-gray-800"
-              onClick={closePopup}
-              aria-label="Close"
-            >
-              &times;
-            </button>
             {!searchInput && (
               <div className="flex justify-center items-center mt-4">
                 <span className="text-center">
@@ -264,7 +253,7 @@ function Header({ toggleSidebar }) {
                         className={`py-2 px-1 ${
                           activeTab === tab
                             ? "border-b-2 border-blue-500 text-blue-500"
-                            : "text-gray-500"
+                            : "text-gray-800"
                         }`}
                         onClick={() => setActiveTab(tab)}
                       >

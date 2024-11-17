@@ -4,7 +4,7 @@ import image2 from "../assets/rsc/jeffrey-keenan-pUhxoSapPFA-unsplash.jpg";
 import image3 from "../assets/rsc/joshua-earle-ICE__bo2Vws-unsplash.jpg";
 import image4 from "../assets/rsc/arnold-francisca-nPhl2x4fk2s-unsplash.jpg";
 import { FaPlus } from "react-icons/fa";
-import { useTheme } from "../../DarkMode/ThemeProvider";
+
 
 const tagSections = [
   {
@@ -98,20 +98,30 @@ const blogSections = [
           { date: "3 Aug, 2022", title: "API Security Best Practices" },
         ],
       },
+      {
+        profileImg: image1,
+        author: "Alt Engineer",
+        url: "backendengineer.hashnode.dev",
+        posts: [
+          { date: "9 Aug, 2022", title: "Introduction to Docker" },
+          { date: "6 Aug, 2022", title: "Understanding Microservices" },
+          { date: "3 Aug, 2022", title: "API Security Best Practices" },
+        ],
+      },
     ],
   },
 ];
 
 const BlogPage = () => {
-  const { theme } = useTheme();
+
   return (
-    <div className="px-2 md:px-8">
-      <h1 className="text-2xl md:text-3xl md:text-center text-white font-bold mb-4">
+    <div className="px-2 md:p-8 ">
+      <h1 className="text-2xl md:text-3xl md:text-center font-bold mb-4">
         Explore Tech Blogs & Tags
       </h1>
       <div className="mt-2">
         {tagSections.map((section, index) => (
-          <div key={index} className="mb-8 text-white ">
+          <div key={index} className="mb-8  ">
             <div className="text-xl font-semibold mb-4">
               <h3 className="text-blue-600">{section.title}</h3>
               <p className="">{section.subtitle}</p>
@@ -120,17 +130,13 @@ const BlogPage = () => {
               {section.items.map((item, itemIndex) => (
                 <div
                   key={itemIndex}
-                  className={`flex justify-between items-center p-2 border rounded-lg border-gray-600 ${
-                    theme == "dark"
-                      ? "bg-black text-white"
-                      : "bg-gray-600 text-gray-300"
-                  }`}
+                  className={`flex justify-between items-center p-2 border rounded-lg border-gray-600 bg-gray-50 text-gray-800 dark:text-gray-100 dark:bg-black`}
                 >
                   <div>
                     <h4 className="text-lg font-medium">{item.tag}</h4>
                     <p className="">{item.articles}</p>
                   </div>
-                  <button className="text-white px-2 rounded-full text-3xl">
+                  <button className="px-2 rounded-full text-3xl">
                     +
                   </button>
                 </div>
@@ -145,13 +151,13 @@ const BlogPage = () => {
               <p className="text-xl text-blue-600 font-semibold mb-2">
                 {section.title}
               </p>
-              <p className="text-white">{section.subtitle}</p>
+              <p className="">{section.subtitle}</p>
             </div>
             <div className="space-y-8">
               {section.blogs.map((blog, blogIndex) => (
                 <div
                   key={blogIndex}
-                  className={`${theme == 'dark' ? 'bg-black text-white' : "bg-gray-700 text-gray-300"}  border border-gray-200 p-4 rounded-lg shadow-md`}
+                  className={`bg-gray-50 text-gray-800 dark:text-gray-100 dark:bg-black border border-gray-200 p-4 rounded-lg shadow-md`}
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
                     <div className="flex items-center mb-4 lg:mb-0">
@@ -161,10 +167,10 @@ const BlogPage = () => {
                         className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 shadow-md mr-4"
                       />
                       <div>
-                        <h4 className="text-xl font-semibold text-white">
+                        <h4 className="text-xl font-semibold ">
                           {blog.author}
                         </h4>
-                        <p className="text-gray-300">{blog.url}</p>
+                        <p className="">{blog.url}</p>
                       </div>
                     </div>
                     <button className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
@@ -175,7 +181,7 @@ const BlogPage = () => {
                   <div>
                     {blog.posts.map((post, postIndex) => (
                       <div key={postIndex} className="pt-2 mt-2">
-                        <p className="text-white">
+                        <p className="">
                           <span className="font-medium">{post.date}</span> -{" "}
                           {post.title}
                         </p>
@@ -194,13 +200,13 @@ const BlogPage = () => {
               <p className="text-xl text-blue-600 font-semibold mb-2">
                 {section.title}
               </p>
-              <p className="text-white">{section.subtitle}</p>
+              <p className="">{section.subtitle}</p>
             </div>
             <div className="space-y-8">
               {section.blogs.map((blog, blogIndex) => (
                 <div
                   key={blogIndex}
-                  className={`${theme == 'dark' ? 'bg-black text-white' : "bg-gray-700 text-gray-300"} border border-gray-200 p-4 rounded-lg shadow-md`}
+                  className={`$bg-gray-50 text-gray-800 dark:text-gray-100 dark:bg-black border border-gray-300 p-4 rounded-lg shadow-md`}
                 >
                   <div className="flex flex-col lg:flex-row items-center justify-between mb-4">
                     <div className="flex items-center mb-4 lg:mb-0">
@@ -210,10 +216,10 @@ const BlogPage = () => {
                         className="w-16 h-16 object-cover rounded-full border-2 border-blue-600 shadow-md mr-4"
                       />
                       <div>
-                        <h4 className="text-xl font-semibold text-white">
+                        <h4 className="text-xl font-semibold">
                           {blog.author}
                         </h4>
-                        <p className="text-gray-300">{blog.url}</p>
+                        <p >{blog.url}</p>
                       </div>
                     </div>
                     <button className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
@@ -223,7 +229,7 @@ const BlogPage = () => {
                   <div>
                     {blog.posts.map((post, postIndex) => (
                       <div key={postIndex} className="pt-2 mt-2">
-                        <p className="text-white">
+                        <p className="">
                           <span className="font-medium">{post.date}</span> -{" "}
                           {post.title}
                         </p>

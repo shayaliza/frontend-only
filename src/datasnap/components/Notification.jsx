@@ -55,20 +55,20 @@ function Notification({ isOpen }) {
       <div
         className={`${
           isOpen ? "block" : "hidden"
-        } lg:flex flex-col space-y-4 sm:space-y-8 p-4 sm:p-6 bg-black lg:w-96 overflow-y-auto `}
+        } lg:flex flex-col space-y-4 sm:space-y-8 p-4 sm:p-6 bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100 `}
       >
-        <section className="flex items-center space-x-4 p-3 sm:p-4 bg-gray-800 rounded-lg shadow-sm text-white">
+        <section className="flex items-center space-x-4 p-3 sm:p-4 border border-gray-300 shadow-sm rounded-lg">
           <img
             src={android}
             alt="Android"
-            className="w-8 h-8 sm:w-12 sm:h-12"
+            className="w-8 h-8 sm:w-12 sm:h-12 flex-shrink-0"
           />
           <p className="text-sm sm:text-lg font-semibold">
             Datasnap for Android is here!
           </p>
         </section>
 
-        <section className="bg-gray-800 p-3 sm:p-4 rounded-lg shadow-sm text-white">
+        <section className="p-3 sm:p-4 border border-gray-300 shadow-sm rounded-lg">
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <p className="text-base sm:text-lg font-semibold">
               Trending Articles
@@ -76,7 +76,7 @@ function Notification({ isOpen }) {
             <img
               src={trendingIcon}
               alt="Trending"
-              className="w-5 h-5 sm:w-6 sm:h-6"
+              className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
             />
           </div>
           <div className="space-y-4 sm:space-y-6">
@@ -88,7 +88,7 @@ function Notification({ isOpen }) {
                 <img
                   src={article.image}
                   alt="Article"
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex-shrink-0"
                 />
                 <div>
                   <h4 className="text-sm sm:text-md font-semibold">
@@ -100,7 +100,7 @@ function Notification({ isOpen }) {
                       <img
                         src={likeIcon}
                         alt="Likes"
-                        className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
+                        className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0"
                       />
                       {article.likes}
                     </span>
@@ -108,7 +108,7 @@ function Notification({ isOpen }) {
                       <img
                         src={commentIcon}
                         alt="Comments"
-                        className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
+                        className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0"
                       />
                       {article.comments}
                     </span>
@@ -122,7 +122,7 @@ function Notification({ isOpen }) {
           </div>
         </section>
 
-        <section className="bg-gray-800 p-3 sm:p-4 rounded-lg shadow-sm text-white">
+        <section className="p-3 sm:p-4 border border-gray-300 shadow-sm rounded-lg">
           <p className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
             Recently Accessed
           </p>
@@ -135,7 +135,7 @@ function Notification({ isOpen }) {
                 <img
                   src={article.image}
                   alt="Article"
-                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex-shrink-0"
                 />
                 <div>
                   <h4 className="text-sm sm:text-md font-semibold">
@@ -162,7 +162,7 @@ function Notification({ isOpen }) {
             <img
               src={android}
               alt="Android"
-              className="w-8 h-8 sm:w-12 sm:h-12"
+              className="w-8 h-8 sm:w-12 sm:h-12 flex-shrink-0"
             />
             <p className="text-sm sm:text-lg font-semibold">
               Datasnap for Android is here!
@@ -177,7 +177,7 @@ function Notification({ isOpen }) {
               <img
                 src={trendingIcon}
                 alt="Trending"
-                className="w-5 h-5 sm:w-6 sm:h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
               />
             </div>
             <div className="space-y-4 sm:space-y-6">
@@ -189,7 +189,7 @@ function Notification({ isOpen }) {
                   <img
                     src={article.image}
                     alt="Article"
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex-shrink-0"
                   />
                   <div>
                     <h4 className="text-sm sm:text-md font-semibold">
@@ -201,7 +201,7 @@ function Notification({ isOpen }) {
                         <img
                           src={likeIcon}
                           alt="Likes"
-                          className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
+                          className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0"
                         />
                         {article.likes}
                       </span>
@@ -209,7 +209,7 @@ function Notification({ isOpen }) {
                         <img
                           src={commentIcon}
                           alt="Comments"
-                          className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
+                          className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0"
                         />
                         {article.comments}
                       </span>
@@ -223,7 +223,7 @@ function Notification({ isOpen }) {
             </div>
           </section>
 
-          <section className="bg-gray-800 p-3 sm:p-4 rounded-lg shadow-sm text-white">
+          <section className="p-3 sm:p-4 border border-gray-300 shadow-sm rounded-lg">
             <p className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               Recently Accessed
             </p>
@@ -236,7 +236,7 @@ function Notification({ isOpen }) {
                   <img
                     src={article.image}
                     alt="Article"
-                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex-shrink-0"
                   />
                   <div>
                     <h4 className="text-sm sm:text-md font-semibold">

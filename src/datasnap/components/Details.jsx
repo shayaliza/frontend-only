@@ -56,7 +56,7 @@ const NavBarDesktop = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white flex flex-col min-h-screen">
+    <div className="bg-gray-800 text-white flex flex-col min-h-screen pb-10 lg:pb-0">
       <div className="min-h-screen flex bg-gray-100">
         <div className="m-4 bg-gray-50 rounded-xl overflow-hidden">
           <div className="w-full my-4 lg:px-8">
@@ -692,7 +692,7 @@ const NavBarDesktop = () => {
           </div>
         </div>
 
-        <div className="w-3/4 hidden lg:block p-4 bg-gray-700 min-h-screen">
+        <div className="w-3/4 hidden lg:block p-4 bg-gray-700 min-h-screen sticky top-[-240px]">
           <div className="border border-gray-200 rounded-lg p-4">
             <div className="flex items-center">
               <img

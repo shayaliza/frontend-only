@@ -19,54 +19,54 @@ function Sidebar({ isOpen, setIsOpen }) {
 
   const getLinkClass = (path) =>
     `flex items-center mb-2 p-2 rounded-lg transition-all ${
-      location.pathname === path ? "bg-gray-700" : "hover:bg-gray-700"
+      location.pathname === path ? "bg-gray-300" : "hover:bg-gray-400"
     }`;
 
   return (
     <div className="">
       <div
-        className={`hidden lg:flex lg:flex-col lg:justify-between sticky top-0 h-full bg-black text-white p-6 shadow-lg `}
+        className={`hidden lg:flex lg:flex-col lg:justify-between sticky top-0 h-full bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100 px-6 py-2 shadow-lg `}
       >
         <div>
           <div className={getLinkClass("/home")}>
-            <FaHome className="w-6 h-6 mr-4 text-blue-400" />
+            <FaHome className="w-6 h-6 mr-4 text-blue-600" />
             <Link to="home" className="text-lg font-medium">
               My Feed
             </Link>
           </div>
           <div className={getLinkClass("/explore")}>
-            <FaCompass className="w-6 h-6 mr-4 text-blue-400" />
+            <FaCompass className="w-6 h-6 mr-4 text-blue-600" />
             <Link to="explore" className="text-lg font-medium">
               Explore
             </Link>
           </div>
           <div className={getLinkClass("/drafts")}>
-            <FaPenAlt className="w-6 h-6 mr-4 text-blue-400" />
+            <FaPenAlt className="w-6 h-6 mr-4 text-blue-600" />
             <Link to="drafts" className="text-lg font-medium">
               Drafts
             </Link>
           </div>
-          <div className={getLinkClass("/publised")}>
-            <FaPenAlt className="w-6 h-6 mr-4 text-blue-400" />
-            <Link to="publised" className="text-lg font-medium">
-              Publised
-            </Link>
-          </div>
           <div className={getLinkClass("/bookmarks")}>
-            <FaBookmark className="w-6 h-6 mr-4 text-blue-400" />
+            <FaBookmark className="w-6 h-6 mr-4 text-blue-600" />
             <Link to="bookmarks" className="text-lg font-medium">
               Bookmarks
             </Link>
           </div>
+          <div className={getLinkClass("/published")}>
+            <FaBookmark className="w-6 h-6 mr-4 text-blue-600" />
+            <Link to="published" className="text-lg font-medium">
+              Published
+            </Link>
+          </div>
           <div className={getLinkClass("/more")}>
-            <FaEllipsisH className="w-6 h-6 mr-4 text-blue-400" />
-            <Link to="detail" className="text-lg font-medium">
+            <FaEllipsisH className="w-6 h-6 mr-4 text-blue-600" />
+            <Link to="details" className="text-lg font-medium">
               More
             </Link>
           </div>
         </div>
-        <div className="mt-4">
-          <div className="flex items-center justify-between mb-4">
+        <div className="mt-2">
+          <div className="flex items-center justify-between mb-2">
             <p className="text-xl font-semibold">Trending Tags</p>
             <img src={trendingimg} alt="Trending" className="w-6 h-6" />
           </div>
@@ -77,31 +77,31 @@ function Sidebar({ isOpen, setIsOpen }) {
               </a>
               <span className="text-sm text-gray-400">+205</span>
             </p>
-            <p className="flex justify-between p-2 hover:bg-gray-700 rounded-lg transition-all">
+            <p className="flex justify-between p-2 hover:bg-gray-400 rounded-lg transition-all">
               <a href="" className="text-md">
                 React
               </a>
               <span className="text-sm text-gray-400">+93</span>
             </p>
-            <p className="flex justify-between p-2 hover:bg-gray-700 rounded-lg transition-all">
+            <p className="flex justify-between p-2 hover:bg-gray-400 rounded-lg transition-all">
               <a href="" className="text-md">
                 CSS
               </a>
               <span className="text-sm text-gray-400">+105</span>
             </p>
-            <p className="flex justify-between p-2 hover:bg-gray-700 rounded-lg transition-all">
+            <p className="flex justify-between p-2 hover:bg-gray-400 rounded-lg transition-all">
               <a href="" className="text-md">
                 Python
               </a>
               <span className="text-sm text-gray-400">+66</span>
             </p>
-            <p className="flex justify-between p-2 hover:bg-gray-700 rounded-lg transition-all">
+            <p className="flex justify-between p-2 hover:bg-gray-400 rounded-lg transition-all">
               <a href="" className="text-md">
                 Vue
               </a>
               <span className="text-sm text-gray-400">+40</span>
             </p>
-            <p className="p-2 hover:bg-gray-700 rounded-lg transition-all">
+            <p className="p-2 hover:bg-gray-400 rounded-lg transition-all">
               <a href="" className="text-md">
                 Show more
               </a>

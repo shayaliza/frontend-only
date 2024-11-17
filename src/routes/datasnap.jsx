@@ -21,9 +21,9 @@ export default function DataSnapRoutes() {
         <Route path="home" element={<BlogHome />} />
         <Route path="explore" element={<BlogExplore />} />
         <Route path="drafts" element={<BlogDrafts />} />
-        <Route path="publised" element={<BlogPublised />} />
+        <Route path="published" element={<BlogPublised />} />
         <Route path="bookmarks" element={<BlogBookmarks />} />
-        <Route path="detail" element={<BlogDetails />} />
+        <Route path="details" element={<BlogDetails />} />
       </Route>
       <Route path="ds/create" element={<BlogCreate />} />
       <Route path="/ds/edit/:id" element={<BlogEdit />} />

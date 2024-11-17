@@ -5,7 +5,7 @@ import img3 from "../assets/rsc/bookmark.png";
 import img4 from "../assets/rsc/explore.png";
 import img5 from "../assets/rsc/notification-bell.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTheme } from "../../DarkMode/ThemeProvider";
+
 
 function BottomBar() {
   const navigate = useNavigate();
@@ -21,13 +21,12 @@ function BottomBar() {
   ];
 
   const handleClick = (path) => {
-    navigate(`/datasnap/${path}`);
+    navigate(`/${path}`);
   };
 
-  const {theme} = useTheme();
 
   return (
-    <div className={`w-full bg-background border-t border-gray-300 z-30 shadow-lg ${theme == 'dark' ? 'bg-black text-white' : "bg-gray-800 text-white"} flex justify-around items-center px-4 pb-2 safe-bottom`}>
+    <div className={`w-full bg-background border-t border-gray-300 z-30 shadow-lg bg-gray-50 text-gray-800 dark:text-gray-100 dark:bg-black flex justify-around items-center px-4 pb-2 safe-bottom`}>
       {tabs.map((tab) => {
         const isActive = currentPath === tab.name;
 
@@ -41,7 +40,7 @@ function BottomBar() {
             aria-label={tab.label}
           >
             <img src={tab.icon} alt={tab.label} className="w-6 h-6" />
-            <span className="text-xs text-white">{tab.label}</span>
+            <span className="text-xs">{tab.label}</span>
           </div>
         );
       })}
