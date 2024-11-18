@@ -31,7 +31,7 @@ const Layout = () => {
 
           {currentPath !== "details" && (
             <div
-              className="hidden lg:block lg:w-1/3 sticky top-[-240px] bg-gray-100 dark:bg-gray-900 scroll-smooth"
+              className="hidden lg:block lg:w-1/3 sticky top-[-280px] bg-gray-100 dark:bg-gray-900 scroll-smooth"
             >
               <Notification />
             </div>

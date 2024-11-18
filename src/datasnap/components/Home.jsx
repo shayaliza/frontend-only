@@ -61,83 +61,60 @@ const Tab = memo(({ tab, isActive, onClick }) => (
   </div>
 ));
 
-const Article = memo(
-  ({
-    profileImg,
-    author,
-    date,
-    title,
-    readTime,
-    reactions,
-    dislikes,
-    comments,
-    tags,
-    description,
-    activeTab,
-  }) => (
-    <div className="article-card p-2 md:p-4 mb-2 border-2 pb-4 overflow-auto shadow-lg rounded-lg">
-      <div className="profile flex items-center mb-4 overflow-auto">
-        <img
-          src={profileImg}
-          alt="Profile"
-          className="profile-image w-12 h-12 rounded-full mr-4"
-          loading="lazy"
-        />
-        <div className="info">
-          <h4 className="text-lg font-semibold">
-            <a href="#">{author}</a>
-          </h4>
-          <p className="text-sm">{date}</p>
+const Article = memo(({
+  profileImg,
+  author,
+  date,
+  tags,
+  title,
+  activeTab,
+  likes = 50,
+  dislikes = 5,
+  shares = 20,
+  reads = 118,
+  description,
+  isPro = true,
+}) => (
+  <div className="border rounded-lg p-4 overflow-auto shadow-lg mb-3">
+    {/* Header with profile */}
+    <div className="flex items-center mb-4">
+      <img
+        src={profileImg}
+        alt={`${author}'s profile`}
+        className="w-12 h-12 rounded-full mr-4"
+      />
+      <div>
+        <div className="flex items-center gap-2">
+          <span className="text-lg font-semibold">{author}</span>
+          {isPro && (
+            <span className="px-2 text-sm border rounded-md">Pro</span>
+          )}
+        </div>
+        <div className="text-sm">
+          <span>{date}</span>
         </div>
       </div>
-      <div className="article-content">
-        <div className="content mb-4">
-          {activeTab !== "myfeed" && (
-            <div className="read-reactions flex items-center mb-2 text-sm">
-              <div className="read flex items-center mr-4">
-                <img
-                  src={read}
-                  alt="Read"
-                  className="w-4 h-4 mr-1"
-                  loading="lazy"
-                />
-                <p>
-                  {readTime} <span>read</span>
-                </p>
-              </div>
-              <div className="reactions flex items-center mr-4">
-                <FaHeart className="mr-1 text-red-500" />
-                <p>
-                  {reactions} <span>Reactions</span>
-                </p>
-              </div>
-              <div className="comments flex items-center">
-                <FaComment className="mr-1" />
-                <p>
-                  {comments} <span>Comments</span>
-                </p>
-              </div>
-            </div>
-          )}
-          <div className="flex flex-col md:flex-row justify-between gap-2 p-2">
-            <div className="flex-1">
-              <h3 className="text-md font-bold mb-2">{title}</h3>
-              <div className="text-sm">
-                <span>{description}</span>
-              </div>
-            </div>
-            <div className="w-full md:w-1/3 mb-2">
-              <img
-                src={img2}
-                alt="Article"
-                className="w-full h-auto"
-                loading="lazy"
-              />
-            </div>
+    </div>
+
+    <div className="mb-4">
+      <div className="flex flex-col md:flex-row justify-between gap-2 p-2">
+        <div className="flex-1">
+          <h3 className="text-md font-bold mb-2">{title}</h3>
+          <div className="text-sm">
+            <span>{description}</span>
           </div>
         </div>
+          <div className="w-full md:w-1/3 mb-2">
+            <img
+              src={img2}
+              alt="Article preview"
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
       </div>
-      <div className="tags-used flex items-center justify-between text-sm">
+    </div>
+    <div className="tags-used flex items-center justify-between text-sm mb-4">
         <p className="used-tags flex items-center">
           Tags:
           {tags.map((tag, index) => (
@@ -153,15 +130,45 @@ const Article = memo(
           <p className="save-button cursor-pointer text-blue-500">Save post</p>
         )}
       </div>
-      {activeTab !== "myfeed" && (
-        <div className="flex items-center mt-4 text-sm">
-          <FaHeart className="mr-2 text-red-500 cursor-pointer" />
-          <FaComment className="mr-2 text-gray-500 cursor-pointer" />
-        </div>
-      )}
+
+      <div className="flex items-center gap-4">
+        <button className="flex items-center gap-1">
+          <ThumbsUpIcon className="w-4 h-4" />
+          <span>{likes} </span>
+        </button>
+        <button className="flex items-center gap-1">
+          <ThumbsDownIcon className="w-4 h-4" />
+          <span>{dislikes} </span>
+        </button>
+        <button className="flex items-center gap-1">
+          <MessageCircle className="w-4 h-4" />
+          <span>0</span>
+        </button>
+        <button className="flex items-center gap-1">
+          <Bookmark className="w-4 h-4" />
+          <span>{reads} </span>
+        </button>
+        <button className="flex items-center gap-1">
+          <Share2Icon className="w-4 h-4" />
+          <span>{shares}</span>
+        </button>
+      </div>
+
+      {/* <div className="flex items-center gap-4 px-4">
+        <button className="flex items-center gap-2">
+          <ThumbsUpIcon className="w-4 h-4" />
+        </button>
+        <button className="flex items-center gap-2">
+          <ThumbsDownIcon className="w-4 h-4" />
+        </button>
+        <button className="flex items-center gap-1">
+          <MessageCircle className="w-4 h-4" />
+        </button>
+        <Share2Icon className="cursor-pointer w-4 h-4" />
+        <Bookmark className="cursor-pointer w-4 h-4" />
+      </div> */}
     </div>
-  )
-);
+));
 const ArticleMobile = memo(
   ({
     profileImg,
