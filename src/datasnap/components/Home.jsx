@@ -45,19 +45,13 @@ const ProfileImage = memo(({ src, index }) => (
 
 const Tab = memo(({ tab, isActive, onClick }) => (
   <div
-    className={`relative flex items-center cursor-pointer space-x-2 p-2 rounded-lg ${
-      isActive ? "bg-gray-400" : "hover:bg-gray-500"
+    className={`relative flex items-center cursor-pointer space-x-2 py-2 px-6 rounded-full ${
+      isActive ? "bg-blue-100 text-blue-600" : "hover:bg-blue-200"
     }`}
     onClick={onClick}
   >
     <img src={tab.icon} alt={tab.text} className="w-6 h-6" />
     <p className="text-xs md:text-sm md:font-medium">{tab.text}</p>
-    {isActive && (
-      <div
-        className="absolute bottom-0 left-0 h-1 bg-blue-500"
-        style={{ width: "calc(100%)", left: "-8px" }}
-      />
-    )}
   </div>
 ));
 
@@ -76,12 +70,12 @@ const Article = memo(({
   isPro = true,
 }) => (
   <div className="border rounded-lg p-4 overflow-auto shadow-lg mb-3">
-    {/* Header with profile */}
+    <div className="flex justify-between items-center">
     <div className="flex items-center mb-4">
       <img
         src={profileImg}
         alt={`${author}'s profile`}
-        className="w-12 h-12 rounded-full mr-4"
+        className="w-12 h-12 mr-4"
       />
       <div>
         <div className="flex items-center gap-2">
@@ -95,6 +89,16 @@ const Article = memo(({
         </div>
       </div>
     </div>
+    <div className="flex gap-4 mr-4">
+    <button className="flex items-center gap-1">
+          <Share2Icon className="w-4 h-4" />
+          <span>{shares}</span>
+        </button>
+        <button className="flex items-center gap-1">
+          <MoreHorizontal className="w-4 h-4" />
+        </button>
+    </div>
+    </div>
 
     <div className="mb-4">
       <div className="flex flex-col md:flex-row justify-between gap-2 p-2">
@@ -103,6 +107,12 @@ const Article = memo(({
           <div className="text-sm">
             <span>{description}</span>
           </div>
+          <div className="flex gap-4 mt-2">
+          <span>#javascript</span>
+          <span>#web development</span>
+          <span>#git</span>
+          </div>
+          
         </div>
           <div className="w-full md:w-1/3 mb-2">
             <img
@@ -114,24 +124,9 @@ const Article = memo(({
           </div>
       </div>
     </div>
-    <div className="tags-used flex items-center justify-between text-sm mb-4">
-        <p className="used-tags flex items-center">
-          Tags:
-          {tags.map((tag, index) => (
-            <Tag key={index} tag={tag} />
-          ))}
-        </p>
-        {activeTab === "myfeed" ? (
-          <div className="flex space-x-2">
-            <p className="text-blue-500">4min</p>
-            <p className="cursor-pointer border px-1">save</p>
-          </div>
-        ) : (
-          <p className="save-button cursor-pointer text-blue-500">Save post</p>
-        )}
-      </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex justify-between items-center gap-4">
+        <div className="flex items-center gap-4">
         <button className="flex items-center gap-1">
           <ThumbsUpIcon className="w-4 h-4" />
           <span>{likes} </span>
@@ -148,10 +143,10 @@ const Article = memo(({
           <Bookmark className="w-4 h-4" />
           <span>{reads} </span>
         </button>
-        <button className="flex items-center gap-1">
-          <Share2Icon className="w-4 h-4" />
-          <span>{shares}</span>
-        </button>
+        </div><div className="flex space-x-2">
+            <p className="text-blue-500">4min</p>
+            <p className="cursor-pointer border px-1">save</p>
+          </div>
       </div>
 
       {/* <div className="flex items-center gap-4 px-4">
