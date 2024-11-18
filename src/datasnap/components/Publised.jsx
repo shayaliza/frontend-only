@@ -50,8 +50,8 @@ function Publised() {
       <div className="w-full max-w-3xl py-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-white">Your Submission </h2>
-            <p className="text-gray-400">All your pending drafts are here</p>
+            <h2 className="text-2xl font-bold ">Your Submission </h2>
+            <p className="">All your pending drafts are here</p>
           </div>
           <Link
             to={"/ds/create"}

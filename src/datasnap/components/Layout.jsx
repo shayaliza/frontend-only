@@ -20,7 +20,7 @@ const Layout = () => {
         {currentPath !== "detail" && (
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         )}
-        <div className="flex flex-1 overflow-y-auto bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100 ds-scrollbar">
+        <div className="flex flex-1 overflow-y-auto bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100">
           <main
             className={`${
               currentPath === "details" ? "w-screen" : "w-full lg:w-2/3 "

@@ -52,20 +52,9 @@
   }
 }
 
-.ds-scrollbar::-webkit-scrollbar-thumb{
-  width: 25px;
-  border-radius: 35px;
-  background-clip: padding-box;
-  border: 10px solid transparent;
-  box-shadow: inset 0 0 0 10px;
-  scroll-behavior: smooth;
+.ds-scrollbar::-webkit-scrollbar{
+  display: none;
 }
 
-.ds-scrollbar::-webkit-scrollbar{
-  width: 25px;
-  border-radius: 35px;
-  background-clip: padding-box;
-  border: 10px solid transparent;
-  scroll-behavior: smooth;
-}
+
 

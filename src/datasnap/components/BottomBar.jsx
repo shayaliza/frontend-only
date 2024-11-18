@@ -21,7 +21,7 @@ function BottomBar() {
   ];
 
   const handleClick = (path) => {
-    navigate(`/${path}`);
+    navigate(`${path}`);
   };
 
 
