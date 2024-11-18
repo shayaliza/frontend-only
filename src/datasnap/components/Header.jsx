@@ -177,7 +177,7 @@ function Header({ toggleSidebar }) {
             <FaSearch />
           </div>
 
-          <Link to="/create" aria-label="Create Blog Post">
+          <Link to="/ds/create" aria-label="Create Blog Post">
             <img src={writeimg} alt="Create blog post" className="w-6 h-6" />
           </Link>
           <ModeToggle className="hidden lg:block" />

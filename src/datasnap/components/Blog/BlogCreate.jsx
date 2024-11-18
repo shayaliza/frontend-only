@@ -6,6 +6,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useTheme } from "../../../DarkMode/ThemeProvider";
 import { CreateABlog } from "../../../fetching/dataSnap/post";
+import { ModeToggle } from "../../../DarkMode/ToggleMode";
 function BlogCreate() {
   const [bannerImage, setBannerImage] = useState(null);
   const [postContent, setPostContent] = useState("");
@@ -75,7 +76,7 @@ function BlogCreate() {
   return (
     <div
       className={`w-full ${
-        theme === "dark" ? "bg-black text-white" : "bg-gray-800 text-gray-300"
+        theme === "dark" ? "bg-black text-white" : "bg-gray-50 text-black"
       }`}
     >
       <div className="shadow-sm sticky top-0 z-50">
@@ -84,6 +85,7 @@ function BlogCreate() {
             <img src={datasnaplogo} alt="Logo" className="h-12" />
           </Link>
           <div className="flex space-x-4">
+            <ModeToggle/>
             <button className="bg-blue-600 text-white px-4 py-2 rounded">
               Preview
             </button>
