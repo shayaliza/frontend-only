@@ -6,6 +6,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useTheme } from "../../../DarkMode/ThemeProvider";
 import { ModeToggle } from "../../../DarkMode/ToggleMode";
+import CKEDitor from "../../../CKEditor";
 
 const suggestedTags = [
   "JavaScript",
@@ -41,12 +42,13 @@ function BlogCreate() {
     }
   };
 
-  const handleRemoveBanner = () => {
-    setBannerImage(null);
+  const handleChange = (event, editor) => {
+    const data = editor.getData();
+    setPostContent(data);
   };
 
-  const handleChange = (value) => {
-    setPostContent(value);
+  const handleRemoveBanner = () => {
+    setBannerImage(null);
   };
 
   const handleInputChange = (e) => {
@@ -289,10 +291,9 @@ function BlogCreate() {
                 </div>
               </div>
               <div className="h-[50vh] border-none w-full">
-                <ReactQuill
-                  value={postContent}
-                  onChange={handleChange}
-                  className="h-full bg-white outline-none border-none pb-20 lg:pb-11"
+                <CKEDitor
+                  data={postContent}
+                  className="h-auto bg-white outline-none border-none pb-20 lg:pb-11"
                 />
               </div>
             </div>
