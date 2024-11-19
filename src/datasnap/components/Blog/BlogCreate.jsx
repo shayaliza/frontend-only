@@ -173,7 +173,7 @@ function BlogCreate() {
         </div>
 
         <div className="p-4 md:p-8 flex flex-col gap-3 lg:flex-row">
-          <div className="flex-1 lg:px-8 pt-2 pb-6 mb-8 lg:mb-0 bg-white dark:bg-zinc-800 rounded-lg">
+          <div className="flex-1 px-4 lg:px-8 pt-2 pb-6 mb-8 lg:mb-0 bg-white dark:bg-zinc-800 rounded-lg">
             <div className="p-4 rounded-lg mb-4">
               {bannerImage ? (
                 <div className="flex space-x-4 items-center">

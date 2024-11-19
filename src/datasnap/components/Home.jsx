@@ -210,7 +210,12 @@ const ArticleMobile = memo(
         text: "Jagan gutupettuko ninnu athapathalaniki tokkakapotey na peru pawan kalyan a kadu na party jansena a kadu",
         time: "1h ago"
       },
-
+      {
+        author: "sharmila",
+        profileImg: profileImg,
+        text: "Ippudu deenini Andhra Pradesh ani enduku antaro telusa idhi Andhra Pradesh kabatti",
+        time: "1h ago"
+      },
       {
         author: "Chandrababu",
         profileImg: profileImg,
