@@ -24,32 +24,32 @@ const BottomSheet = ({ isOpen, onClose }) => (
           <div className="p-4 space-y-4">
             <div className="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6" />
             
-            <button className="flex items-center w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button className="flex items-center w-full p-3 rounded-lg">
               <Share2 className="w-5 h-5 mr-3" />
               <span>Share via</span>
             </button>
             
-            <button className="flex items-center w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button className="flex items-center w-full p-3 rounded-lg">
               <Eye className="w-5 h-5 mr-3" />
               <span>Hide</span>
             </button>
             
-            <button className="flex items-center w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button className="flex items-center w-full p-3 rounded-lg">
               <BookmarkPlus className="w-5 h-5 mr-3" />
               <span>Read it later</span>
             </button>
             
-            <button className="flex items-center w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button className="flex items-center w-full p-3 rounded-lg">
               <Plus className="w-5 h-5 mr-3" />
               <span>Follow Community Picks</span>
             </button>
             
-            <button className="flex items-center w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button className="flex items-center w-full p-3 rounded-lg">
               <Ban className="w-5 h-5 mr-3" />
               <span>Don't show posts from Community Picks</span>
             </button>
             
-            <button className="flex items-center w-full p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <button className="flex items-center w-full p-3 rounded-lg">
               <Flag className="w-5 h-5 mr-3" />
               <span>Report</span>
             </button>
