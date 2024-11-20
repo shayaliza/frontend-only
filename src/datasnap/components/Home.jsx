@@ -52,6 +52,7 @@ import {
   BiUpvote,
 } from "react-icons/bi";
 import Share from "./Effects/Share";
+import UserList from "./Effects/SendProfile";
 
 const tabs = [
   { id: "myfeed", icon: activityFeedIcon, text: "My Feed" },
