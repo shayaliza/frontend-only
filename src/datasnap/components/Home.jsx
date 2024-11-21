@@ -306,7 +306,7 @@ const ArticleMobile = memo(
             </p>
           </div>
 
-          <div className="flex items-center gap-4 px-2 text-gray-800 dark:text-white">
+          <div className="flex items-center justify-between px-2 text-gray-800 dark:text-white">
             <button
               className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               aria-label="Like"
@@ -335,9 +335,8 @@ const ArticleMobile = memo(
             <button
               className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
               aria-label="Share"
-              onClick={() => setIsShareOpen(true)}
             >
-              <FaShare className="w-5 h-5" />
+              <Share2Icon className="w-5 h-5" />
             </button>
 
             <button
@@ -345,6 +344,14 @@ const ArticleMobile = memo(
               aria-label="Bookmark"
             >
               <Bookmark className="w-5 h-5" />
+            </button>
+
+            <button
+              className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+              aria-label="Send"
+              onClick={() => setIsShareOpen(true)}
+            >
+              <SendIcon className="w-5 h-5" />
             </button>
           </div>
         </div>

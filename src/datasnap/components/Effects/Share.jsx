@@ -55,7 +55,7 @@ const Share = ({ isOpen, onClose }) => {
 
           <motion.div
             className="fixed bottom-0 left-0 right-0 bg-white dark:bg-black rounded-t-3xl z-30"
-            style={{ height: "75vh" }}
+            style={{height:"75vh"}}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
@@ -76,14 +76,13 @@ const Share = ({ isOpen, onClose }) => {
               </div>
               <div className="flex flex-col space-y-4 mb-6">
                 <h1 className="text-lg font-semibold">Send as Message</h1>
-                <input
-                  type="text"
-                  name="search"
+                <div
                   id="search"
                   className="w-full bg-transparent border border-gray-300 dark:border-gray-700 focus:outline-none rounded-full p-2"
-                  placeholder="Search here..."
                   onClick={()=>setIsSendProfileOpen(true)}
-                />
+                >
+                  Search here...
+                </div>
                 <div className="w-full flex flex-col">
                   <div className="flex overflow-x-auto whitespace-nowrap ds-scrollbar space-x-2">
                     {images.map((src, index) => (
