@@ -362,7 +362,7 @@ const ArticleMobile = memo(
           comments={commentsData}
           profileImg={profileImg}
         />
-        <Share isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}/>
+        <UserList isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}/>
       </div>
     );
   }
