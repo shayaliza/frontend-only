@@ -26,35 +26,29 @@ import img3 from "../../assets/man3.jpg";
 import img4 from "../../assets/women1.jpg";
 import { useTheme } from "../../../DarkMode/ThemeProvider";
 
-function useLongPress(callback = () => {}, ms = 300) {
-  const [startLongPress, setStartLongPress] = useState(false);
-  const timerRef = useRef();
-  const isLongPress = useRef(false);
+const useLongPress = (callback, ms) => {
+  const timerRef = useRef(null);
 
-  const start = useCallback(() => {
-    setStartLongPress(true);
-    timerRef.current = setTimeout(() => {
-      isLongPress.current = true;
-      callback();
-    }, ms);
-  }, [callback, ms]);
+  const start = (message) => {
+    timerRef.current = setTimeout(() => callback(message), ms);
+  };
 
-  const stop = useCallback(() => {
-    setStartLongPress(false);
-    clearTimeout(timerRef.current);
-    if (isLongPress.current) {
-      isLongPress.current = false;
+  const clear = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
-  }, []);
+  };
 
   return {
-    onMouseDown: start,
-    onMouseUp: stop,
-    onMouseLeave: stop,
-    onTouchStart: start,
-    onTouchEnd: stop,
+    onMouseDown: (message) => start(message),
+    onMouseUp: clear,
+    onMouseLeave: clear,
+    onTouchStart: (message) => start(message),
+    onTouchEnd: clear,
   };
-}
+};
+
 const contacts = [
   {
     id: 1,
@@ -330,6 +324,7 @@ function Chat() {
   const [newMessage, setNewMessage] = useState("");
   const [isReactionOpen, setIsReactionOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [replyToMessage, setReplyToMessage] = useState(null);
   const reactionMenuRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -384,22 +379,26 @@ function Chat() {
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
-      setMessages([
-        ...messages,
-        {
-          id: messages.length,
-          content: newMessage,
-          sender: "You",
-          timestamp: new Date().toISOString(),
-        },
-      ]);
+      const newMessageObj = {
+        id: messages.length + 1,
+        content: newMessage,
+        sender: "You",
+        timestamp: new Date().toISOString(),
+        replyTo: replyToMessage || null,
+      };
+
+      setMessages([...messages, newMessageObj]);
+
       setNewMessage("");
       setIsActive(false);
+      setReplyToMessage(null);
+
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
       }
     }
   };
+
   const handleToggleReactions = useCallback((message) => {
     setSelectedMessage(message);
     setIsReactionOpen(true);
@@ -443,6 +442,14 @@ function Chat() {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
+  const handleReplyToMessage = useCallback((message) => {
+    console.log("Selected Message:", message);
+    setReplyToMessage(message);
+    setIsReactionOpen(false);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, []);
   const handleInputFocus = () => {
     setIsActive(newMessage.trim() !== "");
   };
@@ -538,7 +545,11 @@ function Chat() {
 
                   {message.imageUrl && (
                     <div className="flex items-center mb-4">
-                      <div className="relative rounded-lg overflow-hidden bg-gray-400 border  border-gray-300 max-w-52 flex-grow">
+                      <div
+                        {...longPressEvent}
+                        className="relative rounded-lg overflow-hidden bg-gray-400 border  border-gray-300 max-w-52 flex-grow"
+                        onClick={() => handleToggleReactions(message)}
+                      >
                         <img
                           src={message.imageUrl}
                           alt="Sent image"
@@ -555,14 +566,33 @@ function Chat() {
                   )}
 
                   {message.url && !message.imageUrl && (
-                    <div className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 p-2 max-w-max text-blue-600">
+                    <div
+                      {...longPressEvent}
+                      className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 p-2 max-w-max text-blue-600"
+                    >
                       <a href={message.url}>{message.url}</a>
+                    </div>
+                  )}
+
+                  {message.replyTo && (
+                    <div className="reply-preview bg-gray-100 dark:bg-gray-700 p-2 rounded-lg text-sm mb-2">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <ReplyIcon className="w-4 h-4 text-gray-500" />
+                        <span className="font-semibold">
+                          Replying to {message.replyTo.sender}
+                        </span>
+                      </div>
+                      <div className="pl-6 border-l-4 border-blue-500 text-gray-700 dark:text-gray-300">
+                        {message.replyTo.content}
+                      </div>
                     </div>
                   )}
 
                   {!message.imageUrl && !message.url && (
                     <div
                       {...longPressEvent}
+                      onMouseDown={() => longPressEvent.onMouseDown(message)}
+                      onTouchStart={() => longPressEvent.onTouchStart(message)}
                       className={`message-content p-2 rounded-lg relative whitespace-pre-wrap break-words max-w-xs ${
                         type === "dm" && message.sender === "You"
                           ? "bg-blue-600 text-white"
@@ -579,6 +609,35 @@ function Chat() {
           </div>
           <div ref={messagesEndRef} />
         </div>
+
+        {replyToMessage && (
+          <div className="fixed bottom-16 left-0 right-0 bg-gray-200 dark:bg-zinc-800 p-2 flex justify-between items-center z-40">
+            <div className="flex items-center space-x-2">
+              <ReplyIcon className="w-5 h-5 " />
+              <div>
+                <span className="text-sm font-semibold">
+                  Replying to {replyToMessage.sender}
+                </span>
+                {replyToMessage.imageUrl && (
+                  <img
+                    src={replyToMessage.imageUrl}
+                    alt=""
+                    className="w-full h-10 object-fill my-2"
+                  />
+                )}
+                <p className="text-xs truncate max-w-[250px]">
+                  {replyToMessage.content}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setReplyToMessage(null)}
+              className="text-red-600 hover:text-gray-900"
+            >
+              <FaTimes />
+            </button>
+          </div>
+        )}
 
         <form
           onSubmit={(e) => {
@@ -680,7 +739,10 @@ function Chat() {
                 <ClipboardCopyIcon className="w-6 h-6 text-gray-400" />
                 <span className="text-gray-200 text-sm">Copy</span>
               </button>
-              <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
+              <button
+                onClick={() => handleReplyToMessage(selectedMessage)}
+                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg"
+              >
                 <ReplyIcon className="w-6 h-6 text-gray-400" />
                 <span className="text-gray-200 text-sm">Reply</span>
               </button>
