@@ -146,16 +146,16 @@ function Header({ toggleSidebar }) {
               <div className="absolute top-12 -right-10 mt-2 w-48  bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg  rounded-lg z-[999]">
                 <ul className="list-none p-2 m-0">
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    Follower
+                    <Link to="/dashboard/profile">Techsnap</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    Following
+                    <Link to="/createsnap">Snappie</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
                     <Link to="/datasnap">Datasnap</Link>
                   </li>
                   <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    <Link to="/dashboard/profile">Home</Link>
+                    <Link to="/managesnap">Managesnap</Link>
                   </li>
                 </ul>
               </div>

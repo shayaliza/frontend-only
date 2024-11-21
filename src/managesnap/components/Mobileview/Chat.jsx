@@ -451,191 +451,204 @@ function Chat() {
     setIsActive(newMessage.trim() !== "");
   };
 
-  const {theme} = useTheme();
+  const { theme } = useTheme();
 
   return (
     <>
       <div
-  className={`flex flex-col ${theme == 'dark' ? "text-gray-200" : "text-gray-800"} ${isReactionOpen ? "overflow-hidden" : "overflow-auto"} min-h-screen pb-20 pt-4`}
->
-  <div className={`border-b fixed top-0 h-16 left-0 right-0 z-50 ${theme == 'dark' ? "bg-black" : "bg-white"}`}>
-    <div className="p-4 flex justify-between items-center bg-background border-gray-500">
-      <div className="flex items-center">
-        <div className="mr-2 cursor-pointer" onClick={handleNavigationBack}>
-          <ArrowLeftIcon className="w-6 h-6 transition" />
-        </div>
-        {type === "channel" ? (
-          <span className="font-bold text-xl">
-            #{chatInfo?.name}
-          </span>
-        ) : (
-          <div className="flex items-center space-x-2">
-            <img
-              onClick={() => navigate(`/managesnap/profile/${id}`, {
-                state: {
-                  img: chatInfo.img,
-                  name: chatInfo.name
-                },
-              })}
-              src={chatInfo?.img}
-              alt=""
-              className="flex-shrink-0 w-10 h-10 rounded-full border border-gray-600"
-            />
-            <span className="font-bold text-xl">{chatInfo?.name}</span>
+        className={`flex flex-col text-gray-800 dark:text-gray-200 ${
+          isReactionOpen ? "overflow-hidden" : "overflow-auto"
+        } min-h-screen pb-20 pt-4`}
+      >
+        <div className="border-b fixed top-0 h-16 left-0 right-0 z-50 bg-white dark:bg-black">
+          <div className="p-4 flex justify-between items-center bg-background border-gray-500">
+            <div className="flex items-center">
+              <div
+                className="mr-2 cursor-pointer"
+                onClick={handleNavigationBack}
+              >
+                <ArrowLeftIcon className="w-6 h-6 transition" />
+              </div>
+              {type === "channel" ? (
+                <span className="font-bold text-xl">#{chatInfo?.name}</span>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <img
+                    onClick={() =>
+                      navigate(`/managesnap/profile/${id}`, {
+                        state: {
+                          img: chatInfo.img,
+                          name: chatInfo.name,
+                        },
+                      })
+                    }
+                    src={chatInfo?.img}
+                    alt=""
+                    className="flex-shrink-0 w-10 h-10 rounded-full border border-gray-600"
+                  />
+                  <span className="font-bold text-xl">{chatInfo?.name}</span>
+                </div>
+              )}
+            </div>
+            <div className="flex space-x-4 items-center">
+              <SearchIcon className="w-6 h-6 hover:text-gray-400 transition" />
+              <DocumentTextIcon className="w-6 h-6 hover:text-gray-400 transition" />
+              <VolumeUpIcon className="w-6 h-6 hover:text-gray-400 transition" />
+            </div>
           </div>
-        )}
-      </div>
-      <div className="flex space-x-4 items-center">
-        <SearchIcon className="w-6 h-6 hover:text-gray-400 transition" />
-        <DocumentTextIcon className="w-6 h-6 hover:text-gray-400 transition" />
-        <VolumeUpIcon className="w-6 h-6 hover:text-gray-400 transition" />
-      </div>
-    </div>
-  </div>
+        </div>
 
-  <div className={`flex-grow ${isReactionOpen ? "overflow-hidden" : "overflow-auto"} px-4 pt-14 pb-2 mt-4`}>
-    <div className="space-y-4">
-      {messages.map((message) => (
         <div
-          key={message.id}
-          className={`relative flex items-start space-x-2 ${type === "dm" && message.sender === "You" ? "justify-end" : ""}`}
+          className={`flex-grow ${
+            isReactionOpen ? "overflow-hidden" : "overflow-auto"
+          } px-4 pt-14 pb-2 mt-4`}
         >
-          {type === "channel" && (
-            <div className="flex-none w-10 h-10 rounded-full overflow-hidden">
-              <img
-                src="https://via.placeholder.com/50"
-                alt=""
-                className="w-full h-full object-cover"
-              />
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`relative flex items-start space-x-2 ${
+                  type === "dm" && message.sender === "You" ? "justify-end" : ""
+                }`}
+              >
+                {((type === "dm" && message.sender !== "You") ||
+                  type === "channel") && (
+                  <div className="flex-none w-10 h-10 rounded-full overflow-hidden">
+                    <img
+                      src={img1}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+
+                <div
+                  className={`flex flex-col relative ${
+                    type === "dm" && message.sender === "You" ? "text-left" : ""
+                  } rounded-lg text-black dark:text-gray-300`}
+                >
+                  {type === "channel" && (
+                    <div className={`font-bold`}>
+                      {message.sender}{" "}
+                      <span className="text-xs">
+                        {new Date(message.timestamp).toLocaleTimeString()}
+                      </span>
+                    </div>
+                  )}
+
+                  {message.imageUrl && (
+                    <div className="flex items-center mb-4">
+                      <div className="relative rounded-lg overflow-hidden bg-gray-400 border  border-gray-300 max-w-52 flex-grow">
+                        <img
+                          src={message.imageUrl}
+                          alt="Sent image"
+                          className="w-full h-auto object-cover"
+                        />
+                      </div>
+                      <div
+                        onClick={() => setIsShareOpen(true)}
+                        className="p-2 cursor-pointer rounded-full ml-4"
+                      >
+                        <FaShare />
+                      </div>
+                    </div>
+                  )}
+
+                  {message.url && !message.imageUrl && (
+                    <div className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 p-2 max-w-max text-blue-600">
+                      <a href={message.url}>{message.url}</a>
+                    </div>
+                  )}
+
+                  {!message.imageUrl && !message.url && (
+                    <div
+                      {...longPressEvent}
+                      className={`message-content p-2 rounded-lg relative whitespace-pre-wrap break-words max-w-xs ${
+                        type === "dm" && message.sender === "You"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-500"
+                      }`}
+                      style={{ userSelect: "none" }}
+                    >
+                      {message.content}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div ref={messagesEndRef} />
+        </div>
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
+          }}
+          className={`flex items-center bg-white dark:bg-black py-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
+        >
+          <button
+            type="button"
+            className="p-2 rounded-full hover:bg-gray-200 transition duration-150 ease-in-out"
+          >
+            <PlusIcon className="w-5 h-5 hover:text-gray-900" />
+          </button>
+
+          <div className="rounded-lg flex items-center flex-grow">
+            <textarea
+              ref={textareaRef}
+              id="message-textarea"
+              className="flex-grow outline-none p-1 rounded-sm text-sm  border border-gray-500 resize-none overflow-y-auto bg-transparent"
+              placeholder="Type a message"
+              value={newMessage}
+              onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
+              style={{
+                minHeight: "1px",
+                maxHeight: "100px",
+                overflowY: "auto",
+              }}
+              onInput={(e) => {
+                e.target.style.height = "auto";
+                const newHeight = Math.min(e.target.scrollHeight, 150);
+                e.target.style.height = `${newHeight}px`;
+              }}
+            />
+            <button
+              type="button"
+              className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
+            >
+              <EmojiHappyIcon className="w-5 h-5 hover:text-gray-900" />
+            </button>
+          </div>
+          {!isActive && (
+            <div className="mx-2 flex">
+              <button
+                type="button"
+                className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
+              >
+                <CameraIcon className="w-5 h-5 hover:text-gray-900" />
+              </button>
+              <button
+                type="button"
+                className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
+              >
+                <MicrophoneIcon className="w-5 h-5 hover:text-gray-900" />
+              </button>
             </div>
           )}
-
-          <div className={`flex flex-col relative ${type === "dm" && message.sender === "You" ? "text-left" : ""} rounded-lg text-black`}>
-            {type === "channel" && (
-              <div className={`font-bold bg-gray-400`}>
-                {message.sender}{" "}
-                <span className="text-xs">
-                  {new Date(message.timestamp).toLocaleTimeString()}
-                </span>
-              </div>
-            )}
-
-            {message.imageUrl && (
-              <div className="flex items-center mb-4">
-                <div className="relative rounded-lg overflow-hidden bg-gray-400 border  border-gray-300 max-w-52 flex-grow">
-                  <img
-                    src={message.imageUrl}
-                    alt="Sent image"
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-                <div
-                  onClick={() => setIsShareOpen(true)}
-                  className="p-2 cursor-pointer rounded-full ml-4 bg-gray-400"
-                >
-                  <FaShare />
-                </div>
-              </div>
-            )}
-
-            {message.url && !message.imageUrl && (
-              <div className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 p-2 max-w-max text-blue-600">
-                <a
-                  href={message.url}
-                >
-                  {message.url}
-                </a>
-              </div>
-            )}
-
-            {!message.imageUrl && !message.url && (
-              <div
-                {...longPressEvent}
-                className={`message-content p-2 rounded-lg relative whitespace-pre-wrap break-words max-w-xs bg-gray-400 ${
-                  type === "dm" && message.sender === "You" ? "" : ""
-                }`}
-                style={{ userSelect: "none" }}
-              >
-                {message.content}
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
-    </div>
-    <div ref={messagesEndRef} />
-  </div>
-
-  <form
-    onSubmit={(e) => {
-      e.preventDefault();
-      handleSendMessage();
-    }}
-    className={`flex items-center ${theme == 'dark' ? "bg-black" : "bg-white"} py-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
-  >
-    <button
-      type="button"
-      className="p-2 rounded-full hover:bg-gray-200 transition duration-150 ease-in-out"
-    >
-      <PlusIcon className="w-5 h-5 hover:text-gray-900" />
-    </button>
-
-    <div className="rounded-lg flex items-center flex-grow">
-      <textarea
-        ref={textareaRef}
-        id="message-textarea"
-        className="flex-grow p-2 outline-none rounded-sm text-sm  border border-gray-500 resize-none overflow-y-auto"
-        placeholder="Type a message"
-        value={newMessage}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        style={{
-          minHeight: "1px",
-          maxHeight: "150px",
-          overflowY: "auto",
-        }}
-        onInput={(e) => {
-          e.target.style.height = "auto";
-          const newHeight = Math.min(e.target.scrollHeight, 150);
-          e.target.style.height = `${newHeight}px`;
-        }}
-      />
-      <button
-        type="button"
-        className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-      >
-        <EmojiHappyIcon className="w-5 h-5 hover:text-gray-900" />
-      </button>
-    </div>
-    {!isActive && (
-      <div className="mx-2 flex">
-        <button
-          type="button"
-          className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-        >
-          <CameraIcon className="w-5 h-5 hover:text-gray-900" />
-        </button>
-        <button
-          type="button"
-          className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-        >
-          <MicrophoneIcon className="w-5 h-5 hover:text-gray-900" />
-        </button>
+          {isActive && (
+            <button
+              type="submit"
+              className="p-2 rounded-full transition duration-150 ease-in-out mx-2 border border-gray-500"
+              onClick={handleSendMessage}
+            >
+              <MdSend className="w-5 h-5" />
+            </button>
+          )}
+        </form>
       </div>
-    )}
-    {isActive && (
-      <button
-        type="submit"
-        className="p-2 rounded-full transition duration-150 ease-in-out mx-2 border border-gray-500"
-        onClick={handleSendMessage}
-      >
-        <MdSend className="w-5 h-5" />
-      </button>
-    )}
-  </form>
-</div>
-
 
       {isReactionOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">

@@ -45,6 +45,8 @@ import Notification from "./Notification";
 import BottomSheet from "./Effects/MoreHorizontal";
 import CommentBottomSheet from "./Effects/CommentBottomSheet";
 import {
+  BiBookmark,
+  BiBookmarkHeart,
   BiComment,
   BiDownArrow,
   BiDownvote,
@@ -214,6 +216,12 @@ const ArticleMobile = memo(
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isCommentsOpen, setIsCommentsOpen] = useState(false);
     const [isShareOpen, setIsShareOpen] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    const toggleBookmark = () => {
+      setIsBookmarked((prev) => !prev);
+    };
+
     const commentsData = [
       {
         author: "Jagan Army",
@@ -342,8 +350,13 @@ const ArticleMobile = memo(
             <button
               className="hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors"
               aria-label="Bookmark"
+              onClick={()=> toggleBookmark()}
             >
-              <Bookmark className="w-5 h-5" />
+              {isBookmarked ? (
+                <FaBookmark className="w-5 h-5 " />
+              ) : (
+                <BiBookmark className="w-5 h-5" />
+              )}
             </button>
 
             <button
