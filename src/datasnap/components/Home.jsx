@@ -55,6 +55,7 @@ import {
 } from "react-icons/bi";
 import Share from "./Effects/Share";
 import UserList from "./Effects/SendProfile";
+import Save from "./Effects/Save";
 
 const tabs = [
   { id: "myfeed", icon: activityFeedIcon, text: "My Feed" },
@@ -216,11 +217,19 @@ const ArticleMobile = memo(
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isCommentsOpen, setIsCommentsOpen] = useState(false);
     const [isShareOpen, setIsShareOpen] = useState(false);
+    const [isSaveOpen, setIsSaveOpen] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
 
     const toggleBookmark = () => {
-      setIsBookmarked((prev) => !prev);
+      setIsBookmarked((prev) => {
+        const newValue = !prev;
+        if (newValue) {
+          setIsSaveOpen(true);
+        }
+        return newValue;
+      });
     };
+    
 
     const commentsData = [
       {
@@ -350,7 +359,7 @@ const ArticleMobile = memo(
             <button
               className="hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors"
               aria-label="Bookmark"
-              onClick={()=> toggleBookmark()}
+              onClick={() => toggleBookmark()}
             >
               {isBookmarked ? (
                 <FaBookmark className="w-5 h-5 " />
@@ -375,7 +384,12 @@ const ArticleMobile = memo(
           comments={commentsData}
           profileImg={profileImg}
         />
-        <UserList isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}/>
+        <UserList isOpen={isShareOpen} onClose={() => setIsShareOpen(false)} />
+        <Save
+          Image={profileImg}
+          isOpen={isSaveOpen}
+          onClose={() => setIsSaveOpen(false)}
+        />
       </div>
     );
   }
