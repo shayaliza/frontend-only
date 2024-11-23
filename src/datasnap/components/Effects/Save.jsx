@@ -50,7 +50,7 @@ function Save({ isOpen, onClose, Image}) {
           />
 
           <motion.div
-            className="fixed bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-700 rounded-t-3xl z-50"
+            className="fixed bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-900 rounded-t-3xl z-50"
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
@@ -58,7 +58,7 @@ function Save({ isOpen, onClose, Image}) {
           >
             <div className="pt-4">
               <div className="py-2">
-                <div className="w-8 h-1 bg-gray-800 dark:bg-gray-300 rounded-full mx-auto mb-2" />
+                <div className="w-8 h-1 bg-gray-900 dark:bg-gray-300 rounded-full mx-auto mb-2" />
                 <div className="flex justify-between items-center px-6 mb-2">
                   <div className="flex items-center space-x-2">
                     <img src={Image} alt="" className="rounded-lg w-12 h-12" />
@@ -80,7 +80,7 @@ function Save({ isOpen, onClose, Image}) {
                 {collections.map((collection, index) => (
                   <div
                     key={index}
-                    className="flex justify-between items-center my-2"
+                    className="flex justify-between items-center py-2"
                   >
                     <div className="flex items-center space-x-2 mb-2">
                       <img
