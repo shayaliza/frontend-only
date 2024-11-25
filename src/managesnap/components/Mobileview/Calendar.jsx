@@ -114,25 +114,25 @@ function Calendarcomponent() {
     switch (selected) {
       case "Upcoming":
         return (
-          <button className="bg-indigo-600 text-white text-sm font-semibold py-2 px-4 rounded-lg">
+          <button className="bg-indigo-600 text-white text-sm font-semibold py-2 px-6 rounded-lg">
             Notify Me
           </button>
         );
       case "Ended":
         return (
-          <button className="bg-gray-600 text-white text-sm font-semibold py-2 px-4 rounded-lg">
+          <button className="bg-gray-600 text-white text-sm font-semibold py-2 px-6 rounded-lg">
             View Chat
           </button>
         );
       case "Cancelled":
         return (
-          <button className="bg-red-600 text-white text-sm font-semibold py-2 px-4 rounded-lg">
+          <button className="bg-red-600 text-white text-sm font-semibold py-2 px-6 rounded-lg">
             Cancelled
           </button>
         );
       default:
         return (
-          <button className="bg-blue-600 text-white text-sm font-semibold py-2 px-4 rounded-lg">
+          <button className="bg-blue-600 text-white text-sm font-semibold py-2 px-6 rounded-lg">
             Join Now
           </button>
         );
@@ -311,7 +311,7 @@ function Calendarcomponent() {
           <div className="flex flex-col items-center mt-4">
             {events.map((event, index) => (
               <div key={index} className="flex items-center w-full my-2">
-                <div className="w-1/4 text-right text-black pr-4">
+                <div className="w-1/4 text-right text-black dark:text-white pr-4">
                   <span className="block text-sm">{event.time}</span>
                 </div>
                 <div

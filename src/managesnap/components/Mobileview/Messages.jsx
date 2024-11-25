@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import img1 from "../../assets/man1.jpg";
 import img2 from "../../assets/man2.jpg";
 import img3 from "../../assets/man3.jpg";
@@ -173,7 +173,7 @@ function DirectMessages() {
   const navigate = useNavigate();
   const [lastOpenedDM, setLastOpenedDM] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const {theme} = useTheme();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const storedLastOpenedDM = localStorage.getItem("lastOpenedDM");
@@ -184,36 +184,40 @@ function DirectMessages() {
     if (storedScrollPosition) {
       setScrollPosition(Number(storedScrollPosition));
     }
-
   }, []);
 
-  const handleContactClick = (contact) => {
-    setLastOpenedDM(contact.id);
-    localStorage.setItem("lastOpenedDM", contact.id);
-    setScrollPosition(window.scrollY);
-    localStorage.setItem("scrollPosition", window.scrollY);
-    navigate(`/managesnap/chat/dm/${contact.id}`, {
-      state: {
-        img: contact.src,
-        name: contact.name,
-        lastMessage: contact.lastMessage,
-        chatId: contact.id,
-        chatType: "dm",
-      },
-    });
-  };
+  const memoizedContacts = useMemo(() => contacts, []);
+
+  const handleContactClick = useCallback(
+    (contact) => {
+      setLastOpenedDM(contact.id);
+      localStorage.setItem("lastOpenedDM", contact.id);
+      setScrollPosition(window.scrollY);
+      localStorage.setItem("scrollPosition", window.scrollY);
+      navigate(`/managesnap/chat/dm/${contact.id}`, {
+        state: {
+          img: contact.src,
+          name: contact.name,
+          lastMessage: contact.lastMessage,
+          chatId: contact.id,
+          chatType: "dm",
+        },
+      });
+    },
+    [navigate]
+  );
 
   useEffect(() => {
     window.scrollTo(0, scrollPosition);
   }, [scrollPosition]);
 
   return (
-    <div className={`flex ${theme == 'dark' ? "text-gray-300" : "text-gray-700"}`}>
+    <div className={`flex ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
       <div className="p-2 flex flex-col space-y-1 overflow-x-auto">
-        <h1 className="text-2xl font-bold my-1 pl-3">Direct Messages</h1>
+        <h1 className="text-xl font-bold my-1 pl-3">Direct Messages</h1>
         <div className="overflow-x-auto p-2">
           <div className="flex space-x-4">
-            {contacts.map((contact) => (
+            {memoizedContacts.map((contact) => (
               <div
                 key={contact.id}
                 className="flex-shrink-0 w-20 h-20 shadow-lg rounded-lg flex flex-col justify-center items-center border border-gray-500"
@@ -230,19 +234,17 @@ function DirectMessages() {
                     }`}
                   />
                 </div>
-                <span className="text-xs mt-1 text-center">
-                  {contact.name}
-                </span>
+                <span className="text-xs mt-1 text-center">{contact.name}</span>
               </div>
             ))}
           </div>
         </div>
         <div className="overflow-y-auto">
-          {contacts.map((contact) => (
+          {memoizedContacts.map((contact) => (
             <div
               key={contact.id}
               className={`flex items-start space-x-4 p-2 rounded-lg cursor-pointer ${
-                contact.id === lastOpenedDM ? "bg-gray-300 text-gray-700" : ""
+                contact.id === lastOpenedDM ? "bg-zinc-600 text-gray-100" : ""
               }`}
               onClick={() => handleContactClick(contact)}
             >
@@ -260,16 +262,10 @@ function DirectMessages() {
               </div>
               <div className="flex flex-col w-full">
                 <div className="flex justify-between space-x-2">
-                  <span className=" font-semibold">
-                    {contact.name}
-                  </span>
-                  <span className="text-xs">
-                    {contact.lastSeen}
-                  </span>
+                  <span className="font-semibold">{contact.name}</span>
+                  <span className="text-xs">{contact.lastSeen}</span>
                 </div>
-                <div className=" mt-1">
-                  {contact.lastMessage}
-                </div>
+                <div className="mt-1">{contact.lastMessage}</div>
               </div>
             </div>
           ))}

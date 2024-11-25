@@ -510,7 +510,7 @@ function Chat() {
             isReactionOpen ? "overflow-hidden" : "overflow-auto"
           } px-4 pt-14 pb-2 mt-4`}
         >
-          <div className="space-y-4">
+          <div className="space-y-1">
             {messages.map((message) => (
               <div
                 key={message.id}
