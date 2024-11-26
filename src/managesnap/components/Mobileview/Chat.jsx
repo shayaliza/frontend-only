@@ -495,16 +495,16 @@ function Chat() {
     setTouchStartX(e.touches[0].clientX);
     setTouchCurrentX(e.touches[0].clientX);
   };
-
+  
   const handleTouchMove = (e, message) => {
     if (touchStartX === null) return;
-
+  
     const currentX = e.touches[0].clientX;
     setTouchCurrentX(currentX);
-    const deltaX = touchStartX - currentX;
+    const deltaX = currentX - touchStartX;  
     if (Math.abs(deltaX) > 10) {
       setSwipedMessageId(message.id);
-      if (deltaX > 50) {
+      if (deltaX > 50) {  
         setReplyToMessage({
           id: message.id,
           sender: message.sender,
@@ -515,7 +515,7 @@ function Chat() {
       }
     }
   };
-
+  
   const handleTouchEnd = () => {
     if (swipedMessageId !== null) {
       setTimeout(() => {
@@ -525,6 +525,7 @@ function Chat() {
       }, 100);
     }
   };
+  
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -769,7 +770,14 @@ function Chat() {
                     </div>
                   )}
                 </div>
-                <div className="absolute -right-[200px] text-xs mt-2">
+                <div className="absolute -right-[200px] text-xs mt-2"
+                style={{
+                  transform: 
+                    swipedMessageId === message.id 
+                      ? 'translateX(-200px)' 
+                      : 'translateX(0)',
+                  transition: 'transform 0.3s ease'
+                }}>
                 <span className="mr-4">{formatTimestamp(message.timestamp)}</span>
                 </div>
               </div>
