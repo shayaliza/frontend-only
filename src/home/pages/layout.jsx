@@ -4,6 +4,7 @@ import Header from "../component/layoutComp/header";
 import Sidebar from "../component/layoutComp/sidebar";
 import MobileMenu from "../component/layoutComp/mobileSidebar";
 import BottomBar from "../component/layoutComp/bottomBar";
+import Footer from "../component/layoutComp/Footer";
 function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -33,6 +34,9 @@ function Layout() {
             <Outlet />
           </div>
         </div>
+        {/* <div className="px-32 ml-24 hidden lg:block">
+          <Footer />
+        </div> */}
         <BottomBar />
       </div>
     </div>

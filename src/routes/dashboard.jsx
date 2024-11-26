@@ -75,6 +75,7 @@ import Catalog from "@/home/pages/catalog/catalog";
 import ProfilePage from "@/home/pages/profile/firstProfile";
 import SecondProfilePage from "@/home/pages/profile/secondProfile";
 import { Routes } from "react-router-dom";
+import Footer from "../home/component/layoutComp/Footer";
 
 export default function DashboardRoutes() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -92,6 +93,7 @@ export default function DashboardRoutes() {
   return (
     <Routes>
       <Route path="/dashboard" element={<MainLayout />}>
+      <Route path="footer" element={<Footer />} />
         <Route path="job" element={<Job />} />
         <Route path="notification" element={<Notification />} />
 
