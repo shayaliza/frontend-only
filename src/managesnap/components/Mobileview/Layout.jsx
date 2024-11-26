@@ -23,15 +23,16 @@ function Layout() {
         <Header />
       </div>
       <main className="flex-1 relative">
-        <PullToRefresh 
+        {/* <PullToRefresh 
         onRefresh={refreshData}
         maxPullDownDistance={150}
         refreshingContent={<div className="flex justify-center items-center w-16 h-16 relative left-1/2 -translate-x-1/2">
           <RefreshIcon className="spin w-8 h-8 rounded-full text-blue-600"></RefreshIcon>
         </div>}
         className="text-transparent">
-          <Outlet />
-        </PullToRefresh>
+          
+        </PullToRefresh> */}
+        <Outlet />
       </main>
       <div className="h-16">
         <BottomBar />

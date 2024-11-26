@@ -328,6 +328,25 @@ function Chat() {
   const reactionMenuRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [messageReactions, setMessageReactions] = useState({});
+
+  const handleAddReaction = (reaction) => {
+    if (selectedMessage) {
+      setMessageReactions((prev) => {
+        const currentReactions = prev[selectedMessage.id] || [];
+        const isReactionExists = currentReactions.includes(reaction);
+        const updatedReactions = isReactionExists
+          ? currentReactions.filter((r) => r !== reaction)
+          : [...currentReactions, reaction];
+        return {
+          ...prev,
+          [selectedMessage.id]: updatedReactions,
+        };
+      });
+
+      setIsReactionOpen(false);
+    }
+  };
 
   useEffect(() => {
     const fetchChatData = async () => {
@@ -384,15 +403,22 @@ function Chat() {
         content: newMessage,
         sender: "You",
         timestamp: new Date().toISOString(),
-        replyTo: replyToMessage || null,
+        replyTo: replyToMessage
+          ? {
+              id: replyToMessage.id,
+              sender: replyToMessage.sender,
+              content: replyToMessage.content,
+              imageUrl: replyToMessage.imageUrl,
+              timestamp: replyToMessage.timestamp,
+            }
+          : null,
       };
 
       setMessages([...messages, newMessageObj]);
-
       setNewMessage("");
       setIsActive(false);
+      console.log(replyToMessage.content);
       setReplyToMessage(null);
-
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
       }
@@ -403,6 +429,33 @@ function Chat() {
     setSelectedMessage(message);
     setIsReactionOpen(true);
   }, []);
+
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+
+    const isToday =
+      date.getDate() === now.getDate() &&
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear();
+
+    const timeOptions = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    if (isToday) {
+      return date.toLocaleTimeString("en-US", timeOptions);
+    } else {
+      const dateOptions = {
+        month: "short",
+        day: "numeric",
+        ...timeOptions,
+      };
+      return date.toLocaleString("en-US", dateOptions);
+    }
+  };
 
   const longPressEvent = useLongPress(
     (message) => handleToggleReactions(message),
@@ -434,6 +487,45 @@ function Chat() {
     };
   }, []);
 
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchCurrentX, setTouchCurrentX] = useState(null);
+  const [swipedMessageId, setSwipedMessageId] = useState(null);
+
+  const handleTouchStart = (e, message) => {
+    setTouchStartX(e.touches[0].clientX);
+    setTouchCurrentX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e, message) => {
+    if (touchStartX === null) return;
+
+    const currentX = e.touches[0].clientX;
+    setTouchCurrentX(currentX);
+    const deltaX = touchStartX - currentX;
+    if (Math.abs(deltaX) > 10) {
+      setSwipedMessageId(message.id);
+      if (deltaX > 50) {
+        setReplyToMessage({
+          id: message.id,
+          sender: message.sender,
+          content: message.content,
+          imageUrl: message.imageUrl || null,
+          timestamp: message.timestamp,
+        });
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (swipedMessageId !== null) {
+      setTimeout(() => {
+        setSwipedMessageId(null);
+        setTouchStartX(null);
+        setTouchCurrentX(null);
+      }, 100);
+    }
+  };
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setNewMessage(value);
@@ -443,13 +535,21 @@ function Chat() {
   };
 
   const handleReplyToMessage = useCallback((message) => {
-    console.log("Selected Message:", message);
-    setReplyToMessage(message);
+    setReplyToMessage({
+      id: message.id,
+      sender: message.sender,
+      content: message.content,
+      imageUrl: message.imageUrl || null,
+      timestamp: message.timestamp,
+    });
+
     setIsReactionOpen(false);
+
     if (textareaRef.current) {
       textareaRef.current.focus();
     }
   }, []);
+
   const handleInputFocus = () => {
     setIsActive(newMessage.trim() !== "");
   };
@@ -457,8 +557,6 @@ function Chat() {
   const handleInputBlur = () => {
     setIsActive(newMessage.trim() !== "");
   };
-
-  const { theme } = useTheme();
 
   return (
     <>
@@ -514,9 +612,21 @@ function Chat() {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`relative flex items-start space-x-2 ${
+                className={`relative flex items-start space-x-2 mb-4 ${
                   type === "dm" && message.sender === "You" ? "justify-end" : ""
-                }`}
+                } ${messageReactions[message.id] ? "pb-8" : ""}`}
+                onTouchStart={(e) => handleTouchStart(e, message)}
+                onTouchMove={(e) => handleTouchMove(e, message)}
+                onTouchEnd={handleTouchEnd}
+                style={{
+                  transform:
+                    swipedMessageId === message.id &&
+                    touchStartX &&
+                    touchCurrentX
+                      ? `translateX(${-(touchStartX - touchCurrentX)}px)`
+                      : "translateX(0)",
+                  transition: "transform 0.3s ease",
+                }}
               >
                 {((type === "dm" && message.sender !== "You") ||
                   type === "channel") && (
@@ -547,6 +657,10 @@ function Chat() {
                     <div className="flex items-center mb-4">
                       <div
                         {...longPressEvent}
+                        onMouseDown={() => longPressEvent.onMouseDown(message)}
+                        onTouchStart={() =>
+                          longPressEvent.onTouchStart(message)
+                        }
                         className="relative rounded-lg overflow-hidden bg-gray-400 border  border-gray-300 max-w-52 flex-grow"
                         onClick={() => handleToggleReactions(message)}
                       >
@@ -575,20 +689,32 @@ function Chat() {
                   )}
 
                   {message.replyTo && (
-                    <div className="reply-preview bg-gray-100 dark:bg-gray-700 p-2 rounded-lg text-sm mb-2">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <ReplyIcon className="w-4 h-4 text-gray-500" />
-                        <span className="font-semibold">
-                          Replying to {message.replyTo.sender}
+                    <div className="reply-context bg-blue-600 p-2 rounded-t-lg border-b border-gray-200 dark:border-gray-600 rounded-lg text-white ">
+                      <div className="flex items-center space-x-2">
+                        <ReplyIcon className="w-4 h-4" />
+                        <span className="font-semibold text-sm">
+                          Replied to {message.replyTo.sender}
                         </span>
                       </div>
-                      <div className="pl-6 border-l-4 border-blue-500 text-gray-700 dark:text-gray-300">
-                        {message.replyTo.content}
+                      <div className="pl-6 py-2 pr-2 mt-1 bg-gray-500 rounded-lg">
+                        {message.replyTo.imageUrl && (
+                          <img
+                            src={message.replyTo.imageUrl}
+                            alt="Replied message"
+                            className="w-20 h-20 object-cover rounded-lg mb-2"
+                          />
+                        )}
+                        <p className="text-xsitalic truncate relative whitespace-pre-wrap break-words max-w-xs">
+                          {message.replyTo.content}
+                        </p>
                       </div>
+                      <span className="font-semibold text-sm">
+                        {message.content}
+                      </span>
                     </div>
                   )}
 
-                  {!message.imageUrl && !message.url && (
+                  {!message.imageUrl && !message.url && !message.replyTo && (
                     <div
                       {...longPressEvent}
                       onMouseDown={() => longPressEvent.onMouseDown(message)}
@@ -601,6 +727,45 @@ function Chat() {
                       style={{ userSelect: "none" }}
                     >
                       {message.content}
+                    </div>
+                  )}
+
+                  {messageReactions[message.id] && (
+                    <div
+                      className={`absolute bottom-[-25px] ${
+                        message.sender === "You" ? "right-0" : "left-0"
+                      } flex space-x-1 z-10 bg-white dark:bg-gray-700 p-1 rounded-full shadow-md`}
+                      style={{
+                        bottom:
+                          messageReactions[message.id].length > 0
+                            ? "-25px"
+                            : "auto",
+                      }}
+                    >
+                      {messageReactions[message.id].map((reaction, index) => (
+                        <span
+                          key={index}
+                          className="text-lg cursor-pointer hover:scale-125 transition-transform"
+                          onClick={() => {
+                            setMessageReactions((prev) => {
+                              const currentReactions = prev[message.id] || [];
+                              const updatedReactions = currentReactions.filter(
+                                (r) => r !== reaction
+                              );
+
+                              return {
+                                ...prev,
+                                [message.id]:
+                                  updatedReactions.length > 0
+                                    ? updatedReactions
+                                    : undefined,
+                              };
+                            });
+                          }}
+                        >
+                          {reaction}
+                        </span>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -717,16 +882,28 @@ function Chat() {
           >
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1/5 h-2 bg-indigo-200 rounded-lg shadow-lg"></div>
             <div className="flex justify-around space-x-4 py-3">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md">
+              <div
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
+                onClick={() => handleAddReaction("👍")}
+              >
                 👍
               </div>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-pink-500 hover:bg-pink-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md">
+              <div
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-pink-500 hover:bg-pink-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
+                onClick={() => handleAddReaction("❤️")}
+              >
                 ❤️
               </div>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md">
+              <div
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
+                onClick={() => handleAddReaction("😄")}
+              >
                 😄
               </div>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 hover:bg-blue-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md">
+              <div
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 hover:bg-blue-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
+                onClick={() => handleAddReaction("😮")}
+              >
                 😮
               </div>
               <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 hover:bg-gray-700 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md">
