@@ -23,6 +23,8 @@ import {
   Cog,
 } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { FaBell } from "react-icons/fa6";
+import { FaCog } from "react-icons/fa";
 
 function Sidebar() {
   const location = useLocation();
@@ -100,7 +102,7 @@ function Sidebar() {
       ),
       activeIcon: (
         <div className="relative">
-          <MessageSquare className="w-6 h-6 fill-current" />
+          <FaBell className="w-6 h-6 fill-current" />
           {msgCount > 0 && (
             <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
               {msgCount}
@@ -127,7 +129,7 @@ function Sidebar() {
       ),
       activeIcon: (
         <div className="relative">
-          <Cog className="w-6 h-6 fill-current" />
+          <FaCog className="w-6 h-6 fill-current" />
           {msgCount > 0 && (
             <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
               {msgCount}

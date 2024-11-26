@@ -598,7 +598,7 @@ const DMs = () => {
                       </PopoverTrigger>
 
                       <PopoverContent
-                        className="w-[300px] p-0  text-white shadow-xl"
+                        className="w-[300px] p-0  text-white shadow-xl ml-56"
                         onMouseEnter={() => {
                           if (timeoutRef.current)
                             clearTimeout(timeoutRef.current);

@@ -562,7 +562,7 @@ function Chat() {
     <>
       <div
         className={`flex flex-col text-gray-800 dark:text-gray-200 ${
-          isReactionOpen ? "overflow-hidden" : "overflow-auto"
+          isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
         } min-h-screen pb-20 pt-4`}
       >
         <div className="border-b fixed top-0 h-16 left-0 right-0 z-50 bg-white dark:bg-black">
@@ -605,7 +605,7 @@ function Chat() {
 
         <div
           className={`flex-grow ${
-            isReactionOpen ? "overflow-hidden" : "overflow-auto"
+            isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
           } px-4 pt-14 pb-2 mt-4`}
         >
           <div className="space-y-1">
@@ -768,6 +768,9 @@ function Chat() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="absolute -right-[200px] text-xs mt-2">
+                <span className="mr-4">{formatTimestamp(message.timestamp)}</span>
                 </div>
               </div>
             ))}
