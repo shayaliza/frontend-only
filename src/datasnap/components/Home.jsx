@@ -44,6 +44,7 @@ import img2 from "../assets/rsc/image2.png";
 import Notification from "./Notification";
 import BottomSheet from "./Effects/MoreHorizontal";
 import CommentBottomSheet from "./Effects/CommentBottomSheet";
+import SendDesktop from "./Effects/SendDesktop";
 import {
   BiBookmark,
   BiBookmarkHeart,
@@ -104,7 +105,21 @@ const Article = memo(
     reads = 118,
     description,
     isPro = true,
-  }) => (
+    url = "https://frontend-only-ruddy.vercel.app/datasnap/home",
+  }) => {
+    
+    const [isShareOpen, setIsShareOpen] = useState(false)
+    
+    const handleShare = async () => {
+    const data = { title, text: description, url };
+
+    try {
+      await navigator.share(data);
+    } catch (e) {
+      console.log('Share error:', e);
+    }
+  };
+    return (
     <div className="border rounded-lg p-4 overflow-auto shadow-lg mb-3">
       <div className="flex justify-between items-center">
         <div className="flex items-center mb-4">
@@ -126,9 +141,8 @@ const Article = memo(
           </div>
         </div>
         <div className="flex gap-4 mr-4">
-          <button className="flex items-center gap-1">
-            <Share2Icon className="w-4 h-4" />
-            <span>{shares}</span>
+          <button className="flex items-center gap-1" onClick={handleShare}>
+            <SendIcon className="w-4 h-4" />
           </button>
           <button className="flex items-center gap-1">
             <MoreHorizontal className="w-4 h-4" />
@@ -178,6 +192,11 @@ const Article = memo(
             <Bookmark className="w-4 h-4" />
             <span>{reads} </span>
           </button>
+          <button className="flex items-center gap-1" onClick={() => setIsShareOpen(true)}>
+            <Share2Icon className="w-4 h-4" />
+            <span>{shares} </span>
+          </button>
+          <SendDesktop isOpen={isShareOpen} onClose={() => setIsShareOpen(false)}/>
         </div>
         <div className="flex space-x-2">
           <p className="text-blue-500">4min</p>
@@ -200,7 +219,7 @@ const Article = memo(
       </div> */}
     </div>
   )
-);
+});
 const ArticleMobile = memo(
   ({
     profileImg,

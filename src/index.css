@@ -10,6 +10,47 @@ body {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+.popup-scrollbar {
+  max-height: 300px; /* Limit the height of the scrollable area */
+  overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
+}
+
+/* Webkit-based browsers */
+.popup-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Slim width */
+  height: 5px; /* Reduce scrollbar height */
+}
+
+.popup-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Transparent track */
+}
+
+.popup-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.4);
+  border-radius: 3px; /* Rounded scrollbar for aesthetics */
+  transition: background 0.3s;
+}
+
+.popup-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.7); /* Highlight on hover */
+}
+
+/* Dark mode adjustments */
+body.dark .popup-scrollbar {
+  scrollbar-color: rgba(200, 200, 200, 0.3) transparent;
+}
+
+body.dark .popup-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(200, 200, 200, 0.3);
+}
+
+body.dark .popup-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 200, 200, 0.5);
+}
+
+
 @media (min-width: 902px) and (max-width: 990px) {
   .final {
     width: 660px;
