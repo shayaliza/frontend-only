@@ -76,7 +76,7 @@ function Header() {
               onClick={() => setIsMenuOpen(true)}
             />
             <span className="text-2xl font-semibold">
-              Snapthetech
+              Snapthetech.
             </span>
             <button onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="p-2">
             <IoIosArrowDropdown size={24} className="text-gray-700 dark:text-gray-300" />
