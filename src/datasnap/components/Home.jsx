@@ -225,13 +225,14 @@ const ArticleMobile = memo(
     profileImg,
     author,
     date,
-    title,
     readTime,
     reactions,
     dislikes,
     comments,
     tags,
-    activeTab,
+    title,
+    description,
+    url = "https://frontend-only-ruddy.vercel.app/datasnap/home"
   }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isCommentsOpen, setIsCommentsOpen] = useState(false);
@@ -247,6 +248,16 @@ const ArticleMobile = memo(
         }
         return newValue;
       });
+    };
+
+    const handleShare = async () => {
+      const data = { title, text: description, url };
+  
+      try {
+        await navigator.share(data);
+      } catch (e) {
+        console.log('Share error:', e);
+      }
     };
     
 
@@ -371,6 +382,7 @@ const ArticleMobile = memo(
             <button
               className="hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
               aria-label="Share"
+              onClick={handleShare}
             >
               <Share2Icon className="w-5 h-5" />
             </button>
