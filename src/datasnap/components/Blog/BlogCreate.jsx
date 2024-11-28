@@ -290,10 +290,10 @@ function BlogCreate() {
                   )}
                 </div>
               </div>
-              <div className="h-[50vh] border-none w-full">
+              <div className="border-none w-full">
                 <CKEDitor
                   data={postContent}
-                  className="h-auto bg-white outline-none border-none pb-20 lg:pb-11"
+                  className="h-auto dark:text-black outline-none border-none pb-20 lg:pb-11"
                 />
               </div>
             </div>

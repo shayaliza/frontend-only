@@ -84,8 +84,8 @@ import "ckeditor5/ckeditor5.css";
 
 import "./App.css";
 
-export default function CKEDitor({data, onDataChange}) {
-	const [editorContent, setEditorContent] = useState(data || "");
+export default function CKEDitor({ data, onDataChange }) {
+  const [editorContent, setEditorContent] = useState(data || "");
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
@@ -97,7 +97,7 @@ export default function CKEDitor({data, onDataChange}) {
     const content = editor.getData();
     setEditorContent(content);
     if (onDataChange) {
-      onDataChange(content); 
+      onDataChange(content);
     }
   };
 
@@ -396,7 +396,7 @@ export default function CKEDitor({data, onDataChange}) {
     <div>
       <div className="main-container">
         <div
-          className="editor-container editor-container_classic-editor editor-container_include-style"
+          className="editor-container editor-container_classic-editor editor-container_include-style dark:text-black"
           ref={editorContainerRef}
         >
           <div className="editor-container__editor">
@@ -405,11 +405,11 @@ export default function CKEDitor({data, onDataChange}) {
                 <CKEditor
                   editor={ClassicEditor}
                   config={editorConfig}
-				  data={editorContent} 
-				  onChange={handleEditorChange}
-				  onReady={(editor) => {
-					console.log('Editor is ready', editor);
-				  }}
+                  data={editorContent}
+                  onChange={handleEditorChange}
+                  onReady={(editor) => {
+                    console.log("Editor is ready", editor);
+                  }}
                 />
               )}
             </div>
