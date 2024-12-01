@@ -12,6 +12,8 @@ import {
   FaBookmark,
   FaShare,
   FaArrowUp,
+  FaThumbsUp,
+  FaThumbsDown,
 } from "react-icons/fa";
 import {
   ArrowUp,
@@ -50,14 +52,18 @@ import {
   BiBookmark,
   BiBookmarkHeart,
   BiComment,
+  BiDislike,
   BiDownArrow,
   BiDownvote,
+  BiLike,
   BiUpArrow,
   BiUpvote,
 } from "react-icons/bi";
 import Share from "./Effects/Share";
 import UserList from "./Effects/SendProfile";
 import Save from "./Effects/Save";
+import CommentsDesktop from "./Effects/CommentsDesktop";
+import { FaRegThumbsDown } from "react-icons/fa6";
 
 const tabs = [
   { id: "myfeed", icon: activityFeedIcon, text: "My Feed" },
@@ -97,9 +103,7 @@ const Article = memo(
     profileImg,
     author,
     date,
-    tags,
     title,
-    activeTab,
     likes = 50,
     dislikes = 5,
     shares = 20,
@@ -111,6 +115,9 @@ const Article = memo(
     const [isShareOpen, setIsShareOpen] = useState(false);
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+    const [isDisliked, setIsDisliked] = useState(false);
+    const [isCommentsOpen, setIsCommentsOpen] = useState(false);
     const toggleBookmark = () => {
       setIsBookmarked((prev) => {
         const newValue = !prev;
@@ -118,6 +125,67 @@ const Article = memo(
       });
     };
 
+    const toggleLiked = () => {
+      setIsLiked((prev) => {
+        const newValue = !prev;
+        return newValue;
+      });
+      setIsDisliked(false);
+    };
+
+    const toggleDisliked = () => {
+      setIsDisliked((prev) => {
+        const newValue = !prev;
+        return newValue;
+      });
+      setIsLiked(false);
+    };
+
+
+    const commentsData = [
+      {
+        author: "Jagan Army",
+        profileImg: profileImg,
+        text: "Anna ostunnadu manchi rojulu vastunnayi.",
+        time: "2h ago",
+      },
+      {
+        author: "TDP Army",
+        profileImg: profileImg,
+        text: "Psycho povali cycle ravali.",
+        time: "1h ago",
+      },
+      {
+        author: "Jagan",
+        profileImg: profileImg,
+        text: "Madhusudhan rao ellakalam okela undadu.",
+        time: "1h ago",
+      },
+      {
+        author: "lokesh",
+        profileImg: profileImg,
+        text: "jaggu bhai punch padindha!",
+        time: "1h ago",
+      },
+      {
+        author: "pavan kalyan",
+        profileImg: profileImg,
+        text: "Jagan gutupettuko ninnu athapathalaniki tokkakapotey na peru pawan kalyan a kadu na party jansena a kadu",
+        time: "1h ago",
+      },
+      {
+        author: "sharmila",
+        profileImg: profileImg,
+        text: "Ippudu deenini Andhra Pradesh ani enduku antaro telusa idhi Andhra Pradesh kabatti",
+        time: "1h ago",
+      },
+      {
+        author: "Chandrababu",
+        profileImg: profileImg,
+        text: "Tammulu! Amaravati ni maro hitech city ga marusta",
+        time: "1h ago",
+      },
+    ];
 
     const handleShare = async () => {
       const data = { title, text: description, url };
@@ -154,7 +222,7 @@ const Article = memo(
               <p className="text-blue-500">4min</p>
               <p className="cursor-pointer border px-1">save</p>
             </div>
-            <div className="flex gap-4 mr-4">
+            <div className="flex gap-2 mx-4">
               <button className="flex items-center gap-1" onClick={handleShare}>
                 <SendIcon className="w-4 h-4" />
               </button>
@@ -194,19 +262,33 @@ const Article = memo(
 
         <div className="flex justify-between items-center gap-4">
           <div className="flex items-center gap-4">
-            <button className="flex items-center gap-1">
-              <ThumbsUpIcon className="w-4 h-4" />
+            <button className="flex items-center gap-1" onClick={toggleLiked}>
+            {isLiked ? (
+                <FaThumbsUp className="w-4 h-4 " />
+              ) : (
+                <BiLike className="w-4 h-4" />
+              )}
               <span>{likes} </span>
             </button>
-            <button className="flex items-center gap-1">
-              <ThumbsDownIcon className="w-4 h-4" />
+            <button className="flex items-center gap-1" onClick={toggleDisliked}>
+            {isDisliked ? (
+                <FaThumbsDown className="w-4 h-4 mt-1" />
+              ) : (
+                <BiDislike className="w-4 h-4 mt-1" />
+              )}
               <span>{dislikes} </span>
             </button>
-            <button className="flex items-center gap-1">
+            <button
+              className="flex items-center gap-1"
+              onClick={() => setIsCommentsOpen(true)}
+            >
               <MessageCircle className="w-4 h-4" />
               <span>0</span>
             </button>
-            <button className="flex items-center gap-1" onClick={toggleBookmark}>
+            <button
+              className="flex items-center gap-1"
+              onClick={toggleBookmark}
+            >
               {isBookmarked ? (
                 <FaBookmark className="w-4 h-4 " />
               ) : (
@@ -228,6 +310,12 @@ const Article = memo(
             <DesktopMore
               isOpen={isOptionsOpen}
               onClose={() => setIsOptionsOpen(false)}
+            />
+            <CommentsDesktop
+              isOpen={isCommentsOpen}
+              onClose={() => setIsCommentsOpen(false)}
+              comments={commentsData}
+              profileImg={profileImg}
             />
           </div>
         </div>
