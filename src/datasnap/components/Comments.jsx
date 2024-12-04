@@ -13,6 +13,8 @@ import SendDesktop from "./Effects/SendDesktop";
 import DesktopMore from "./Effects/DesktopMore";
 import CommentsDesktop from "./Effects/CommentsDesktop";
 import { useLocation } from "react-router-dom";
+import Commentstructure from "./Comments/CommentStructure";
+import MainComments from "./Comments/MainComments";
 
 const Comments = memo(
   ({
@@ -32,8 +34,7 @@ const Comments = memo(
     const [commentInfo, setCommentInfo] = useState({});
 
     const location = useLocation();
-    const { ProfileImage, Title, Description, BlogImg, Date, Author } =
-      location.state || {};
+    const { ProfileImage, Title, Description, BlogImg, Date, Author } = location.state || {};
 
     const toggleBookmark = () => {
       setIsBookmarked((prev) => {
@@ -68,7 +69,7 @@ const Comments = memo(
       }
     };
     return (
-      <div className="flex flex-col items-center space-y-4 p-6">
+      <div className="flex flex-col items-center space-y-4 p-6 mx-6">
         <div className="overflow-auto my-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center mb-4">
@@ -212,12 +213,12 @@ const Comments = memo(
             }}
           />
         </div>
-        <div className="w-full flex justify-between items-center">
+        {/* <div className="w-full flex justify-between items-center">
           <div className="flex space-x-4">
             {["All", "Answered", "Unanswered"].map((label) => (
               <button
                 key={label}
-                className="px-4 py-1 border-2 rounded-lg hover:shadow focus:ring-2 focus:outline-none"
+                className="px-4 py-1 border rounded-lg hover:shadow focus:ring-2 focus:outline-none"
               >
                 {label}
               </button>
@@ -227,7 +228,7 @@ const Comments = memo(
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
               <span>Sort by:</span>
-              <button className="flex items-center px-4 py-1 border-2 rounded-lg hover:shadow focus:ring-2 focus:outline-none">
+              <button className="flex items-center px-4 py-1 border rounded-lg hover:shadow focus:ring-2 focus:outline-none">
                 Best
                 <ChevronDown className="w-4 h-4 ml-1 mt-1.5" />
               </button>
@@ -238,10 +239,13 @@ const Comments = memo(
               <input
                 type="text"
                 placeholder="Search Comments..."
-                className="pl-10 pr-4 py-2 border-2 rounded-full w-48 focus:outline-none bg-transparent"
+                className="pl-10 pr-4 py-2 border rounded-full w-48 focus:outline-none bg-transparent"
               />
             </div>
           </div>
+        </div> */}
+        <div className="">
+          <MainComments/>
         </div>
       </div>
     );
