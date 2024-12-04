@@ -53,7 +53,7 @@ const SendDesktop = ({ isOpen, onClose }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/50 dark:bg-gray-800/70 transition-all">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 dark:bg-gray-800/70 transition-all z-[9999]">
           <div
             className="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-md border shadow-xl transition-transform transform scale-95 hover:scale-100"
             ref={popupRef}

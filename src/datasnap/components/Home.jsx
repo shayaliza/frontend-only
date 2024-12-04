@@ -59,11 +59,11 @@ import {
   BiUpArrow,
   BiUpvote,
 } from "react-icons/bi";
-import Share from "./Effects/Share";
 import UserList from "./Effects/SendProfile";
 import Save from "./Effects/Save";
 import CommentsDesktop from "./Effects/CommentsDesktop";
-import { FaRegThumbsDown } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { Title } from "ckeditor5";
 
 const tabs = [
   { id: "myfeed", icon: activityFeedIcon, text: "My Feed" },
@@ -118,6 +118,7 @@ const Article = memo(
     const [isLiked, setIsLiked] = useState(false);
     const [isDisliked, setIsDisliked] = useState(false);
     const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+    const navigate = useNavigate();
     const toggleBookmark = () => {
       setIsBookmarked((prev) => {
         const newValue = !prev;
@@ -140,7 +141,6 @@ const Article = memo(
       });
       setIsLiked(false);
     };
-
 
     const commentsData = [
       {
@@ -263,15 +263,18 @@ const Article = memo(
         <div className="flex justify-between items-center gap-4">
           <div className="flex items-center gap-4">
             <button className="flex items-center gap-1" onClick={toggleLiked}>
-            {isLiked ? (
+              {isLiked ? (
                 <FaThumbsUp className="w-4 h-4 " />
               ) : (
                 <BiLike className="w-4 h-4" />
               )}
               <span>{likes} </span>
             </button>
-            <button className="flex items-center gap-1" onClick={toggleDisliked}>
-            {isDisliked ? (
+            <button
+              className="flex items-center gap-1"
+              onClick={toggleDisliked}
+            >
+              {isDisliked ? (
                 <FaThumbsDown className="w-4 h-4 mt-1" />
               ) : (
                 <BiDislike className="w-4 h-4 mt-1" />
@@ -280,7 +283,18 @@ const Article = memo(
             </button>
             <button
               className="flex items-center gap-1"
-              onClick={() => setIsCommentsOpen(true)}
+              onClick={() =>
+                navigate(`/datasnap/${title.replace(/\s+/g, '_')}`, {
+                  state: {
+                    ProfileImage: profileImg,
+                    Title: title,
+                    Description: description,
+                    BlogImg: img2,
+                    Date: date,
+                    Author: author,
+                  },
+                })
+              }
             >
               <MessageCircle className="w-4 h-4" />
               <span>0</span>
