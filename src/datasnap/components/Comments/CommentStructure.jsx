@@ -33,16 +33,16 @@ const Commentstructure = ({ author, time, content, upvotes, replies, depth, maxD
             {hasReplies && (
               <button 
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                className="text-gray-500 hover:text-gray-700"
+                className=" hover:text-gray-700"
               >
                 {isCollapsed ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
               </button>
             )}
             <span className="font-semibold text-sm">{author}</span>
-            <span className="text-xs text-gray-500">• {time}</span>
+            <span className="text-xs">• {time}</span>
           </div>
           <p className="text-sm mt-1">{content}</p>
-          <div className="flex items-center space-x-4 mt-2 text-gray-500">
+          <div className="flex items-center space-x-4 mt-2">
             <button className="flex items-center space-x-1">
               <ThumbsUp size={16} />
               <span className="text-xs">{upvotes}</span>

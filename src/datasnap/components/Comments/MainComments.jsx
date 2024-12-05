@@ -108,7 +108,7 @@ const MainComments = () => {
       <div className="mb-4 flex items-center space-x-4">
         <button
           onClick={toggleAllComments}
-          className="rounded bg-transparent px-4 py-2 border dark:text-white text-black hover:bg-gray-400 dark:hover:bg-gray-500"
+          className="rounded bg-transparent px-4 py-2 border dark:text-white text-black hover:text-white hover:bg-blue-600 dark:hover:bg-blue-700"
         >
           {isAllCollapsed ? 'Expand All' : 'Collapse All'}
         </button>
@@ -118,7 +118,7 @@ const MainComments = () => {
           </label>
           <select
             id="depth-select"
-            className="rounded border p-1 bg-white dark:bg-transparent text-black dark:text-white"
+            className="rounded border p-1 bg-white dark:bg-transparent text-black dark:text-white cursor-pointer"
             onChange={handleDepthChange}
             value={maxDepth === Infinity ? 0 : maxDepth}
           >
