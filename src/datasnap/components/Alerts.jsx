@@ -32,13 +32,13 @@ const notifications = [
 
 function NotificationItem({ image, message, time, description }) {
   return (
-    <div className="flex justify-between items-center px-4 py-2s hover:bg-gray-300 dark:hover:bg-stone-800">
+    <div className="flex justify-between items-center px-0 lg:px-4 py-2 hover:bg-gray-300 dark:hover:bg-stone-800">
       <div className="flex items-center space-x-4">
-        <div className="relative rounded-full bg-black border border-gray-300 w-12 h-12 flex justify-center items-center">
+        <div className="relative rounded-full flex-shrink-0 bg-black border border-gray-300 w-12 h-12 flex justify-center items-center">
         <img
           src={image}
           alt="User"
-          className="rounded-full w-12 h-12 object-cover border border-gray-300"
+          className="flex-shrink-0 rounded-full w-12 h-12 object-cover border border-gray-300"
         />
           <FaBell className="absolute -right-1 bottom-0 w-4 h-4 text-pink-600" />
         </div>
@@ -64,7 +64,7 @@ function Alerts() {
   return (
     <div className="p-6 max-w-screen-md mx-auto">
       <h1 className="text-2xl font-semibold mb-6 ml-3">Notifications</h1>
-      <div className="flex justify-end items-center mb-4">
+      <div className="flex justify-start lg:justify-end items-center mb-4">
         <button className="text-sm font-medium border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600">
           Mark all as read
         </button>

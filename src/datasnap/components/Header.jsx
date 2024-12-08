@@ -10,7 +10,7 @@ import notification from "../assets/rsc/notification-bell.png";
 import { ModeToggle } from "../../DarkMode/ToggleMode";
 import { useTheme } from '../../DarkMode/ThemeProvider';
 import { IoIosArrowDropdown } from "react-icons/io";
-import { Cog } from "lucide-react";
+import { Bell, Cog } from "lucide-react";
 
 function Header({ toggleSidebar }) {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -165,7 +165,7 @@ function Header({ toggleSidebar }) {
             )}
           </div>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2">
           <div
             className="hidden relative lg:flex items-center rounded-full px-4 py-4 cursor-pointer"
             onClick={handleSearchOpen}
@@ -191,11 +191,11 @@ function Header({ toggleSidebar }) {
             className="w-6 h-6 hidden lg:inline-block"
           />
           </Link>
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <img
               src={profileimg}
               alt="Profile"
-              className="w-8 h-8 rounded-full cursor-pointer"
+              className="w-8 h-8 rounded-full cursor-pointer flex-shrink-0"
               onClick={toggleDropdown}
             />
             {dropdownOpen && (
@@ -213,6 +213,26 @@ function Header({ toggleSidebar }) {
                     className="inline w-4 h-4 mr-2"
                   />
                   Details
+                </Link>
+                <Link
+                  to="notifications"
+                  className="block px-4 py-2"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  <Bell
+                    className="inline w-4 h-4 mr-2"
+                  />
+                  Notifications
+                </Link>
+                <Link
+                  to="settings"
+                  className="block px-4 py-2"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  <Cog
+                    className="inline w-4 h-4 mr-2"
+                  />
+                  Settings
                 </Link>
               </div>
             )}
