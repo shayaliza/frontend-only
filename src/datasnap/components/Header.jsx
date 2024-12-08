@@ -10,12 +10,14 @@ import notification from "../assets/rsc/notification-bell.png";
 import { ModeToggle } from "../../DarkMode/ToggleMode";
 import { useTheme } from '../../DarkMode/ThemeProvider';
 import { IoIosArrowDropdown } from "react-icons/io";
+import { Cog } from "lucide-react";
 
 function Header({ toggleSidebar }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [activeTab, setActiveTab] = useState("top");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isDesktopdropdownOpen, setIsDesktopDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const searchPopupRef = useRef(null);
   const { theme } = useTheme();
@@ -54,6 +56,7 @@ function Header({ toggleSidebar }) {
   };
 
   const toggleDropdown = () => {
+    setIsDesktopDropdownOpen(!isDesktopdropdownOpen)
     setDropdownOpen(!dropdownOpen);
   };
 
@@ -181,11 +184,13 @@ function Header({ toggleSidebar }) {
             <img src={writeimg} alt="Create blog post" className="w-6 h-6" />
           </Link>
           <ModeToggle className="hidden lg:block" />
+          <Link to="notifications" aria-label="Notifications">
           <img
             src={notification}
             alt="Notifications"
             className="w-6 h-6 hidden lg:inline-block"
           />
+          </Link>
           <div className="relative">
             <img
               src={profileimg}
@@ -208,6 +213,22 @@ function Header({ toggleSidebar }) {
                     className="inline w-4 h-4 mr-2"
                   />
                   Details
+                </Link>
+              </div>
+            )}
+            {isDesktopdropdownOpen && (
+              <div
+                className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg hidden lg:block py-2 z-50 border border-gray-200 bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100`}
+              >
+                <Link
+                  to="settings"
+                  className="block px-4 py-2"
+                  onClick={() => setIsDesktopDropdownOpen(false)}
+                >
+                  <Cog
+                    className="inline w-4 h-4 mr-2"
+                  />
+                  Settings
                 </Link>
               </div>
             )}

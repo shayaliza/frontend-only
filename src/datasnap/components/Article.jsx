@@ -1,4 +1,3 @@
-// Article.js
 import React, { useState } from "react";
 import { FaHeart, FaComment } from "react-icons/fa";
 import { LikeABlog, UnlikeLikeABlog } from "../../fetching/dataSnap/like";
