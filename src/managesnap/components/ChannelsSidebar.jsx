@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { FaChevronDown, FaChevronUp, FaCog, FaThumbtack } from 'react-icons/fa';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { FaChevronDown, FaChevronUp, FaThumbtack } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import img from "../assets/man1.jpg"
-import img2 from "../assets/man2.jpg"
-import img3 from "../assets/man3.jpg"
-import img4 from "../assets/img1.png"
+import img from "../assets/man1.jpg";
+import img2 from "../assets/man2.jpg";
+import img3 from "../assets/man3.jpg";
+import img4 from "../assets/img1.png";
 
 const channels = [
   { 
@@ -24,20 +23,38 @@ const channels = [
       { id: "C0877-2", name: "# data-visualization" }
     ]
   },
-  { id: "C0878", name: "# evalsnap" },
   { 
-    id: "C0879",
-    name: "# general",
+    id: "C0878",
+    name: "# managesnap",
     subChannels: [
-      { id: "C0879-1", name: "# announcements" },
-      { id: "C0879-2", name: "# random" }
+      { id: "C0878-1", name: "# announcements" },
+      { id: "C0878-2", name: "# random" }
     ]
   },
-  { id: "C0880", name: "# hiresnap" },
-  { id: "C0881", name: "# ideas" },
-  { id: "C0882", name: "# managesnap" },
-  { id: "C0883", name: "# moviesnap" },
-  { id: "C0884", name: "# techsnap" }
+  { 
+    id: "C0879",
+    name: "# evalsnap",
+    subChannels: [
+      { id: "C0879-1", name: "# unit-tests" },
+      { id: "C0879-2", name: "# integration-tests" }
+    ]
+  },
+  { 
+    id: "C0880",
+    name: "# moviesnap",
+    subChannels: [
+      { id: "C0880-1", name: "# data-processing" },
+      { id: "C0880-2", name: "# data-visualization" }
+    ]
+  },
+  { 
+    id: "C0881",
+    name: "# gensnap",
+    subChannels: [
+      { id: "C0881-1", name: "# announcements" },
+      { id: "C0881-2", name: "# random" }
+    ]
+  },
 ];
 
 const directMessages = [
@@ -64,9 +81,9 @@ const ChannelItem = ({ channel, level = 0, onChannelClick }) => {
   const hasSubChannels = channel.subChannels && channel.subChannels.length > 0;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col dark:text-white">
       <div
-        className="flex items-center p-2 rounded cursor-pointer hover:bg-gray-500 transition"
+        className="flex items-center p-2 rounded cursor-pointer hover:bg-transparent transition"
         style={{ paddingLeft: `${level * 16 + 8}px` }}
         onClick={() => {
           if (hasSubChannels) {
@@ -78,20 +95,21 @@ const ChannelItem = ({ channel, level = 0, onChannelClick }) => {
       >
         {hasSubChannels && (
           <span className="mr-2">
-            {showSubChannels ? 
-              <FaChevronUp className="text-gray-400 w-3 h-3" /> : 
-              <FaChevronDown className="text-gray-400 w-3 h-3" />
-            }
+            {showSubChannels ? (
+              <FaChevronUp className="w-3 h-3" />
+            ) : (
+              <FaChevronDown className="w-3 h-3" />
+            )}
           </span>
         )}
-        <span className="text-white text-sm">{channel.name}</span>
+        <span>{channel.name}</span>
       </div>
       {hasSubChannels && showSubChannels && (
         <div className="ml-2">
           {channel.subChannels.map((subChannel) => (
-            <ChannelItem 
-              key={subChannel.id} 
-              channel={subChannel} 
+            <ChannelItem
+              key={subChannel.id}
+              channel={subChannel}
               level={level + 1}
               onChannelClick={onChannelClick}
             />
@@ -116,20 +134,27 @@ function ChannelsSidebar() {
   };
 
   return (
-    <div id="sidebar" className="relative w-full flex flex-col bg-zinc-950 h-[calc(100vh-56px)] overflow-y-auto border-r channel-scrollbar">
+    <div
+      id="sidebar"
+      className="relative w-full flex flex-col h-[calc(100vh-56px)] overflow-y-auto border-r channel-scrollbar dark:text-white"
+    >
       <div className="flex-1 p-4">
         <div className="mb-4 flex flex-col">
-          <div 
-            className="flex justify-between items-center cursor-pointer p-2 rounded hover:bg-gray-700 transition"
+          <div
+            className="flex justify-between items-center cursor-pointer p-2 rounded hover:bg-transparent transition"
             onClick={() => setShowChannels(!showChannels)}
           >
-            <span className="text-sm font-bold text-white">Channels</span>
-            {showChannels ? <FaChevronUp className="text-gray-400"/> : <FaChevronDown className="text-gray-400"/>}
+            <span className="font-bold">Channels</span>
+            {showChannels ? <FaChevronUp /> : <FaChevronDown />}
           </div>
-          <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showChannels ? 'max-h-[1000px]' : 'max-h-0'}`}>
+          <div
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${
+              showChannels ? "max-h-[1000px]" : "max-h-0"
+            }`}
+          >
             <div id="channels" className="mt-2">
               {channels.map((channel) => (
-                <ChannelItem 
+                <ChannelItem
                   key={channel.id}
                   channel={channel}
                   onChannelClick={handleChannelClick}
@@ -140,23 +165,27 @@ function ChannelsSidebar() {
         </div>
 
         <div className="mb-4 flex flex-col">
-          <div 
-            className="flex justify-between items-center cursor-pointer p-2 rounded hover:bg-gray-700 transition"
+          <div
+            className="flex justify-between items-center cursor-pointer p-2 rounded transition"
             onClick={() => setShowDirectMessages(!showDirectMessages)}
           >
-            <span className="text-sm font-bold text-white">Direct messages</span>
-            {showDirectMessages ? <FaChevronUp className="text-gray-400"/> : <FaChevronDown className="text-gray-400"/>}
+            <span className="font-bold">Direct messages</span>
+            {showDirectMessages ? <FaChevronUp /> : <FaChevronDown />}
           </div>
-          <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showDirectMessages ? 'max-h-[1000px]' : 'max-h-0'}`}>
+          <div
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${
+              showDirectMessages ? "max-h-[1000px]" : "max-h-0"
+            }`}
+          >
             <div id="directMessages" className="mt-2">
               {directMessages.map((message) => (
                 <div
                   key={message.id}
                   onClick={() => handleDMClick(message)}
-                  className="flex items-center space-x-3 p-2 rounded cursor-pointer hover:bg-gray-500 transition"
+                  className="flex items-center space-x-3 p-2 rounded cursor-pointer hover:bg-transparent transition"
                 >
                   <img src={message.photo} alt="" className="w-8 h-8 rounded-full" />
-                  <span className="text-white text-sm">{message.name}</span>
+                  <span>{message.name}</span>
                 </div>
               ))}
             </div>
@@ -164,8 +193,8 @@ function ChannelsSidebar() {
         </div>
       </div>
 
-      <div className="sticky bottom-0 w-full bg-zinc-950 py-4 px-4 border-t border-gray-700">
-        <div className="flex items-center overflow-auto whitespace-nowrap pb-2 scrollbar-thin scrollbar-thumb-gray-600 pin-scrollbar">
+      <div className="sticky bottom-0 w-full py-4 px-4 bg-white dark:bg-black border-t">
+      <div className="flex items-center overflow-auto whitespace-nowrap pb-2 pin-scrollbar">
           {pinnedItems.map((item, index) => (
             <div 
               key={index} 
@@ -180,7 +209,7 @@ function ChannelsSidebar() {
                     className="w-10 h-10 rounded-full border-2 border-gray-700"
                   />
                   <FaThumbtack 
-                    className="absolute -top-1 -right-1 text-gray-400 bg-zinc-950 rounded-full p-1 w-4 h-4" 
+                    className="absolute top-0 -right-1 text-gray-400 bg-zinc-950 rounded-full p-1 w-4 h-4" 
                   />
                 </div>
               ) : (
@@ -189,7 +218,7 @@ function ChannelsSidebar() {
                     <span className="text-white text-sm">#</span>
                   </div>
                   <FaThumbtack 
-                    className="absolute -top-1 -right-1 text-gray-400 bg-zinc-950 rounded-full p-1 w-4 h-4" 
+                    className="absolute top-0 -right-1 text-gray-400 bg-zinc-950 rounded-full p-1 w-4 h-4" 
                   />
                 </div>
               )}
@@ -199,7 +228,7 @@ function ChannelsSidebar() {
             </div>
           ))}
         </div>
-      </div>
+        </div>
     </div>
   );
 }

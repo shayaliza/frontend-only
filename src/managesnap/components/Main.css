@@ -123,6 +123,25 @@ body.splash-screen .fade-out {
   display: none;
 }
 
-.pin-scrollbar::-webkit-scrollbar{
+.pin-scrollbar::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px; 
+}
+
+.pin-scrollbar::-webkit-scrollbar-thumb {
+  background: #b7c1ce;
+  border-radius: 4px; 
+}
+
+.pin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b7280; 
+}
+
+.pin-scrollbar::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+.emoji-scrollbar::-webkit-scrollbar {
   display: none;
 }
+

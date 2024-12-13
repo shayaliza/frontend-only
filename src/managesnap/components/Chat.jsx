@@ -27,6 +27,7 @@ import {
   Search,
   X,
   ChevronDownIcon,
+  Copy,
 } from "lucide-react";
 
 const ALLOWED_FILE_TYPES = [
@@ -45,6 +46,9 @@ const currentUser = {
   id: 1,
   name: "You",
   photo: img,
+  email: "salma.pattan@non.se.com",
+  phone: "+91 566757688",
+  location: "AVINYA campus",
 };
 
 const dms = [
@@ -129,6 +133,16 @@ function Chat({ toggleProfileSectionVisibility }) {
   const lastSegment = location.pathname.split("/").pop();
   const isChannelChat = lastSegment.startsWith("C");
 
+  const [copied, setCopied] = useState(null);
+
+  const handleCopy = (text, successMessage) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(text);
+      // Reset icon after 2 seconds
+      setTimeout(() => setCopied(null), 2000);
+    });
+  };
+
   useEffect(() => {
     if (shouldScrollToBottom) {
       scrollToBottom();
@@ -208,7 +222,7 @@ function Chat({ toggleProfileSectionVisibility }) {
         name: lastSegment,
       },
     });
-  }
+  };
 
   const handlePaste = async (e) => {
     const items = Array.from(e.clipboardData.items);
@@ -575,17 +589,17 @@ function Chat({ toggleProfileSectionVisibility }) {
         <div className="w-full flex justify-between items-center">
           <div
             className="flex items-center cursor-pointer space-x-2"
-            onClick={toggleProfileSectionVisibility}
+            // onClick={toggleProfileSectionVisibility}
           >
             <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
               <PopoverTrigger asChild>
                 <div
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
+                // onMouseEnter={handleMouseEnter}
+                // onMouseLeave={handleMouseLeave}
                 >
                   <Avatar
                     className="w-12 h-12 border border-gray-500 cursor-pointer hover:opacity-90"
-                    onClick={toggleProfileSectionVisibility}
+                    // onClick={toggleProfileSectionVisibility}
                   >
                     <AvatarImage src={currentUser.photo} alt="Profile" />
                     <AvatarFallback>
@@ -599,13 +613,13 @@ function Chat({ toggleProfileSectionVisibility }) {
               </PopoverTrigger>
 
               <PopoverContent
-                className="w-[300px] p-0  text-white shadow-xl"
-                onMouseEnter={() => {
-                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                }}
-                onMouseLeave={handleMouseLeave}
+                className="w-[300px] p-0  text-white shadow-xl ml-60"
+                // onMouseEnter={() => {
+                //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                // }}
+                // onMouseLeave={handleMouseLeave}
               >
-                <div className="p-4 space-y-2 text-black dark:text-white">
+                <div className="px-4 pt-2 space-y-2 text-black dark:text-white">
                   <div className="flex items-center gap-2">
                     <Avatar className="w-10 h-10">
                       <AvatarImage
@@ -633,16 +647,16 @@ function Chat({ toggleProfileSectionVisibility }) {
                   </div>
 
                   <div className="flex justify-around py-2 text-black dark:text-white">
-                    <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
                       <MessageSquare className="w-5 h-5" />
                     </button>
-                    <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
                       <Users className="w-5 h-5" />
                     </button>
-                    <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
                       <Video className="w-5 h-5" />
                     </button>
-                    <button className="hover:bg-gray-800 p-2 rounded-full transition-colors">
+                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
                       <Phone className="w-5 h-5" />
                     </button>
                   </div>
@@ -657,34 +671,100 @@ function Chat({ toggleProfileSectionVisibility }) {
                     <Clock className="w-3.5 h-3.5" />
                     <span>Work hours: 10:00 AM - 7:00 PM</span>
                   </div>
+                  <div className="flex items-center gap-2 text-xs text-black dark:text-white">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>12:49 A.M - same time zone as you</span>
+                  </div>
                 </div>
 
                 <div className="border-t border-gray-800 p-3 text-black dark:text-white">
                   <h4 className="text-xs font-medium mb-2">Contact</h4>
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2 text-blue-400">
-                      <Mail className="w-4 h-4" />
-                      <a
-                        href={`mailto:salma.pattan@non.se.com`}
-                        className="text-xs hover:underline"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        salma.pattan@non.se.com
-                      </a>
+                    <div className="flex items-center justify-between group ">
+                      <div className="flex items-center gap-2 text-blue-400">
+                        <Mail className="w-4 h-4" />
+                        <a
+                          href={`mailto:${currentUser.email}`}
+                          className="text-xs hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {currentUser.email}
+                        </a>
+                      </div>
+                      <div className="relative">
+                        <button
+                          onClick={() =>
+                            handleCopy(currentUser.email, "Email copied!")
+                          }
+                          className="focus:outline-none hidden group-hover:inline-block"
+                        >
+                          {copied === currentUser.email ? (
+                            <Check className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
+                          )}
+                        </button>
+                        <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
+                          Email:{currentUser.email}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-blue-400">
-                      <Phone className="w-4 h-4" />
-                      <a
-                        href="tel:+91566757688"
-                        className="text-xs hover:underline"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        +91 566757688
-                      </a>
+
+                    <div className="flex items-center justify-between group">
+                      <div className="flex items-center gap-2 text-blue-400">
+                        <Phone className="w-4 h-4" />
+                        <a
+                          href={`tel:${currentUser.phone}`}
+                          className="text-xs hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {currentUser.phone}
+                        </a>
+                      </div>
+                      <div className="relative">
+                        <button
+                          onClick={() =>
+                            handleCopy(
+                              currentUser.phone,
+                              "Phone number copied!"
+                            )
+                          }
+                          className="focus:outline-none hidden group-hover:inline-block"
+                        >
+                          {copied === currentUser.phone ? (
+                            <Check className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
+                          )}
+                        </button>
+                        <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
+                          Phone:{currentUser.phone}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-black dark:text-white">
-                      <MapPin className="w-4 h-4" />
-                      <span className="text-xs">AVINYA Campus</span>
+
+                    <div className="flex items-center justify-between group">
+                      <div className="flex items-center gap-2 text-black dark:text-white">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-xs">{currentUser.location}</span>
+                      </div>
+                      <div className="relative">
+                        <button
+                          onClick={() =>
+                            handleCopy(currentUser.location, "Location copied!")
+                          }
+                          className="focus:outline-none hidden group-hover:inline-block"
+                        >
+                          {copied === currentUser.location ? (
+                            <Check className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
+                          )}
+                        </button>
+                        <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
+                         Location:{currentUser.location}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

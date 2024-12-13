@@ -145,7 +145,7 @@ function Sidebar() {
   ];
 
   return (
-    <div className="flex flex-col justify-between px-2 py-6 bg-zinc-900 shadow-md w-20">
+    <div className="flex flex-col justify-between px-2 py-6 shadow-md w-20">
       <aside className="flex flex-col items-center space-y-6">
         {icons.map(({ id, icon, activeIcon, label, tooltip, path, matchPath }) => {
           const isActive = currentPath.includes(matchPath);
@@ -159,12 +159,12 @@ function Sidebar() {
                 role="button"
               >
                 <div className={`${
-                  isActive ? "text-pink-500" : "text-gray-400 hover:text-gray-200"
+                  isActive ? "text-pink-500" : "text-gray-600 hover:text-gray-200"
                 }`}>
                   {isActive ? activeIcon : icon}
                 </div>
                 <span className={`text-xs mt-1 ${
-                  isActive ? "text-pink-500" : "text-gray-400"
+                  isActive ? "text-pink-500" : "text-gray-600"
                 }`}>
                   {label}
                 </span>
@@ -187,7 +187,7 @@ function Sidebar() {
               <Avatar className="w-12 h-12 cursor-pointer hover:opacity-90 rounded-lg">
                 <AvatarImage src={logo} alt="Profile"  />
               </Avatar>
-              <span className="text-xs text-gray-400 mt-1">Personal</span>
+              <span className="text-xs text-gray-600 mt-1">Personal</span>
             </div>
           </PopoverTrigger>
 
