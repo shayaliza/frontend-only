@@ -11,6 +11,7 @@ import { Pin, Download, FileIcon, ReplyIcon, ViewIcon } from "lucide-react";
 import ReactionPicker from "./ReactionPicker";
 import MessageStatus from "./MessageStatus";
 import MessageTimestamp from "./MessageTimestamp";
+import ForwardMessage from "./ForwardMessage";
 
 export default function ChatMessage({
   message,
@@ -19,6 +20,7 @@ export default function ChatMessage({
   messageStatus,
   onReply,
   onEdit,
+  onDelete,
   onPin,
   onReact,
   isChannelChat,
@@ -26,6 +28,7 @@ export default function ChatMessage({
   const [showFullContent, setShowFullContent] = useState(false);
   const contentRef = useRef(null);
   const [hasOverflow, setHasOverflow] = useState(false);
+  const [forwardOpen, setForwardOpen] = useState(false);
 
   useEffect(() => {
     if (contentRef.current) {
@@ -36,36 +39,36 @@ export default function ChatMessage({
   }, [message.content]);
 
   const handleReaction = (emoji) => {
-
     onReact(message.id, emoji);
   };
 
-  const shareMessage = async (event) => {
-    event?.preventDefault();
-    event?.stopPropagation();
 
-    try {
-      let shareData = {
-        title: "Shared Message",
-        text: message.content,
-      };
+  // const shareMessage = async (event) => {
+  //   event?.preventDefault();
+  //   event?.stopPropagation();
 
-      if (message.imageUrl) {
-        shareData.url = message.imageUrl;
-      }
+  //   try {
+  //     let shareData = {
+  //       title: "Shared Message",
+  //       text: message.content,
+  //     };
 
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(
-          `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
-        );
-        alert("Message copied to clipboard!");
-      }
-    } catch (error) {
-      console.error("Error sharing:", error);
-    }
-  };
+  //     if (message.imageUrl) {
+  //       shareData.url = message.imageUrl;
+  //     }
+
+  //     if (navigator.share) {
+  //       await navigator.share(shareData);
+  //     } else {
+  //       await navigator.clipboard.writeText(
+  //         `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
+  //       );
+  //       alert("Message copied to clipboard!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sharing:", error);
+  //   }
+  // };
 
   const renderContent = () => {
     return (
@@ -169,8 +172,9 @@ export default function ChatMessage({
 
         <div
           ref={contentRef}
-          className={`${showFullContent ? "" : "max-h-68"
-            } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
+          className={`${
+            showFullContent ? "" : "max-h-68"
+          } overflow-hidden transition-all duration-200 break-words whitespace-pre-wrap`}
         >
           <LinkPreviewHandler content={message.content} />
         </div>
@@ -203,10 +207,16 @@ export default function ChatMessage({
   };
 
   return (
-    <div className={`relative w-full px-2 ${isCurrentUser ? "items-end" : "items-start"
-      }`}>
-      <div className={`flex w-full mb-1 ${isCurrentUser ? "justify-end" : "justify-start"
-        } px-2`}>
+    <div
+      className={`relative w-full px-2 ${
+        isCurrentUser ? "items-end" : "items-start"
+      }`}
+    >
+      <div
+        className={`flex w-full mb-1 ${
+          isCurrentUser ? "justify-end" : "justify-start"
+        } px-2`}
+      >
         <div className="flex items-center gap-2 text-xs text-muted-foreground ml-8">
           {!isCurrentUser && isChannelChat && (
             <span className="font-medium">{message.user}</span>
@@ -218,8 +228,11 @@ export default function ChatMessage({
         </div>
       </div>
 
-      <div className={`flex items-start gap-2 ${isCurrentUser ? "flex-row-reverse" : "flex-row"
-        }`}>
+      <div
+        className={`flex items-start gap-2 ${
+          isCurrentUser ? "flex-row-reverse" : "flex-row"
+        }`}
+      >
         {!isCurrentUser && (
           <Avatar className="w-8 h-8 border border-gray-500 flex-shrink-0">
             <AvatarImage src={message.photo} alt={message.user} />
@@ -234,13 +247,15 @@ export default function ChatMessage({
           )}
 
           <Card
-            className={`border-0 ${isCurrentUser
+            className={`border-0 ${
+              isCurrentUser
                 ? "bg-blue-500 text-white dark:bg-blue-700"
                 : "bg-gray-200 dark:bg-gray-700"
-              } ${isCurrentUser
+            } ${
+              isCurrentUser
                 ? "rounded-t-lg rounded-bl-lg"
                 : "rounded-t-lg rounded-br-lg"
-              }`}
+            }`}
           >
             <CardContent className="p-3">{renderContent()}</CardContent>
           </Card>
@@ -260,8 +275,11 @@ export default function ChatMessage({
             </div>
           )}
 
-          <div className={`absolute ${isCurrentUser ? "-top-12 right-8" : "-top-12 -right-52"
-            } z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 p-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}>
+          <div
+            className={`absolute ${
+              isCurrentUser ? "-top-12 -right-1" : "-top-12 -right-52"
+            } z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border min-w-64`}
+          >
             <div className="border-r border-gray-500">
               <ReactionPicker onReact={handleReaction} />
             </div>
@@ -272,17 +290,18 @@ export default function ChatMessage({
                 onReply(message);
               }}
             />
-            <FaShare
-              className="ml-2 cursor-pointer"
-              onClick={shareMessage}
-            />
+            <FaShare className="ml-2 cursor-pointer" onClick={() => setForwardOpen(true)} />
+
+            <ForwardMessage message={message} isOpen={forwardOpen} onClose={() => setForwardOpen(false)} />
+
             <MessageOptions
               message={message}
               onReply={onReply}
+              onDelete={onDelete}
               onEdit={onEdit}
               onPin={onPin}
               isCurrentUser={isCurrentUser}
-              onShare={shareMessage}
+              forwardOpen={forwardOpen}
             />
           </div>
         </div>

@@ -2,8 +2,8 @@ import React from "react";
 
 const REACTION_TYPES = [
     { emoji: "👍", label: "Like" },
-    { emoji: "😄", label: "Haha" },
-    { emoji: "😢", label: "Sad" },
+    { emoji: "😉", label: "wink" },
+    { emoji: "🫠", label: "dissolve" },
     { emoji: "😄", label: "Haha" },
     { emoji: "😢", label: "Sad" },
   ];
@@ -15,7 +15,7 @@ export default function ReactionPicker({ onReact }) {
           <button
             key={reaction.label}
             onClick={() => onReact(reaction.emoji)}
-            className="hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 rounded-full transition-colors"
+            className="hover:bg-gray-100 dark:hover:bg-gray-700 p-0.5 rounded-full transition-colors"
             title={reaction.label}
           >
             {reaction.emoji}

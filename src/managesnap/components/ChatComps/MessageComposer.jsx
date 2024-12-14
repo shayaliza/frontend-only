@@ -32,50 +32,62 @@ const MessageComposer = ({
 }) => {
   const renderReplyPreview = () => {
     if (!replyToMessage) return null;
-
-    return (
-      <div className="mb-2 flex items-center gap-2 bg-muted p-2 rounded">
-        <Reply className="w-4 h-4" />
-        <div className="flex-grow flex items-center gap-2">
-          <div className="flex-grow">
-            <div className="text-sm font-medium">{replyToMessage.user}</div>
-            {replyToMessage.imageUrl ? (
-              <div className="flex items-center gap-2">
-                <img 
-                  src={replyToMessage.imageUrl} 
-                  alt="Reply preview" 
-                  className="h-10 w-10 object-cover rounded"
-                />
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  Photo
-                </span>
-              </div>
-            ) : replyToMessage.fileUrl ? (
-              <div className="flex items-center gap-2">
-                <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded">
-                  <FileIcon className="h-4 w-4" />
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {replyToMessage.fileName}
-                </span>
-              </div>
-            ) : (
-              <div className="text-sm text-gray-500 dark:text-gray-400 line-clamp-1">
-                {replyToMessage.content}
-              </div>
-            )}
+  
+    const ContentPreview = () => {
+      if (replyToMessage.imageUrl) {
+        return (
+          <div className="flex items-center gap-2">
+            <img
+              src={replyToMessage.imageUrl}
+              alt="Reply preview"
+              className="h-12 w-12 object-cover rounded-lg shadow-sm"
+            />
+            <span className="text-sm text-gray-600 dark:text-gray-300">Photo</span>
           </div>
+        );
+      }
+      if (replyToMessage.fileUrl) {
+        return (
+          <div className="flex items-center gap-2">
+            <div className="p-2 bg-gray-200 dark:bg-gray-700 rounded shadow-sm">
+              <FileIcon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+            </div>
+            <span className="text-sm text-gray-600 dark:text-gray-300 truncate max-w-xs">
+              {replyToMessage.fileName}
+            </span>
+          </div>
+        );
+      }
+      return (
+        <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1">
+          {replyToMessage.content}
+        </div>
+      );
+    };
+  
+    return (
+      <div className="mb-3 flex items-center gap-3 bg-[#1F1F1F] p-3 rounded-lg shadow">
+        <div className="flex-shrink-0">
+          <Reply className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        </div>
+        <div className="flex-grow">
+          <div className="text-sm font-semibold text-gray-700 dark:text-gray-200 pb-2">
+            {replyToMessage.user}
+          </div>
+          <ContentPreview />
         </div>
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setReplyToMessage(null)}
+          className="text-gray-500 hover:text-red-700 dark:text-gray-400 dark:hover:text-red-700"
         >
-          <X className="w-4 h-4" />
+          <X className="w-5 h-5" />
         </Button>
       </div>
     );
   };
+  
 
   const [emojis, setEmojis] = useState(emojisData.emojis || []);  
 
@@ -131,7 +143,7 @@ const MessageComposer = ({
                   key={index}
                   onClick={() => {
                     setMessageInput((prev) => prev + emoji);  
-                    setShowEmojiPicker(false);
+                    // setShowEmojiPicker(false);
                   }}
                   className="hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
                 >

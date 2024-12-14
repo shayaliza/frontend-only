@@ -30,7 +30,10 @@ import {
   Search,
   X,
   ChevronDownIcon,
+  MessageCircle,
 } from "lucide-react";
+import PinnedMessages from "./ChatComps/PinnedMessages";
+import ChatFiles from "./ChatComps/ChatFiles";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -173,6 +176,7 @@ const DMs = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
+  const [currentView, setCurrentView] = useState("messages");
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -443,7 +447,7 @@ const DMs = () => {
         name: selectedUser.name,
       },
     });
-  }
+  };
 
   const downloadImage = (imageUrl) => {
     const link = document.createElement("a");
@@ -695,96 +699,113 @@ const DMs = () => {
                     <div className="text-lg font-bold">{selectedUser.name}</div>
                   </div>
                   <div className="flex items-center space-x-4 mt-2">
-            <button onClick={() => handleSearch(selectedUser)}>
-              <Search className="w-5 h-5 mr-1" />
-            </button>
-            <button className="p-1">
-              <PinIcon className="w-5 h-5" />
-            </button>
-            <button className="p-1">
-              <FileIcon className="w-5 h-5" />
-            </button>
-            <button className="p-1">
-              <MoreVerticalIcon className="w-5 h-5" />
-            </button>
-          </div>
+                    <button onClick={() => handleSearch(selectedUser)}>
+                      <Search className="w-5 h-5 mr-1" />
+                    </button>
+                    <button onClick={() => setCurrentView("messages")}>
+                      <MessageCircle className="w-5 h-5 mr-1" />
+                    </button>
+                    <button
+                      className="p-1"
+                      onClick={() => setCurrentView("pinned messages")}
+                    >
+                      <PinIcon className="w-5 h-5" />
+                    </button>
+                    <button
+                      className="p-1"
+                      onClick={() => setCurrentView("Files")}
+                    >
+                      <FileIcon className="w-5 h-5" />
+                    </button>
+                    <button className="p-1">
+                      <MoreVerticalIcon className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              <div
-                className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
-                ref={chatContainerRef}
-              >
-                {messages.map((message, index) => (
-                  <ChatMessage
-                    key={message.id}
-                    message={message}
-                    isCurrentUser={message.user === "You"}
-                    previousMessage={index > 0 ? messages[index - 1] : null}
-                    onReply={setReplyToMessage}
-                    onEdit={(messageId, content) => {
-                      setEditingMessageId(messageId);
-                      setMessageInput(content);
-                    }}
-                    onPin={(messageId) => {
-                      setMessages(
-                        messages.map((msg) =>
-                          msg.id === messageId
-                            ? { ...msg, isPinned: !msg.isPinned }
-                            : msg
-                        )
-                      );
-                    }}
-                    onReact={(messageId, reaction) => {
-                      setMessages(
-                        messages.map((msg) =>
-                          msg.id === messageId
-                            ? {
-                                ...msg,
-                                reactions: msg.reactions.some(
-                                  (r) => r.emoji === reaction
-                                )
-                                  ? msg.reactions.filter(
-                                      (r) => r.emoji !== reaction
-                                    )
-                                  : [
-                                      ...msg.reactions,
-                                      { emoji: reaction, count: 1 },
-                                    ],
-                              }
-                            : msg
-                        )
-                      );
-                    }}
-                    onImageClick={(imageUrl) => setImagePreview(imageUrl)}
-                  />
-                ))}
-                {scrollButton && (
+              {currentView === "messages" && (
+                <>
                   <div
-                    className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
-                    onClick={() => setShouldScrollToBottom(true)}
+                    className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
+                    ref={chatContainerRef}
                   >
-                    <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    {messages.map((message, index) => (
+                      <ChatMessage
+                        key={message.id}
+                        message={message}
+                        isCurrentUser={message.user === "You"}
+                        previousMessage={index > 0 ? messages[index - 1] : null}
+                        onReply={setReplyToMessage}
+                        onEdit={(messageId, content) => {
+                          setEditingMessageId(messageId);
+                          setMessageInput(content);
+                        }}
+                        onPin={(messageId) => {
+                          setMessages(
+                            messages.map((msg) =>
+                              msg.id === messageId
+                                ? { ...msg, isPinned: !msg.isPinned }
+                                : msg
+                            )
+                          );
+                        }}
+                        onReact={(messageId, reaction) => {
+                          setMessages(
+                            messages.map((msg) =>
+                              msg.id === messageId
+                                ? {
+                                    ...msg,
+                                    reactions: msg.reactions.some(
+                                      (r) => r.emoji === reaction
+                                    )
+                                      ? msg.reactions.filter(
+                                          (r) => r.emoji !== reaction
+                                        )
+                                      : [
+                                          ...msg.reactions,
+                                          { emoji: reaction, count: 1 },
+                                        ],
+                                  }
+                                : msg
+                            )
+                          );
+                        }}
+                        onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+                      />
+                    ))}
+                    {scrollButton && (
+                      <div
+                        className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+                        onClick={() => setShouldScrollToBottom(true)}
+                      >
+                        <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
                   </div>
-                )}
-                <div ref={messagesEndRef} />
-              </div>
-              {selectedFiles.length > 0 && renderFilePreview()}
-              <MessageComposer
-                messageInput={messageInput}
-                setMessageInput={setMessageInput}
-                handleKeyDown={handleKeyDown}
-                handlePaste={handlePaste}
-                editingMessageId={editingMessageId}
-                replyToMessage={replyToMessage}
-                setReplyToMessage={setReplyToMessage}
-                showEmojiPicker={showEmojiPicker}
-                setShowEmojiPicker={setShowEmojiPicker}
-                fileInputRef={fileInputRef}
-                handleFileUpload={handleFileUpload}
-                handleImageUpload={handleImageUpload}
-                sendMessage={sendMessage}
-              />
+                  {selectedFiles.length > 0 && renderFilePreview()}
+                  <MessageComposer
+                    messageInput={messageInput}
+                    setMessageInput={setMessageInput}
+                    handleKeyDown={handleKeyDown}
+                    handlePaste={handlePaste}
+                    editingMessageId={editingMessageId}
+                    replyToMessage={replyToMessage}
+                    setReplyToMessage={setReplyToMessage}
+                    showEmojiPicker={showEmojiPicker}
+                    setShowEmojiPicker={setShowEmojiPicker}
+                    fileInputRef={fileInputRef}
+                    handleFileUpload={handleFileUpload}
+                    handleImageUpload={handleImageUpload}
+                    sendMessage={sendMessage}
+                  />
+                </>
+              )}
+
+              {currentView === "pinned messages" && <PinnedMessages />}
+
+              {currentView === "Files" && <ChatFiles />}
             </>
           ) : (
             <div className="flex-1 flex items-center justify-center opacity-50">

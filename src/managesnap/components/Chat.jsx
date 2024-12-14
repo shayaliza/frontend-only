@@ -35,6 +35,8 @@ import {
 } from "lucide-react";
 import { FaFilePdf, FaHtml5 } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
+import ChatFiles from "./ChatComps/ChatFiles";
+import ChatMoreOptions from "./ChatComps/ChatMoreOptions";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -772,7 +774,7 @@ function Chat({ toggleProfileSectionVisibility }) {
                           )}
                         </button>
                         <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
-                         Location:{currentUser.location}
+                          Location:{currentUser.location}
                         </span>
                       </div>
                     </div>
@@ -793,195 +795,151 @@ function Chat({ toggleProfileSectionVisibility }) {
             <button onClick={() => setCurrentView("messages")}>
               <MessageCircle className="w-5 h-5 mr-1" />
             </button>
-            <button className="p-1" onClick={() => setCurrentView("pinned messages")}>
+            <button
+              className="p-1"
+              onClick={() => setCurrentView("pinned messages")}
+            >
               <PinIcon className="w-5 h-5" />
             </button>
             <button className="p-1" onClick={() => setCurrentView("Files")}>
               <FileIcon className="w-5 h-5" />
             </button>
-            <button className="p-1">
-              <MoreVerticalIcon className="w-5 h-5" />
-            </button>
+            <ChatMoreOptions/>
           </div>
         </div>
       </div>
-      
+
       {currentView === "messages" && (
         <>
-        <div
-        className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
-        ref={chatContainerRef}
-      >
-        {messages.map((message, index) => (
-          <ChatMessage
-            key={message.id}
-            message={message}
-            isCurrentUser={message.user === "You"}
-            previousMessage={index > 0 ? messages[index - 1] : null}
-            onReply={setReplyToMessage}
-            onEdit={(messageId, content) => {
-              setEditingMessageId(messageId);
-              setMessageInput(content);
-            }}
-            onPin={(messageId) => {
-              setMessages(
-                messages.map((msg) =>
-                  msg.id === messageId
-                    ? { ...msg, isPinned: !msg.isPinned }
-                    : msg
-                )
-              );
-            }}
-            onReact={(messageId, reaction) => {
-              setMessages(
-                messages.map((msg) =>
-                  msg.id === messageId
-                    ? {
-                        ...msg,
-                        reactions: msg.reactions.some(
-                          (r) => r.emoji === reaction
-                        )
-                          ? msg.reactions.filter((r) => r.emoji !== reaction)
-                          : [...msg.reactions, { emoji: reaction, count: 1 }],
-                      }
-                    : msg
-                )
-              );
-            }}
-            onImageClick={(imageUrl) => setImagePreview(imageUrl)}
-            isChannelChat={isChannelChat}
-          />
-        ))}
-        {scrollButton && (
           <div
-            className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
-            onClick={() => setShouldScrollToBottom(true)}
+            className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
+            ref={chatContainerRef}
           >
-            <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </div>
-        )}
+            {messages.map((message, index) => (
+              <ChatMessage
+              key={message.id}
+              message={message}
+              isCurrentUser={message.user === "You"}
+              previousMessage={index > 0 ? messages[index - 1] : null}
+              onReply={setReplyToMessage}
+              onEdit={(messageId, content) => {
+                setEditingMessageId(messageId);
+                setMessageInput(content);
+              }}
+              onPin={(messageId) => {
+                setMessages(
+                  messages.map((msg) =>
+                    msg.id === messageId
+                      ? { ...msg, isPinned: !msg.isPinned }
+                      : msg
+                  )
+                );
+              }}
+              onReact={(messageId, reaction) => {
+                setMessages(
+                  messages.map((msg) =>
+                    msg.id === messageId
+                      ? {
+                          ...msg,
+                          reactions: msg.reactions.some((r) => r.emoji === reaction)
+                            ? msg.reactions.filter((r) => r.emoji !== reaction)
+                            : [...msg.reactions, { emoji: reaction, count: 1 }],
+                        }
+                      : msg
+                  )
+                );
+              }}
+              onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+              onDelete={(messageId) => {
+                setMessages(messages.filter((msg) => msg.id !== messageId));
+              }}
+              isChannelChat={isChannelChat}
+            />
+            ))}
+            {scrollButton && (
+              <div
+                className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+                onClick={() => setShouldScrollToBottom(true)}
+              >
+                <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              </div>
+            )}
 
-        <div ref={messagesEndRef} />
-      </div>
-      {selectedFiles.length > 0 && renderFilePreview()}
-      <MessageComposer
-        messageInput={messageInput}
-        setMessageInput={setMessageInput}
-        handleKeyDown={handleKeyDown}
-        handlePaste={handlePaste}
-        editingMessageId={editingMessageId}
-        replyToMessage={replyToMessage}
-        setReplyToMessage={setReplyToMessage}
-        showEmojiPicker={showEmojiPicker}
-        setShowEmojiPicker={setShowEmojiPicker}
-        fileInputRef={fileInputRef}
-        handleFileUpload={handleFileUpload}
-        handleImageUpload={handleImageUpload}
-        sendMessage={sendMessage}
-      />
+            <div ref={messagesEndRef} />
+          </div>
+          {selectedFiles.length > 0 && renderFilePreview()}
+          <MessageComposer
+            messageInput={messageInput}
+            setMessageInput={setMessageInput}
+            handleKeyDown={handleKeyDown}
+            handlePaste={handlePaste}
+            editingMessageId={editingMessageId}
+            replyToMessage={replyToMessage}
+            setReplyToMessage={setReplyToMessage}
+            showEmojiPicker={showEmojiPicker}
+            setShowEmojiPicker={setShowEmojiPicker}
+            fileInputRef={fileInputRef}
+            handleFileUpload={handleFileUpload}
+            handleImageUpload={handleImageUpload}
+            sendMessage={sendMessage}
+          />
         </>
       )}
 
-{currentView === "Files" && (
-  <div className="px-6 py-10 space-y-10 overflow-y-auto">
-    <div className="relative w-full flex">
-      <input
-        type="text"
-        name="search"
-        id="search"
-        placeholder="Search files"
-        className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
-      />
-      <SearchIcon className="w-4 h-4 absolute top-4 left-2.5"/>
-    </div>
-    <div className="space-y-6">
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-        <div className="bg-[#00B2FF] p-2 rounded-md">
-          <FolderIcon className="w-6 h-6 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-medium">Untitled</h3>
-          <p className="text-sm">Shared by Techsnap yesterday</p>
-        </div>
-      </div>
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] border px-4 py-3 rounded-md dark:border-none">
-        <div className="bg-[#FFB800] p-2 rounded-md">
-          <ListIcon className="w-6 h-6 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-medium">Untitled list</h3>
-          <p className="text-sm">Shared by Techsnap yesterday</p>
-        </div>
-      </div>
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-        <div className="bg-[#FF007F] p-2 rounded-md">
-          <FaFilePdf className="w-6 h-6 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-medium">Anurag Upadhyay_JL.pdf</h3>
-          <p className="text-sm">Shared by Techsnap on Oct 29th</p>
-        </div>
-      </div>
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] border px-4 py-3 rounded-md dark:border-none">
-        <div className="bg-[#FF6600] p-2 rounded-md">
-          <FaHtml5 className="w-6 h-6 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-medium">testpro.html</h3>
-          <p className="text-sm">Shared by Techsnap on Aug 14th</p>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+      {currentView === "Files" && (
+        <ChatFiles/>
+      )}
 
-{currentView === "pinned messages" && (
-  <div className="px-6 py-10 space-y-10">
-    <div className="relative w-full flex">
-      <input
-        type="text"
-        name="search"
-        id="search"
-        placeholder="Search files"
-        className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
-      />
-      <SearchIcon className="w-4 h-4 absolute top-4 left-2.5"/>
-    </div>
-    <div className="space-y-6">
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-        <div className="bg-blue-500 p-2 rounded-md">
-          <FaMessage className="w-6 h-6 text-white" />
+      {currentView === "pinned messages" && (
+        <div className="px-6 py-10 space-y-10">
+          <div className="relative w-full flex">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              placeholder="Search files"
+              className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
+            />
+            <SearchIcon className="w-4 h-4 absolute top-4 left-2.5" />
+          </div>
+          <div className="space-y-6">
+            <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+              <div className="bg-blue-500 p-2 rounded-md">
+                <FaMessage className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium">John Doe</h3>
+                <p className="text-gray-400 text-sm">Hey, how's it going?</p>
+              </div>
+              <div className="text-gray-400 text-sm">11:42 AM</div>
+            </div>
+            <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+              <div className="bg-yellow-500 p-2 rounded-md">
+                <FaMessage className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium">Jane Smith</h3>
+                <p className="text-gray-400 text-sm">
+                  Can we meet for lunch today?
+                </p>
+              </div>
+              <div className="text-gray-400 text-sm">9:30 AM</div>
+            </div>
+            <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+              <div className="bg-pink-500 p-2 rounded-md">
+                <FaMessage className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-medium">Alex Johnson</h3>
+                <p className="text-gray-400 text-sm">
+                  Did you see the new update?
+                </p>
+              </div>
+              <div className="text-gray-400 text-sm">Yesterday</div>
+            </div>
+          </div>
         </div>
-        <div className="flex-1">
-          <h3 className="font-medium">John Doe</h3>
-          <p className="text-gray-400 text-sm">Hey, how's it going?</p>
-        </div>
-        <div className="text-gray-400 text-sm">11:42 AM</div>
-      </div>
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-        <div className="bg-yellow-500 p-2 rounded-md">
-          <FaMessage className="w-6 h-6 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-medium">Jane Smith</h3>
-          <p className="text-gray-400 text-sm">Can we meet for lunch today?</p>
-        </div>
-        <div className="text-gray-400 text-sm">9:30 AM</div>
-      </div>
-      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-        <div className="bg-pink-500 p-2 rounded-md">
-          <FaMessage className="w-6 h-6 text-white" />
-        </div>
-        <div className="flex-1">
-          <h3 className="font-medium">Alex Johnson</h3>
-          <p className="text-gray-400 text-sm">Did you see the new update?</p>
-        </div>
-        <div className="text-gray-400 text-sm">Yesterday</div>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </div>
   );
 }
