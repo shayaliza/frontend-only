@@ -8,6 +8,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import logo from "../assets/faviconmobile.png";
 import user from "../assets/man1.jpg";
+import Profile from './Profile';
 
 const NAVIGATION_ITEMS = [
   { id: 1, name: 'Home', path: '/' },
@@ -201,9 +202,10 @@ const Header = () => {
             onMouseEnter={() => {
               if (timeoutRef.current) clearTimeout(timeoutRef.current);
             }}
-            onMouseLeave={handleProfileMouseEvents.onMouseLeave}
+            // onMouseLeave={handleProfileMouseEvents.onMouseLeave}
           >
-            <div className="p-3 space-y-1">
+            <Profile/>
+            {/* <div className="p-3 space-y-1">
               <div className="flex items-center gap-3">
                 <Avatar className="w-10 h-10">
                   <AvatarImage src={user} alt="User avatar" />
@@ -243,7 +245,7 @@ const Header = () => {
                   {item.hasChevron && <ChevronRight className="w-5 h-5 ml-auto" />}
                 </button>
               ))}
-            </div>
+            </div> */}
           </PopoverContent>
         </Popover>
         <ModeToggle />

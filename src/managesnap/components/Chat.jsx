@@ -28,7 +28,13 @@ import {
   X,
   ChevronDownIcon,
   Copy,
+  MessageCircle,
+  FolderIcon,
+  ListIcon,
+  SearchIcon,
 } from "lucide-react";
+import { FaFilePdf, FaHtml5 } from "react-icons/fa";
+import { FaMessage } from "react-icons/fa6";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -124,6 +130,10 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
+  // const [viewMessages, setViewMessages] = useState(false);
+  // const [viewPinnedMessages, setViewPinnedMessages] = useState(false);
+  // const [viewFiles, setViewFiles] = useState(false);
+  const [currentView, setCurrentView] = useState("messages");
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -780,10 +790,13 @@ function Chat({ toggleProfileSectionVisibility }) {
             <button onClick={() => handleSearch(lastSegment)}>
               <Search className="w-5 h-5 mr-1" />
             </button>
-            <button className="p-1">
+            <button onClick={() => setCurrentView("messages")}>
+              <MessageCircle className="w-5 h-5 mr-1" />
+            </button>
+            <button className="p-1" onClick={() => setCurrentView("pinned messages")}>
               <PinIcon className="w-5 h-5" />
             </button>
-            <button className="p-1">
+            <button className="p-1" onClick={() => setCurrentView("Files")}>
               <FileIcon className="w-5 h-5" />
             </button>
             <button className="p-1">
@@ -792,8 +805,10 @@ function Chat({ toggleProfileSectionVisibility }) {
           </div>
         </div>
       </div>
-
-      <div
+      
+      {currentView === "messages" && (
+        <>
+        <div
         className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
         ref={chatContainerRef}
       >
@@ -848,9 +863,7 @@ function Chat({ toggleProfileSectionVisibility }) {
 
         <div ref={messagesEndRef} />
       </div>
-
       {selectedFiles.length > 0 && renderFilePreview()}
-
       <MessageComposer
         messageInput={messageInput}
         setMessageInput={setMessageInput}
@@ -866,6 +879,109 @@ function Chat({ toggleProfileSectionVisibility }) {
         handleImageUpload={handleImageUpload}
         sendMessage={sendMessage}
       />
+        </>
+      )}
+
+{currentView === "Files" && (
+  <div className="px-6 py-10 space-y-10 overflow-y-auto">
+    <div className="relative w-full flex">
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Search files"
+        className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
+      />
+      <SearchIcon className="w-4 h-4 absolute top-4 left-2.5"/>
+    </div>
+    <div className="space-y-6">
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+        <div className="bg-[#00B2FF] p-2 rounded-md">
+          <FolderIcon className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">Untitled</h3>
+          <p className="text-sm">Shared by Techsnap yesterday</p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] border px-4 py-3 rounded-md dark:border-none">
+        <div className="bg-[#FFB800] p-2 rounded-md">
+          <ListIcon className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">Untitled list</h3>
+          <p className="text-sm">Shared by Techsnap yesterday</p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+        <div className="bg-[#FF007F] p-2 rounded-md">
+          <FaFilePdf className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">Anurag Upadhyay_JL.pdf</h3>
+          <p className="text-sm">Shared by Techsnap on Oct 29th</p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] border px-4 py-3 rounded-md dark:border-none">
+        <div className="bg-[#FF6600] p-2 rounded-md">
+          <FaHtml5 className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">testpro.html</h3>
+          <p className="text-sm">Shared by Techsnap on Aug 14th</p>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{currentView === "pinned messages" && (
+  <div className="px-6 py-10 space-y-10">
+    <div className="relative w-full flex">
+      <input
+        type="text"
+        name="search"
+        id="search"
+        placeholder="Search files"
+        className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
+      />
+      <SearchIcon className="w-4 h-4 absolute top-4 left-2.5"/>
+    </div>
+    <div className="space-y-6">
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+        <div className="bg-blue-500 p-2 rounded-md">
+          <FaMessage className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">John Doe</h3>
+          <p className="text-gray-400 text-sm">Hey, how's it going?</p>
+        </div>
+        <div className="text-gray-400 text-sm">11:42 AM</div>
+      </div>
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+        <div className="bg-yellow-500 p-2 rounded-md">
+          <FaMessage className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">Jane Smith</h3>
+          <p className="text-gray-400 text-sm">Can we meet for lunch today?</p>
+        </div>
+        <div className="text-gray-400 text-sm">9:30 AM</div>
+      </div>
+      <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+        <div className="bg-pink-500 p-2 rounded-md">
+          <FaMessage className="w-6 h-6 text-white" />
+        </div>
+        <div className="flex-1">
+          <h3 className="font-medium">Alex Johnson</h3>
+          <p className="text-gray-400 text-sm">Did you see the new update?</p>
+        </div>
+        <div className="text-gray-400 text-sm">Yesterday</div>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
