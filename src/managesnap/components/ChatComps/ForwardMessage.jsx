@@ -1,4 +1,4 @@
-import { FileIcon, X } from "lucide-react";
+import { X } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import img1 from "../../assets/man1.jpg"
 import img2 from "../../assets/man2.jpg"
@@ -165,7 +165,7 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                 </div>
                 {message.fileUrl && (
                   <img
-                  src={message.fileUrl || <FileIcon/>}
+                  src={message.fileUrl}
                   alt={message.user}
                   className="h-8 w-auto"
                 />
