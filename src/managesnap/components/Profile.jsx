@@ -26,9 +26,22 @@ import {
   PauseCircle,
 } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "../../components/ui/button";
 import user from "../assets/man1.jpg";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import DND from "../assets/slack.png";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const OptionButton = ({
   icon: Icon,
@@ -54,12 +67,15 @@ const OptionButton = ({
 
 function Profile() {
   const [currentView, setCurrentView] = useState("main");
-  const [availability, setAvailability] = useState("");
-  const [WorkLocation, setWorkLocation] = useState("");
+  const [previousView, setPreviousView] = useState(null);
+  const [availability, setAvailability] = useState("Available");
+  const [workLocation, setWorkLocation] = useState("");
   const [selectValue, setSelectValue] = useState("");
+  const [selectStatus, setSelectStatus] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [notificationTime, setNotificationTime] = useState("");
+  const [duration, setDuration] = useState("");
 
   const formattedDate = selectedDate.toLocaleDateString("en-US", {
     weekday: "short",
@@ -68,33 +84,56 @@ function Profile() {
     year: "numeric",
   });
 
-  const handleOptions = (option) => {
+  const handleOptions = (option, from = "main") => {
+    setPreviousView(from);
     setCurrentView(option);
-    console.log(currentView);
+    console.log(`Navigating from ${from} to ${option}`);
+  };
+
+  const goBack = () => {
+    if (previousView) {
+      setCurrentView(previousView);
+      setPreviousView(null);
+    } else {
+      setCurrentView("main");
+    }
   };
 
   const handleAvailability = (status) => {
     setAvailability(status);
+    setPreviousView("status");
     setCurrentView("showStatus");
   };
 
   const handlePauseNotifications = (path) => {
     setNotificationTime(path);
-    setCurrentView("pause");
+    setPreviousView("notifications");
+    setCurrentView("main");
+  };
+
+  const resumeNotifications = () => {
+    setNotificationTime("");
+    setCurrentView("main");
   };
 
   const saveStatus = () => {
-    setCurrentView("main");
+    setCurrentView(previousView || "main");
+    setPreviousView(null);
   };
 
   const mainOptions = [
     { icon: Moon, label: "Set yourself as away", action: () => {} },
     {
-      icon: BellOff,
+      icon: notificationTime ? PauseCircle : BellOff,
       label: "Pause notifications",
       hasChevron: true,
+      Check: notificationTime ? "off" : "on",
       action: () => {
-        handleOptions("notifications");
+        if (notificationTime) {
+          handleOptions("pause");
+        } else {
+          handleOptions("notifications");
+        }
       },
     },
     {
@@ -167,19 +206,29 @@ function Profile() {
   return (
     <div>
       <div className="p-3 space-y-1">
-        <div className="flex items-center gap-3">
-          <Avatar className="w-10 h-10">
-            <AvatarImage src={user} alt="User avatar" />
-          </Avatar>
-          <div className="flex flex-col">
-            <span className="text-lg font-medium">Saketh</span>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              <span className="text-sm text-green-500">
-                {availability || "Active"}
-              </span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Avatar className="w-10 h-10">
+              <AvatarImage src={user} alt="User avatar" />
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="text-lg font-medium">Saketh</span>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${availability === "Available" ? "bg-green-500" : "bg-red-600"}`} />
+                <span className={`text-sm ${availability === "Available" ? "text-green-500" : "text-red-600"}`}>
+                  {availability}
+                </span>
+              </div>
             </div>
           </div>
+          {currentView !== "main" && (
+            <button
+              onClick={goBack}
+              className="hover:text-red-500 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -205,9 +254,22 @@ function Profile() {
                 label={option.label}
                 onClick={option.action}
                 extra={
-                  option.hasChevron && (
-                    <ChevronRight className="w-5 h-5 ml-auto" />
-                  )
+                  <div className="flex items-center">
+                    {option.Check && (
+                      <span
+                        className={`ml-2 text-sm font-medium ${
+                          option.Check === "off"
+                            ? "text-red-500"
+                            : "text-green-500"
+                        }`}
+                      >
+                        {option.Check === "off" ? "off" : "on"}
+                      </span>
+                    )}
+                    {option.hasChevron && (
+                      <ChevronRight className="w-5 h-5 ml-auto" />
+                    )}
+                  </div>
                 }
                 className={option.className}
               />
@@ -217,37 +279,31 @@ function Profile() {
       )}
 
       {currentView === "office" && (
-        <div className="px-4 pt-1 pb-2">
+        <div className="pt-1">
           <div className="px-4 flex justify-between items-center pb-2">
             <h2 className="text-lg font-semibold">For today</h2>
-            <button
-              onClick={() => setCurrentView("main")}
-              className="hover:text-red-500 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
 
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center border-b">
             <button
-              className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-500 rounded-md transition"
+              className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-500 rounded-t-md transition"
               onClick={() => setWorkLocation("office")}
             >
-              <School className="w-5 h-5 text-blue-500" />
+              <School className="w-5 h-5" />
               <span className="font-medium">Office</span>
             </button>
             <button
-              className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-500 rounded-md transition"
+              className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-500 transition"
               onClick={() => setWorkLocation("remote")}
             >
-              <Home className="w-5 h-5 text-green-500" />
+              <Home className="w-5 h-5" />
               <span className="font-medium">Remote</span>
             </button>
           </div>
 
           <button
-            className="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-gray-500 rounded-md transition"
-            onClick={() => setCurrentView("main")}
+            className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-500 rounded-b-md transition"
+            onClick={() => handleOptions("main", "office")}
           >
             <Trash className="w-5 h-5" />
             <span>Clear work location</span>
@@ -262,12 +318,6 @@ function Profile() {
               <h2 className="text-md font-semibold">Set status message</h2>
               <span>saketh@se.com</span>
             </div>
-            <button
-              onClick={() => setCurrentView("main")}
-              className="hover:text-red-500 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
 
           <textarea
@@ -285,12 +335,24 @@ function Profile() {
             className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent text-gray-400"
             onChange={(e) => setSelectValue(e.target.value)}
           >
-            <option value="1">Never</option>
-            <option value="2">Today</option>
-            <option value="3">1 hour</option>
-            <option value="4">2 hours</option>
-            <option value="5">This week</option>
-            <option value="custom">Custom</option>
+            <option value="1" className="bg-gray-800 text-white">
+              Never
+            </option>
+            <option value="2" className="bg-gray-800 text-white">
+              Today
+            </option>
+            <option value="3" className="bg-gray-800 text-white">
+              1 hour
+            </option>
+            <option value="4" className="bg-gray-800 text-white">
+              2 hours
+            </option>
+            <option value="5" className="bg-gray-800 text-white">
+              This week
+            </option>
+            <option value="custom" className="bg-gray-800 text-white">
+              Custom
+            </option>
           </select>
 
           {selectValue === "custom" && (
@@ -342,134 +404,114 @@ function Profile() {
             <h2 className="text-sm font-semibold">
               Pause notifications for...
             </h2>
-            <button
-              onClick={() => setCurrentView("main")}
-              className="hover:text-red-500 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
           <div className="space-y-1">
-            <button
-              onClick={() => handlePauseNotifications("30 minutes")}
-              className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
-            >
-              For 30 minutes...
-            </button>
-            <button
-              onClick={() => handlePauseNotifications("1 hour")}
-              className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
-            >
-              For 1 hour...
-            </button>
-            <button
-              onClick={() => handlePauseNotifications("2 hours")}
-              className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
-            >
-              For 2 hours...
-            </button>
-            <button
-              onClick={() => handlePauseNotifications("tomorrow")}
-              className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
-            >
-              Until tomorrow
-            </button>
-            <button
-              onClick={() => handlePauseNotifications("next week")}
-              className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
-            >
-              Until next week
-            </button>
-            <button
-              onClick={() => handlePauseNotifications("custom")}
-              className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
-            >
-              Custom...
-            </button>
+            {[
+              "30 minutes",
+              "1 hour",
+              "2 hours",
+              "tomorrow",
+              "next week",
+              "custom",
+            ].map((time) => (
+              <button
+                key={time}
+                onClick={() => handlePauseNotifications(time)}
+                className="hover:bg-gray-500 w-full text-left px-4 py-2 rounded transition-colors"
+              >
+                For {time}...
+              </button>
+            ))}
           </div>
         </div>
       )}
 
       {currentView === "pause" && (
         <div className="px-4 py-1 space-y-1">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-3">
-            <PauseCircle className="w-6 h-6" />
-            <h2 className="text-base font-bold">Do Not Disturb</h2>
+          <div className="relative">
+            <img src={DND} alt="" className="rounded-md" />
+            <span className="absolute top-1/4 left-2 font-semibold">
+              Do not disturb
+            </span>
+            <div className="absolute top-1/2 left-2 flex items-center space-x-2 text-xs">
+              <p className="text-sm">Notifications paused until</p>
+              <time className="text-sm font-semibold text-red-600">
+                {notificationTime}
+              </time>
+            </div>
           </div>
-          <X className="w-5 h-5 hover:text-red-500 transition-colors cursor-pointer" onClick={() => setCurrentView("main")}/>
-        </div>
-  
-        <div className="">
-          <div className="flex items- space-x-2">
-            <p className="text-sm">
-              Notifications paused until
-            </p>
-            <time className="text-sm font-semibold text-red-600">
-              {notificationTime}
-            </time>
-          </div>
-        </div>
-  
-        <nav 
-          aria-label="Notification controls" 
-          className="space-y-2"
-        >
-          <button
-            // onClick={resumeNotifications}
-            className="w-full flex items-center space-x-2
-                       bg-transparent 
-                       py-2 rounded-md 
+
+          <nav aria-label="Notification controls" className="space-y-2 pb-2">
+            <button
+              onClick={resumeNotifications}
+              className="w-full flex items-center space-x-2
+                       bg-transparent
+                       py-1 rounded-md 
                        transition-colors duration-200
                        focus:outline-none focus:ring-2 focus:ring-green-300 mb-2"
-            aria-label="Resume notifications"
-          >
-            <Play className="w-5 h-5" />
-            <span className="font-medium">Resume Notifications</span>
-          </button>
-  
-          <div className="flex space-x-2">
-            <button
-              // onClick={adjustTime}
-              className="flex-1 flex items-center justify-center space-x-2 border
+              aria-label="Resume notifications"
+            >
+              <span className="font-medium text-red-600">
+                Resume Notifications
+              </span>
+            </button>
+
+            <div className="flex space-x-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 flex items-center justify-center space-x-2 border
+           bg-transparent
+           py-2 rounded-md 
+           hover:bg-gray-500 
+           transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  >
+                    <Clock className="w-5 h-5" />
+                    <span className="text-sm">Adjust Time</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="p-2 space-y-1 flex flex-col items-center w-[200px]">
+                  {[
+                    "For 30 minutes",
+                    "For 1 hour",
+                    "For 2 hours",
+                    "Until tomorrow",
+                    "Until next week",
+                    "custom",
+                  ].map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => handlePauseNotifications(time)}
+                      className="hover:bg-gray-500 w-full text-left px-2 py-2 rounded transition-colors"
+                    >
+                      {time}...
+                    </button>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <button
+                // onClick={setNotificationSchedule}
+                className="flex-1 flex items-center justify-center space-x-2 border
                          bg-transparent
                          py-2 rounded-md 
                          hover:bg-gray-500 
                          transition-colors duration-200
                          focus:outline-none focus:ring-2 focus:ring-gray-300"
-              aria-label="Adjust notification pause time"
-            >
-              <Clock className="w-5 h-5" />
-              <span className="text-sm">Adjust Time</span>
-            </button>
-  
-            <button
-              // onClick={setNotificationSchedule}
-              className="flex-1 flex items-center justify-center space-x-2 border
-                         bg-transparent
-                         py-2 rounded-md 
-                         hover:bg-gray-500 
-                         transition-colors duration-200
-                         focus:outline-none focus:ring-2 focus:ring-gray-300"
-              aria-label="Set a notification schedule"
-            >
-              <CalendarIcon className="w-5 h-5" />
-              <span className="text-sm">Schedule</span>
-            </button>
-          </div>
-        </nav>
-      </div>
+                aria-label="Set a notification schedule"
+              >
+                <CalendarIcon className="w-5 h-5" />
+                <span className="text-sm">Schedule</span>
+              </button>
+            </div>
+          </nav>
+        </div>
       )}
 
       {currentView === "status" && (
         <div className="px-2 py-1 space-y-1">
-          <div
-            className="flex space-x-2 items-center pb-2 cursor-pointer"
-            onClick={() => setCurrentView("main")}
-          >
-            <ChevronLeft className="w-4 h-4 mt-0.5" />
-            <h1>Back</h1>
-          </div>
           {statusOptions.map((status, index) => (
             <OptionButton
               key={index}
@@ -485,15 +527,9 @@ function Profile() {
       )}
 
       {currentView === "showStatus" && (
-        <div className="px-4 pt-1 space-y-4 pb-2">
+        <div className="px-4 pt-1 space-y-2 pb-2">
           <div className="flex justify-between items-centerpb-2">
             <h2 className="text-lg font-semibold">Set a Status</h2>
-            <button
-              onClick={() => setCurrentView("status")}
-              className="hover:text-red-500 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
           </div>
           <div className="border rounded-md p-3 flex items-center justify-between hover:bg-gray-500 transition">
             <div className="flex gap-2 items-center">
@@ -507,20 +543,84 @@ function Profile() {
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Remove status after...</h3>
             <select
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent text-gray-300 "
-              onChange={(e) => setDuration(e.target.value)}
+              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent"
+              onChange={(e) => setSelectStatus(e.target.value)}
             >
-              <option value="1">1 hour</option>
-              <option value="2">2 hours</option>
-              <option value="3">3 hours</option>
-              <option value="custom">Custom</option>
+              <option value="1" className="bg-gray-800 text-white">
+                1 hour
+              </option>
+              <option value="2" className="bg-gray-800 text-white">
+                2 hours
+              </option>
+              <option value="3" className="bg-gray-800 text-white">
+                3 hours
+              </option>
+              <option value="custom" className="bg-gray-800 text-white">
+                Custom
+              </option>
             </select>
           </div>
+
+          {selectStatus === "custom" && (
+            <div className="flex items-center justify-between py-2">
+              <div className="">
+                <div
+                  className="flex items-center border p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+                  onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                >
+                  <span className="text-white">{formattedDate}</span>
+                  <ChevronDown className="w-4 h-4 ml-2 text-gray-500" />
+                </div>
+              </div>
+
+              <div className="w-1/3">
+                <select className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent text-sm">
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <option
+                      key={i}
+                      value={`${i + 1}:00 AM`}
+                      className="bg-gray-800 text-white"
+                    >
+                      {i + 1}:00 AM
+                    </option>
+                  ))}
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <option
+                      key={i + 12}
+                      value={`${i + 1}:00 PM`}
+                      className="bg-gray-800 text-white"
+                    >
+                      {i + 1}:00 PM
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+
+          <h1>Pause Notifications</h1>
+          <select
+            className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent mb-2"
+            onChange={(e) => setDuration(e.target.value)}
+          >
+            <option value="1" className="bg-gray-800 text-white">
+              Do not pause
+            </option>
+            <option value="2" className="bg-gray-800 text-white">
+              1 hours
+            </option>
+            <option value="3" className="bg-gray-800 text-white">
+              2 hours
+            </option>
+            <option value="custom" className="bg-gray-800 text-white">
+              Custom
+            </option>
+          </select>
 
           <div className="flex justify-end gap-2">
             <button
               onClick={() => setCurrentView("status")}
-              className="px-3 py-1 rounded-md hover:bg-gray-300 transition border"
+              className="px-3 py-1 rounded-md hover:bg-gray-500 transition border"
             >
               Cancel
             </button>

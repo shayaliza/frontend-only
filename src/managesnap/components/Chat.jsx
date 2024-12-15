@@ -138,6 +138,7 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [currentView, setCurrentView] = useState("messages");
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const imageInputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const location = useLocation();
@@ -692,92 +693,104 @@ function Chat({ toggleProfileSectionVisibility }) {
                 <div className="border-t border-gray-800 p-3 text-black dark:text-white">
                   <h4 className="text-xs font-medium mb-2">Contact</h4>
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between group ">
-                      <div className="flex items-center gap-2 text-blue-400">
-                        <Mail className="w-4 h-4" />
-                        <a
-                          href={`mailto:${currentUser.email}`}
-                          className="text-xs hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {currentUser.email}
-                        </a>
+                      <div className="flex items-center justify-between group relative">
+                        <div className="flex items-center gap-2 text-blue-400">
+                          <Mail className="w-4 h-4" />
+                          <a
+                            href={`mailto:${currentUser.email}`}
+                            className="text-xs hover:underline"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {currentUser.email}
+                          </a>
+                        </div>
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <button
+                            onClick={() =>
+                              handleCopy(currentUser.email, "Email copied!")
+                            }
+                            className="focus:outline-none"
+                          >
+                            {copied === currentUser.email ? (
+                              <Check className="w-4 h-4 text-green-500" />
+                            ) : (
+                              <Copy className="w-4 h-4 text-gray-400 hover:text-blue-400" />
+                            )}
+                          </button>
+                        </div>
+                        <div className="absolute top-full left-2/3 w-4/5 mt-2 hidden group-hover:block">
+                          <div className="bg-gray-500 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded">
+                            Email: {currentUser.email}
+                          </div>
+                        </div>
                       </div>
-                      <div className="relative">
-                        <button
-                          onClick={() =>
-                            handleCopy(currentUser.email, "Email copied!")
-                          }
-                          className="focus:outline-none hidden group-hover:inline-block"
-                        >
-                          {copied === currentUser.email ? (
-                            <Check className="w-4 h-4 text-green-500" />
-                          ) : (
-                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
-                          )}
-                        </button>
-                        <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
-                          Email:{currentUser.email}
-                        </span>
-                      </div>
-                    </div>
 
-                    <div className="flex items-center justify-between group">
-                      <div className="flex items-center gap-2 text-blue-400">
-                        <Phone className="w-4 h-4" />
-                        <a
-                          href={`tel:${currentUser.phone}`}
-                          className="text-xs hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {currentUser.phone}
-                        </a>
+                      <div className="flex items-center justify-between group relative">
+                        <div className="flex items-center gap-2 text-blue-400">
+                          <Phone className="w-4 h-4" />
+                          <a
+                            href={`tel:${currentUser.phone}`}
+                            className="text-xs hover:underline"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {currentUser.phone}
+                          </a>
+                        </div>
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <button
+                            onClick={() =>
+                              handleCopy(
+                                currentUser.phone,
+                                "Phone number copied!"
+                              )
+                            }
+                            className="focus:outline-none"
+                          >
+                            {copied === currentUser.phone ? (
+                              <Check className="w-4 h-4 text-green-500" />
+                            ) : (
+                              <Copy className="w-4 h-4 text-gray-400 hover:text-blue-400" />
+                            )}
+                          </button>
+                        </div>
+                        <div className="absolute top-full left-2/3 w-2/3 mt-2 hidden group-hover:block">
+                          <div className="bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded">
+                            Phone: {currentUser.phone}
+                          </div>
+                        </div>
                       </div>
-                      <div className="relative">
-                        <button
-                          onClick={() =>
-                            handleCopy(
-                              currentUser.phone,
-                              "Phone number copied!"
-                            )
-                          }
-                          className="focus:outline-none hidden group-hover:inline-block"
-                        >
-                          {copied === currentUser.phone ? (
-                            <Check className="w-4 h-4 text-green-500" />
-                          ) : (
-                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
-                          )}
-                        </button>
-                        <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
-                          Phone:{currentUser.phone}
-                        </span>
-                      </div>
-                    </div>
 
-                    <div className="flex items-center justify-between group">
-                      <div className="flex items-center gap-2 text-black dark:text-white">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-xs">{currentUser.location}</span>
+                      <div className="flex items-center justify-between group relative">
+                        <div className="flex items-center gap-2 text-black dark:text-white">
+                          <MapPin className="w-4 h-4" />
+                          <span className="text-xs">
+                            {currentUser.location}
+                          </span>
+                        </div>
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <button
+                            onClick={() =>
+                              handleCopy(
+                                currentUser.location,
+                                "Location copied!"
+                              )
+                            }
+                            className="focus:outline-none"
+                          >
+                            {copied === currentUser.location ? (
+                              <Check className="w-4 h-4 text-green-500" />
+                            ) : (
+                              <Copy className="w-4 h-4 text-gray-400 hover:text-blue-400" />
+                            )}
+                          </button>
+                        </div>
+                        <div className="absolute top-full left-2/3 w-4/5 mt-2 hidden group-hover:block">
+                          <div className="bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded">
+                            Location: {currentUser.location}
+                          </div>
+                        </div>
                       </div>
-                      <div className="relative">
-                        <button
-                          onClick={() =>
-                            handleCopy(currentUser.location, "Location copied!")
-                          }
-                          className="focus:outline-none hidden group-hover:inline-block"
-                        >
-                          {copied === currentUser.location ? (
-                            <Check className="w-4 h-4 text-green-500" />
-                          ) : (
-                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-400" />
-                          )}
-                        </button>
-                        <span className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-gray-600 dark:bg-gray-200 dark:text-black text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">
-                          Location:{currentUser.location}
-                        </span>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </PopoverContent>
@@ -804,7 +817,7 @@ function Chat({ toggleProfileSectionVisibility }) {
             <button className="p-1" onClick={() => setCurrentView("Files")}>
               <FileIcon className="w-5 h-5" />
             </button>
-            <ChatMoreOptions/>
+            <ChatMoreOptions />
           </div>
         </div>
       </div>
@@ -817,44 +830,51 @@ function Chat({ toggleProfileSectionVisibility }) {
           >
             {messages.map((message, index) => (
               <ChatMessage
-              key={message.id}
-              message={message}
-              isCurrentUser={message.user === "You"}
-              previousMessage={index > 0 ? messages[index - 1] : null}
-              onReply={setReplyToMessage}
-              onEdit={(messageId, content) => {
-                setEditingMessageId(messageId);
-                setMessageInput(content);
-              }}
-              onPin={(messageId) => {
-                setMessages(
-                  messages.map((msg) =>
-                    msg.id === messageId
-                      ? { ...msg, isPinned: !msg.isPinned }
-                      : msg
-                  )
-                );
-              }}
-              onReact={(messageId, reaction) => {
-                setMessages(
-                  messages.map((msg) =>
-                    msg.id === messageId
-                      ? {
-                          ...msg,
-                          reactions: msg.reactions.some((r) => r.emoji === reaction)
-                            ? msg.reactions.filter((r) => r.emoji !== reaction)
-                            : [...msg.reactions, { emoji: reaction, count: 1 }],
-                        }
-                      : msg
-                  )
-                );
-              }}
-              onImageClick={(imageUrl) => setImagePreview(imageUrl)}
-              onDelete={(messageId) => {
-                setMessages(messages.filter((msg) => msg.id !== messageId));
-              }}
-              isChannelChat={isChannelChat}
-            />
+                key={message.id}
+                message={message}
+                isCurrentUser={message.user === "You"}
+                previousMessage={index > 0 ? messages[index - 1] : null}
+                onReply={setReplyToMessage}
+                onEdit={(messageId, content) => {
+                  setEditingMessageId(messageId);
+                  setMessageInput(content);
+                }}
+                onPin={(messageId) => {
+                  setMessages(
+                    messages.map((msg) =>
+                      msg.id === messageId
+                        ? { ...msg, isPinned: !msg.isPinned }
+                        : msg
+                    )
+                  );
+                }}
+                onReact={(messageId, reaction) => {
+                  setMessages(
+                    messages.map((msg) =>
+                      msg.id === messageId
+                        ? {
+                            ...msg,
+                            reactions: msg.reactions.some(
+                              (r) => r.emoji === reaction
+                            )
+                              ? msg.reactions.filter(
+                                  (r) => r.emoji !== reaction
+                                )
+                              : [
+                                  ...msg.reactions,
+                                  { emoji: reaction, count: 1 },
+                                ],
+                          }
+                        : msg
+                    )
+                  );
+                }}
+                onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+                onDelete={(messageId) => {
+                  setMessages(messages.filter((msg) => msg.id !== messageId));
+                }}
+                isChannelChat={isChannelChat}
+              />
             ))}
             {scrollButton && (
               <div
@@ -879,6 +899,7 @@ function Chat({ toggleProfileSectionVisibility }) {
             showEmojiPicker={showEmojiPicker}
             setShowEmojiPicker={setShowEmojiPicker}
             fileInputRef={fileInputRef}
+            imageInputRef={imageInputRef}
             handleFileUpload={handleFileUpload}
             handleImageUpload={handleImageUpload}
             sendMessage={sendMessage}
@@ -886,9 +907,7 @@ function Chat({ toggleProfileSectionVisibility }) {
         </>
       )}
 
-      {currentView === "Files" && (
-        <ChatFiles/>
-      )}
+      {currentView === "Files" && <ChatFiles />}
 
       {currentView === "pinned messages" && (
         <div className="px-6 py-10 space-y-10">

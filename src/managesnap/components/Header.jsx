@@ -190,7 +190,7 @@ const Header = () => {
       <div className="absolute right-4 top-2.5 flex space-x-2">
         <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
           <PopoverTrigger asChild>
-            <div {...handleProfileMouseEvents}>
+            <div /*...handleProfileMouseEvents*/> 
               <Avatar className="w-8 h-8 border border-gray-500 cursor-pointer hover:opacity-90 mt-1.5 flex-shrink-0">
                 <AvatarImage src={user} alt="User profile" />
               </Avatar>
@@ -199,9 +199,9 @@ const Header = () => {
 
           <PopoverContent
             className="w-[300px] p-0 bg-[#1E1E1E] text-white shadow-xl mr-3"
-            onMouseEnter={() => {
-              if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            }}
+            // onMouseEnter={() => {
+            //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            // }}
             // onMouseLeave={handleProfileMouseEvents.onMouseLeave}
           >
             <Profile/>

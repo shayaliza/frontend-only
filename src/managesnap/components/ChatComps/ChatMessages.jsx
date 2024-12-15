@@ -42,33 +42,32 @@ export default function ChatMessage({
     onReact(message.id, emoji);
   };
 
+  const shareMessage = async (event) => {
+    event?.preventDefault();
+    event?.stopPropagation();
 
-  // const shareMessage = async (event) => {
-  //   event?.preventDefault();
-  //   event?.stopPropagation();
+    try {
+      let shareData = {
+        title: "Shared Message",
+        text: message.content,
+      };
 
-  //   try {
-  //     let shareData = {
-  //       title: "Shared Message",
-  //       text: message.content,
-  //     };
+      if (message.imageUrl) {
+        shareData.url = message.imageUrl;
+      }
 
-  //     if (message.imageUrl) {
-  //       shareData.url = message.imageUrl;
-  //     }
-
-  //     if (navigator.share) {
-  //       await navigator.share(shareData);
-  //     } else {
-  //       await navigator.clipboard.writeText(
-  //         `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
-  //       );
-  //       alert("Message copied to clipboard!");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sharing:", error);
-  //   }
-  // };
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(
+          `${message.content}${message.imageUrl ? `\n${message.imageUrl}` : ""}`
+        );
+        alert("Message copied to clipboard!");
+      }
+    } catch (error) {
+      console.error("Error sharing:", error);
+    }
+  };
 
   const renderContent = () => {
     return (
@@ -141,15 +140,11 @@ export default function ChatMessage({
           <div className="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
             {getFileIcon(message.fileType)}
             <div className="flex-1 min-w-0">
-              <div className="font-medium text-sm truncate">
+              <div className="font-medium text-sm truncate text-black dark:text-white">
                 {message.fileName}
               </div>
               <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                 <span>{message.fileSize}</span>
-                <span>•</span>
-                <span>
-                  {message.fileType?.split("/")[1]?.toUpperCase() || "FILE"}
-                </span>
               </div>
             </div>
             <a
@@ -275,6 +270,12 @@ export default function ChatMessage({
             </div>
           )}
 
+          <ForwardMessage
+            message={message}
+            isOpen={forwardOpen}
+            onClose={() => setForwardOpen(false)}
+          />
+
           <div
             className={`absolute ${
               isCurrentUser ? "-top-12 -right-1" : "-top-12 -right-52"
@@ -290,9 +291,10 @@ export default function ChatMessage({
                 onReply(message);
               }}
             />
-            <FaShare className="ml-2 cursor-pointer" onClick={() => setForwardOpen(true)} />
-
-            <ForwardMessage message={message} isOpen={forwardOpen} onClose={() => setForwardOpen(false)} />
+            <FaShare
+              className="ml-2 cursor-pointer"
+              onClick={() => setForwardOpen(true)}
+            />
 
             <MessageOptions
               message={message}

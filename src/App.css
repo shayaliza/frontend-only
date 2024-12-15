@@ -21,10 +21,10 @@
 }
 
 .editor-container_classic-editor .editor-container__editor {
-  min-width: 325px;
-  max-width: 795px;
-  min-height: 200px;
-  max-height: 400px;
+  min-width: 600px;
+  max-width: 900px;
+  min-height: 100px;
+  max-height: 200px;
   overflow: auto;
   border: 1px solid #ccc;
   padding: 5px;

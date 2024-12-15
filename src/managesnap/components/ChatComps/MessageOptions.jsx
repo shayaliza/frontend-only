@@ -7,11 +7,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {MoreVertical, Pin, Edit, Copy, Save, Bell, Forward, Reply, Star, Trash} from "lucide-react";
-import { Alert } from "@mui/material";
-import ForwardMessage from "./ForwardMessage";
+import { FaRegMessage } from "react-icons/fa6";
+import { IoMdAdd } from "react-icons/io";
 
 export default function MessageOptions({ message, onEdit, onPin, isCurrentUser, onDelete, onReply }) {
-  const [isForwardOpen, setIsForwardOpen] = useState(false);
     return (
       <>
       <DropdownMenu>
@@ -21,12 +20,6 @@ export default function MessageOptions({ message, onEdit, onPin, isCurrentUser, 
           </Button>
         </DropdownMenuTrigger >
         <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setIsForwardOpen(true)}>
-            <Forward className="mr-2 h-4 w-4" /> Forward
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onReply(message)}>
-            <Reply className="mr-2 h-4 w-4" /> Reply
-          </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => navigator.clipboard.writeText(message.content)}
           >
@@ -49,12 +42,16 @@ export default function MessageOptions({ message, onEdit, onPin, isCurrentUser, 
           <DropdownMenuItem onClick={() => onDelete(message.id, message.content)}>
             <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>
+          {!isCurrentUser && (
+            <DropdownMenuItem>
+            <FaRegMessage className="mr-2 h-4 w-4" /> Mark as Unread
+          </DropdownMenuItem>
+          )}
           <DropdownMenuItem>
-            <Bell className="mr-2 h-4 w-4" /> Remind me about this
+            <IoMdAdd className="mr-2 h-4 w-4" /> Add to list
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <ForwardMessage message={message} isOpen={isForwardOpen} onClose={() => setIsForwardOpen(false)} />
       </>
     );
   }
