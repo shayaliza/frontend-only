@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { formatTimestamp } from "../../utils/formatTimestamp";
 import img from "../assets/man1.jpg";
 import img2 from "../assets/man2.jpg";
 import img3 from "../assets/man3.jpg";
@@ -37,6 +38,7 @@ import { FaFilePdf, FaHtml5 } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
 import ChatFiles from "./ChatComps/ChatFiles";
 import ChatMoreOptions from "./ChatComps/ChatMoreOptions";
+import MessageTimestamp from "./ChatComps/MessageTimestamp";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -65,7 +67,7 @@ const dms = [
     user: "user",
     content: "Hello bro!",
     photo: img,
-    timestamp: "2024-10-26T09:00:00",
+    timestamp: "10 Dec 1:25 P.M",
     reactions: [{ emoji: "👋", count: 1 }],
   },
   {
@@ -73,7 +75,7 @@ const dms = [
     user: "You",
     content: "Hey, good morning!",
     photo: img2,
-    timestamp: "2024-10-28T09:05:00",
+    timestamp: "11 Dec 11:25 P.M",
     reactions: [],
   },
   {
@@ -82,7 +84,7 @@ const dms = [
     photo: img,
     content: "hi",
     url: "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?cs=srgb&dl=pexels-souvenirpixels-417074.jpg&fm=jpg",
-    timestamp: "2024-10-24T09:10:00",
+    timestamp: "Yesterday",
     reactions: [{ emoji: "☕", count: 2 }],
   },
 ];
@@ -132,9 +134,9 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
-  // const [viewMessages, setViewMessages] = useState(false);
-  // const [viewPinnedMessages, setViewPinnedMessages] = useState(false);
-  // const [viewFiles, setViewFiles] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredMessages, setFilteredMessages] = useState([]);
   const [currentView, setCurrentView] = useState("messages");
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -192,6 +194,27 @@ function Chat({ toggleProfileSectionVisibility }) {
       });
     };
   }, [messages]);
+
+  const handleMessageSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    if (value.trim() === "") {
+      setFilteredMessages("");
+    } else {
+      const filtered = messages.filter(
+        (message) =>
+          message.content.toLowerCase().includes(value.toLowerCase()) ||
+          message.user.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredMessages(filtered);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (messages.length > 0) {
+  //     setFilteredMessages(messages);
+  //   }
+  // }, [messages]);
 
   const scrollToBottom = () => {
     const container = chatContainerRef.current;
@@ -419,14 +442,15 @@ function Chat({ toggleProfileSectionVisibility }) {
 
   const sendMessage = () => {
     setShouldScrollToBottom(true);
+
     if (!messageInput.trim() && selectedFiles.length === 0) return;
+
     const extractUrls = (text) => {
       const URL_REGEX = /(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/g;
       const matches = text.match(URL_REGEX) || [];
 
       return matches.map((url) => {
         let type = "url";
-
         if (/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/.test(url)) {
           type = "youtube";
         } else if (/twitter\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+/.test(url)) {
@@ -442,10 +466,11 @@ function Chat({ toggleProfileSectionVisibility }) {
         } else if (/\.(mp4|webm|ogg)$/i.test(url)) {
           type = "video";
         }
-
         return { url, type };
       });
     };
+
+    const formattedTimestamp = formatTimestamp(Date.now()); // Format the timestamp immediately
 
     if (editingMessageId) {
       setMessages(
@@ -457,6 +482,7 @@ function Chat({ toggleProfileSectionVisibility }) {
               content: messageInput,
               links: extractedUrls,
               edited: true,
+              timestamp: formattedTimestamp, // Use formatted timestamp
             };
           }
           return msg;
@@ -469,13 +495,14 @@ function Chat({ toggleProfileSectionVisibility }) {
           const extractedUrls = extractUrls(messageInput);
           const newMessageId = Date.now();
           const newMessage = {
-            id: Date.now(),
+            id: newMessageId,
             user: currentUser.name,
             content: messageInput,
             reactions: [],
             photo: currentUser.photo,
             isPinned: false,
             links: extractedUrls,
+            timestamp: formattedTimestamp, // Use formatted timestamp
             imageUrl: fileData.type.startsWith("image/")
               ? fileData.preview
               : null,
@@ -501,16 +528,17 @@ function Chat({ toggleProfileSectionVisibility }) {
       }
 
       if (messageInput.trim() && selectedFiles.length === 0) {
-        const newMessageId = Date.now();
         const extractedUrls = extractUrls(messageInput);
+        const newMessageId = Date.now();
         const newMessage = {
-          id: Date.now(),
+          id: newMessageId,
           user: currentUser.name,
           content: messageInput,
           reactions: [],
           photo: currentUser.photo,
           isPinned: false,
           links: extractedUrls,
+          timestamp: formattedTimestamp, // Use formatted timestamp
           replyTo: replyToMessage
             ? {
                 id: replyToMessage.id,
@@ -593,52 +621,29 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [searchValue, setSearchValue] = useState("");
 
   return (
-    <div
-      className="flex flex-col h-full text-black dark:text-white"
-      onDrop={handleDrop}
-      onDragOver={(e) => e.preventDefault()}
-    >
-      <div className="p-4 flex justify-between items-center border-b shadow-md">
-        <div className="w-full flex justify-between items-center">
-          <div
-            className="flex items-center cursor-pointer space-x-2"
-            // onClick={toggleProfileSectionVisibility}
-          >
-            <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
-              <PopoverTrigger asChild>
-                <div
-                // onMouseEnter={handleMouseEnter}
-                // onMouseLeave={handleMouseLeave}
-                >
-                  <Avatar
-                    className="w-12 h-12 border border-gray-500 cursor-pointer hover:opacity-90"
-                    // onClick={toggleProfileSectionVisibility}
+    <div className="flex w-full h-full items-center">
+      <div
+        className="flex flex-1 flex-col h-full text-black dark:text-white border-r"
+        onDrop={handleDrop}
+        onDragOver={(e) => e.preventDefault()}
+      >
+        <div className="p-4 flex justify-between items-center border-b shadow-md">
+          <div className="w-full flex justify-between items-center">
+            <div
+              className="flex items-center cursor-pointer space-x-2"
+              // onClick={toggleProfileSectionVisibility}
+            >
+              <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+                <PopoverTrigger asChild>
+                  <div
+                    onMouseEnter={handleMouseEnter}
+                    // onMouseLeave={handleMouseLeave}
                   >
-                    <AvatarImage src={currentUser.photo} alt="Profile" />
-                    <AvatarFallback>
-                      {currentUser.name
-                        ?.split(" ")
-                        .map((n) => n[0])
-                        .join("") || "U"}
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-              </PopoverTrigger>
-
-              <PopoverContent
-                className="w-[300px] p-0  text-white shadow-xl ml-60"
-                // onMouseEnter={() => {
-                //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                // }}
-                // onMouseLeave={handleMouseLeave}
-              >
-                <div className="px-4 pt-2 space-y-2 text-black dark:text-white">
-                  <div className="flex items-center gap-2">
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage
-                        src={currentUser.photo}
-                        alt={currentUser.name}
-                      />
+                    <Avatar
+                      className="w-12 h-12 border border-gray-500 cursor-pointer hover:opacity-90"
+                      onClick={toggleProfileSectionVisibility}
+                    >
+                      <AvatarImage src={currentUser.photo} alt="Profile" />
                       <AvatarFallback>
                         {currentUser.name
                           ?.split(" ")
@@ -646,53 +651,77 @@ function Chat({ toggleProfileSectionVisibility }) {
                           .join("") || "U"}
                       </AvatarFallback>
                     </Avatar>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <h3 className="font-semibold">{lastSegment}</h3>
-                        <div className="w-3.5 h-3.5 bg-gray-800 rounded-full flex items-center justify-center">
-                          <Check className="w-2.5 h-2.5 text-green-500" />
+                  </div>
+                </PopoverTrigger>
+
+                <PopoverContent
+                  className="w-[300px] p-0  text-white shadow-xl ml-60"
+                  // onMouseEnter={() => {
+                  //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                  // }}
+                  // onMouseLeave={handleMouseLeave}
+                >
+                  <div className="px-4 pt-2 space-y-2 text-black dark:text-white">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="w-10 h-10">
+                        <AvatarImage
+                          src={currentUser.photo}
+                          alt={currentUser.name}
+                        />
+                        <AvatarFallback>
+                          {currentUser.name
+                            ?.split(" ")
+                            .map((n) => n[0])
+                            .join("") || "U"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <h3 className="font-semibold">{lastSegment}</h3>
+                          <div className="w-3.5 h-3.5 bg-gray-800 rounded-full flex items-center justify-center">
+                            <Check className="w-2.5 h-2.5 text-green-500" />
+                          </div>
                         </div>
+                        <p className="text-xs ">
+                          Digital Innovation & Technology
+                        </p>
                       </div>
-                      <p className="text-xs ">
-                        Digital Innovation & Technology
-                      </p>
+                    </div>
+
+                    <div className="flex justify-around py-2 text-black dark:text-white">
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
+                        <MessageSquare className="w-5 h-5" />
+                      </button>
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
+                        <Users className="w-5 h-5" />
+                      </button>
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
+                        <Video className="w-5 h-5" />
+                      </button>
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
+                        <Phone className="w-5 h-5" />
+                      </button>
                     </div>
                   </div>
 
-                  <div className="flex justify-around py-2 text-black dark:text-white">
-                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
-                      <MessageSquare className="w-5 h-5" />
-                    </button>
-                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
-                      <Users className="w-5 h-5" />
-                    </button>
-                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
-                      <Video className="w-5 h-5" />
-                    </button>
-                    <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
-                      <Phone className="w-5 h-5" />
-                    </button>
+                  <div className="border-t border-gray-800 p-3 space-y-1.5 text-black dark:text-white">
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="w-2 h-2 rounded-full bg-green-500" />
+                      <span>Available • Free all day</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-black dark:text-white">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>Work hours: 10:00 AM - 7:00 PM</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-black dark:text-white">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>12:49 A.M - same time zone as you</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="border-t border-gray-800 p-3 space-y-1.5 text-black dark:text-white">
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                    <span>Available • Free all day</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-black dark:text-white">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>Work hours: 10:00 AM - 7:00 PM</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-black dark:text-white">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>12:49 A.M - same time zone as you</span>
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-800 p-3 text-black dark:text-white">
-                  <h4 className="text-xs font-medium mb-2">Contact</h4>
-                  <div className="space-y-2 text-sm">
+                  <div className="border-t border-gray-800 p-3 text-black dark:text-white">
+                    <h4 className="text-xs font-medium mb-2">Contact</h4>
+                    <div className="space-y-2 text-sm">
                       <div className="flex items-center justify-between group relative">
                         <div className="flex items-center gap-2 text-blue-400">
                           <Mail className="w-4 h-4" />
@@ -790,175 +819,219 @@ function Chat({ toggleProfileSectionVisibility }) {
                           </div>
                         </div>
                       </div>
-                    
+                    </div>
                   </div>
-                </div>
-              </PopoverContent>
-            </Popover>
+                </PopoverContent>
+              </Popover>
 
-            <div className="flex flex-col space-y-1">
-              <div className="text-lg font-bold">{lastSegment}</div>
-              <span className="font-semibold text-xs">Active 4hr ago</span>
+              <div className="flex flex-col space-y-1">
+                <div className="text-lg font-bold">{lastSegment}</div>
+                <span className="font-semibold text-xs">Active 4hr ago</span>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 mt-2">
+              <button onClick={() => setIsSearchOpen(true)}>
+                <Search className="w-5 h-5 mr-1" />
+              </button>
+              <button onClick={() => setCurrentView("messages")}>
+                <MessageCircle className="w-5 h-5 mr-1" />
+              </button>
+              <button
+                className="p-1"
+                onClick={() => setCurrentView("pinned messages")}
+              >
+                <PinIcon className="w-5 h-5" />
+              </button>
+              <button className="p-1" onClick={() => setCurrentView("Files")}>
+                <FileIcon className="w-5 h-5" />
+              </button>
+              <ChatMoreOptions />
             </div>
           </div>
-          <div className="flex items-center space-x-4 mt-2">
-            <button onClick={() => handleSearch(lastSegment)}>
-              <Search className="w-5 h-5 mr-1" />
-            </button>
-            <button onClick={() => setCurrentView("messages")}>
-              <MessageCircle className="w-5 h-5 mr-1" />
-            </button>
-            <button
-              className="p-1"
-              onClick={() => setCurrentView("pinned messages")}
+        </div>
+
+        {currentView === "messages" && (
+          <>
+            <div
+              className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
+              ref={chatContainerRef}
             >
-              <PinIcon className="w-5 h-5" />
-            </button>
-            <button className="p-1" onClick={() => setCurrentView("Files")}>
-              <FileIcon className="w-5 h-5" />
-            </button>
-            <ChatMoreOptions />
+              {messages.map((message, index) => (
+                <ChatMessage
+                  key={message.id}
+                  message={message}
+                  isCurrentUser={message.user === "You"}
+                  previousMessage={index > 0 ? messages[index - 1] : null}
+                  onReply={setReplyToMessage}
+                  onEdit={(messageId, content) => {
+                    setEditingMessageId(messageId);
+                    setMessageInput(content);
+                  }}
+                  onPin={(messageId) => {
+                    setMessages(
+                      messages.map((msg) =>
+                        msg.id === messageId
+                          ? { ...msg, isPinned: !msg.isPinned }
+                          : msg
+                      )
+                    );
+                  }}
+                  onReact={(messageId, reaction) => {
+                    setMessages(
+                      messages.map((msg) =>
+                        msg.id === messageId
+                          ? {
+                              ...msg,
+                              reactions: msg.reactions.some(
+                                (r) => r.emoji === reaction
+                              )
+                                ? msg.reactions.filter(
+                                    (r) => r.emoji !== reaction
+                                  )
+                                : [
+                                    ...msg.reactions,
+                                    { emoji: reaction, count: 1 },
+                                  ],
+                            }
+                          : msg
+                      )
+                    );
+                  }}
+                  onImageClick={(imageUrl) => setImagePreview(imageUrl)}
+                  onDelete={(messageId) => {
+                    setMessages(messages.filter((msg) => msg.id !== messageId));
+                  }}
+                  isChannelChat={isChannelChat}
+                />
+              ))}
+              {scrollButton && (
+                <div
+                  className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+                  onClick={() => setShouldScrollToBottom(true)}
+                >
+                  <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+            {selectedFiles.length > 0 && renderFilePreview()}
+            <MessageComposer
+              messageInput={messageInput}
+              setMessageInput={setMessageInput}
+              handleKeyDown={handleKeyDown}
+              handlePaste={handlePaste}
+              editingMessageId={editingMessageId}
+              replyToMessage={replyToMessage}
+              setReplyToMessage={setReplyToMessage}
+              showEmojiPicker={showEmojiPicker}
+              setShowEmojiPicker={setShowEmojiPicker}
+              fileInputRef={fileInputRef}
+              imageInputRef={imageInputRef}
+              handleFileUpload={handleFileUpload}
+              handleImageUpload={handleImageUpload}
+              sendMessage={sendMessage}
+            />
+          </>
+        )}
+
+        {currentView === "Files" && <ChatFiles />}
+
+        {currentView === "pinned messages" && (
+          <div className="px-6 py-10 space-y-10">
+            <div className="relative w-full flex">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search files"
+                className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
+              />
+              <SearchIcon className="w-4 h-4 absolute top-4 left-2.5" />
+            </div>
+            <div className="space-y-6">
+              <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+                <div className="bg-blue-500 p-2 rounded-md">
+                  <FaMessage className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium">John Doe</h3>
+                  <p className="text-gray-400 text-sm">Hey, how's it going?</p>
+                </div>
+                <div className="text-gray-400 text-sm">11:42 AM</div>
+              </div>
+              <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+                <div className="bg-yellow-500 p-2 rounded-md">
+                  <FaMessage className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium">Jane Smith</h3>
+                  <p className="text-gray-400 text-sm">
+                    Can we meet for lunch today?
+                  </p>
+                </div>
+                <div className="text-gray-400 text-sm">9:30 AM</div>
+              </div>
+              <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
+                <div className="bg-pink-500 p-2 rounded-md">
+                  <FaMessage className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-medium">Alex Johnson</h3>
+                  <p className="text-gray-400 text-sm">
+                    Did you see the new update?
+                  </p>
+                </div>
+                <div className="text-gray-400 text-sm">Yesterday</div>
+              </div>
+            </div>
           </div>
+        )}
+      </div>
+      <div
+        className={`w-1/3 h-full ${isSearchOpen ? "flex flex-col" : "hidden"}`}
+      >
+        <div className="flex justify-between px-4 pt-2">
+          <h1 className="text-lg font-semibold">Search for messages</h1>
+          <X
+            className="cursor-pointer"
+            onClick={() => setIsSearchOpen(false)}
+          />
+        </div>
+        <div className="relative w-full flex p-4">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            value={searchTerm}
+            onChange={handleMessageSearch}
+            placeholder="Search messages"
+            className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
+          />
+          <SearchIcon className="w-4 h-4 absolute top-8 left-6" />
+        </div>
+
+        <div
+          className="relative flex-grow overflow-y-auto overflow-x-hidden"
+          ref={chatContainerRef}
+        >
+          {filteredMessages.length === 0 ? (
+            <div className="text-center text-gray-500 py-4">
+              No messages found
+            </div>
+          ) : (
+            filteredMessages.map((message) => (
+              <div key={message.id} className="hover:bg-gray-400 p-4 border-b">
+                <div className="flex items-center space-x-2 mb-2">
+                  {/* <span className="font-semibold text-sm">{message.user}</span> */}
+                  <span className="text-xs">{message.timestamp}</span>
+                </div>
+                <p className="text-sm">{message.content}</p>
+              </div>
+            ))
+          )}
         </div>
       </div>
-
-      {currentView === "messages" && (
-        <>
-          <div
-            className="relative flex-grow overflow-y-auto overflow-x-hidden px-6 py-10"
-            ref={chatContainerRef}
-          >
-            {messages.map((message, index) => (
-              <ChatMessage
-                key={message.id}
-                message={message}
-                isCurrentUser={message.user === "You"}
-                previousMessage={index > 0 ? messages[index - 1] : null}
-                onReply={setReplyToMessage}
-                onEdit={(messageId, content) => {
-                  setEditingMessageId(messageId);
-                  setMessageInput(content);
-                }}
-                onPin={(messageId) => {
-                  setMessages(
-                    messages.map((msg) =>
-                      msg.id === messageId
-                        ? { ...msg, isPinned: !msg.isPinned }
-                        : msg
-                    )
-                  );
-                }}
-                onReact={(messageId, reaction) => {
-                  setMessages(
-                    messages.map((msg) =>
-                      msg.id === messageId
-                        ? {
-                            ...msg,
-                            reactions: msg.reactions.some(
-                              (r) => r.emoji === reaction
-                            )
-                              ? msg.reactions.filter(
-                                  (r) => r.emoji !== reaction
-                                )
-                              : [
-                                  ...msg.reactions,
-                                  { emoji: reaction, count: 1 },
-                                ],
-                          }
-                        : msg
-                    )
-                  );
-                }}
-                onImageClick={(imageUrl) => setImagePreview(imageUrl)}
-                onDelete={(messageId) => {
-                  setMessages(messages.filter((msg) => msg.id !== messageId));
-                }}
-                isChannelChat={isChannelChat}
-              />
-            ))}
-            {scrollButton && (
-              <div
-                className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
-                onClick={() => setShouldScrollToBottom(true)}
-              >
-                <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-          {selectedFiles.length > 0 && renderFilePreview()}
-          <MessageComposer
-            messageInput={messageInput}
-            setMessageInput={setMessageInput}
-            handleKeyDown={handleKeyDown}
-            handlePaste={handlePaste}
-            editingMessageId={editingMessageId}
-            replyToMessage={replyToMessage}
-            setReplyToMessage={setReplyToMessage}
-            showEmojiPicker={showEmojiPicker}
-            setShowEmojiPicker={setShowEmojiPicker}
-            fileInputRef={fileInputRef}
-            imageInputRef={imageInputRef}
-            handleFileUpload={handleFileUpload}
-            handleImageUpload={handleImageUpload}
-            sendMessage={sendMessage}
-          />
-        </>
-      )}
-
-      {currentView === "Files" && <ChatFiles />}
-
-      {currentView === "pinned messages" && (
-        <div className="px-6 py-10 space-y-10">
-          <div className="relative w-full flex">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              placeholder="Search files"
-              className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
-            />
-            <SearchIcon className="w-4 h-4 absolute top-4 left-2.5" />
-          </div>
-          <div className="space-y-6">
-            <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-              <div className="bg-blue-500 p-2 rounded-md">
-                <FaMessage className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-medium">John Doe</h3>
-                <p className="text-gray-400 text-sm">Hey, how's it going?</p>
-              </div>
-              <div className="text-gray-400 text-sm">11:42 AM</div>
-            </div>
-            <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-              <div className="bg-yellow-500 p-2 rounded-md">
-                <FaMessage className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-medium">Jane Smith</h3>
-                <p className="text-gray-400 text-sm">
-                  Can we meet for lunch today?
-                </p>
-              </div>
-              <div className="text-gray-400 text-sm">9:30 AM</div>
-            </div>
-            <div className="flex items-center space-x-4 bg-gray-100 shadow-sm dark:bg-[#1F1F1F] px-4 py-3 rounded-md border dark:border-none">
-              <div className="bg-pink-500 p-2 rounded-md">
-                <FaMessage className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-medium">Alex Johnson</h3>
-                <p className="text-gray-400 text-sm">
-                  Did you see the new update?
-                </p>
-              </div>
-              <div className="text-gray-400 text-sm">Yesterday</div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
