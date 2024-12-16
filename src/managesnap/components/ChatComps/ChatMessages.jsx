@@ -15,7 +15,9 @@ import ForwardMessage from "./ForwardMessage";
 
 export default function ChatMessage({
   message,
+  id,
   previousMessage,
+  isHighlighted,
   isCurrentUser,
   messageStatus,
   onReply,
@@ -206,6 +208,7 @@ export default function ChatMessage({
       className={`relative w-full px-2 ${
         isCurrentUser ? "items-end" : "items-start"
       }`}
+      id={id}
     >
       <div
         className={`flex w-full mb-1 ${
@@ -242,15 +245,9 @@ export default function ChatMessage({
           )}
 
           <Card
-            className={`border-0 ${
-              isCurrentUser
-                ? "bg-blue-500 text-white dark:bg-blue-700"
-                : "bg-gray-200 dark:bg-gray-700"
-            } ${
-              isCurrentUser
-                ? "rounded-t-lg rounded-bl-lg"
-                : "rounded-t-lg rounded-br-lg"
-            }`}
+            className={`border-0 ${isHighlighted ? "bg-yellow-200" : isCurrentUser ? "bg-blue-500 text-white dark:bg-blue-700" : "bg-gray-200 dark:bg-gray-700"} 
+            ${
+              isCurrentUser ? "rounded-t-lg rounded-bl-lg" : "rounded-t-lg rounded-br-lg"}`}
           >
             <CardContent className="p-3">{renderContent()}</CardContent>
           </Card>

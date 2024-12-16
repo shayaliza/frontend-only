@@ -39,6 +39,7 @@ import { FaMessage } from "react-icons/fa6";
 import ChatFiles from "./ChatComps/ChatFiles";
 import ChatMoreOptions from "./ChatComps/ChatMoreOptions";
 import MessageTimestamp from "./ChatComps/MessageTimestamp";
+import SearchMessage from "./ChatComps/SearchMessage";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -135,15 +136,16 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredMessages, setFilteredMessages] = useState([]);
   const [currentView, setCurrentView] = useState("messages");
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [highlightDuration, setHighlightDuration] = useState(0);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const location = useLocation();
+
 
   const lastSegment = location.pathname.split("/").pop();
   const isChannelChat = lastSegment.startsWith("C");
@@ -195,26 +197,6 @@ function Chat({ toggleProfileSectionVisibility }) {
     };
   }, [messages]);
 
-  const handleMessageSearch = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-    if (value.trim() === "") {
-      setFilteredMessages("");
-    } else {
-      const filtered = messages.filter(
-        (message) =>
-          message.content.toLowerCase().includes(value.toLowerCase()) ||
-          message.user.toLowerCase().includes(value.toLowerCase())
-      );
-      setFilteredMessages(filtered);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (messages.length > 0) {
-  //     setFilteredMessages(messages);
-  //   }
-  // }, [messages]);
 
   const scrollToBottom = () => {
     const container = chatContainerRef.current;
@@ -226,6 +208,21 @@ function Chat({ toggleProfileSectionVisibility }) {
     }
   };
 
+  const handleFocusMessage = (messageId) => {
+    setSelectedMessageId(messageId);
+    setTimeout(() => {
+      const element = document.getElementById(`message-${messageId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 0); 
+    setHighlightDuration(3); // Set duration to 3 seconds for example
+
+    setTimeout(() => {
+      setSelectedMessageId(null); // Reset the highlighted message after 3 seconds
+    }, 3000);
+  };
+  
   useEffect(() => {
     const container = chatContainerRef.current;
 
@@ -470,7 +467,7 @@ function Chat({ toggleProfileSectionVisibility }) {
       });
     };
 
-    const formattedTimestamp = formatTimestamp(Date.now()); // Format the timestamp immediately
+    const formattedTimestamp = formatTimestamp(Date.now()); 
 
     if (editingMessageId) {
       setMessages(
@@ -482,7 +479,7 @@ function Chat({ toggleProfileSectionVisibility }) {
               content: messageInput,
               links: extractedUrls,
               edited: true,
-              timestamp: formattedTimestamp, // Use formatted timestamp
+              timestamp: formattedTimestamp, 
             };
           }
           return msg;
@@ -502,7 +499,7 @@ function Chat({ toggleProfileSectionVisibility }) {
             photo: currentUser.photo,
             isPinned: false,
             links: extractedUrls,
-            timestamp: formattedTimestamp, // Use formatted timestamp
+            timestamp: formattedTimestamp, 
             imageUrl: fileData.type.startsWith("image/")
               ? fileData.preview
               : null,
@@ -538,7 +535,7 @@ function Chat({ toggleProfileSectionVisibility }) {
           photo: currentUser.photo,
           isPinned: false,
           links: extractedUrls,
-          timestamp: formattedTimestamp, // Use formatted timestamp
+          timestamp: formattedTimestamp, 
           replyTo: replyToMessage
             ? {
                 id: replyToMessage.id,
@@ -859,9 +856,11 @@ function Chat({ toggleProfileSectionVisibility }) {
               {messages.map((message, index) => (
                 <ChatMessage
                   key={message.id}
+                  id={`message-${message.id}`}
                   message={message}
                   isCurrentUser={message.user === "You"}
                   previousMessage={index > 0 ? messages[index - 1] : null}
+                  isHighlighted={selectedMessageId === message.id && highlightDuration > 0}
                   onReply={setReplyToMessage}
                   onEdit={(messageId, content) => {
                     setEditingMessageId(messageId);
@@ -906,7 +905,7 @@ function Chat({ toggleProfileSectionVisibility }) {
               ))}
               {scrollButton && (
                 <div
-                  className="fixed bottom-32 right-10 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+                  className="fixed bottom-32 right-10 z-50 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
                   onClick={() => setShouldScrollToBottom(true)}
                 >
                   <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -991,46 +990,11 @@ function Chat({ toggleProfileSectionVisibility }) {
       <div
         className={`w-1/3 h-full ${isSearchOpen ? "flex flex-col" : "hidden"}`}
       >
-        <div className="flex justify-between px-4 pt-2">
-          <h1 className="text-lg font-semibold">Search for messages</h1>
-          <X
-            className="cursor-pointer"
-            onClick={() => setIsSearchOpen(false)}
-          />
-        </div>
-        <div className="relative w-full flex p-4">
-          <input
-            type="text"
-            name="search"
-            id="search"
-            value={searchTerm}
-            onChange={handleMessageSearch}
-            placeholder="Search messages"
-            className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
-          />
-          <SearchIcon className="w-4 h-4 absolute top-8 left-6" />
-        </div>
-
-        <div
-          className="relative flex-grow overflow-y-auto overflow-x-hidden"
-          ref={chatContainerRef}
-        >
-          {filteredMessages.length === 0 ? (
-            <div className="text-center text-gray-500 py-4">
-              No messages found
-            </div>
-          ) : (
-            filteredMessages.map((message) => (
-              <div key={message.id} className="hover:bg-gray-400 p-4 border-b">
-                <div className="flex items-center space-x-2 mb-2">
-                  {/* <span className="font-semibold text-sm">{message.user}</span> */}
-                  <span className="text-xs">{message.timestamp}</span>
-                </div>
-                <p className="text-sm">{message.content}</p>
-              </div>
-            ))
-          )}
-        </div>
+        <SearchMessage
+        messages={messages}
+        onClose = {() => setIsSearchOpen(false)}
+        onSendData={handleFocusMessage}
+        />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import img3 from "../assets/man3.jpg";
 import ChatMessage from "./ChatComps/ChatMessages";
 import MessageComposer from "./ChatComps/MessageComposer";
 import FilePreview from "./ChatComps/FilePreview";
+import { formatTimestamp } from "../../utils/formatTimestamp";
 import {
   Popover,
   PopoverContent,
@@ -34,6 +35,7 @@ import {
 } from "lucide-react";
 import PinnedMessages from "./ChatComps/PinnedMessages";
 import ChatFiles from "./ChatComps/ChatFiles";
+import SearchMessage from "./ChatComps/SearchMessage";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -94,6 +96,7 @@ const DMs = () => {
   const timeoutRef = useRef(null);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const handleClose = () => {
     setIsSearchVisible(false);
@@ -394,49 +397,132 @@ const DMs = () => {
   };
 
   const sendMessage = () => {
-    setShouldScrollToBottom(true);
-    if (!messageInput.trim() && selectedFiles.length === 0) return;
-
-    if (editingMessageId) {
-      setMessages(
-        messages.map((msg) =>
-          msg.id === editingMessageId ? { ...msg, content: messageInput } : msg
-        )
-      );
-      setEditingMessageId(null);
-    } else {
-      selectedFiles.forEach((fileData) => {
-        const newMessage = createMessage({
-          content: messageInput,
-          imageUrl: fileData.type.startsWith("image/")
-            ? fileData.preview
-            : null,
-          fileUrl: fileData.blobUrl,
-          fileName: fileData.name,
-          fileType: fileData.type,
-          fileSize: fileData.size,
-          file: fileData.file,
+      setShouldScrollToBottom(true);
+  
+      if (!messageInput.trim() && selectedFiles.length === 0) return;
+  
+      const extractUrls = (text) => {
+        const URL_REGEX = /(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/g;
+        const matches = text.match(URL_REGEX) || [];
+  
+        return matches.map((url) => {
+          let type = "url";
+          if (/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/.test(url)) {
+            type = "youtube";
+          } else if (/twitter\.com\/[a-zA-Z0-9_]+\/status\/[0-9]+/.test(url)) {
+            type = "twitter";
+          } else if (
+            /spotify\.com\/(?:track|album|playlist|artist)\/([a-zA-Z0-9]+)/.test(
+              url
+            )
+          ) {
+            type = "spotify";
+          } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+            type = "image";
+          } else if (/\.(mp4|webm|ogg)$/i.test(url)) {
+            type = "video";
+          }
+          return { url, type };
         });
-        setMessages((prev) => [...prev, newMessage]);
-      });
-
-      if (messageInput.trim() && selectedFiles.length === 0) {
-        const newMessage = createMessage({
-          content: messageInput,
-        });
-        setMessages((prev) => [...prev, newMessage]);
+      };
+  
+      const formattedTimestamp = formatTimestamp(Date.now()); 
+  
+      if (editingMessageId) {
+        setMessages(
+          messages.map((msg) => {
+            if (msg.id === editingMessageId) {
+              const extractedUrls = extractUrls(messageInput);
+              return {
+                ...msg,
+                content: messageInput,
+                links: extractedUrls,
+                edited: true,
+                timestamp: formattedTimestamp, 
+              };
+            }
+            return msg;
+          })
+        );
+        setEditingMessageId(null);
+      } else {
+        if (selectedFiles.length > 0) {
+          selectedFiles.forEach((fileData) => {
+            const extractedUrls = extractUrls(messageInput);
+            const newMessageId = Date.now();
+            const newMessage = {
+              id: newMessageId,
+              user: currentUser.name,
+              content: messageInput,
+              reactions: [],
+              photo: currentUser.photo,
+              isPinned: false,
+              links: extractedUrls,
+              timestamp: formattedTimestamp, 
+              imageUrl: fileData.type.startsWith("image/")
+                ? fileData.preview
+                : null,
+              fileUrl: fileData.blobUrl,
+              fileName: fileData.name,
+              fileType: fileData.type,
+              fileSize: fileData.size,
+              replyTo: replyToMessage
+                ? {
+                    id: replyToMessage.id,
+                    user: replyToMessage.user,
+                    content: replyToMessage.content,
+                    imageUrl: replyToMessage.imageUrl,
+                    fileUrl: replyToMessage.fileUrl,
+                    fileName: replyToMessage.fileName,
+                    fileType: replyToMessage.fileType,
+                  }
+                : null,
+            };
+            setMessages((prev) => [...prev, newMessage]);
+            updateMessageStatus(newMessageId, "sending");
+          });
+        }
+  
+        if (messageInput.trim() && selectedFiles.length === 0) {
+          const extractedUrls = extractUrls(messageInput);
+          const newMessageId = Date.now();
+          const newMessage = {
+            id: newMessageId,
+            user: currentUser.name,
+            content: messageInput,
+            reactions: [],
+            photo: currentUser.photo,
+            isPinned: false,
+            links: extractedUrls,
+            timestamp: formattedTimestamp, 
+            replyTo: replyToMessage
+              ? {
+                  id: replyToMessage.id,
+                  user: replyToMessage.user,
+                  content: replyToMessage.content,
+                  imageUrl: replyToMessage.imageUrl,
+                  fileUrl: replyToMessage.fileUrl,
+                  fileName: replyToMessage.fileName,
+                  fileType: replyToMessage.fileType,
+                }
+              : null,
+          };
+          setMessages((prev) => [...prev, newMessage]);
+          updateMessageStatus(newMessageId, "sending");
+        }
       }
-    }
-
-    setMessageInput("");
-    setSelectedFiles([]);
-    setReplyToMessage(null);
-    resetTextareaHeight();
-  };
+  
+      setMessageInput("");
+      setSelectedFiles([]);
+      setReplyToMessage(null);
+      resetTextareaHeight();
+    };
+  
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
+      setMessageInput("")
       sendMessage();
     }
   };
@@ -558,8 +644,9 @@ const DMs = () => {
           className="w-1 bg-gray-600 cursor-col-resize hover:bg-blue-500 transition-colors"
           onMouseDown={() => setIsResizingLeft(true)}
         />
+        <div className="flex flex-1 h-full items-center">
         <div
-          className="flex-1 flex flex-col h-full text-black dark:text-white"
+          className="flex flex-1 flex-col h-full text-black dark:text-white border-r"
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
           ref={messageSectionRef}
@@ -699,7 +786,7 @@ const DMs = () => {
                     <div className="text-lg font-bold">{selectedUser.name}</div>
                   </div>
                   <div className="flex items-center space-x-4 mt-2">
-                    <button onClick={() => handleSearch(selectedUser)}>
+                    <button onClick={() => setIsSearchOpen(true)}>
                       <Search className="w-5 h-5 mr-1" />
                     </button>
                     <button onClick={() => setCurrentView("messages")}>
@@ -812,6 +899,15 @@ const DMs = () => {
               Select a conversation to start messaging
             </div>
           )}
+        </div>
+        <div
+        className={`w-1/3 h-full ${isSearchOpen ? "flex flex-col" : "hidden"}`}
+      >
+        <SearchMessage
+        messages={messages}
+        onClose = {() => setIsSearchOpen(false)}
+        />
+      </div>
         </div>
         {isProfileSectionVisible && (
           <div
