@@ -221,7 +221,6 @@ const MessageComposer = ({
             e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;
           }}
         />
-
         <input
           type="file"
           ref={fileInputRef}

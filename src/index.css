@@ -102,5 +102,10 @@ body.dark .popup-scrollbar::-webkit-scrollbar-thumb:hover {
   display: none;
 }
 
+.react-calendar{
+  width: 300px;
+  height:250px;
+  line-height: 0.5em;
+}
 
 

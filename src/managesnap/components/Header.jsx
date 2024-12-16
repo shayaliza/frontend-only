@@ -198,7 +198,7 @@ const Header = () => {
           </PopoverTrigger>
 
           <PopoverContent
-            className="w-[300px] p-0 bg-[#1E1E1E] text-white shadow-xl mr-3"
+            className="w-[300px] p-0 bg-white dark:bg-gray-900 text-black dark:text-white shadow-xl mr-3"
             // onMouseEnter={() => {
             //   if (timeoutRef.current) clearTimeout(timeoutRef.current);
             // }}

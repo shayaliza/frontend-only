@@ -24,6 +24,7 @@ import {
   Play,
   Clock,
   PauseCircle,
+  CreativeCommons,
 } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../../components/ui/button";
@@ -42,6 +43,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import CustomPopup from "./ChatComps/CustomPopup";
 
 const OptionButton = ({
   icon: Icon,
@@ -58,10 +60,10 @@ const OptionButton = ({
     }`}
   >
     <div className="flex items-center gap-4">
-      <Icon fill={fill} className="w-5 h-5" />
-      <span className="text-white">{label}</span>
+      <Icon  className="w-5 h-5" />
+      <span className="">{label}</span>
     </div>
-    {extra && <span className="text-white">{extra}</span>}
+    {extra && <span className="">{extra}</span>}
   </button>
 );
 
@@ -76,14 +78,12 @@ function Profile() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [notificationTime, setNotificationTime] = useState("");
   const [duration, setDuration] = useState("");
+  const [customPopup, setCustomPopupOpen] = useState(false);
+  const [formattedDate, setFormattedDateState] = useState("");
 
-  const formattedDate = selectedDate.toLocaleDateString("en-US", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-
+  const setFormattedDate = (date) => {
+    setFormattedDateState(date);
+  };
   const handleOptions = (option, from = "main") => {
     setPreviousView(from);
     setCurrentView(option);
@@ -106,7 +106,12 @@ function Profile() {
   };
 
   const handlePauseNotifications = (path) => {
-    setNotificationTime(path);
+    if (path === "custom") {
+      setNotificationTime("");
+      setCustomPopupOpen(true);
+    } else {
+      setNotificationTime(path);
+    }
     setPreviousView("notifications");
     setCurrentView("main");
   };
@@ -152,7 +157,6 @@ function Profile() {
     },
     { icon: User2, label: "Profile" },
     { icon: Settings, label: "Preferences" },
-    { icon: Rocket, label: "Upgrade snapthetech" },
     { icon: LogOut, label: "Sign out", className: "text-red-400" },
   ];
 
@@ -201,11 +205,18 @@ function Profile() {
       extra: "3 days",
       action: () => handleAvailability("Appear Offline"),
     },
+    {
+      icon: CreativeCommons,
+      classname: "",
+      label: "Make your own status",
+      extra: "1 hour",
+      action: () => handleAvailability(""),
+    },
   ];
 
   return (
     <div>
-      <div className="p-3 space-y-1">
+      <div className="px-3 py-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="w-10 h-10">
@@ -214,8 +225,18 @@ function Profile() {
             <div className="flex flex-col">
               <span className="text-lg font-medium">Saketh</span>
               <div className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${availability === "Available" ? "bg-green-500" : "bg-red-600"}`} />
-                <span className={`text-sm ${availability === "Available" ? "text-green-500" : "text-red-600"}`}>
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    availability === "Available" ? "bg-green-500" : "bg-red-600"
+                  }`}
+                />
+                <span
+                  className={`text-sm ${
+                    availability === "Available"
+                      ? "text-green-500"
+                      : "text-red-600"
+                  }`}
+                >
                   {availability}
                 </span>
               </div>
@@ -223,13 +244,18 @@ function Profile() {
           </div>
           {currentView !== "main" && (
             <button
-              onClick={goBack}
+              onClick={() => setCurrentView("main")}
               className="hover:text-red-500 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           )}
         </div>
+        {currentView !== "main" && (
+          <button onClick={goBack} className="flex items-center space-x-2">
+            <ChevronLeft className="w-4 h-4 mt-0.5" /> Back
+          </button>
+        )}
       </div>
 
       {currentView === "main" && (
@@ -332,25 +358,25 @@ function Profile() {
           </div>
 
           <select
-            className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent text-gray-400"
+            className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none transition bg-transparent text-gray-400"
             onChange={(e) => setSelectValue(e.target.value)}
           >
-            <option value="1" className="bg-gray-800 text-white">
+            <option value="1" className="bg-white text-black dark:bg-gray-800 dark:text-white">
               Never
             </option>
-            <option value="2" className="bg-gray-800 text-white">
+            <option value="2" className="bg-white text-black dark:bg-gray-800 dark:text-white">
               Today
             </option>
-            <option value="3" className="bg-gray-800 text-white">
+            <option value="3" className="bg-white text-black dark:bg-gray-800 dark:text-white">
               1 hour
             </option>
-            <option value="4" className="bg-gray-800 text-white">
+            <option value="4" className="bg-white text-black dark:bg-gray-800 dark:text-white">
               2 hours
             </option>
-            <option value="5" className="bg-gray-800 text-white">
+            <option value="5" className="bg-white text-black dark:bg-gray-800 dark:text-white">
               This week
             </option>
-            <option value="custom" className="bg-gray-800 text-white">
+            <option value="custom" className="bg-white text-black dark:bg-gray-800 dark:text-white">
               Custom
             </option>
           </select>
@@ -362,13 +388,13 @@ function Profile() {
                   className="flex items-center border p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                 >
-                  <span className="text-white">{formattedDate}</span>
+                  <span className="">{formattedDate || "Monday"}</span>
                   <ChevronDown className="w-4 h-4 ml-2 text-gray-500" />
                 </div>
               </div>
 
               <div className="w-1/3">
-                <select className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent text-gray-400 text-sm">
+                <select className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none transition bg-transparent text-sm">
                   {Array.from({ length: 12 }, (_, i) => (
                     <option key={i} value={`${i + 1}:00 AM`}>
                       {i + 1}:00 AM
@@ -473,7 +499,10 @@ function Profile() {
                     <span className="text-sm">Adjust Time</span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="p-2 space-y-1 flex flex-col items-center w-[200px]">
+                <DropdownMenuContent
+                  align="end"
+                  className="p-2 space-y-1 flex flex-col items-center w-[200px]"
+                >
                   {[
                     "For 30 minutes",
                     "For 1 hour",
@@ -531,31 +560,41 @@ function Profile() {
           <div className="flex justify-between items-centerpb-2">
             <h2 className="text-lg font-semibold">Set a Status</h2>
           </div>
-          <div className="border rounded-md p-3 flex items-center justify-between hover:bg-gray-500 transition">
+          <div className="border rounded-md p-3 flex items-center justify-between transition">
             <div className="flex gap-2 items-center">
               <CalendarIcon className="w-5 h-5 text-blue-500" />
-              <span className="font-medium">{availability}</span>
+              <input
+                value={availability || ""}
+                onChange={(e) => setAvailability(e.target.value)}
+                className="font-medium bg-transparent focus:outline-none"
+                placeholder="Set your availability"
+              />
             </div>
-            <button className="hover:text-red-500 transition-colors">
-              <XCircle className="w-5 h-5" />
-            </button>
+            {availability && (
+              <button className="hover:text-red-500 transition-colors">
+                <XCircle
+                  className="w-5 h-5"
+                  onClick={() => setAvailability("")}
+                />
+              </button>
+            )}
           </div>
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Remove status after...</h3>
             <select
-              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent"
+              className="w-full p-2 border rounded-md focus:ring focus:outline-none focus:ring-blue-300 transition bg-transparent"
               onChange={(e) => setSelectStatus(e.target.value)}
             >
-              <option value="1" className="bg-gray-800 text-white">
+              <option value="1" className="bg-white text-black dark:bg-gray-800 dark:text-white">
                 1 hour
               </option>
-              <option value="2" className="bg-gray-800 text-white">
+              <option value="2" className="bg-white text-black dark:bg-gray-800 dark:text-white">
                 2 hours
               </option>
-              <option value="3" className="bg-gray-800 text-white">
+              <option value="3" className="bg-white text-black dark:bg-gray-800 dark:text-white">
                 3 hours
               </option>
-              <option value="custom" className="bg-gray-800 text-white">
+              <option value="custom" className="bg-white text-black dark:bg-gray-800 dark:text-white">
                 Custom
               </option>
             </select>
@@ -601,7 +640,7 @@ function Profile() {
           <h1>Pause Notifications</h1>
           <select
             className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent mb-2"
-            onChange={(e) => setDuration(e.target.value)}
+            onChange={(e) => setNotificationTime(e.target.value)}
           >
             <option value="1" className="bg-gray-800 text-white">
               Do not pause
@@ -616,6 +655,62 @@ function Profile() {
               Custom
             </option>
           </select>
+
+          {notificationTime === "custom" && (
+            <div className="flex space-x-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 flex items-center justify-center space-x-2 border
+         bg-transparent
+         py-2 rounded-md 
+         hover:bg-gray-500 
+         transition-colors duration-200
+         focus:outline-none focus:ring-2 focus:ring-gray-300"
+                  >
+                    <Clock className="w-5 h-5" />
+                    <span className="text-sm">Adjust Time</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="p-2 space-y-1 flex flex-col items-center w-[200px]"
+                >
+                  {[
+                    "For 30 minutes",
+                    "For 1 hour",
+                    "For 2 hours",
+                    "Until tomorrow",
+                    "Until next week",
+                    "custom",
+                  ].map((time) => (
+                    <button
+                      key={time}
+                      onClick={() => handlePauseNotifications(time)}
+                      className="hover:bg-gray-500 w-full text-left px-2 py-2 rounded transition-colors"
+                    >
+                      {time}...
+                    </button>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <button
+                // onClick={setNotificationSchedule}
+                className="flex-1 flex items-center justify-center space-x-2 border
+                       bg-transparent
+                       py-2 rounded-md 
+                       hover:bg-gray-500 
+                       transition-colors duration-200
+                       focus:outline-none focus:ring-2 focus:ring-gray-300"
+                aria-label="Set a notification schedule"
+              >
+                <CalendarIcon className="w-5 h-5" />
+                <span className="text-sm">Schedule</span>
+              </button>
+            </div>
+          )}
 
           <div className="flex justify-end gap-2">
             <button
@@ -632,6 +727,17 @@ function Profile() {
             </button>
           </div>
         </div>
+      )}
+
+      {customPopup && (
+        <CustomPopup
+          isCalendarOpen={isCalendarOpen}
+          setIsCalendarOpen={setIsCalendarOpen}
+          formattedDate={formattedDate}
+          setFormattedDate={setFormattedDate}
+          setCustomPopupOpen={setCustomPopupOpen}
+          setNotificationTime={setNotificationTime}
+        />
       )}
     </div>
   );

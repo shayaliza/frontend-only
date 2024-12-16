@@ -59,8 +59,8 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-blur/50 dark:bg-gray-900/50 transition-all">
-          <div className="w-full max-w-md mx-auto p-4 bg-zinc-900 text-white rounded-lg shadow-lg">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/10 backdrop-blur-sm">
+          <div className="w-full max-w-md mx-auto p-4 bg-white/80 dark:bg-gray-900/80 rounded-lg shadow-lg border">
           <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">
                 Forward this private message
@@ -106,13 +106,13 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
               {(isFocused || filteredChats.length > 0) && (
                 <div 
                   ref={dropdownRef}
-                  className="absolute z-10 w-full bg-zinc-800 border border-gray-700 rounded shadow-md mt-1"
+                  className="absolute z-10 w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-300 rounded shadow-md mt-1"
                 >
                   {filteredChats.map((chat) => (
                     <div
                       key={chat.user}
                       onClick={() => handleSelectChat(chat)}
-                      className="flex items-center px-3 py-2 hover:bg-zinc-700 cursor-pointer"
+                      className="flex items-center px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-700 cursor-pointer"
                     >
                       <img
                         src={chat.photo}
@@ -130,7 +130,7 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
               {selectedChats.map((chat) => (
                 <div
                   key={chat.user}
-                  className="flex items-center px-3 py-1 bg-gray-700 rounded-full text-sm"
+                  className="flex items-center px-3 py-2 rounded-full text-sm bg-gray-200 dark:bg-gray-700"
                 >
                   <img
                     src={chat.photo}
@@ -140,7 +140,7 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                   <span>{chat.user}</span>
                   <button
                     onClick={() => handleRemoveChat(chat.user)}
-                    className="ml-2 text-gray-400 hover:text-white"
+                    className="ml-2"
                   >
                     <X size={16}/>
                   </button>
@@ -153,14 +153,14 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
               className="w-full px-3 py-2 mb-4 text-sm rounded bg-transparent border resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
 
-            <div className="flex items-center gap-3 p-3 bg-gray-700 rounded">
+            <div className="flex items-center gap-3 p-3 bg-gray-300 dark:bg-gray-700 rounded">
               <img
                 src={message.photo}
                 alt={message.user}
                 className="h-8 w-8 rounded-full"
               />
               <div>
-                <div className="text-sm font-medium text-white">
+                <div className="text-sm font-medium">
                   {message.user}
                 </div>
                 {message.fileUrl && (
@@ -170,7 +170,7 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                   className="h-8 w-auto"
                 />
                 ) }
-                <div className="text-sm text-gray-400">{message.content}</div>
+                <div className="text-sm ">{message.content}</div>
               </div>
             </div>
 
