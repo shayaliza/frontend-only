@@ -22,9 +22,10 @@ import {
   Bell,
   Cog,
   MessageCircle,
+  Calendar,
 } from "lucide-react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { FaBell } from "react-icons/fa6";
+import { FaBell, FaCalendar } from "react-icons/fa6";
 import { FaCog } from "react-icons/fa";
 
 function Sidebar() {
@@ -88,6 +89,33 @@ function Sidebar() {
       tooltip: "DMs",
       path: "/managesnap/dms",
       matchPath: "dms"
+    },
+    {
+      id: "calendar-tooltip",
+      icon: (
+        <div className="relative">
+          <Calendar className="w-6 h-6" />
+          {msgCount > 0 && (
+            <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {msgCount}
+            </span>
+          )}
+        </div>
+      ),
+      activeIcon: (
+        <div className="relative">
+          <FaCalendar className="w-6 h-6" />
+          {msgCount > 0 && (
+            <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {msgCount}
+            </span>
+          )}
+        </div>
+      ),
+      label: "Calendar",
+      tooltip: "Calendar",
+      path: "/managesnap/calendar",
+      matchPath: "calendar"
     },
     {
       id: "bell-tooltip",
