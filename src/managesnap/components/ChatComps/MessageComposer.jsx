@@ -25,8 +25,13 @@ import {
   Camera,
   Contact,
   Sticker,
+  StickerIcon,
+  LucideSticker,
 } from "lucide-react";
 import { FaPoll } from "react-icons/fa";
+import { FaStickerMule } from "react-icons/fa6";
+import Emoji from "./Emoji";
+import Gifs from "./Gifs";
 
 const MessageComposer = ({
   messageInput,
@@ -44,6 +49,7 @@ const MessageComposer = ({
   handleFileUpload,
   sendMessage,
 }) => {
+  
   const renderReplyPreview = () => {
     if (!replyToMessage) return null;
 
@@ -171,6 +177,7 @@ const MessageComposer = ({
     );
   };
 
+  const [showGifPicker, setShowGifPicker] = useState(false);
   const [emojis, setEmojis] = useState(emojisData.emojis || []);
 
   return (
@@ -204,7 +211,16 @@ const MessageComposer = ({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <div className="flex flex-col items-center"></div>
+        <Popover open={showGifPicker} onOpenChange={setShowGifPicker}>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <StickerIcon className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="mr-12 mb-6 w-[400px]">
+            <Gifs setMessageInput={setMessageInput}/>
+          </PopoverContent>
+        </Popover>
         <textarea
           id="message-textarea"
           value={messageInput}
@@ -251,21 +267,8 @@ const MessageComposer = ({
               <Smile className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="mr-2 mb-6">
-            <div className="grid grid-cols-6 gap-4 overflow-y-auto max-h-96 emoji-scrollbar">
-              {emojis.map((emoji, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    setMessageInput((prev) => prev + emoji);
-                    // setShowEmojiPicker(false);
-                  }}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
-                >
-                  {emoji}
-                </button>
-              ))}
-            </div>
+          <PopoverContent className="mr-12 mb-6 w-[400px]">
+            <Emoji setMessageInput={setMessageInput}/>
           </PopoverContent>
         </Popover>
 

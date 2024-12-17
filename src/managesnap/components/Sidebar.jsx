@@ -193,7 +193,7 @@ function Sidebar() {
           </PopoverTrigger>
 
           <PopoverContent
-            className="w-[300px] p-0 bg-[#1E1E1E] text-white shadow-xl ml-12"
+            className="w-[300px] p-0 bg-gray-50 dark:bg-[#1E1E1E] text-black dark:text-white shadow-xl ml-12"
             align="start"
           >
             <div className="p-3 space-y-1">
@@ -214,7 +214,7 @@ function Sidebar() {
             <div className="px-1 py-1">
               <button className="w-full flex items-center gap-3 px-2 py-1 hover:bg-white/10 rounded-md">
                 <span className="text-xl">😊</span>
-                <span className="text-gray-300">Update your status</span>
+                <span className="">Update your status</span>
               </button>
             </div>
 

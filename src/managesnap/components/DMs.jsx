@@ -36,6 +36,9 @@ import {
 import PinnedMessages from "./ChatComps/PinnedMessages";
 import ChatFiles from "./ChatComps/ChatFiles";
 import SearchMessage from "./ChatComps/SearchMessage";
+import PinnedContent from "./ChatComps/PinnedContent";
+import PinnedHeader from "./ChatComps/PinnedHeader";
+import ChatMoreOptions from "./ChatComps/ChatMoreOptions";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -96,11 +99,37 @@ const DMs = () => {
   const timeoutRef = useRef(null);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isPinnedOpen, setIsPinnedOpen] = useState(false);
 
   const handleClose = () => {
     setIsSearchVisible(false);
     setSearchValue("");
+  };
+
+  const onViewAll = () => {
+    setIsSearchOpen(false);
+    setIsPinnedOpen(true);
+  };
+
+  const handleSearchOpen = () => {
+    setIsPinnedOpen(false);
+    setIsSearchOpen(true);
+  };
+
+  const handleFocusMessage = (messageId) => {
+    setSelectedMessageId(messageId);
+    setTimeout(() => {
+      const element = document.getElementById(`message-${messageId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "auto", block: "center" });
+      }
+    }, 0);
+    setHighlightDuration(3);
+
+    setTimeout(() => {
+      setSelectedMessageId(null);
+    }, 3000);
   };
 
   const handleMouseEnter = () => {
@@ -179,6 +208,8 @@ const DMs = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [highlightDuration, setHighlightDuration] = useState(0);
   const [currentView, setCurrentView] = useState("messages");
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
@@ -786,7 +817,7 @@ const DMs = () => {
                     <div className="text-lg font-bold">{selectedUser.name}</div>
                   </div>
                   <div className="flex items-center space-x-4 mt-2">
-                    <button onClick={() => setIsSearchOpen(true)}>
+                    <button onClick={handleSearchOpen}>
                       <Search className="w-5 h-5 mr-1" />
                     </button>
                     <button onClick={() => setCurrentView("messages")}>
@@ -805,11 +836,12 @@ const DMs = () => {
                       <FileIcon className="w-5 h-5" />
                     </button>
                     <button className="p-1">
-                      <MoreVerticalIcon className="w-5 h-5" />
+                    <ChatMoreOptions />
                     </button>
                   </div>
                 </div>
               </div>
+              <PinnedHeader messages={messages} onViewAll={onViewAll} onSendData={handleFocusMessage}/>
 
               {currentView === "messages" && (
                 <>
@@ -828,6 +860,9 @@ const DMs = () => {
                           setEditingMessageId(messageId);
                           setMessageInput(content);
                         }}
+                        isHighlighted={
+                          selectedMessageId === message.id && highlightDuration > 0
+                        }
                         onPin={(messageId) => {
                           setMessages(
                             messages.map((msg) =>
@@ -904,12 +939,24 @@ const DMs = () => {
           )}
         </div>
         <div
-        className={`w-1/3 h-full ${isSearchOpen ? "flex flex-col" : "hidden"}`}
+        className={`w-1/3 h-full ${
+          isSearchOpen || isPinnedOpen ? "flex flex-col" : "hidden"
+        }`}
       >
-        <SearchMessage
-        messages={messages}
-        onClose = {() => setIsSearchOpen(false)}
-        />
+        {isSearchOpen && (
+          <SearchMessage
+            messages={messages}
+            onClose={() => setIsSearchOpen(false)}
+            onSendData={handleFocusMessage}
+          />
+        )}
+        {isPinnedOpen && (
+          <PinnedContent
+            messages={messages}
+            onClose={() => setIsPinnedOpen(false)}
+            onSendData={handleFocusMessage}
+          />
+        )}
       </div>
         </div>
         {isProfileSectionVisible && (

@@ -42,6 +42,7 @@ import MessageTimestamp from "./ChatComps/MessageTimestamp";
 import SearchMessage from "./ChatComps/SearchMessage";
 import PinnedHeader from "./ChatComps/PinnedHeader";
 import PinnedContent from "./ChatComps/PinnedContent";
+import Organisation from "./ChatComps/Organisation";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -139,6 +140,7 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [scrollButton, setScrollButton] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isPinnedOpen, setIsPinnedOpen] = useState(false);
+  const [isOrgOpen, setIsOrgOpen] = useState(false);
   const [currentView, setCurrentView] = useState("messages");
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const [highlightDuration, setHighlightDuration] = useState(0);
@@ -217,6 +219,12 @@ function Chat({ toggleProfileSectionVisibility }) {
   const handleSearchOpen = () => {
     setIsPinnedOpen(false);
     setIsSearchOpen(true);
+  };
+
+  const handleOrg = () => {
+    setIsOrgOpen(true);
+    setIsPinnedOpen(false);
+    setIsSearchOpen(false);
   };
 
   const handleFocusMessage = (messageId) => {
@@ -469,7 +477,9 @@ function Chat({ toggleProfileSectionVisibility }) {
           )
         ) {
           type = "spotify";
-        } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
+        } else if (/giphy\.com/.test(url)) {
+          type = "gif";  
+        }else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(url)) {
           type = "image";
         } else if (/\.(mp4|webm|ogg)$/i.test(url)) {
           type = "video";
@@ -700,7 +710,7 @@ function Chat({ toggleProfileSectionVisibility }) {
                       <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
                         <MessageSquare className="w-5 h-5" />
                       </button>
-                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors" onClick={handleOrg}>
                         <Users className="w-5 h-5" />
                       </button>
                       <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
@@ -1002,8 +1012,8 @@ function Chat({ toggleProfileSectionVisibility }) {
         )}
       </div>
       <div
-        className={`w-1/3 h-full ${
-          isSearchOpen || isPinnedOpen ? "flex flex-col" : "hidden"
+        className={`w-1/3 h-full overflow-y-auto ${
+          isSearchOpen || isPinnedOpen || isOrgOpen ? "flex flex-col" : "hidden"
         }`}
       >
         {isSearchOpen && (
@@ -1018,6 +1028,11 @@ function Chat({ toggleProfileSectionVisibility }) {
             messages={messages}
             onClose={() => setIsPinnedOpen(false)}
             onSendData={handleFocusMessage}
+          />
+        )}
+        {isOrgOpen && (
+          <Organisation
+            onClose={() => setIsOrgOpen(false)}
           />
         )}
       </div>

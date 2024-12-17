@@ -7,7 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import getFileIcon from "./GetFileIcon";
 import MessageOptions from "./MessageOptions";
 import LinkPreviewHandler from "./LinkHandling";
-import { Pin, Download, FileIcon, ReplyIcon, ViewIcon, ForwardIcon } from "lucide-react";
+import {
+  Pin,
+  Download,
+  FileIcon,
+  ReplyIcon,
+  ViewIcon,
+  ForwardIcon,
+} from "lucide-react";
 import ReactionPicker from "./ReactionPicker";
 import MessageStatus from "./MessageStatus";
 import MessageTimestamp from "./MessageTimestamp";
@@ -137,6 +144,13 @@ export default function ChatMessage({
         )}
 
         {message.linkUrl && <LinkPreviewHandler content={message.linkUrl} />}
+        {/* {message.linkUrl.includes("giphy.com") && (
+          <img
+            src={message.linkUrl}
+            alt="GIF"
+            className="max-w-full h-auto rounded-lg"
+          />
+        )} */}
 
         {!message.imageUrl && message.fileUrl && (
           <div className="flex items-center space-x-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer group">
@@ -238,11 +252,19 @@ export default function ChatMessage({
         )}
 
         <div className="relative max-w-2xl group">
-
           <Card
-            className={`border-0 ${isHighlighted ? "bg-yellow-500 dark:bg-yellow-500" : isCurrentUser ? "bg-blue-500 text-white dark:bg-blue-700" : "bg-gray-200 dark:bg-gray-700"} 
+            className={`border-0 ${
+              isHighlighted
+                ? "bg-yellow-500 dark:bg-yellow-500"
+                : isCurrentUser
+                ? "bg-blue-500 text-white dark:bg-blue-700"
+                : "bg-gray-200 dark:bg-gray-700"
+            } 
             ${
-              isCurrentUser ? "rounded-t-lg rounded-bl-lg" : "rounded-t-lg rounded-br-lg"}`}
+              isCurrentUser
+                ? "rounded-t-lg rounded-bl-lg"
+                : "rounded-t-lg rounded-br-lg"
+            }`}
           >
             {message.isPinned && (
               <div className="absolute top-2 right-2 text-xs text-muted-foreground">
