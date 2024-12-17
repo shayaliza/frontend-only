@@ -31,9 +31,9 @@ export default function MessageOptions({ message, onEdit, onPin, isCurrentUser, 
           <DropdownMenuItem>
             <Star className="mr-2 h-4 w-4" /> Star
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          {/* <DropdownMenuItem>
             <Bell className="mr-2 h-4 w-4" /> Read later
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           {isCurrentUser && (
             <DropdownMenuItem onClick={() => onEdit(message.id, message.content)}>
               <Edit className="mr-2 h-4 w-4" /> Edit

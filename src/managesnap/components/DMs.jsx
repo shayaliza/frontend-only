@@ -858,6 +858,9 @@ const DMs = () => {
                             )
                           );
                         }}
+                        onDelete={(messageId) => {
+                          setMessages(messages.filter((msg) => msg.id !== messageId));
+                        }}
                         onImageClick={(imageUrl) => setImagePreview(imageUrl)}
                       />
                     ))}

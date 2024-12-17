@@ -5,10 +5,15 @@ import img2 from "../../assets/man2.jpg"
 import img3 from "../../assets/man3.jpg"
 
 const ForwardMessage = ({ message, isOpen, onClose }) => {
+
   const [searchQuery, setSearchQuery] = useState("");
+
   const [filteredChats, setFilteredChats] = useState([]);
+
   const [selectedChats, setSelectedChats] = useState([]);
+
   const [isFocused, setIsFocused] = useState(false);
+
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -19,11 +24,33 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
     { photo: img1, user: "Siddharth Reddy" },
   ];
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current && 
+        !dropdownRef.current.contains(event.target) &&
+        inputRef.current && 
+        !inputRef.current.contains(event.target)
+      ) {
+        setIsFocused(false);
+        setFilteredChats([]);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
+    setIsFocused(true);
+
     if (query.trim() === "") {
-      setFilteredChats([]);
+      setFilteredChats(dummyChats);
     } else {
       const results = dummyChats.filter((chat) =>
         chat.user.toLowerCase().includes(query.toLowerCase())
@@ -34,19 +61,14 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
 
   const handleSelectChat = (chat) => {
     const isAlreadySelected = selectedChats.some((selected) => selected.user === chat.user);
-    
     if (!isAlreadySelected) {
       const newSelectedChats = [...selectedChats, chat];
-      console.log("Updated selected chats:", newSelectedChats);
       setSelectedChats(newSelectedChats);
     }
-    
+    setIsFocused(false);
     setSearchQuery(""); 
-    setFilteredChats([]); 
-    setIsFocused(false); 
-    
     if (inputRef.current) {
-      inputRef.current.blur();
+      inputRef.current.focus();
     }
   };
 
@@ -55,13 +77,17 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
     setSelectedChats(updatedChats);
   };
 
+  const handleForward = () => {
+    console.log("Forwarding to:", selectedChats);
+    onClose();
+  };
 
   return (
     <>
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/10 backdrop-blur-sm">
           <div className="w-full max-w-md mx-auto p-4 bg-white/80 dark:bg-gray-900/80 rounded-lg shadow-lg border">
-          <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">
                 Forward this private message
               </h2>
@@ -94,16 +120,10 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                   setIsFocused(true);
                   setFilteredChats(dummyChats);
                 }}
-                onBlur={(e) => {
-                  setTimeout(() => {
-                    setIsFocused(false);
-                    setFilteredChats([]);
-                  }, 200);
-                }}
                 className="w-full px-3 py-2 mb-4 text-sm bg-transparent rounded border focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
-              {(isFocused || filteredChats.length > 0) && (
+              {(isFocused && filteredChats.length > 0) && (
                 <div 
                   ref={dropdownRef}
                   className="absolute z-10 w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-300 rounded shadow-md mt-1"
@@ -111,7 +131,10 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                   {filteredChats.map((chat) => (
                     <div
                       key={chat.user}
-                      onClick={() => handleSelectChat(chat)}
+                      onMouseDown={(e) => {
+                        e.preventDefault(); 
+                        handleSelectChat(chat);
+                      }}
                       className="flex items-center px-3 py-2 hover:bg-gray-200 dark:hover:bg-zinc-700 cursor-pointer"
                     >
                       <img
@@ -147,9 +170,10 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                 </div>
               ))}
             </div>
+
             <textarea
               placeholder="Add a message if you like."
-              rows="3"
+              rows={3}
               className="w-full px-3 py-2 mb-4 text-sm rounded bg-transparent border resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
 
@@ -165,17 +189,20 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
                 </div>
                 {message.fileUrl && (
                   <img
-                  src={message.fileUrl}
-                  alt={message.user}
-                  className="h-8 w-auto"
-                />
-                ) }
-                <div className="text-sm ">{message.content}</div>
+                    src={message.fileUrl}
+                    alt={message.user}
+                    className="h-8 w-auto"
+                  />
+                )}
+                <div className="text-sm">{message.content}</div>
               </div>
             </div>
 
             <div className="mt-4 flex justify-end">
-              <button className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-500">
+              <button 
+                onClick={handleForward}
+                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-500"
+              >
                 Forward
               </button>
             </div>

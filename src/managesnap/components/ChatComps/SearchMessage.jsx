@@ -22,7 +22,7 @@ function SearchMessage({messages, onSendData, onClose}) {
 
   return (
     <>
-      <div className="flex justify-between px-4 pt-2">
+      <div className="flex justify-between px-4 pt-2 text-black dark:text-white">
         <h1 className="text-lg font-semibold">Search for messages</h1>
         <X className="cursor-pointer" onClick={onClose} />
       </div>
@@ -34,9 +34,9 @@ function SearchMessage({messages, onSendData, onClose}) {
           value={searchTerm}
           onChange={handleMessageSearch}
           placeholder="Search messages"
-          className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md dark:text-gray-400 focus:ring-0 dark:border-none"
+          className="w-full dark:bg-[#1F1F1F] border outline-none px-8 py-3 rounded-md text-black dark:text-white focus:ring-0 dark:border-none"
         />
-        <SearchIcon className="w-4 h-4 absolute top-8 left-6" />
+        <SearchIcon className="w-4 h-4 absolute top-8 left-6 text-black dark:text-white" />
       </div>
 
       <div
@@ -44,17 +44,17 @@ function SearchMessage({messages, onSendData, onClose}) {
         ref={chatContainerRef}
       >
         {filteredMessages.length === 0 ? (
-          <div className="text-center text-gray-500 py-4">
+          <div className="text-center text-gray-400 dark:text-white py-4">
             No messages found
           </div>
         ) : (
           filteredMessages.map((message) => (
-            <div key={message.id} className="hover:bg-gray-400 p-4 border-b" onClick={() => onSendData(message.id)}>
+            <div key={message.id} className="hover:bg-gray-400 dark:hover:bg-gray-600 text-gray-800 dark:text-white p-4 border-b" onClick={() => onSendData(message.id)}>
               <div className="flex items-center space-x-2 mb-2">
                 {/* <span className="font-semibold text-sm">{message.user}</span> */}
                 <span className="text-xs">{message.timestamp}</span>
               </div>
-              <p className="text-sm">{message.content}</p>
+              <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis max-w-[350px]">{message.content}</p>
             </div>
           ))
         )}

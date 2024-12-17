@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { FaShare } from "react-icons/fa";
+import { FaForward, FaShare } from "react-icons/fa";
 import { Badge } from "@/components/ui/badge";
 import getFileIcon from "./GetFileIcon";
 import MessageOptions from "./MessageOptions";
 import LinkPreviewHandler from "./LinkHandling";
-import { Pin, Download, FileIcon, ReplyIcon, ViewIcon } from "lucide-react";
+import { Pin, Download, FileIcon, ReplyIcon, ViewIcon, ForwardIcon } from "lucide-react";
 import ReactionPicker from "./ReactionPicker";
 import MessageStatus from "./MessageStatus";
 import MessageTimestamp from "./MessageTimestamp";
@@ -238,17 +238,17 @@ export default function ChatMessage({
         )}
 
         <div className="relative max-w-2xl group">
-          {message.isPinned && (
-            <div className="absolute -top-10 -left-10 flex items-center text-xs text-muted-foreground">
-              <Pin className="w-3 h-3 mr-1" /> Pinned
-            </div>
-          )}
 
           <Card
-            className={`border-0 ${isHighlighted ? "bg-yellow-200" : isCurrentUser ? "bg-blue-500 text-white dark:bg-blue-700" : "bg-gray-200 dark:bg-gray-700"} 
+            className={`border-0 ${isHighlighted ? "bg-yellow-500 dark:bg-yellow-500" : isCurrentUser ? "bg-blue-500 text-white dark:bg-blue-700" : "bg-gray-200 dark:bg-gray-700"} 
             ${
               isCurrentUser ? "rounded-t-lg rounded-bl-lg" : "rounded-t-lg rounded-br-lg"}`}
           >
+            {message.isPinned && (
+              <div className="absolute top-2 right-2 text-xs text-muted-foreground">
+                <Pin fill="#000" className="w-2 h-2 text-black" />
+              </div>
+            )}
             <CardContent className="p-3">{renderContent()}</CardContent>
           </Card>
 
@@ -288,7 +288,7 @@ export default function ChatMessage({
                 onReply(message);
               }}
             />
-            <FaShare
+            <ForwardIcon
               className="ml-2 cursor-pointer"
               onClick={() => setForwardOpen(true)}
             />

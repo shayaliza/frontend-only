@@ -146,7 +146,7 @@ function Sidebar() {
   ];
 
   return (
-    <div className="flex flex-col justify-between px-2 py-6 shadow-md w-20">
+    <div className="flex flex-col justify-between px-2 py-6 shadow-md w-20 border-r dark:border-gray-700">
       <aside className="flex flex-col items-center space-y-6">
         {icons.map(({ id, icon, activeIcon, label, tooltip, path, matchPath }) => {
           const isActive = currentPath.includes(matchPath);

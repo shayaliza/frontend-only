@@ -9,7 +9,7 @@ import img4 from "../assets/img1.png";
 const channels = [
   { 
     id: "C0876",
-    name: "# test-tasks",
+    name: "test-tasks",
     subChannels: [
       { id: "C0876-1", name: "# unit-tests" },
       { id: "C0876-2", name: "# integration-tests" }
@@ -17,7 +17,7 @@ const channels = [
   },
   { 
     id: "C0877",
-    name: "# datasnap",
+    name: "datasnap",
     subChannels: [
       { id: "C0877-1", name: "# data-processing" },
       { id: "C0877-2", name: "# data-visualization" }
@@ -25,7 +25,7 @@ const channels = [
   },
   { 
     id: "C0878",
-    name: "# managesnap",
+    name: "managesnap",
     subChannels: [
       { id: "C0878-1", name: "# announcements" },
       { id: "C0878-2", name: "# random" }
@@ -33,7 +33,7 @@ const channels = [
   },
   { 
     id: "C0879",
-    name: "# evalsnap",
+    name: "evalsnap",
     subChannels: [
       { id: "C0879-1", name: "# unit-tests" },
       { id: "C0879-2", name: "# integration-tests" }
@@ -41,7 +41,7 @@ const channels = [
   },
   { 
     id: "C0880",
-    name: "# moviesnap",
+    name: "moviesnap",
     subChannels: [
       { id: "C0880-1", name: "# data-processing" },
       { id: "C0880-2", name: "# data-visualization" }
@@ -49,7 +49,7 @@ const channels = [
   },
   { 
     id: "C0881",
-    name: "# gensnap",
+    name: "gensnap",
     subChannels: [
       { id: "C0881-1", name: "# announcements" },
       { id: "C0881-2", name: "# random" }
@@ -66,14 +66,14 @@ const directMessages = [
 ];
 
 const pinnedItems = [
-  { type: 'channel', id: "C0879", name: "# general", subChannel: "# announcements" },
-  { type: 'channel', id: "C0877", name: "# datasnap", subChannel: "# data-processing" },
+  { type: 'channel', id: "C0879", name: "general", subChannel: "announcements" },
+  { type: 'channel', id: "C0877", name: "datasnap", subChannel: "data-processing" },
   { type: 'dm', ...directMessages[0] },
   { type: 'dm', ...directMessages[3] },
   { type: 'dm', ...directMessages[2] },
   { type: 'dm', ...directMessages[1] },
-  { type: 'channel', id: "C0878", name: "# evalsnap" },
-  { type: 'channel', id: "C0877-1", name: "# data-processing" },
+  { type: 'channel', id: "C0878", name: "evalsnap" },
+  { type: 'channel', id: "C0877-1", name: "data-processing" },
 ];
 
 const ChannelItem = ({ channel, level = 0, onChannelClick }) => {
@@ -182,10 +182,15 @@ function ChannelsSidebar() {
                 <div
                   key={message.id}
                   onClick={() => handleDMClick(message)}
-                  className="flex items-center space-x-3 p-2 rounded cursor-pointer hover:bg-transparent transition"
+                  className="flex justify-between items-center p-2 rounded cursor-pointer hover:bg-transparent transition"
                 >
+                  <div className="flex items-center space-x-3">
                   <img src={message.photo} alt="" className="w-8 h-8 rounded-full" />
                   <span>{message.name}</span>
+                  </div>
+                  <div className="w-5 h-5 bg-green-600 rounded-full flex justify-center items-center">
+                    <span className='text-white text-xs font-semibold'>3</span>
+                  </div>
                 </div>
               ))}
             </div>

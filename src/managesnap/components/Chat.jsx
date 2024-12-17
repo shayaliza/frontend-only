@@ -40,6 +40,8 @@ import ChatFiles from "./ChatComps/ChatFiles";
 import ChatMoreOptions from "./ChatComps/ChatMoreOptions";
 import MessageTimestamp from "./ChatComps/MessageTimestamp";
 import SearchMessage from "./ChatComps/SearchMessage";
+import PinnedHeader from "./ChatComps/PinnedHeader";
+import PinnedContent from "./ChatComps/PinnedContent";
 
 const ALLOWED_FILE_TYPES = [
   "image/jpeg",
@@ -136,6 +138,7 @@ function Chat({ toggleProfileSectionVisibility }) {
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [scrollButton, setScrollButton] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isPinnedOpen, setIsPinnedOpen] = useState(false);
   const [currentView, setCurrentView] = useState("messages");
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const [highlightDuration, setHighlightDuration] = useState(0);
@@ -145,7 +148,6 @@ function Chat({ toggleProfileSectionVisibility }) {
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
   const location = useLocation();
-
 
   const lastSegment = location.pathname.split("/").pop();
   const isChannelChat = lastSegment.startsWith("C");
@@ -197,7 +199,6 @@ function Chat({ toggleProfileSectionVisibility }) {
     };
   }, [messages]);
 
-
   const scrollToBottom = () => {
     const container = chatContainerRef.current;
     if (container) {
@@ -208,21 +209,31 @@ function Chat({ toggleProfileSectionVisibility }) {
     }
   };
 
+  const onViewAll = () => {
+    setIsSearchOpen(false);
+    setIsPinnedOpen(true);
+  };
+
+  const handleSearchOpen = () => {
+    setIsPinnedOpen(false);
+    setIsSearchOpen(true);
+  };
+
   const handleFocusMessage = (messageId) => {
     setSelectedMessageId(messageId);
     setTimeout(() => {
       const element = document.getElementById(`message-${messageId}`);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.scrollIntoView({ behavior: "auto", block: "center" });
       }
-    }, 0); 
-    setHighlightDuration(3); // Set duration to 3 seconds for example
+    }, 0);
+    setHighlightDuration(3);
 
     setTimeout(() => {
-      setSelectedMessageId(null); // Reset the highlighted message after 3 seconds
+      setSelectedMessageId(null);
     }, 3000);
   };
-  
+
   useEffect(() => {
     const container = chatContainerRef.current;
 
@@ -467,7 +478,7 @@ function Chat({ toggleProfileSectionVisibility }) {
       });
     };
 
-    const formattedTimestamp = formatTimestamp(Date.now()); 
+    const formattedTimestamp = formatTimestamp(Date.now());
 
     if (editingMessageId) {
       setMessages(
@@ -479,7 +490,7 @@ function Chat({ toggleProfileSectionVisibility }) {
               content: messageInput,
               links: extractedUrls,
               edited: true,
-              timestamp: formattedTimestamp, 
+              timestamp: formattedTimestamp,
             };
           }
           return msg;
@@ -499,7 +510,7 @@ function Chat({ toggleProfileSectionVisibility }) {
             photo: currentUser.photo,
             isPinned: false,
             links: extractedUrls,
-            timestamp: formattedTimestamp, 
+            timestamp: formattedTimestamp,
             imageUrl: fileData.type.startsWith("image/")
               ? fileData.preview
               : null,
@@ -535,7 +546,7 @@ function Chat({ toggleProfileSectionVisibility }) {
           photo: currentUser.photo,
           isPinned: false,
           links: extractedUrls,
-          timestamp: formattedTimestamp, 
+          timestamp: formattedTimestamp,
           replyTo: replyToMessage
             ? {
                 id: replyToMessage.id,
@@ -620,7 +631,7 @@ function Chat({ toggleProfileSectionVisibility }) {
   return (
     <div className="flex w-full h-full items-center">
       <div
-        className="flex flex-1 flex-col h-full text-black dark:text-white border-r"
+        className="relative flex flex-1 flex-col h-full text-black dark:text-white border-r"
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
       >
@@ -827,7 +838,7 @@ function Chat({ toggleProfileSectionVisibility }) {
               </div>
             </div>
             <div className="flex items-center space-x-4 mt-2">
-              <button onClick={() => setIsSearchOpen(true)}>
+              <button onClick={handleSearchOpen}>
                 <Search className="w-5 h-5 mr-1" />
               </button>
               <button onClick={() => setCurrentView("messages")}>
@@ -846,6 +857,7 @@ function Chat({ toggleProfileSectionVisibility }) {
             </div>
           </div>
         </div>
+        <PinnedHeader messages={messages} onViewAll={onViewAll} onSendData={handleFocusMessage}/>
 
         {currentView === "messages" && (
           <>
@@ -860,7 +872,9 @@ function Chat({ toggleProfileSectionVisibility }) {
                   message={message}
                   isCurrentUser={message.user === "You"}
                   previousMessage={index > 0 ? messages[index - 1] : null}
-                  isHighlighted={selectedMessageId === message.id && highlightDuration > 0}
+                  isHighlighted={
+                    selectedMessageId === message.id && highlightDuration > 0
+                  }
                   onReply={setReplyToMessage}
                   onEdit={(messageId, content) => {
                     setEditingMessageId(messageId);
@@ -988,13 +1002,24 @@ function Chat({ toggleProfileSectionVisibility }) {
         )}
       </div>
       <div
-        className={`w-1/3 h-full ${isSearchOpen ? "flex flex-col" : "hidden"}`}
+        className={`w-1/3 h-full ${
+          isSearchOpen || isPinnedOpen ? "flex flex-col" : "hidden"
+        }`}
       >
-        <SearchMessage
-        messages={messages}
-        onClose = {() => setIsSearchOpen(false)}
-        onSendData={handleFocusMessage}
-        />
+        {isSearchOpen && (
+          <SearchMessage
+            messages={messages}
+            onClose={() => setIsSearchOpen(false)}
+            onSendData={handleFocusMessage}
+          />
+        )}
+        {isPinnedOpen && (
+          <PinnedContent
+            messages={messages}
+            onClose={() => setIsPinnedOpen(false)}
+            onSendData={handleFocusMessage}
+          />
+        )}
       </div>
     </div>
   );
