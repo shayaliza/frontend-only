@@ -211,16 +211,6 @@ const MessageComposer = ({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Popover open={showGifPicker} onOpenChange={setShowGifPicker}>
-          <PopoverTrigger asChild>
-            <Button variant="ghost" size="sm">
-              <StickerIcon className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="mr-12 mb-6 w-[400px]">
-            <Gifs setMessageInput={setMessageInput}/>
-          </PopoverContent>
-        </Popover>
         <textarea
           id="message-textarea"
           value={messageInput}
@@ -269,6 +259,17 @@ const MessageComposer = ({
           </PopoverTrigger>
           <PopoverContent className="mr-12 mb-6 w-[400px]">
             <Emoji setMessageInput={setMessageInput}/>
+          </PopoverContent>
+        </Popover>
+
+        <Popover open={showGifPicker} onOpenChange={setShowGifPicker}>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <StickerIcon className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="mr-12 mb-6 w-[400px]">
+            <Gifs setMessageInput={setMessageInput}/>
           </PopoverContent>
         </Popover>
 

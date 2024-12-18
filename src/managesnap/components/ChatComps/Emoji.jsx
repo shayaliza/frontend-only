@@ -66,15 +66,15 @@ const Emoji = ({setMessageInput}) => {
         ))}
       </div>
 
-      <div className="h-96 overflow-y-auto emoji-scrollbar">
-        <div className="p-3 border-b border-gray-700">
+      <div className="h-72 overflow-y-auto emoji-scrollbar">
+        <div className="p-2 border-b border-gray-700">
           <div className="text-sm mb-2">Recently Used</div>
           <div className="grid grid-cols-6 gap-2">
             {recentEmojis.map((emoji, index) => (
               <button
                 key={index}
                 onClick={() => setMessageInput((prev) => prev + emoji)}
-                className="text-2xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
+                className="text-xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
               >
                 {emoji}
               </button>
@@ -84,14 +84,14 @@ const Emoji = ({setMessageInput}) => {
 
         {activeTab === 'all' ? (
           Object.entries(categories).map(([key, category]) => (
-            <div key={key} className="p-3 border-b border-gray-700">
+            <div key={key} className="p-2 border-b border-gray-700">
               <div className="text-sm mb-2">{category.title}</div>
-              <div className="grid grid-cols-6 gap-2">
+              <div className="grid grid-cols-6 gap-1">
                 {category.emojis.map((emoji, index) => (
                   <button
                     key={index}
                     onClick={() => setMessageInput((prev) => prev + emoji)}
-                    className="text-2xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
+                    className="text-xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
                   >
                     {emoji}
                   </button>
@@ -100,13 +100,13 @@ const Emoji = ({setMessageInput}) => {
             </div>
           ))
         ) : (
-          <div className="p-3">
-            <div className="grid grid-cols-6 gap-2">
+          <div className="p-2">
+            <div className="grid grid-cols-6 gap-1">
               {categories[activeTab]?.emojis.map((emoji, index) => (
                 <button
                   key={index}
                   onClick={() => setMessageInput((prev) => prev + emoji)}
-                  className="text-2xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
+                  className="text-xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
                 >
                   {emoji}
                 </button>

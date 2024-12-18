@@ -7,7 +7,7 @@ const Gifs = ({setMessageInput}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const GIPHY_API_KEY = '';
+  const GIPHY_API_KEY = 'JrzqIxA2LOepfXad3kOLdGjekYvjX9yd';
 
   const tabs = [
     { id: 'trending', icon: <Flame size={20} />, label: 'Trending' },
@@ -79,7 +79,7 @@ const Gifs = ({setMessageInput}) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search for GIFs"
-          className="flex-grow p-2 rounded mr-2 focus:outline-none border dark:border-gray-700"
+          className="flex-grow p-2 rounded mr-2 bg-transparent focus:outline-none border dark:border-gray-700"
         />
         <button 
           type="submit" 
@@ -106,13 +106,13 @@ const Gifs = ({setMessageInput}) => {
         ))}
       </div>
 
-      <div className="h-96 overflow-y-auto emoji-scrollbar">
+      <div className="h-56 overflow-y-auto emoji-scrollbar">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-blue-500"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-2 p-2">
+          <div className="grid grid-cols-3 gap-2 p-1">
             {gifs.map((gifUrl, index) => (
               <button
                 key={index}

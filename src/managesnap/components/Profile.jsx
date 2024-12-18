@@ -60,7 +60,7 @@ const OptionButton = ({
     }`}
   >
     <div className="flex items-center gap-4">
-      <Icon  className="w-5 h-5" />
+      <Icon className="w-5 h-5" />
       <span className="">{label}</span>
     </div>
     {extra && <span className="">{extra}</span>}
@@ -80,10 +80,27 @@ function Profile() {
   const [duration, setDuration] = useState("");
   const [customPopup, setCustomPopupOpen] = useState(false);
   const [formattedDate, setFormattedDateState] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const setFormattedDate = (date) => {
     setFormattedDateState(date);
   };
+
+  const handleCheckboxChange = (event) => {
+    setIsChecked(event.target.checked);
+  };
+
+  const handleFocus = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    if (!availability) {
+      setIsEditing(false);
+    }
+  };
+
   const handleOptions = (option, from = "main") => {
     setPreviousView(from);
     setCurrentView(option);
@@ -100,6 +117,9 @@ function Profile() {
   };
 
   const handleAvailability = (status) => {
+    if(status === ""){
+      setIsEditing(true);
+    }
     setAvailability(status);
     setPreviousView("status");
     setCurrentView("showStatus");
@@ -132,7 +152,7 @@ function Profile() {
       icon: notificationTime ? PauseCircle : BellOff,
       label: "Pause notifications",
       hasChevron: true,
-      Check: notificationTime ? "off" : "on",
+      Check: notificationTime ? "on" : "off",
       action: () => {
         if (notificationTime) {
           handleOptions("pause");
@@ -237,7 +257,7 @@ function Profile() {
                       : "text-red-600"
                   }`}
                 >
-                  {availability}
+                  {availability || "Busy"}
                 </span>
               </div>
             </div>
@@ -361,22 +381,40 @@ function Profile() {
             className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 focus:outline-none transition bg-transparent text-gray-400"
             onChange={(e) => setSelectValue(e.target.value)}
           >
-            <option value="1" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+            <option
+              value="1"
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+            >
               Never
             </option>
-            <option value="2" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+            <option
+              value="2"
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+            >
               Today
             </option>
-            <option value="3" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+            <option
+              value="3"
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+            >
               1 hour
             </option>
-            <option value="4" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+            <option
+              value="4"
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+            >
               2 hours
             </option>
-            <option value="5" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+            <option
+              value="5"
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+            >
               This week
             </option>
-            <option value="custom" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+            <option
+              value="custom"
+              className="bg-white text-black dark:bg-gray-800 dark:text-white"
+            >
               Custom
             </option>
           </select>
@@ -564,20 +602,22 @@ function Profile() {
             <div className="flex gap-2 items-center">
               <CalendarIcon className="w-5 h-5 text-blue-500" />
               <input
-                value={availability || ""}
+                value={availability}
                 onChange={(e) => setAvailability(e.target.value)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className="font-medium bg-transparent focus:outline-none"
                 placeholder="Set your availability"
+                disabled={!isEditing && !availability}
               />
             </div>
-            {availability && (
-              <button className="hover:text-red-500 transition-colors">
-                <XCircle
-                  className="w-5 h-5"
-                  onClick={() => setAvailability("")}
-                />
-              </button>
-            )}
+
+            <button className="hover:text-red-500 transition-colors">
+              <XCircle
+                className="w-5 h-5"
+                onClick={() => setCurrentView("status")}
+              />
+            </button>
           </div>
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Remove status after...</h3>
@@ -585,16 +625,28 @@ function Profile() {
               className="w-full p-2 border rounded-md focus:ring focus:outline-none focus:ring-blue-300 transition bg-transparent"
               onChange={(e) => setSelectStatus(e.target.value)}
             >
-              <option value="1" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+              <option
+                value="1"
+                className="bg-white text-black dark:bg-gray-800 dark:text-white"
+              >
                 1 hour
               </option>
-              <option value="2" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+              <option
+                value="2"
+                className="bg-white text-black dark:bg-gray-800 dark:text-white"
+              >
                 2 hours
               </option>
-              <option value="3" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+              <option
+                value="3"
+                className="bg-white text-black dark:bg-gray-800 dark:text-white"
+              >
                 3 hours
               </option>
-              <option value="custom" className="bg-white text-black dark:bg-gray-800 dark:text-white">
+              <option
+                value="custom"
+                className="bg-white text-black dark:bg-gray-800 dark:text-white"
+              >
                 Custom
               </option>
             </select>
@@ -637,38 +689,42 @@ function Profile() {
             </div>
           )}
 
-          <h1>Pause Notifications</h1>
-          <select
-            className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent mb-2"
-            onChange={(e) => setNotificationTime(e.target.value)}
-          >
-            <option value="1" className="bg-gray-800 text-white">
-              Do not pause
-            </option>
-            <option value="2" className="bg-gray-800 text-white">
-              1 hours
-            </option>
-            <option value="3" className="bg-gray-800 text-white">
-              2 hours
-            </option>
-            <option value="custom" className="bg-gray-800 text-white">
-              Custom
-            </option>
-          </select>
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+            />
+            <h1>Pause Notifications</h1>
+          </div>
+          {isChecked && (
+            <select
+              className="w-full p-2 border rounded-md focus:ring focus:ring-blue-300 transition bg-transparent mb-2"
+              onChange={(e) => setNotificationTime(e.target.value)}
+            >
+              <option value="1" className="bg-gray-800 text-white">
+                Do not pause
+              </option>
+              <option value="2" className="bg-gray-800 text-white">
+                1 hours
+              </option>
+              <option value="3" className="bg-gray-800 text-white">
+                2 hours
+              </option>
+              <option value="custom" className="bg-gray-800 text-white">
+                Custom
+              </option>
+            </select>
+          )}
 
-          {notificationTime === "custom" && (
+          {notificationTime === "custom" && isChecked && (
             <div className="flex space-x-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="flex-1 flex items-center justify-center space-x-2 border
-         bg-transparent
-         py-2 rounded-md 
-         hover:bg-gray-500 
-         transition-colors duration-200
-         focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    className="flex-1 flex items-center justify-center space-x-2 border bg-transparent py-2 rounded-md hover:bg-gray-500 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
                   >
                     <Clock className="w-5 h-5" />
                     <span className="text-sm">Adjust Time</span>
@@ -699,11 +755,11 @@ function Profile() {
               <button
                 // onClick={setNotificationSchedule}
                 className="flex-1 flex items-center justify-center space-x-2 border
-                       bg-transparent
-                       py-2 rounded-md 
-                       hover:bg-gray-500 
-                       transition-colors duration-200
-                       focus:outline-none focus:ring-2 focus:ring-gray-300"
+             bg-transparent
+             py-2 rounded-md 
+             hover:bg-gray-500 
+             transition-colors duration-200
+             focus:outline-none focus:ring-2 focus:ring-gray-300"
                 aria-label="Set a notification schedule"
               >
                 <CalendarIcon className="w-5 h-5" />
