@@ -136,7 +136,7 @@ function ChannelsSidebar() {
   return (
     <div
       id="sidebar"
-      className="relative w-full flex flex-col h-[calc(100vh-56px)] overflow-y-auto border-r channel-scrollbar dark:text-white"
+      className="relative w-full flex flex-col h-[calc(100vh-56px)] overflow-y-auto border-r channel-scrollbar dark:text-white z-0"
     >
       <div className="flex-1 p-4">
         <div className="mb-4 flex flex-col">

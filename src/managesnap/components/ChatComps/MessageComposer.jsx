@@ -182,7 +182,7 @@ const MessageComposer = ({
 
   return (
     <div className="p-4 border-t shadow-md">
-      <div className="ml-14 mr-24">{renderReplyPreview()}</div>
+      <div className="ml-8 mr-36">{renderReplyPreview()}</div>
       <div className="flex items-center gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

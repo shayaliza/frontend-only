@@ -40,15 +40,19 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const timeoutRef = useRef(null);
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setSearchState(prev => ({ ...prev, isDropdownVisible: false }));
+        setIsDropdownOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleProfileMouseEvents = {
@@ -109,30 +113,38 @@ const Header = () => {
         <div className="relative flex items-center space-x-2">
           <img src={logo} alt="snapthetech logo" className="w-10 h-10 rounded-md border border-gray-500 object-fit" />
           <span className="ml-3 text-2xl font-semibold">snapthetech</span>
-          <button 
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="mt-2 mr-2"
-            aria-label="Toggle navigation menu"
-            aria-expanded={isDropdownOpen}
-          >
-            <IoIosArrowDropdown size={24} />
-          </button>
-          
-          {isDropdownOpen && (
-            <nav className="absolute top-12 -right-10 mt-2 w-48 bg-black text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[999]">
-              <ul className="list-none p-2 m-0">
-                {DROPDOWN_MENU_ITEMS.map((item, index) => (
-                  <li key={index} className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                    {item.path ? (
-                      <Link to={item.path}>{item.label}</Link>
-                    ) : (
-                      item.label
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )}
+          <div className="relative" ref={dropdownRef}>
+              <button onClick={toggleDropdown} className="p-2">
+                <IoIosArrowDropdown size={24} className="text-black dark:text-white" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute top-12 -right-10 mt-2 w-48 bg-gray-300 dark:bg-zinc-800 text-black dark:text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[9999]">
+                  <ul className="list-none p-2 m-0">
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      Follower
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      Following
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/dashboard/profile">Home</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/createsnap/analytics">Createsnap</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/datasnap">Datasnap</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/managesnap">Managesnap</Link>
+                    </li>
+                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                      <Link to="/ckeditor">CKEditor</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
         </div>
       </div>
 
