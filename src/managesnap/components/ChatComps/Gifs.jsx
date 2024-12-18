@@ -7,7 +7,7 @@ const Gifs = ({setMessageInput}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const GIPHY_API_KEY = 'JrzqIxA2LOepfXad3kOLdGjekYvjX9yd';
+  const GIPHY_API_KEY = '';
 
   const tabs = [
     { id: 'trending', icon: <Flame size={20} />, label: 'Trending' },
