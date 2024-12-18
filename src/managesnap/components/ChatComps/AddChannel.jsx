@@ -97,7 +97,7 @@ function AddChannel({ isOpen, onClose }) {
                     className="w-full px-3 py-2 text-sm bg-transparent rounded border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
                   >
                     {[1, 2, 3, 4, 5].map((num) => (
-                      <option key={num} value={num}>
+                      <option key={num} value={num} className="bg-white text-black dark:bg-gray-700 dark:text-white">
                         {num}
                       </option>
                     ))}
