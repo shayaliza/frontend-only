@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaThumbtack } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip as ReactTooltip } from "react-tooltip";
 import img from "../assets/man1.jpg";
 import img2 from "../assets/man2.jpg";
 import img3 from "../assets/man3.jpg";
 import img4 from "../assets/img1.png";
+import { PlusCircleIcon } from 'lucide-react';
+import AddChannel from './ChatComps/AddChannel';
 
 const channels = [
   { 
@@ -123,6 +126,7 @@ const ChannelItem = ({ channel, level = 0, onChannelClick }) => {
 function ChannelsSidebar() {
   const [showChannels, setShowChannels] = useState(true);
   const [showDirectMessages, setShowDirectMessages] = useState(true);
+  const [addChannel, setAddChannel] = useState(false);
   const navigate = useNavigate();
 
   const handleChannelClick = (channel) => {
@@ -142,10 +146,20 @@ function ChannelsSidebar() {
         <div className="mb-4 flex flex-col">
           <div
             className="flex justify-between items-center cursor-pointer p-2 rounded hover:bg-transparent transition"
-            onClick={() => setShowChannels(!showChannels)}
           >
             <span className="font-bold">Channels</span>
-            {showChannels ? <FaChevronUp /> : <FaChevronDown />}
+            <div className="flex items-center space-x-2">
+              <div>
+            <PlusCircleIcon id='add' className='w-5 h-5 mr-2' onClick={() => setAddChannel(true)}/>
+            <ReactTooltip
+                  id="add"
+                  place="right"
+                  content="Add Channel"
+                  className="z-[999]"
+                />
+            </div>
+            {showChannels ? <FaChevronUp onClick={() => setShowChannels(!showChannels)}/> : <FaChevronDown onClick={() => setShowChannels(!showChannels)}/>}
+          </div>
           </div>
           <div
             className={`transition-all duration-300 ease-in-out overflow-hidden ${
@@ -234,6 +248,7 @@ function ChannelsSidebar() {
           ))}
         </div>
         </div>
+        <AddChannel isOpen={addChannel} onClose={() => setAddChannel(false)} />
     </div>
   );
 }

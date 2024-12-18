@@ -85,7 +85,7 @@ const ForwardMessage = ({ message, isOpen, onClose }) => {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/10 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/10 dark:bg-black/20 backdrop-blur-sm">
           <div className="w-full max-w-md mx-auto p-4 bg-white/80 dark:bg-gray-900/80 rounded-lg shadow-lg border">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold">

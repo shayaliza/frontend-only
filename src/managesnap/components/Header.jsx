@@ -1,198 +1,254 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { SearchIcon, Moon, BellOff, ChevronRight, User2, Settings, Rocket, LogOut } from 'lucide-react';
-import { IoIosArrowDropdown } from 'react-icons/io';
-import { useTheme } from '../../DarkMode/ThemeProvider';
-import { ModeToggle } from '../../DarkMode/ToggleMode';
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  SearchIcon,
+  Clock,
+  X,
+  Lock,
+} from "lucide-react";
+import { IoIosArrowDropdown } from "react-icons/io";
+import { useTheme } from "../../DarkMode/ThemeProvider";
+import { ModeToggle } from "../../DarkMode/ToggleMode";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import logo from "../assets/faviconmobile.png";
 import user from "../assets/man1.jpg";
-import Profile from './Profile';
-
-const NAVIGATION_ITEMS = [
-  { id: 1, name: 'Home', path: '/' },
-  { id: 2, name: 'About', path: '/about' },
-  { id: 3, name: 'Products', path: '/products' },
-  { id: 4, name: 'Contact', path: '/contact' },
-];
+import Profile from "./Profile";
+import { BsQuestionCircleFill } from "react-icons/bs";
+import { FaHashtag, FaQuestionCircle } from "react-icons/fa";
 
 const DROPDOWN_MENU_ITEMS = [
-  { label: 'Follower', path: null },
-  { label: 'Following', path: null },
-  { label: 'Home', path: '/dashboard/profile' },
-  { label: 'Createsnap', path: '/createsnap/analytics' },
-  { label: 'Datasnap', path: '/datasnap' },
-  { label: 'Managesnap', path: '/managesnap' },
+  { label: "Follower", path: null },
+  { label: "Following", path: null },
+  { label: "Home", path: "/dashboard/profile" },
+  { label: "Createsnap", path: "/createsnap/analytics" },
+  { label: "Datasnap", path: "/datasnap" },
+  { label: "Managesnap", path: "/managesnap" },
 ];
 
 const Header = () => {
-  const [searchState, setSearchState] = useState({
-    term: '',
-    isDropdownVisible: false,
-    showCustomSearch: false,
-    filteredData: NAVIGATION_ITEMS,
-  });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const { theme } = useTheme();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const inputRef = useRef(null);
+  const [isMainDropdownOpen, setIsMainDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen)
-  }
+    setIsMainDropdownOpen(!isMainDropdownOpen);
+  };
+
+  const filterData = [
+    { name: "Techsnap", icon: <FaQuestionCircle />, id: 1 },
+    { name: "View profile for Techsnap", icon: <FaQuestionCircle />, id: 2 },
+    { name: "test-tasks", icon: <FaHashtag />, id: 3 },
+    { name: "techsnap", icon: <Lock />, id: 4 },
+    {
+      name: "Customise your terms of service for Enterprise Grid",
+      icon: <FaQuestionCircle />,
+      id: 5,
+    },
+    {
+      name: "Email template for introducing Slack",
+      icon: <FaQuestionCircle />,
+      id: 6,
+    },
+    {
+      name: "Microsoft Teams Calls for Slack",
+      icon: <FaQuestionCircle />,
+      id: 7,
+    },
+  ];
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleProfileMouseEvents = {
-    onMouseEnter: () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      setIsProfileOpen(true);
-    },
-    onMouseLeave: () => {
-      timeoutRef.current = setTimeout(() => setIsProfileOpen(false), 300);
-    },
-  };
-
-  const handleSearch = (e) => {
-    const term = e.target.value;
-    const filtered = term.trim() === '' 
-      ? NAVIGATION_ITEMS 
-      : NAVIGATION_ITEMS.filter(item => 
-          item.name.toLowerCase().includes(term.toLowerCase())
-        );
-
-    setSearchState({
-      term,
-      filteredData: filtered,
-      isDropdownVisible: true,
-      showCustomSearch: term.trim() !== '' && filtered.length === 0,
-    });
-  };
-
-  const handleSearchSelection = (path) => {
-    setSearchState({
-      term: '',
-      isDropdownVisible: false,
-      showCustomSearch: false,
-      filteredData: NAVIGATION_ITEMS,
-    });
-    if (path === '/managesnap/search') {
-      navigate(path, {
-        state: { name: searchState.term.trim() }
-      });
+    if (searchQuery) {
+      setIsTyping(true);
+      setFilteredData(
+        filterData.filter((item) =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
     } else {
-      navigate(path);
+      setIsTyping(false);
+      setFilteredData([]);
     }
-  };
-
-  const handleCustomSearch = () => {
-    if (searchState.term.trim()) {
-      navigate('/managesnap/search', {
-        state: { name: searchState.term.trim() }
-      });
-    }
-  };
+  }, [searchQuery]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b ${
-      theme === "dark" ? "bg-black text-gray-300" : "bg-white text-gray-700"
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 p-2.5 w-full flex items-center border-b ${
+        theme === "dark" ? "bg-black text-gray-300" : "bg-white text-gray-700"
+      }`}
+    >
       <div className="absolute left-4 top-3">
         <div className="relative flex items-center space-x-2">
-          <img src={logo} alt="snapthetech logo" className="w-10 h-10 rounded-md border border-gray-500 object-fit" />
+          <img
+            src={logo}
+            alt="snapthetech logo"
+            className="w-10 h-10 rounded-md border border-gray-500 object-fit"
+          />
           <span className="ml-3 text-2xl font-semibold">snapthetech</span>
           <div className="relative" ref={dropdownRef}>
-              <button onClick={toggleDropdown} className="p-2">
-                <IoIosArrowDropdown size={24} className="text-black dark:text-white" />
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute top-12 -right-10 mt-2 w-48 bg-gray-300 dark:bg-zinc-800 text-black dark:text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[9999]">
-                  <ul className="list-none p-2 m-0">
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      Follower
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      Following
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/dashboard/profile">Home</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/createsnap/analytics">Createsnap</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/datasnap">Datasnap</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/managesnap">Managesnap</Link>
-                    </li>
-                    <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
-                      <Link to="/ckeditor">CKEditor</Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
+            <button onClick={toggleDropdown} className="p-2">
+              <IoIosArrowDropdown
+                size={24}
+                className="text-black dark:text-white"
+              />
+            </button>
+            {isMainDropdownOpen && (
+              <div className="absolute top-12 -right-10 mt-2 w-48 bg-gray-300 dark:bg-zinc-800 text-black dark:text-white bg-opacity-25 backdrop-blur-md shadow-lg rounded-lg z-[9999]">
+                <ul className="list-none p-2 m-0">
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    Follower
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    Following
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/dashboard/profile">Home</Link>
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/createsnap/analytics">Createsnap</Link>
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/datasnap">Datasnap</Link>
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/managesnap">Managesnap</Link>
+                  </li>
+                  <li className="p-2 hover:bg-gray-400 hover:text-gray-900 cursor-pointer">
+                    <Link to="/ckeditor">CKEditor</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="w-2/3 mx-auto px-4 flex justify-center">
+      <div className="w-2/3 mx-auto px-4 flex justify-center items-center">
         <div className="relative w-1/2" ref={dropdownRef}>
-          <input 
-            type="search"
-            className="w-full py-2 px-4 border rounded-full focus:outline-none dark:bg-black"
-            placeholder="Search..." 
-            value={searchState.term}
-            onChange={handleSearch}
-            onFocus={() => setSearchState(prev => ({ ...prev, isDropdownVisible: true }))}
-            aria-label="Search"
-            aria-expanded={searchState.isDropdownVisible}
-          />
-          <button 
-            className="absolute top-1/2 right-4 transform -translate-y-1/2"
-            onClick={searchState.showCustomSearch ? handleCustomSearch : undefined}
+          <button
+            className="absolute top-1/2 left-4 transform -translate-y-1/2"
             aria-label="Submit search"
           >
-            <SearchIcon className="w-5 h-5"/>
+            <SearchIcon className="w-5 h-5" />
           </button>
 
-          {searchState.isDropdownVisible && (
-            <div className={`absolute top-full left-0 w-full mt-1 shadow-lg rounded-lg overflow-auto ${
-              theme === "dark" ? "bg-black" : "bg-white"
-            } border`}>
-              {searchState.filteredData.map((item) => (
-                <button
-                  key={item.id}
-                  className={`w-full text-left px-4 py-2 ${
-                    theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"
-                  }`}
-                  onClick={() => handleSearchSelection(item.path)}
-                >
-                  {item.name}
-                </button>
-              ))}
-              {searchState.showCustomSearch && (
-                <button
-                  className={`w-full flex items-center space-x-2 px-4 py-2 ${
-                    theme === "dark" ? "hover:bg-gray-600" : "hover:bg-gray-200"
-                  }`}
-                  onClick={handleCustomSearch}
-                >
-                  <SearchIcon className="w-4 h-4" />
-                  <span>{searchState.term}</span>
-                </button>
+          <input
+          ref={inputRef}
+            type="search"
+            className="w-full py-2 px-12 border rounded-full focus:outline-none dark:bg-black"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onFocus={() => setIsDropdownOpen(true)}
+            onBlur={() => setIsDropdownOpen(false)}
+          />
+          {isDropdownOpen && (
+            <div className="absolute w-full bg-white border dark:bg-black shadow-lg mt-2 rounded-lg z-[999]">
+              {isTyping ? (
+                <div className="w-full flex flex-col">
+                  <div className="w-full flex flex-col border-b">
+                    <div
+                      className="px-4 pt-2 pb-1 flex items-center space-x-4 rounded-t-md hover:bg-blue-600 cursor-pointer"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        navigate("/managesnap/search", {
+                          state: { name: searchQuery },
+                        });
+                        setSearchQuery("");
+                        if (inputRef.current) inputRef.current.blur();
+                      }}
+                    >
+                      <SearchIcon className="w-5 h-5 mr-2" />
+                      {searchQuery}
+                    </div>
+
+                    <div className="w-full flex flex-col">
+                      {filteredData.map((item, index) => (
+                        <div
+                          key={item.id}
+                          className="w-full px-4 py-2 flex items-center space-x-2 hover:bg-blue-600 cursor-pointer"
+                        >
+                          <div className="">{item.icon}</div>
+                          <span className="text-sm">{item.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full flex flex-col  space-y-2">
+                  <div className="w-full flex flex-col space-y-2 py-2 border-b ">
+                    <h3 className="mr-2 text-xs ml-2">People</h3>
+                    <div className="flex justify-around px-4">
+                      <div className="flex flex-col space-y-1">
+                        <img src={user} className="w-10 h-10 rounded-full" />
+                        <span className="text-sm">
+                          Vignesh <br /> Reddy
+                        </span>
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <img src={user} className="w-10 h-10 rounded-full" />
+                        <span className="text-sm">
+                          Mahesh <br /> Reddy
+                        </span>
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <img src={user} className="w-10 h-10 rounded-full" />
+                        <span className="text-sm">
+                          Rajesh <br /> Reddy
+                        </span>
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <img src={user} className="w-10 h-10 rounded-full" />
+                        <span className="text-sm">
+                          Siddharth <br /> Reddy
+                        </span>
+                      </div>
+                      <div className="flex flex-col space-y-1">
+                        <img src={user} className="w-10 h-10 rounded-full" />
+                        <span className="text-sm">
+                          Karthik <br /> Reddy
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full flex flex-col space-y-2 border-b">
+                    <h3 className="mr-2 text-xs ml-2">Recent searches</h3>
+                    <div className="w-full flex flex-col">
+                      {[
+                        { name: "Vignesh Reddy" },
+                        { name: "Mahesh Reddy" },
+                        { name: "Rajesh Reddy" },
+                        { name: "Siddharth Reddy" },
+                        { name: "Karthik Reddy" },
+                      ].map((person, index) => (
+                        <div
+                          key={index}
+                          className="w-full flex justify-between items-center  px-4 py-2 group relative hover:bg-blue-600"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-7 h-7 rounded-full flex justify-center items-center bg-gray-700 flex-shrink-0">
+                              <Clock className="w-4 h-4 text-white flex-shrink-0" />
+                            </div>
+                            <span className="text-sm">{person.name}</span>
+                          </div>
+                          <X className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           )}
@@ -202,7 +258,7 @@ const Header = () => {
       <div className="absolute right-4 top-2.5 flex space-x-2">
         <Popover open={isProfileOpen} onOpenChange={setIsProfileOpen}>
           <PopoverTrigger asChild>
-            <div /*...handleProfileMouseEvents*/> 
+            <div /*...handleProfileMouseEvents*/>
               <Avatar className="w-8 h-8 border border-gray-500 cursor-pointer hover:opacity-90 mt-1.5 flex-shrink-0">
                 <AvatarImage src={user} alt="User profile" />
               </Avatar>
@@ -216,7 +272,7 @@ const Header = () => {
             // }}
             // onMouseLeave={handleProfileMouseEvents.onMouseLeave}
           >
-            <Profile/>
+            <Profile />
             {/* <div className="p-3 space-y-1">
               <div className="flex items-center gap-3">
                 <Avatar className="w-10 h-10">

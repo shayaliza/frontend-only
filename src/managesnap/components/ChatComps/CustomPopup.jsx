@@ -26,7 +26,7 @@ const CustomPopup = ({
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/10 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white/10 dark:bg-black/20 backdrop-blur-sm">
       <div className="relative w-full max-w-md bg-white/80 dark:bg-gray-900/80 p-6 rounded-xl shadow-2xl border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-lg">
       <div className="flex justify-between items-center mb-4 text-black dark:text-white">
         <h1 className="text-lg font-semibold">Pause Notifications for...</h1>

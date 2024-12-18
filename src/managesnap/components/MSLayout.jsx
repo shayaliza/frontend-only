@@ -8,7 +8,7 @@ import { useTheme } from '../../DarkMode/ThemeProvider'
 function MSLayout() {
   return (
     <div className='flex flex-col h-screen overflow-hidden'>
-      <div className="fixed top-0 left-0 right-0 h-16 z-10">
+      <div className="fixed top-0 left-0 right-0 h-16 z-50">
         <Header />
       </div>
       <div className="flex flex-grow h-[calc(100vh-56px)] overflow-hidden pt-16">
