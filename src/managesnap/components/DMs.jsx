@@ -32,6 +32,7 @@ import {
   X,
   ChevronDownIcon,
   MessageCircle,
+  Plus,
 } from "lucide-react";
 import PinnedMessages from "./ChatComps/PinnedMessages";
 import ChatFiles from "./ChatComps/ChatFiles";
@@ -108,11 +109,13 @@ const DMs = () => {
   };
 
   const onViewAll = () => {
+    setIsProfileSectionVisible(false);
     setIsSearchOpen(false);
     setIsPinnedOpen(true);
   };
 
   const handleSearchOpen = () => {
+    setIsProfileSectionVisible(false);
     setIsPinnedOpen(false);
     setIsSearchOpen(true);
   };
@@ -614,6 +617,7 @@ const DMs = () => {
             <div className="flex justify-between items-center mb-4">
               <span className="text-xl font-bold">Direct Messages</span>
               <div className="flex items-center space-x-2">
+                <Plus className="w-6 h-6 cursor-pointer"/>
                 <div
                   onClick={toggleSwitch}
                   className={`relative inline-block w-10 h-6 rounded-full transition-colors hover:cursor-pointer ${
@@ -656,7 +660,7 @@ const DMs = () => {
                     <span className="font-medium">{user.name}</span>
                     <span className="text-xs opacity-50">{user.timestamp}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex justify-between items-center">
                     <Badge
                       variant={
                         user.status === "online" ? "default" : "secondary"
@@ -664,6 +668,9 @@ const DMs = () => {
                     >
                       {user.lastSeen}
                     </Badge>
+                    <div className="w-5 h-5 bg-green-600 rounded-full flex justify-center items-center">
+                    <span className='text-white text-xs font-semibold'>3</span>
+                  </div>
                   </div>
                 </div>
               </button>
@@ -940,7 +947,7 @@ const DMs = () => {
         </div>
         <div
         className={`w-1/3 h-full ${
-          isSearchOpen || isPinnedOpen ? "flex flex-col" : "hidden"
+          (isSearchOpen || isPinnedOpen) && !isProfileSectionVisible ? "flex flex-col" : "hidden"
         }`}
       >
         {isSearchOpen && (

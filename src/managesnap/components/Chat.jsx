@@ -128,7 +128,7 @@ const formatFileSize = (bytes) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 
-function Chat({ toggleProfileSectionVisibility }) {
+function Chat({ toggleProfileSectionVisibility, setIsProfileSectionVisible, isProfileSectionVisible }) {
   const [messages, setMessages] = useState([]);
   const [messageInput, setMessageInput] = useState("");
   const [editingMessageId, setEditingMessageId] = useState(null);
@@ -212,16 +212,20 @@ function Chat({ toggleProfileSectionVisibility }) {
   };
 
   const onViewAll = () => {
+    setIsProfileSectionVisible(false);
     setIsSearchOpen(false);
     setIsPinnedOpen(true);
   };
 
   const handleSearchOpen = () => {
+    setIsProfileSectionVisible(false);
     setIsPinnedOpen(false);
     setIsSearchOpen(true);
+
   };
 
   const handleOrg = () => {
+    setIsProfileSectionVisible(false);
     setIsOrgOpen(true);
     setIsPinnedOpen(false);
     setIsSearchOpen(false);
@@ -659,7 +663,6 @@ function Chat({ toggleProfileSectionVisibility }) {
                   >
                     <Avatar
                       className="w-12 h-12 border border-gray-500 cursor-pointer hover:opacity-90"
-                      onClick={toggleProfileSectionVisibility}
                     >
                       <AvatarImage src={currentUser.photo} alt="Profile" />
                       <AvatarFallback>
@@ -707,10 +710,10 @@ function Chat({ toggleProfileSectionVisibility }) {
                     </div>
 
                     <div className="flex justify-around py-2 text-black dark:text-white">
-                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors" onClick={handleOrg}>
                         <MessageSquare className="w-5 h-5" />
                       </button>
-                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors" onClick={handleOrg}>
+                      <button className="hover:bg-gray-300 p-2 rounded-full transition-colors" onClick={toggleProfileSectionVisibility}>
                         <Users className="w-5 h-5" />
                       </button>
                       <button className="hover:bg-gray-300 p-2 rounded-full transition-colors">
@@ -1013,7 +1016,7 @@ function Chat({ toggleProfileSectionVisibility }) {
       </div>
       <div
         className={`w-1/3 h-full overflow-y-auto ${
-          isSearchOpen || isPinnedOpen || isOrgOpen ? "flex flex-col" : "hidden"
+          (isSearchOpen || isPinnedOpen || isOrgOpen) && !isProfileSectionVisible ? "flex flex-col" : "hidden"
         }`}
       >
         {isSearchOpen && (

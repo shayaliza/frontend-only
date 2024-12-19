@@ -79,11 +79,11 @@ const Gifs = ({setMessageInput}) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search for GIFs"
-          className="flex-grow p-2 rounded mr-2 bg-transparent focus:outline-none border dark:border-gray-700"
+          className="flex-grow p-1 rounded mr-2 bg-transparent focus:outline-none border dark:border-gray-700"
         />
         <button 
           type="submit" 
-          className="bg-blue-600 hover:bg-blue-700 p-2 rounded"
+          className="bg-blue-600 hover:bg-blue-700 p-1 rounded"
         >
           <Search size={20} className='text-white' />
         </button>
@@ -97,7 +97,7 @@ const Gifs = ({setMessageInput}) => {
               setActiveTab(tab.id);
               setSearchTerm('');
             }}
-            className={`flex-shrink-0 p-3 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-t-md ${
+            className={`flex-shrink-0 p-2 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-t-md ${
               activeTab === tab.id ? 'border-b-2 border-blue-500' : ''
             }`}
           >
@@ -106,7 +106,7 @@ const Gifs = ({setMessageInput}) => {
         ))}
       </div>
 
-      <div className="h-56 overflow-y-auto emoji-scrollbar">
+      <div className="h-36 overflow-y-auto emoji-scrollbar">
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-blue-500"></div>

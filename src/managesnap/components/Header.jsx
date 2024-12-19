@@ -68,6 +68,21 @@ const Header = () => {
     },
   ];
 
+  const [persons, setPersons] = useState([
+    { name: "Vignesh Reddy", id: 1 },
+    { name: "Mahesh Reddy", id: 2 },
+    { name: "Rajesh Reddy", id: 3 },
+    { name: "Siddharth Reddy", id: 4 },
+    { name: "Karthik Reddy", id: 5 },
+  ]);
+  
+  const handleRecentRemoval = (personId) => {
+    setPersons((prevPersons) =>
+      prevPersons.filter((user) => user.id !== personId)
+    );
+  };
+  
+
   useEffect(() => {
     if (searchQuery) {
       setIsTyping(true);
@@ -187,7 +202,7 @@ const Header = () => {
                   </div>
                 </div>
               ) : (
-                <div className="w-full flex flex-col  space-y-2">
+                <div className="w-full flex flex-col space-y-2" onMouseDown={(e) => e.preventDefault()}>
                   <div className="w-full flex flex-col space-y-2 py-2 border-b ">
                     <h3 className="mr-2 text-xs ml-2">People</h3>
                     <div className="flex justify-around px-4">
@@ -226,13 +241,7 @@ const Header = () => {
                   <div className="w-full flex flex-col space-y-2 border-b">
                     <h3 className="mr-2 text-xs ml-2">Recent searches</h3>
                     <div className="w-full flex flex-col">
-                      {[
-                        { name: "Vignesh Reddy" },
-                        { name: "Mahesh Reddy" },
-                        { name: "Rajesh Reddy" },
-                        { name: "Siddharth Reddy" },
-                        { name: "Karthik Reddy" },
-                      ].map((person, index) => (
+                      {persons.map((person, index) => (
                         <div
                           key={index}
                           className="w-full flex justify-between items-center  px-4 py-2 group relative hover:bg-blue-600"
@@ -243,7 +252,7 @@ const Header = () => {
                             </div>
                             <span className="text-sm">{person.name}</span>
                           </div>
-                          <X className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" />
+                          <X className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" onClick={() => handleRecentRemoval(person.id)}/>
                         </div>
                       ))}
                     </div>

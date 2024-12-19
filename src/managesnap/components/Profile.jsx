@@ -44,6 +44,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CustomPopup from "./ChatComps/CustomPopup";
+import { EmojiHappyIcon } from "@heroicons/react/outline";
 
 const OptionButton = ({
   icon: Icon,
@@ -117,7 +118,7 @@ function Profile() {
   };
 
   const handleAvailability = (status) => {
-    if(status === ""){
+    if (status === "") {
       setIsEditing(true);
     }
     setAvailability(status);
@@ -225,13 +226,6 @@ function Profile() {
       extra: "3 days",
       action: () => handleAvailability("Appear Offline"),
     },
-    {
-      icon: CreativeCommons,
-      classname: "",
-      label: "Make your own status",
-      extra: "1 hour",
-      action: () => handleAvailability(""),
-    },
   ];
 
   return (
@@ -262,7 +256,7 @@ function Profile() {
               </div>
             </div>
           </div>
-          {currentView !== "main" && (
+          {currentView !== "main" &&(
             <button
               onClick={() => setCurrentView("main")}
               className="hover:text-red-500 transition-colors"
@@ -271,7 +265,7 @@ function Profile() {
             </button>
           )}
         </div>
-        {currentView !== "main" && (
+        {currentView !== "main" && currentView !=="status" && (
           <button onClick={goBack} className="flex items-center space-x-2">
             <ChevronLeft className="w-4 h-4 mt-0.5" /> Back
           </button>
@@ -578,18 +572,36 @@ function Profile() {
       )}
 
       {currentView === "status" && (
-        <div className="px-2 py-1 space-y-1">
-          {statusOptions.map((status, index) => (
-            <OptionButton
-              key={index}
-              icon={status.icon}
-              fill={status.fill}
-              label={status.label}
-              onClick={status.action}
-              extra={status.extra}
-              className={status.classname}
-            />
-          ))}
+        <div className="flex flex-col pb-2">
+          <button onClick={() => setCurrentView("main")} className="flex items-center space-x-2 ml-2">
+            <ChevronLeft className="w-4 h-4 mt-0.5" /> Back
+          </button>
+          <div className="px-2 py-1 space-y-1">
+            {statusOptions.map((status, index) => (
+              <OptionButton
+                key={index}
+                icon={status.icon}
+                fill={status.fill}
+                label={status.label}
+                onClick={status.action}
+                extra={status.extra}
+                className={status.classname}
+              />
+            ))}
+          </div>
+          <div className="px-4">
+            <div className="flex space-x-2 border dark:border-gray-700 p-2 rounded-md">
+              <EmojiHappyIcon className="text-gray-400 w-6 h-6" />
+              <input
+                type="text"
+                name=""
+                id=""
+                placeholder="What's your status?"
+                onFocus={() => handleAvailability("")}
+                className="bg-transparent border-none focus:outline-none"
+              />
+            </div>
+          </div>
         </div>
       )}
 

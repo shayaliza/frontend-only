@@ -57,7 +57,7 @@ const Emoji = ({setMessageInput}) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-shrink-0 p-3 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-t-md ${
+            className={`flex-shrink-0 p-2 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-t-md ${
               activeTab === tab.id ? 'border-b-2 border-blue-500' : ''
             }`}
           >
@@ -66,7 +66,7 @@ const Emoji = ({setMessageInput}) => {
         ))}
       </div>
 
-      <div className="h-72 overflow-y-auto emoji-scrollbar">
+      <div className="h-44 overflow-y-auto emoji-scrollbar">
         <div className="p-2 border-b border-gray-700">
           <div className="text-sm mb-2">Recently Used</div>
           <div className="grid grid-cols-6 gap-2">
@@ -74,7 +74,7 @@ const Emoji = ({setMessageInput}) => {
               <button
                 key={index}
                 onClick={() => setMessageInput((prev) => prev + emoji)}
-                className="text-xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
+                className="text-lg hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
               >
                 {emoji}
               </button>
@@ -91,7 +91,7 @@ const Emoji = ({setMessageInput}) => {
                   <button
                     key={index}
                     onClick={() => setMessageInput((prev) => prev + emoji)}
-                    className="text-xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
+                    className="text-lg hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
                   >
                     {emoji}
                   </button>
@@ -106,7 +106,7 @@ const Emoji = ({setMessageInput}) => {
                 <button
                   key={index}
                   onClick={() => setMessageInput((prev) => prev + emoji)}
-                  className="text-xl hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
+                  className="text-lg hover:bg-gray-300 dark:hover:bg-gray-800 rounded p-1 transition-colors"
                 >
                   {emoji}
                 </button>

@@ -257,7 +257,7 @@ const MessageComposer = ({
               <Smile className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="mr-12 mb-6 w-[400px]">
+          <PopoverContent className="mr-12 mb-6 w-[300px]">
             <Emoji setMessageInput={setMessageInput}/>
           </PopoverContent>
         </Popover>
@@ -268,7 +268,7 @@ const MessageComposer = ({
               <StickerIcon className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="mr-12 mb-6 w-[400px]">
+          <PopoverContent className="mr-12 mb-6 w-[300px]">
             <Gifs setMessageInput={setMessageInput}/>
           </PopoverContent>
         </Popover>

@@ -81,6 +81,7 @@ const FullChatInterface = () => {
         >
           <ChatInterface
             isProfileSectionVisible={isProfileSectionVisible}
+            setIsProfileSectionVisible={setIsProfileSectionVisible}
             toggleProfileSectionVisibility={toggleProfileSectionVisibility}
           />
         </div>

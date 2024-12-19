@@ -51,7 +51,7 @@ const SlackInterface = () => {
             </button>
 
             {isFromDropdownOpen && (
-              <div className="absolute top-full mt-1 w-80 bg-black/40 backdrop-blur-sm border border-white/10 rounded-md shadow-lg z-50">
+              <div className="absolute top-full mt-1 w-80 bg-black/40 backdrop-blur-sm border border-white/10 rounded-md shadow-lg z-50 text-white">
                 <div className="p-3">
                   <form onSubmit={handleSearch} className="relative mb-3">
                     <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 opacity-60" />
@@ -80,9 +80,9 @@ const SlackInterface = () => {
               </div>
             )}
           </div>
-          <button className="px-3 py-1.5 opacity-60 border border-gray-500 rounded-lg">In</button>
-          <button className="px-3 py-1.5 bg-black/20 rounded-md border border-gray-500">Only my channels</button>
-          <button className="px-3 py-1.5 bg-black/20 rounded-md border border-gray-500">Exclude automations</button>
+          <button className="px-3 py-1.5 opacity-60 bg-transparent border border-gray-500 rounded-lg">In</button>
+          <button className="px-3 py-1.5 bg-transparent rounded-md border border-gray-500">Only my channels</button>
+          <button className="px-3 py-1.5 bg-transparent rounded-md border border-gray-500">Exclude automations</button>
           <button className="flex items-center gap-1 px-3 py-1.5 text-blue-400 border border-gray-500 rounded-lg">
             <span className="text-lg">≡</span> Filters
           </button>
@@ -92,7 +92,7 @@ const SlackInterface = () => {
           </div>
         </div>
 
-        <div className="mx-3 p-4 bg-black/20 rounded-md border border-gray-500">
+        <div className="mx-3 p-4 bg-gray-200 dark:bg-black/20 rounded-md border dark:border-gray-500">
           <div className="flex justify-between items-center">
             <div>
               <h3 className="flex items-center gap-2">
@@ -104,7 +104,7 @@ const SlackInterface = () => {
                 <a href="#" className="text-blue-400">Learn more</a>
               </p>
             </div>
-            <button className="px-4 py-2 bg-emerald-800 rounded-md hover:bg-emerald-700">
+            <button className="px-4 py-2 bg-emerald-800 text-white rounded-md hover:bg-emerald-700">
               Start Free Trial
             </button>
           </div>
@@ -112,7 +112,7 @@ const SlackInterface = () => {
 
         <div className="mt-4">
           {['rwg', 'srswg', 'g', 'gsg', 'gs'].map((message, index) => (
-            <div key={index} className="hover:bg-gray-700 bg-zinc-900 px-4 py-3 rounded-lg border border-gray-500 mb-3 mx-3">
+            <div key={index} className="hover:bg-gray-200 dark:hover:bg-gray-700 bg-gray-50 dark:bg-zinc-900 px-4 py-3 rounded-lg border dark:border-gray-500 mb-3 mx-3">
               <div className="opacity-60 text-sm mb-1">{name || 'Techsnap'}</div>
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
@@ -171,32 +171,32 @@ const SlackInterface = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] bg-zinc-800 dark:bg-black text-white overflow-auto" onClick={() => isFromDropdownOpen && setIsFromDropdownOpen(false)}>
-      <div className="flex justify-center items-center pt-3 px-3 border-b border-white/30">
+    <div className="h-[calc(100vh-64px)] bg-white dark:bg-black text-black dark:text-white overflow-auto" onClick={() => isFromDropdownOpen && setIsFromDropdownOpen(false)}>
+      <div className="flex justify-center items-center pt-3 px-3 border-b">
         <div className="flex space-x-6">
           <button 
             onClick={() => setActiveTab('messages')}
-            className={`flex items-center ${activeTab === 'messages' ? 'border-b-2 border-white' : 'opacity-60'}`}>
+            className={`flex items-center ${activeTab === 'messages' ? 'border-b-2 border-black dark:border-white' : 'opacity-60'}`}>
             <span className="font-medium mb-2">Messages 11</span>
           </button>
           <button 
             onClick={() => setActiveTab('files')}
-            className={`flex items-center ${activeTab === 'files' ? 'border-b-2 border-white' : 'opacity-60'}`}>
+            className={`flex items-center ${activeTab === 'files' ? 'border-b-2 border-black dark:border-white' : 'opacity-60'}`}>
             <span className="font-medium mb-2">Files 2</span>
           </button>
           <button 
             onClick={() => setActiveTab('channels')}
-            className={`flex items-center ${activeTab === 'channels' ? 'border-b-2 border-white' : 'opacity-60'}`}>
+            className={`flex items-center ${activeTab === 'channels' ? 'border-b-2 border-black dark:border-white' : 'opacity-60'}`}>
             <span className="font-medium mb-2">Channels 0</span>
           </button>
           <button 
             onClick={() => setActiveTab('people')}
-            className={`flex items-center ${activeTab === 'people' ? 'border-b-2 border-white' : 'opacity-60'}`}>
+            className={`flex items-center ${activeTab === 'people' ? 'border-b-2 border-black dark:border-white' : 'opacity-60'}`}>
             <span className="font-medium mb-2">People 0</span>
           </button>
           <button 
             onClick={() => setActiveTab('canvases')}
-            className={`flex items-center ${activeTab === 'canvases' ? 'border-b-2 border-white' : 'opacity-60'}`}>
+            className={`flex items-center ${activeTab === 'canvases' ? 'border-b-2 border-black dark:border-white' : 'opacity-60'}`}>
             <span className="font-medium mb-2">Canvases</span>
           </button>
         </div>

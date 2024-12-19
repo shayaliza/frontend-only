@@ -8,6 +8,7 @@ import img3 from "../assets/man3.jpg";
 import img4 from "../assets/img1.png";
 import { PlusCircleIcon } from 'lucide-react';
 import AddChannel from './ChatComps/AddChannel';
+import AddGroup from './ChatComps/AddGroup';
 
 const channels = [
   { 
@@ -79,14 +80,14 @@ const pinnedItems = [
   { type: 'channel', id: "C0877-1", name: "data-processing" },
 ];
 
-const ChannelItem = ({ channel, level = 0, onChannelClick }) => {
+const ChannelItem = ({ channel, level = 0, onChannelClick, setAddGroup }) => {
   const [showSubChannels, setShowSubChannels] = useState(false);
   const hasSubChannels = channel.subChannels && channel.subChannels.length > 0;
 
   return (
     <div className="flex flex-col dark:text-white">
       <div
-        className="flex items-center p-2 rounded cursor-pointer hover:bg-transparent transition"
+        className="flex items-center p-1 rounded cursor-pointer hover:bg-transparent transition text-sm"
         style={{ paddingLeft: `${level * 16 + 8}px` }}
         onClick={() => {
           if (hasSubChannels) {
@@ -117,6 +118,10 @@ const ChannelItem = ({ channel, level = 0, onChannelClick }) => {
               onChannelClick={onChannelClick}
             />
           ))}
+          <div className="flex space-x-2 items-center text-sm cursor-pointer" onClick={()=> setAddGroup(true)}>
+            <PlusCircleIcon className='w-4 h-4'/>
+            <span>Add group</span>
+          </div>
         </div>
       )}
     </div>
@@ -127,6 +132,7 @@ function ChannelsSidebar() {
   const [showChannels, setShowChannels] = useState(true);
   const [showDirectMessages, setShowDirectMessages] = useState(true);
   const [addChannel, setAddChannel] = useState(false);
+  const [addGroup, setAddGroup] = useState(false);
   const navigate = useNavigate();
 
   const handleChannelClick = (channel) => {
@@ -172,6 +178,7 @@ function ChannelsSidebar() {
                   key={channel.id}
                   channel={channel}
                   onChannelClick={handleChannelClick}
+                  setAddGroup={setAddGroup}
                 />
               ))}
             </div>
@@ -191,7 +198,7 @@ function ChannelsSidebar() {
               showDirectMessages ? "max-h-[1000px]" : "max-h-0"
             }`}
           >
-            <div id="directMessages" className="mt-2">
+            <div id="directMessages" className="mt-2 text-sm">
               {directMessages.map((message) => (
                 <div
                   key={message.id}
@@ -249,6 +256,7 @@ function ChannelsSidebar() {
         </div>
         </div>
         <AddChannel isOpen={addChannel} onClose={() => setAddChannel(false)} />
+        <AddGroup isOpen={addGroup} onClose={() => setAddGroup(false)} />
     </div>
   );
 }
