@@ -511,7 +511,7 @@ const ArticleMobile = memo(
               onClick={() => setIsCommentsOpen(true)}
               aria-label="View Comments"
             >
-              <MessageSquare className="w-5 h-5" />
+              <MessageCircle className="w-5 h-5" />
               <span>{comments}</span>
             </button>
 
