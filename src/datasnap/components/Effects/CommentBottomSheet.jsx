@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Send, X } from 'lucide-react';
+import debounce from 'lodash.debounce';
 
-const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
+const CommentBottomSheet = React.memo(({ isOpen, onClose, comments = [], profileImg }) => {
   const [newComment, setNewComment] = useState('');
   const [isFullHeight, setIsFullHeight] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -13,25 +14,30 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
     setNewComment('');
   };
 
+  const handleScroll = useCallback(
+    (e) => {
+      requestAnimationFrame(() => {
+        const commentList = e.target;
+        const isScrollingUp = lastScrollY > commentList.scrollTop;
+        setLastScrollY(commentList.scrollTop);
+
+        if (isScrollingUp && commentList.scrollTop < 100) {
+          setIsFullHeight(true);
+        } else if (!isScrollingUp && commentList.scrollTop > 100) {
+          setIsFullHeight(false);
+        }
+      });
+    },
+    [lastScrollY]
+  );
+
   useEffect(() => {
-    const handleScroll = (e) => {
-      const commentList = e.target;
-      const isScrollingUp = lastScrollY > commentList.scrollTop;
-      setLastScrollY(commentList.scrollTop);
-
-      if (isScrollingUp && commentList.scrollTop < 50) {
-        setIsFullHeight(true);
-      } else if (!isScrollingUp && commentList.scrollTop > 50) {
-        setIsFullHeight(false);
-      }
-    };
-
     const commentList = document.querySelector('.comment-scroll-area');
     if (commentList) {
       commentList.addEventListener('scroll', handleScroll);
       return () => commentList.removeEventListener('scroll', handleScroll);
     }
-  }, [lastScrollY]);
+  }, [handleScroll]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,8 +75,17 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 20 }}
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(event, info) => {
+              if (info.point.y < window.innerHeight / 2) {
+                setIsFullHeight(true);
+              } else {
+                setIsFullHeight(false);
+              }
+            }}
             style={{
-              position: 'fixed',
               bottom: isKeyboardOpen ? window.visualViewport?.offsetTop || 0 : 0,
               height: isKeyboardOpen ? `${window.visualViewport?.height}px` : isFullHeight ? '100vh' : '80vh',
             }}
@@ -139,6 +154,6 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
       )}
     </AnimatePresence>
   );
-};
+});
 
 export default CommentBottomSheet;
