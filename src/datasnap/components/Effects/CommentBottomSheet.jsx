@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Send, X } from 'lucide-react';
 
 const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
   const [newComment, setNewComment] = useState('');
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if ('virtualKeyboard' in navigator) {
       navigator.virtualKeyboard.overlaysContent = true;
 
       const handleGeometryChange = (event) => {
-        const { x, y, width, height } = event.target.boundingRect;
-        console.log('Virtual keyboard geometry:', { x, y, width, height });
+        const { height } = event.target.boundingRect;
+        setKeyboardHeight(height);
       };
 
       navigator.virtualKeyboard.addEventListener('geometrychange', handleGeometryChange);
@@ -46,7 +48,6 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 20 }}
           >
-
             <div className="relative flex items-center justify-between p-4 border-b shrink-0">
               <div className="w-12 h-1 bg-gray-300 rounded-full absolute top-2 left-1/2 transform -translate-x-1/2" />
               <h2 className="font-semibold text-lg mx-auto">Comments</h2>
@@ -55,7 +56,11 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div 
+              className="flex-1 overflow-y-auto p-4 space-y-4"
+              ref={containerRef}
+              style={{ marginBottom: keyboardHeight }}
+            >
               {comments.map((comment, index) => (
                 <div key={index} className="flex justify-between items-start">
                   <div className="flex items-start space-x-3">
@@ -85,6 +90,7 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
             <form 
               onSubmit={handleSubmit}
               className="border-t p-4 flex items-center space-x-3 shrink-0"
+              style={{ paddingBottom: keyboardHeight ? `${keyboardHeight}px` : '16px' }}
             >
               <img 
                 src={profileImg} 
