@@ -56,6 +56,7 @@ import {
   BiDownArrow,
   BiDownvote,
   BiLike,
+  BiSolidDownvote,
   BiUpArrow,
   BiUpvote,
 } from "react-icons/bi";
@@ -502,7 +503,7 @@ const ArticleMobile = memo(
               className="flex items-center gap-1 hover:text-red-600 dark:hover:text-red-400 transition-colors"
               aria-label="Dislike"
             >
-              <BiDownvote className="w-5 h-5" />
+              <BiSolidDownvote className="w-5 h-5" />
               <span>{dislikes}</span>
             </button>
 
