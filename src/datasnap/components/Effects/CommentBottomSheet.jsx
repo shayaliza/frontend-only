@@ -1,59 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Heart, Send, X } from 'lucide-react';
-import debounce from 'lodash.debounce';
 
-const CommentBottomSheet = React.memo(({ isOpen, onClose, comments = [], profileImg }) => {
+const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
   const [newComment, setNewComment] = useState('');
-  const [isFullHeight, setIsFullHeight] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    if ('virtualKeyboard' in navigator) {
+      navigator.virtualKeyboard.overlaysContent = true;
+
+      const handleGeometryChange = (event) => {
+        const { x, y, width, height } = event.target.boundingRect;
+        console.log('Virtual keyboard geometry:', { x, y, width, height });
+      };
+
+      navigator.virtualKeyboard.addEventListener('geometrychange', handleGeometryChange);
+
+      return () => {
+        navigator.virtualKeyboard.removeEventListener('geometrychange', handleGeometryChange);
+      };
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setNewComment('');
   };
-
-  const handleScroll = useCallback(
-    (e) => {
-      requestAnimationFrame(() => {
-        const commentList = e.target;
-        const isScrollingUp = lastScrollY > commentList.scrollTop;
-        setLastScrollY(commentList.scrollTop);
-
-        if (isScrollingUp && commentList.scrollTop < 100) {
-          setIsFullHeight(true);
-        } else if (!isScrollingUp && commentList.scrollTop > 100) {
-          setIsFullHeight(false);
-        }
-      });
-    },
-    [lastScrollY]
-  );
-
-  useEffect(() => {
-    const commentList = document.querySelector('.comment-scroll-area');
-    if (commentList) {
-      commentList.addEventListener('scroll', handleScroll);
-      return () => commentList.removeEventListener('scroll', handleScroll);
-    }
-  }, [handleScroll]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const windowHeight = window.innerHeight;
-      const visualViewport = window.visualViewport;
-      if (!visualViewport) return;
-
-      const isKeyboardVisible = visualViewport.height < windowHeight;
-      setIsKeyboardOpen(isKeyboardVisible);
-    };
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', handleResize);
-      return () => window.visualViewport.removeEventListener('resize', handleResize);
-    }
-  }, []);
 
   return (
     <AnimatePresence>
@@ -68,28 +40,13 @@ const CommentBottomSheet = React.memo(({ isOpen, onClose, comments = [], profile
           />
           
           <motion.div
-            className={`fixed bottom-0 left-0 right-0 bg-white dark:bg-black rounded-t-3xl z-50 flex flex-col transition-all duration-300 ease-in-out ${
-              isFullHeight ? 'h-screen' : 'h-[80vh]'
-            }`}
+            className="fixed bottom-0 left-0 right-0 bg-white dark:bg-black rounded-t-3xl z-50 h-[80vh] flex flex-col overflow-hidden"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 20 }}
-            drag="y"
-            dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={0.2}
-            onDragEnd={(event, info) => {
-              if (info.point.y < window.innerHeight / 2) {
-                setIsFullHeight(true);
-              } else {
-                setIsFullHeight(false);
-              }
-            }}
-            style={{
-              bottom: isKeyboardOpen ? window.visualViewport?.offsetTop || 0 : 0,
-              height: isKeyboardOpen ? `${window.visualViewport?.height}px` : isFullHeight ? '100vh' : '80vh',
-            }}
           >
+
             <div className="relative flex items-center justify-between p-4 border-b shrink-0">
               <div className="w-12 h-1 bg-gray-300 rounded-full absolute top-2 left-1/2 transform -translate-x-1/2" />
               <h2 className="font-semibold text-lg mx-auto">Comments</h2>
@@ -98,7 +55,7 @@ const CommentBottomSheet = React.memo(({ isOpen, onClose, comments = [], profile
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 comment-scroll-area">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {comments.map((comment, index) => (
                 <div key={index} className="flex justify-between items-start">
                   <div className="flex items-start space-x-3">
@@ -127,7 +84,7 @@ const CommentBottomSheet = React.memo(({ isOpen, onClose, comments = [], profile
 
             <form 
               onSubmit={handleSubmit}
-              className="border-t p-4 flex items-center space-x-3 shrink-0 bg-white dark:bg-black"
+              className="border-t p-4 flex items-center space-x-3 shrink-0"
             >
               <img 
                 src={profileImg} 
@@ -154,6 +111,6 @@ const CommentBottomSheet = React.memo(({ isOpen, onClose, comments = [], profile
       )}
     </AnimatePresence>
   );
-});
+};
 
 export default CommentBottomSheet;
