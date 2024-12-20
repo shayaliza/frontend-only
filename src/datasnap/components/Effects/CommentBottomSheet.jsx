@@ -89,7 +89,7 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
 
             <form 
               onSubmit={handleSubmit}
-              className={`border-t p-4 flex items-center space-x-3 shrink-0 ${keyboardHeight ? `mb-${keyboardHeight}` : ''}`}>
+              className={`border-t p-4 flex items-center space-x-3 shrink-0 z-[999] ${keyboardHeight ? `mb-${keyboardHeight}` : ''}`}>
               <img 
                 src={profileImg} 
                 alt="Your profile" 
