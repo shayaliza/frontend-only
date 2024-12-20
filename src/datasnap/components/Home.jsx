@@ -434,6 +434,12 @@ const ArticleMobile = memo(
         text: "Tammulu! Amaravati ni maro hitech city ga marusta",
         time: "1h ago",
       },
+      {
+        author: "Jagan Army",
+        profileImg: profileImg,
+        text: "peekenivau le tiyyi",
+        time: "1h ago",
+      },
     ];
     return (
       <div className="border-t shadow-lg mb-2 overflow-hidden text-gray-800 dark:text-white">
