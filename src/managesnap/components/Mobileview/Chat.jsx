@@ -25,6 +25,7 @@ import img2 from "../../assets/man2.jpg";
 import img3 from "../../assets/man3.jpg";
 import img4 from "../../assets/women1.jpg";
 import { useTheme } from "../../../DarkMode/ThemeProvider";
+import { ChevronDownIcon } from "lucide-react";
 
 const useLongPress = (callback, ms) => {
   const timerRef = useRef(null);
@@ -328,7 +329,11 @@ function Chat() {
   const reactionMenuRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messageReactions, setMessageReactions] = useState({});
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [scrollButton, setScrollButton] = useState(false);
+  const chatContainerRef = useRef(null);
 
   const handleAddReaction = (reaction) => {
     if (selectedMessage) {
@@ -345,6 +350,20 @@ function Chat() {
       });
 
       setIsReactionOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (shouldScrollToBottom) {
+      scrollToEnd();
+      setShouldScrollToBottom(false);
+    }
+  }, [messages, shouldScrollToBottom]);
+
+  const scrollToEnd = () => {
+    const container = chatContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
     }
   };
 
@@ -417,7 +436,6 @@ function Chat() {
       setMessages([...messages, newMessageObj]);
       setNewMessage("");
       setIsActive(false);
-      console.log(replyToMessage.content);
       setReplyToMessage(null);
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
@@ -469,6 +487,29 @@ function Chat() {
   };
 
   useEffect(() => {
+    if ("virtualKeyboard" in navigator) {
+      navigator.virtualKeyboard.overlaysContent = true;
+
+      const handleGeometryChange = (event) => {
+        const { height } = event.target.boundingRect;
+        setKeyboardHeight(height || 0);
+      };
+
+      navigator.virtualKeyboard.addEventListener(
+        "geometrychange",
+        handleGeometryChange
+      );
+
+      return () => {
+        navigator.virtualKeyboard.removeEventListener(
+          "geometrychange",
+          handleGeometryChange
+        );
+      };
+    }
+  }, []);
+
+  useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
@@ -495,16 +536,17 @@ function Chat() {
     setTouchStartX(e.touches[0].clientX);
     setTouchCurrentX(e.touches[0].clientX);
   };
-  
+
   const handleTouchMove = (e, message) => {
     if (touchStartX === null) return;
-  
+
     const currentX = e.touches[0].clientX;
     setTouchCurrentX(currentX);
-    const deltaX = currentX - touchStartX;  
+    const deltaX = currentX - touchStartX;
+
     if (Math.abs(deltaX) > 10) {
       setSwipedMessageId(message.id);
-      if (deltaX > 50) {  
+      if (deltaX > 50 && deltaX < 200) {
         setReplyToMessage({
           id: message.id,
           sender: message.sender,
@@ -515,17 +557,16 @@ function Chat() {
       }
     }
   };
-  
+
   const handleTouchEnd = () => {
     if (swipedMessageId !== null) {
       setTimeout(() => {
         setSwipedMessageId(null);
         setTouchStartX(null);
         setTouchCurrentX(null);
-      }, 100);
+      }, 300);
     }
   };
-  
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -608,8 +649,18 @@ function Chat() {
           className={`flex-grow ${
             isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
           } px-4 pt-14 pb-2 mt-4`}
+          onTouchEnd={() => {
+            if (swipedMessageId !== null) {
+              setSwipedMessageId(null);
+              setTouchStartX(null);
+              setTouchCurrentX(null);
+            }
+          }}
         >
-          <div className="space-y-1">
+          <div
+            className="relative space-y-1 overflow-x-auto"
+            ref={chatContainerRef}
+          >
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -662,7 +713,7 @@ function Chat() {
                         onTouchStart={() =>
                           longPressEvent.onTouchStart(message)
                         }
-                        className="relative rounded-lg overflow-hidden bg-gray-400 border  border-gray-300 max-w-52 flex-grow"
+                        className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 max-w-52 flex-grow"
                         onClick={() => handleToggleReactions(message)}
                       >
                         <img
@@ -690,7 +741,7 @@ function Chat() {
                   )}
 
                   {message.replyTo && (
-                    <div className="reply-context bg-blue-600 p-2 rounded-t-lg border-b border-gray-200 dark:border-gray-600 rounded-lg text-white ">
+                    <div className="reply-context bg-blue-600 p-2 rounded-t-lg border-b border-gray-200 dark:border-gray-600 rounded-lg text-white">
                       <div className="flex items-center space-x-2">
                         <ReplyIcon className="w-4 h-4" />
                         <span className="font-semibold text-sm">
@@ -705,7 +756,7 @@ function Chat() {
                             className="w-20 h-20 object-cover rounded-lg mb-2"
                           />
                         )}
-                        <p className="text-xsitalic truncate relative whitespace-pre-wrap break-words max-w-xs">
+                        <p className="text-xs italic truncate relative whitespace-pre-wrap break-words max-w-xs">
                           {message.replyTo.content}
                         </p>
                       </div>
@@ -722,8 +773,8 @@ function Chat() {
                       onTouchStart={() => longPressEvent.onTouchStart(message)}
                       className={`message-content p-2 rounded-lg relative whitespace-pre-wrap break-words max-w-xs ${
                         type === "dm" && message.sender === "You"
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-500"
+                          ? "bg-blue-500 text-white dark:bg-blue-700"
+                          : "bg-gray-200 text-black dark:bg-gray-800 dark:text-gray-200"
                       }`}
                       style={{ userSelect: "none" }}
                     >
@@ -770,19 +821,18 @@ function Chat() {
                     </div>
                   )}
                 </div>
-                <div className="absolute -right-[200px] text-xs mt-2"
-                style={{
-                  transform: 
-                    swipedMessageId === message.id 
-                      ? 'translateX(-200px)' 
-                      : 'translateX(0)',
-                  transition: 'transform 0.3s ease'
-                }}>
-                <span className="mr-4">{formatTimestamp(message.timestamp)}</span>
-                </div>
               </div>
             ))}
+            {scrollButton && (
+              <div
+                className="fixed bottom-32 right-10 z-50 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+                onClick={() => setShouldScrollToBottom(true)}
+              >
+                <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              </div>
+            )}
           </div>
+
           <div ref={messagesEndRef} />
         </div>
 
@@ -820,7 +870,8 @@ function Chat() {
             e.preventDefault();
             handleSendMessage();
           }}
-          className={`flex items-center bg-white dark:bg-black py-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
+          className={`flex items-center bg-white dark:bg-black pt-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
+          style={{ paddingBottom: keyboardHeight + 8 }}
         >
           <button
             type="button"
@@ -829,7 +880,10 @@ function Chat() {
             <PlusIcon className="w-5 h-5 hover:text-gray-900" />
           </button>
 
-          <div className="rounded-lg flex items-center flex-grow">
+          <div
+            className="bg-white dark:bg-black rounded-lg flex items-center flex-grow"
+            style={{ paddingBottom: keyboardHeight }}
+          >
             <textarea
               ref={textareaRef}
               id="message-textarea"

@@ -13,7 +13,7 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
 
       const handleGeometryChange = (event) => {
         const { height } = event.target.boundingRect;
-        setKeyboardHeight(height || 0); // Default to 0 if height is undefined
+        setKeyboardHeight(height || 0); 
       };
 
       navigator.virtualKeyboard.addEventListener('geometrychange', handleGeometryChange);
@@ -49,7 +49,6 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
             transition={{ type: 'spring', damping: 20 }}
             style={{ paddingBottom: keyboardHeight }}
           >
-            {/* Header */}
             <div className="relative flex items-center justify-between p-4 border-b shrink-0">
               <div className="w-12 h-1 bg-gray-300 rounded-full absolute top-2 left-1/2 transform -translate-x-1/2" />
               <h2 className="font-semibold text-lg mx-auto">Comments</h2>
@@ -58,8 +57,7 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
               </button>
             </div>
 
-            {/* Comments Section */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4" ref={containerRef}>
+            <div className="flex-1 overflow-y-auto px-4 pt-4 pb-20 space-y-4" ref={containerRef}>
               {comments.map((comment, index) => (
                 <div key={index} className="flex justify-between items-start">
                   <div className="flex items-start space-x-3">
@@ -86,7 +84,6 @@ const CommentBottomSheet = ({ isOpen, onClose, comments = [], profileImg }) => {
               ))}
             </div>
 
-            {/* Input Form */}
             <form
               onSubmit={handleSubmit}
               className="border-t p-4 flex items-center space-x-3 shrink-0 z-[999] fixed bottom-0 left-0 right-0 bg-white dark:bg-black"
