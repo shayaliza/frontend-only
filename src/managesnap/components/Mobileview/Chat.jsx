@@ -1,54 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import {
-  ArrowLeftIcon,
-  CameraIcon,
-  MicrophoneIcon,
-  EmojiHappyIcon,
-  PlusIcon,
-  DocumentTextIcon,
-  VolumeUpIcon,
-  ReplyIcon,
-  ClipboardCopyIcon,
-  SaveIcon,
-  FastForwardIcon,
-  ShareIcon,
-  SearchIcon,
-} from "@heroicons/react/outline";
-import { FaPlus, FaPaperPlane } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
-// import { FiSend } from "react-icons/fi";
-import { FaShare } from "react-icons/fa6";
-import { MdSend } from "react-icons/md";
+import ChatHeader from "./ChatComp/Header";
+import MessageInput from "./ChatComp/MessageInput";
+import Message from "./ChatComp/Message";
+import ReactionMenu from "./ChatComp/ReactionMenu";
+import ShareModal from "./ChatComp/Share";
+import ReplyPreview from "./ChatComp/ReplyPreview";
+import ScrollToBottomButton from "./ChatComp/Scroll";
+import { useLongPress } from "./Hooks/useLongPress";
 import img1 from "../../assets/man1.jpg";
 import img2 from "../../assets/man2.jpg";
 import img3 from "../../assets/man3.jpg";
 import img4 from "../../assets/women1.jpg";
-import { useTheme } from "../../../DarkMode/ThemeProvider";
-import { ChevronDownIcon } from "lucide-react";
-
-const useLongPress = (callback, ms) => {
-  const timerRef = useRef(null);
-
-  const start = (message) => {
-    timerRef.current = setTimeout(() => callback(message), ms);
-  };
-
-  const clear = () => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  };
-
-  return {
-    onMouseDown: (message) => start(message),
-    onMouseUp: clear,
-    onMouseLeave: clear,
-    onTouchStart: (message) => start(message),
-    onTouchEnd: clear,
-  };
-};
 
 const contacts = [
   {
@@ -326,14 +289,17 @@ function Chat() {
   const [isReactionOpen, setIsReactionOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [replyToMessage, setReplyToMessage] = useState(null);
-  const reactionMenuRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [shouldScrollToBottom, setShouldScrollToBottom] = useState(false);
   const [messageReactions, setMessageReactions] = useState({});
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [scrollButton, setScrollButton] = useState(false);
+
+  const reactionMenuRef = useRef(null);
+  const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   const handleAddReaction = (reaction) => {
     if (selectedMessage) {
@@ -413,7 +379,6 @@ function Chat() {
     navigate(type === "channel" ? "/managesnap/channels" : "/managesnap/dms");
   };
 
-  const textareaRef = useRef(null);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -448,39 +413,13 @@ function Chat() {
     setIsReactionOpen(true);
   }, []);
 
-  const formatTimestamp = (timestamp) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-
-    const isToday =
-      date.getDate() === now.getDate() &&
-      date.getMonth() === now.getMonth() &&
-      date.getFullYear() === now.getFullYear();
-
-    const timeOptions = {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    };
-
-    if (isToday) {
-      return date.toLocaleTimeString("en-US", timeOptions);
-    } else {
-      const dateOptions = {
-        month: "short",
-        day: "numeric",
-        ...timeOptions,
-      };
-      return date.toLocaleString("en-US", dateOptions);
-    }
-  };
 
   const longPressEvent = useLongPress(
     (message) => handleToggleReactions(message),
     500
   );
 
-  const messagesEndRef = useRef(null);
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView();
@@ -509,9 +448,9 @@ function Chat() {
     }
   }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [messages]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -528,45 +467,9 @@ function Chat() {
     };
   }, []);
 
-  const [touchStartX, setTouchStartX] = useState(null);
-  const [touchCurrentX, setTouchCurrentX] = useState(null);
+  
   const [swipedMessageId, setSwipedMessageId] = useState(null);
 
-  const handleTouchStart = (e, message) => {
-    setTouchStartX(e.touches[0].clientX);
-    setTouchCurrentX(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e, message) => {
-    if (touchStartX === null) return;
-
-    const currentX = e.touches[0].clientX;
-    setTouchCurrentX(currentX);
-    const deltaX = currentX - touchStartX;
-
-    if (Math.abs(deltaX) > 10) {
-      setSwipedMessageId(message.id);
-      if (deltaX > 50 && deltaX < 200) {
-        setReplyToMessage({
-          id: message.id,
-          sender: message.sender,
-          content: message.content,
-          imageUrl: message.imageUrl || null,
-          timestamp: message.timestamp,
-        });
-      }
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (swipedMessageId !== null) {
-      setTimeout(() => {
-        setSwipedMessageId(null);
-        setTouchStartX(null);
-        setTouchCurrentX(null);
-      }, 300);
-    }
-  };
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -600,447 +503,65 @@ function Chat() {
     setIsActive(newMessage.trim() !== "");
   };
 
+  
+  
+  
   return (
     <>
-      <div
-        className={`flex flex-col text-gray-800 dark:text-gray-200 ${
+      <div className={`flex flex-col text-gray-800 dark:text-gray-200 ${
+        isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
+      } min-h-screen pb-20 pt-4`}>
+        <ChatHeader 
+          type={type}
+          chatInfo={chatInfo}
+          handleNavigationBack={handleNavigationBack}
+          navigate={navigate}
+        />
+
+        <div className={`flex-grow ${
           isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-        } min-h-screen pb-20 pt-4`}
-      >
-        <div className="border-b fixed top-0 h-16 left-0 right-0 z-50 bg-white dark:bg-black">
-          <div className="p-4 flex justify-between items-center bg-background border-gray-500">
-            <div className="flex items-center">
-              <div
-                className="mr-2 cursor-pointer"
-                onClick={handleNavigationBack}
-              >
-                <ArrowLeftIcon className="w-6 h-6 transition" />
-              </div>
-              {type === "channel" ? (
-                <span className="font-bold text-xl">#{chatInfo?.name}</span>
-              ) : (
-                <div className="flex items-center space-x-2">
-                  <img
-                    onClick={() =>
-                      navigate(`/managesnap/profile/${id}`, {
-                        state: {
-                          img: chatInfo.img,
-                          name: chatInfo.name,
-                        },
-                      })
-                    }
-                    src={chatInfo?.img}
-                    alt=""
-                    className="flex-shrink-0 w-10 h-10 rounded-full border border-gray-600"
-                  />
-                  <span className="font-bold text-xl">{chatInfo?.name}</span>
-                </div>
-              )}
-            </div>
-            <div className="flex space-x-4 items-center">
-              <SearchIcon className="w-6 h-6 hover:text-gray-400 transition" />
-              <DocumentTextIcon className="w-6 h-6 hover:text-gray-400 transition" />
-              <VolumeUpIcon className="w-6 h-6 hover:text-gray-400 transition" />
-            </div>
-          </div>
-        </div>
-
-        <div
-          className={`flex-grow ${
-            isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-          } px-4 pt-14 pb-2 mt-4`}
-          onTouchEnd={() => {
-            if (swipedMessageId !== null) {
-              setSwipedMessageId(null);
-              setTouchStartX(null);
-              setTouchCurrentX(null);
-            }
-          }}
-        >
-          <div
-            className="relative space-y-1 overflow-x-auto"
-            ref={chatContainerRef}
-          >
+        } px-4 pt-14 pb-2 mt-4`}>
+          <div className="relative space-y-1 overflow-x-auto" ref={chatContainerRef}>
             {messages.map((message) => (
-              <div
+              <Message
                 key={message.id}
-                className={`relative flex items-start space-x-2 mb-4 ${
-                  type === "dm" && message.sender === "You" ? "justify-end" : ""
-                } ${messageReactions[message.id] ? "pb-8" : ""}`}
-                onTouchStart={(e) => handleTouchStart(e, message)}
-                onTouchMove={(e) => handleTouchMove(e, message)}
-                onTouchEnd={handleTouchEnd}
-                style={{
-                  transform:
-                    swipedMessageId === message.id &&
-                    touchStartX &&
-                    touchCurrentX
-                      ? `translateX(${-(touchStartX - touchCurrentX)}px)`
-                      : "translateX(0)",
-                  transition: "transform 0.3s ease",
-                }}
-              >
-                {((type === "dm" && message.sender !== "You") ||
-                  type === "channel") && (
-                  <div className="flex-none w-10 h-10 rounded-full overflow-hidden">
-                    <img
-                      src={img1}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-
-                <div
-                  className={`flex flex-col relative ${
-                    type === "dm" && message.sender === "You" ? "text-left" : ""
-                  } rounded-lg text-black dark:text-gray-300`}
-                >
-                  {type === "channel" && (
-                    <div className={`font-bold`}>
-                      {message.sender}{" "}
-                      <span className="text-xs">
-                        {new Date(message.timestamp).toLocaleTimeString()}
-                      </span>
-                    </div>
-                  )}
-
-                  {message.imageUrl && (
-                    <div className="flex items-center mb-4">
-                      <div
-                        {...longPressEvent}
-                        onMouseDown={() => longPressEvent.onMouseDown(message)}
-                        onTouchStart={() =>
-                          longPressEvent.onTouchStart(message)
-                        }
-                        className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 max-w-52 flex-grow"
-                        onClick={() => handleToggleReactions(message)}
-                      >
-                        <img
-                          src={message.imageUrl}
-                          alt="Sent image"
-                          className="w-full h-auto object-cover"
-                        />
-                      </div>
-                      <div
-                        onClick={() => setIsShareOpen(true)}
-                        className="p-2 cursor-pointer rounded-full ml-4"
-                      >
-                        <FaShare />
-                      </div>
-                    </div>
-                  )}
-
-                  {message.url && !message.imageUrl && (
-                    <div
-                      {...longPressEvent}
-                      className="relative rounded-lg overflow-hidden bg-gray-400 border border-gray-300 p-2 max-w-max text-blue-600"
-                    >
-                      <a href={message.url}>{message.url}</a>
-                    </div>
-                  )}
-
-                  {message.replyTo && (
-                    <div className="reply-context bg-blue-600 p-2 rounded-t-lg border-b border-gray-200 dark:border-gray-600 rounded-lg text-white">
-                      <div className="flex items-center space-x-2">
-                        <ReplyIcon className="w-4 h-4" />
-                        <span className="font-semibold text-sm">
-                          Replied to {message.replyTo.sender}
-                        </span>
-                      </div>
-                      <div className="pl-6 py-2 pr-2 mt-1 bg-gray-500 rounded-lg">
-                        {message.replyTo.imageUrl && (
-                          <img
-                            src={message.replyTo.imageUrl}
-                            alt="Replied message"
-                            className="w-20 h-20 object-cover rounded-lg mb-2"
-                          />
-                        )}
-                        <p className="text-xs italic truncate relative whitespace-pre-wrap break-words max-w-xs">
-                          {message.replyTo.content}
-                        </p>
-                      </div>
-                      <span className="font-semibold text-sm">
-                        {message.content}
-                      </span>
-                    </div>
-                  )}
-
-                  {!message.imageUrl && !message.url && !message.replyTo && (
-                    <div
-                      {...longPressEvent}
-                      onMouseDown={() => longPressEvent.onMouseDown(message)}
-                      onTouchStart={() => longPressEvent.onTouchStart(message)}
-                      className={`message-content p-2 rounded-lg relative whitespace-pre-wrap break-words max-w-xs ${
-                        type === "dm" && message.sender === "You"
-                          ? "bg-blue-500 text-white dark:bg-blue-700"
-                          : "bg-gray-200 text-black dark:bg-gray-800 dark:text-gray-200"
-                      }`}
-                      style={{ userSelect: "none" }}
-                    >
-                      {message.content}
-                    </div>
-                  )}
-
-                  {messageReactions[message.id] && (
-                    <div
-                      className={`absolute bottom-[-25px] ${
-                        message.sender === "You" ? "right-0" : "left-0"
-                      } flex space-x-1 z-10 bg-white dark:bg-gray-700 p-1 rounded-full shadow-md`}
-                      style={{
-                        bottom:
-                          messageReactions[message.id].length > 0
-                            ? "-25px"
-                            : "auto",
-                      }}
-                    >
-                      {messageReactions[message.id].map((reaction, index) => (
-                        <span
-                          key={index}
-                          className="text-lg cursor-pointer hover:scale-125 transition-transform"
-                          onClick={() => {
-                            setMessageReactions((prev) => {
-                              const currentReactions = prev[message.id] || [];
-                              const updatedReactions = currentReactions.filter(
-                                (r) => r !== reaction
-                              );
-
-                              return {
-                                ...prev,
-                                [message.id]:
-                                  updatedReactions.length > 0
-                                    ? updatedReactions
-                                    : undefined,
-                              };
-                            });
-                          }}
-                        >
-                          {reaction}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
+                message={message}
+                handleReplyToMessage={handleReplyToMessage}
+                messageReactions={messageReactions}
+                setIsShareOpen={setIsShareOpen}
+                handleToggleReactions={handleToggleReactions}
+                longPressEvent={longPressEvent}
+              />
             ))}
-            {scrollButton && (
-              <div
-                className="fixed bottom-32 right-10 z-50 w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
-                onClick={() => setShouldScrollToBottom(true)}
-              >
-                <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-              </div>
-            )}
+            <ScrollToBottomButton 
+              visible={scrollButton}
+              onClick={() => setShouldScrollToBottom(true)}
+            />
           </div>
-
           <div ref={messagesEndRef} />
         </div>
 
-        {replyToMessage && (
-          <div className="fixed bottom-16 left-0 right-0 bg-gray-200 dark:bg-zinc-800 p-2 flex justify-between items-center z-40">
-            <div className="flex items-center space-x-2">
-              <ReplyIcon className="w-5 h-5 " />
-              <div>
-                <span className="text-sm font-semibold">
-                  Replying to {replyToMessage.sender}
-                </span>
-                {replyToMessage.imageUrl && (
-                  <img
-                    src={replyToMessage.imageUrl}
-                    alt=""
-                    className="w-full h-10 object-fill my-2"
-                  />
-                )}
-                <p className="text-xs truncate max-w-[250px]">
-                  {replyToMessage.content}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => setReplyToMessage(null)}
-              className="text-red-600 hover:text-gray-900"
-            >
-              <FaTimes />
-            </button>
-          </div>
-        )}
+        <ReplyPreview 
+          replyToMessage={replyToMessage}
+          setReplyToMessage={setReplyToMessage}
+        />
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSendMessage();
-          }}
-          className={`flex items-center bg-white dark:bg-black pt-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
-          style={{ paddingBottom: keyboardHeight + 8 }}
-        >
-          <button
-            type="button"
-            className="p-2 rounded-full hover:bg-gray-200 transition duration-150 ease-in-out"
-          >
-            <PlusIcon className="w-5 h-5 hover:text-gray-900" />
-          </button>
-
-          <div
-            className="bg-white dark:bg-black rounded-lg flex items-center flex-grow"
-            style={{ paddingBottom: keyboardHeight }}
-          >
-            <textarea
-              ref={textareaRef}
-              id="message-textarea"
-              className="flex-grow outline-none p-1 rounded-sm text-sm  border border-gray-500 resize-none overflow-y-auto bg-transparent"
-              placeholder="Type a message"
-              value={newMessage}
-              onChange={handleInputChange}
-              onFocus={handleInputFocus}
-              onBlur={handleInputBlur}
-              style={{
-                minHeight: "1px",
-                maxHeight: "100px",
-                overflowY: "auto",
-              }}
-              onInput={(e) => {
-                e.target.style.height = "auto";
-                const newHeight = Math.min(e.target.scrollHeight, 150);
-                e.target.style.height = `${newHeight}px`;
-              }}
-            />
-            <button
-              type="button"
-              className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-            >
-              <EmojiHappyIcon className="w-5 h-5 hover:text-gray-900" />
-            </button>
-          </div>
-          {!isActive && (
-            <div className="mx-2 flex">
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-              >
-                <CameraIcon className="w-5 h-5 hover:text-gray-900" />
-              </button>
-              <button
-                type="button"
-                className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-              >
-                <MicrophoneIcon className="w-5 h-5 hover:text-gray-900" />
-              </button>
-            </div>
-          )}
-          {isActive && (
-            <button
-              type="submit"
-              className="p-2 rounded-full transition duration-150 ease-in-out mx-2 border border-gray-500"
-              onClick={handleSendMessage}
-            >
-              <MdSend className="w-5 h-5" />
-            </button>
-          )}
-        </form>
+        <MessageInput
+          newMessage={newMessage}
+          handleInputChange={handleInputChange}
+          handleSendMessage={handleSendMessage}
+          isActive={isActive}
+          textareaRef={textareaRef}
+          handleInputFocus={handleInputFocus}
+          handleInputBlur={handleInputBlur}
+          keyboardHeight={keyboardHeight}
+          replyToMessage={replyToMessage}
+          setReplyToMessage={setReplyToMessage}
+        />
       </div>
-
-      {isReactionOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-          <div
-            className="fixed left-[50%] top-[100%] h-full z-50 w-full  translate-x-[-50%] translate-y-[-50%] gap-4 border border-slate-200 bg-gray-700 p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg dark:border-slate-800 dark:bg-slate-950"
-            ref={reactionMenuRef}
-          >
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1/5 h-2 bg-indigo-200 rounded-lg shadow-lg"></div>
-            <div className="flex justify-around space-x-4 py-3">
-              <div
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
-                onClick={() => handleAddReaction("👍")}
-              >
-                👍
-              </div>
-              <div
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-pink-500 hover:bg-pink-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
-                onClick={() => handleAddReaction("❤️")}
-              >
-                ❤️
-              </div>
-              <div
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-yellow-500 hover:bg-yellow-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
-                onClick={() => handleAddReaction("😄")}
-              >
-                😄
-              </div>
-              <div
-                className="flex items-center justify-center w-12 h-12 rounded-full bg-blue-500 hover:bg-blue-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
-                onClick={() => handleAddReaction("😮")}
-              >
-                😮
-              </div>
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-800 hover:bg-gray-700 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md">
-                <FaPlus />
-              </div>
-            </div>
-
-            <div className="mt-4 space-y-2">
-              <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
-                <ClipboardCopyIcon className="w-6 h-6 text-gray-400" />
-                <span className="text-gray-200 text-sm">Copy</span>
-              </button>
-              <button
-                onClick={() => handleReplyToMessage(selectedMessage)}
-                className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg"
-              >
-                <ReplyIcon className="w-6 h-6 text-gray-400" />
-                <span className="text-gray-200 text-sm">Reply</span>
-              </button>
-              <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
-                <FastForwardIcon className="w-6 h-6 text-gray-400" />
-                <span className="text-gray-200 text-sm">Forward</span>
-              </button>
-              <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
-                <SaveIcon className="w-6 h-6 text-gray-400" />
-                <span className="text-gray-200 text-sm">Save</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {isShareOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-          <div
-            className={`fixed w-full h-full gap-4 border border-slate-700 bg-gray-100 p-6 shadow-lg duration-200 sm:rounded-lg dark:bg-gray-100 overflow-auto`}
-          >
-            <button
-              className="absolute top-0 right-0 w-12 h-12 rounded-full hover:bg-gray-300 flex items-center justify-center transition duration-300 mt-2"
-              onClick={() => setIsShareOpen(false)}
-            >
-              <FaTimes />
-            </button>
-            <div className="grid grid-cols-3 gap-2">
-              {contacts.map((contact) => (
-                <div
-                  key={contact.id}
-                  className="flex flex-col items-center p-4"
-                >
-                  <div className="relative">
-                    <img
-                      src={contact.src}
-                      alt={contact.name}
-                      className="w-16 h-16 object-cover rounded-full border border-gray-700"
-                    />
-                    <span
-                      className={`absolute bottom-0 right-2 w-3 h-3 rounded-full ${
-                        contact.isActive ? "bg-green-500" : "bg-red-600"
-                      }`}
-                    />
-                  </div>
-                  <span className="text-xs mt-2 text-center">
-                    {contact.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
+
 }
 
 export default Chat;
