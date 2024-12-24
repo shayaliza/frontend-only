@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useRef, useEffect} from 'react';
 import {
   ClipboardCopyIcon,
   ReplyIcon,
@@ -8,26 +8,43 @@ import {
 import { FaPlus } from 'react-icons/fa';
 
 const ReactionMenu = ({
-  reactionMenuRef,
+  isReactionOpen,
+  setIsReactionOpen,
+  setIsShareOpen,
   handleAddReaction,
   handleReplyToMessage,
   selectedMessage,
 }) => {
+  console.log(selectedMessage);
+  const reactionMenuRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        reactionMenuRef.current &&
+        !reactionMenuRef.current.contains(event.target)
+      ) {
+        setIsReactionOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
+    <>
+    {isReactionOpen && (
     <div className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
       <div
-        className="fixed left-[50%] top-[100%] h-full z-50 w-full translate-x-[-50%] translate-y-[-50%] gap-4 border border-slate-200 bg-gray-700 p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg dark:border-slate-800 dark:bg-slate-950"
+        className="fixed left-[50%] top-[100%] h-full z-50 w-full translate-x-[-50%] translate-y-[-50%] gap-4 border border-slate-200 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg dark:border-slate-800 dark:bg-slate-950"
         ref={reactionMenuRef}
       >
-        {/* Top Indicator */}
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-1/5 h-2 bg-indigo-200 rounded-lg shadow-lg"></div>
-
-        {/* Emoji Reaction Options */}
         <div className="flex justify-around space-x-4 py-3">
           {['👍', '❤️', '😄', '😮'].map((emoji) => (
             <div
               key={emoji}
-              className="flex items-center justify-center w-12 h-12 rounded-full bg-green-500 hover:bg-green-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
+              className="flex items-center justify-center w-12 h-12 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-green-400 transition-transform duration-300 cursor-pointer text-2xl text-white transform hover:scale-110 shadow-md"
               onClick={() => handleAddReaction(emoji)}
             >
               {emoji}
@@ -38,30 +55,32 @@ const ReactionMenu = ({
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="mt-4 space-y-2">
-          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
-            <ClipboardCopyIcon className="w-6 h-6 text-gray-400" />
-            <span className="text-gray-200 text-sm">Copy</span>
+        <div className="mt-4 space-y-2 text-black dark:text-white">
+          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out"
+          onClick={() => navigator.clipboard.writeText(selectedMessage.content)}>
+            <ClipboardCopyIcon className="w-6 h-6 " />
+            <span className="text-sm">Copy</span>
           </button>
           <button
             onClick={() => handleReplyToMessage(selectedMessage)}
-            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg"
+            className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out"
           >
-            <ReplyIcon className="w-6 h-6 text-gray-400" />
-            <span className="text-gray-200 text-sm">Reply</span>
+            <ReplyIcon className="w-6 h-6" />
+            <span className="text-sm">Reply</span>
           </button>
-          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
-            <FastForwardIcon className="w-6 h-6 text-gray-400" />
-            <span className="text-gray-200 text-sm">Forward</span>
+          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out" onClick={() => setIsShareOpen(true)}>
+            <FastForwardIcon className="w-6 h-6" />
+            <span className="text-sm">Forward</span>
           </button>
-          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out shadow-lg">
-            <SaveIcon className="w-6 h-6 text-gray-400" />
-            <span className="text-gray-200 text-sm">Save</span>
+          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out">
+            <SaveIcon className="w-6 h-6 " />
+            <span className="text-sm">Save</span>
           </button>
         </div>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

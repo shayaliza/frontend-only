@@ -4,8 +4,10 @@ import { FaTimes } from "react-icons/fa";
 
 const ShareModal = ({ isShareOpen, setIsShareOpen, contacts }) => {
   return (
+    <>
+    {isShareOpen && (
     <div className="fixed inset-0 z-50 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0">
-      <div className="fixed w-full h-full gap-4 border border-slate-700 bg-gray-100 p-6 shadow-lg duration-200 sm:rounded-lg dark:bg-gray-100 overflow-auto">
+      <div className="fixed w-full h-full gap-4 border border-slate-700 bg-gray-100 dark:bg-slate-950 p-6 shadow-lg duration-200 sm:rounded-lg overflow-auto">
         <button
           className="absolute top-0 right-0 w-12 h-12 rounded-full hover:bg-gray-300 flex items-center justify-center transition duration-300 mt-2"
           onClick={() => setIsShareOpen(false)}
@@ -33,6 +35,8 @@ const ShareModal = ({ isShareOpen, setIsShareOpen, contacts }) => {
         </div>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

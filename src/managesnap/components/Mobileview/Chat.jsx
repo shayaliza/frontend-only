@@ -296,7 +296,6 @@ function Chat() {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [scrollButton, setScrollButton] = useState(false);
 
-  const reactionMenuRef = useRef(null);
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -357,23 +356,6 @@ function Chat() {
 
     fetchChatData();
   }, [type, id, location.state]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        reactionMenuRef.current &&
-        !reactionMenuRef.current.contains(event.target)
-      ) {
-        setIsReactionOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleNavigationBack = () => {
     navigate(type === "channel" ? "/managesnap/channels" : "/managesnap/dms");
@@ -452,21 +434,6 @@ function Chat() {
   //   scrollToBottom();
   // }, [messages]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        reactionMenuRef.current &&
-        !reactionMenuRef.current.contains(event.target)
-      ) {
-        setIsReactionOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
   
   const [swipedMessageId, setSwipedMessageId] = useState(null);
 
@@ -502,8 +469,6 @@ function Chat() {
   const handleInputBlur = () => {
     setIsActive(newMessage.trim() !== "");
   };
-
-  
   
   
   return (
@@ -525,9 +490,11 @@ function Chat() {
             {messages.map((message) => (
               <Message
                 key={message.id}
+                type={type}
                 message={message}
                 handleReplyToMessage={handleReplyToMessage}
                 messageReactions={messageReactions}
+                setIsReactionOpen={setIsReactionOpen}
                 setIsShareOpen={setIsShareOpen}
                 handleToggleReactions={handleToggleReactions}
                 longPressEvent={longPressEvent}
@@ -558,6 +525,9 @@ function Chat() {
           replyToMessage={replyToMessage}
           setReplyToMessage={setReplyToMessage}
         />
+
+        <ReactionMenu handleAddReaction={handleAddReaction} handleReplyToMessage={handleReplyToMessage} selectedMessage={selectedMessage} isReactionOpen={isReactionOpen} setIsReactionOpen={setIsReactionOpen} setIsShareOpen={setIsShareOpen}/>
+        <ShareModal isShareOpen={isShareOpen} setIsShareOpen={setIsShareOpen} contacts={contacts}/>
       </div>
     </>
   );
