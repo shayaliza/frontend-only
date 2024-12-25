@@ -17,7 +17,7 @@ const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
           </div>
           <div className="flex items-center space-x-4 text-black dark:text-white">
             <Search className='w-6 h-6'/>
-          <input type="text" name="" id="" className='focus:outline-none bg-transparent' placeholder='search for messages..' />
+          <input type="text" name="" id="" className='focus:outline-none bg-transparent max-w-[200px]' placeholder='search for messages..' />
           </div>
           <div className="flex space-x-4 items-center">
             <ChevronUp/>

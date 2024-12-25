@@ -12,6 +12,7 @@ import img1 from "../../assets/man1.jpg";
 import img2 from "../../assets/man2.jpg";
 import img3 from "../../assets/man3.jpg";
 import img4 from "../../assets/women1.jpg";
+import { ChevronDownIcon } from "lucide-react";
 
 const contacts = [
   {
@@ -277,6 +278,12 @@ const dummyMessages = [
     content: "Awesome, thanks!",
     timestamp: "2024-08-17T10:19:00Z",
   },
+  {
+    sender: "Yaswanth",
+    content: "ok! Good night.",
+    timestamp: "2024-08-17T10:18:00Z",
+    imageUrl: "https://example.com/file.png",
+  },
 ];
 
 function Chat() {
@@ -285,7 +292,9 @@ function Chat() {
   const location = useLocation();
   const [chatInfo, setChatInfo] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [messageInput, setMessageInput] = useState("");
   const [newMessage, setNewMessage] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [isReactionOpen, setIsReactionOpen] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [replyToMessage, setReplyToMessage] = useState(null);
@@ -295,6 +304,9 @@ function Chat() {
   const [messageReactions, setMessageReactions] = useState({});
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [scrollButton, setScrollButton] = useState(false);
+  const [editingMessageId, setEditingMessageId] = useState(false);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [ourMessages, setOurMessages] = useState([]);
 
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -317,6 +329,32 @@ function Chat() {
       setIsReactionOpen(false);
     }
   };
+
+  const lastMessage = messages
+    .filter((message) => message.sender === "You")
+    .pop();
+
+  useEffect(() => {
+    return () => {
+      selectedFiles.forEach((file) => {
+        if (file.preview) URL.revokeObjectURL(file.preview);
+        if (file.url) URL.revokeObjectURL(file.url);
+      });
+    };
+  }, [selectedFiles]);
+
+  useEffect(() => {
+    return () => {
+      messages.forEach((message) => {
+        if (message.fileUrl?.startsWith("blob:")) {
+          URL.revokeObjectURL(message.fileUrl);
+        }
+        if (message.imageUrl?.startsWith("blob:")) {
+          URL.revokeObjectURL(message.imageUrl);
+        }
+      });
+    };
+  }, [messages]);
 
   useEffect(() => {
     if (shouldScrollToBottom) {
@@ -361,32 +399,80 @@ function Chat() {
     navigate(type === "channel" ? "/managesnap/channels" : "/managesnap/dms");
   };
 
+  const handleFocusMessage = (messageId) => {
+    setSelectedMessageId(messageId);
+    setTimeout(() => {
+      const element = document.getElementById(`message-${messageId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "auto", block: "center" });
+      }
+    }, 0);
+    setHighlightDuration(3);
+
+    setTimeout(() => {
+      setSelectedMessageId(null);
+    }, 3000);
+  };
 
   const handleSendMessage = () => {
-    if (newMessage.trim()) {
-      const newMessageObj = {
-        id: messages.length + 1,
-        content: newMessage,
-        sender: "You",
-        timestamp: new Date().toISOString(),
-        replyTo: replyToMessage
-          ? {
-              id: replyToMessage.id,
-              sender: replyToMessage.sender,
-              content: replyToMessage.content,
-              imageUrl: replyToMessage.imageUrl,
-              timestamp: replyToMessage.timestamp,
-            }
-          : null,
-      };
+    setShouldScrollToBottom(true);
 
-      setMessages([...messages, newMessageObj]);
+    if (editingMessageId) {
+      setMessages(messages.map(msg => {
+        if (msg.id === editingMessageId) {
+          return {
+            ...msg,
+            content: newMessage,
+            timestamp:new Date().toISOString(),
+            edited: true
+          };
+        }
+        return msg;
+      }));
+      
+      // Reset editing state
+      setEditingMessageId(null);
       setNewMessage("");
-      setIsActive(false);
-      setReplyToMessage(null);
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
       }
+      return;
+    }
+  
+    // Handle new message
+    if (!newMessage.trim() && selectedFiles.length === 0) return;
+  
+    const newMessageObj = {
+      id: messages.length + 1,
+      content: newMessage,
+      sender: "You",
+      timestamp: new Date().toISOString(),
+      isPinned:false,
+      replyTo: replyToMessage ? {
+        id: replyToMessage.id,
+        sender: replyToMessage.sender,
+        content: replyToMessage.content,
+        imageUrl: replyToMessage.imageUrl,
+        timestamp: replyToMessage.timestamp,
+      } : null,
+    };
+  
+    setMessages([...messages, newMessageObj]);
+    setNewMessage("");
+    setIsActive(false);
+    setReplyToMessage(null);
+    
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+    }
+  };
+
+  const handleEdit = (messageId, content) => {
+    setEditingMessageId(messageId);
+    setNewMessage(content);
+    setIsReactionOpen(false);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
     }
   };
 
@@ -395,17 +481,42 @@ function Chat() {
     setIsReactionOpen(true);
   }, []);
 
-
   const longPressEvent = useLongPress(
     (message) => handleToggleReactions(message),
     500
   );
 
-  
-
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
+
+  useEffect(() => {
+    if (shouldScrollToBottom) {
+      scrollToBottom();
+      setShouldScrollToBottom(false);
+    }
+  }, [messages, shouldScrollToBottom]);
+
+  useEffect(() => {
+    const container = chatContainerRef.current;
+
+    const handleScroll = () => {
+      if (!container) return;
+
+      const isAtBottom =
+        container.scrollHeight - container.scrollTop <=
+        container.clientHeight + 100;
+      const hasScrollableContent =
+        container.scrollHeight > container.clientHeight;
+
+      setScrollButton(hasScrollableContent && !isAtBottom);
+    };
+
+    container?.addEventListener("scroll", handleScroll);
+    return () => container?.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if ("virtualKeyboard" in navigator) {
@@ -430,17 +541,13 @@ function Chat() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
-
-  
-  const [swipedMessageId, setSwipedMessageId] = useState(null);
-
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setNewMessage(value);
+    setNewMessage(value); 
     setIsActive(value.trim() !== "");
     e.target.style.height = "auto";
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -469,46 +576,58 @@ function Chat() {
   const handleInputBlur = () => {
     setIsActive(newMessage.trim() !== "");
   };
-  
-  
+
   return (
     <>
-      <div className={`flex flex-col text-gray-800 dark:text-gray-200 ${
-        isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-      } min-h-screen pb-20 pt-4`}>
-        <ChatHeader 
+      <div
+        className={`flex flex-col text-gray-800 dark:text-gray-200 ${
+          isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
+        } min-h-screen pb-20 pt-4`}
+      >
+        <ChatHeader
           type={type}
           chatInfo={chatInfo}
           handleNavigationBack={handleNavigationBack}
           navigate={navigate}
         />
 
-        <div className={`flex-grow ${
-          isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-        } px-4 pt-14 pb-2 mt-4`}>
-          <div className="relative space-y-1 overflow-x-auto" ref={chatContainerRef}>
-            {messages.map((message) => (
-              <Message
-                key={message.id}
-                type={type}
-                message={message}
-                handleReplyToMessage={handleReplyToMessage}
-                messageReactions={messageReactions}
-                setIsReactionOpen={setIsReactionOpen}
-                setIsShareOpen={setIsShareOpen}
-                handleToggleReactions={handleToggleReactions}
-                longPressEvent={longPressEvent}
-              />
-            ))}
-            <ScrollToBottomButton 
-              visible={scrollButton}
-              onClick={() => setShouldScrollToBottom(true)}
+        <div
+          className={`flex-grow ${
+            isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
+          } px-4 pt-10 mt-4`}
+          ref={chatContainerRef}
+        >
+          {messages.map((message, index) => (
+            <Message
+              key={message.id}
+              type={type}
+              message={message}
+              handleReplyToMessage={handleReplyToMessage}
+              isLastMessage={lastMessage?.id === message.id}
+              messageReactions={messageReactions}
+              setMessageReactions={setMessageReactions}
+              setIsReactionOpen={setIsReactionOpen}
+              setIsShareOpen={setIsShareOpen}
+              handleToggleReactions={handleToggleReactions}
+              longPressEvent={longPressEvent}
+              scrollToBottom={scrollToBottom}
+              handleAddReaction={handleAddReaction}
+              selectedMessage={selectedMessage}
             />
-          </div>
+          ))}
+
+          {scrollButton && (
+            <div
+              className="fixed bottom-32 right-16 z-[999] w-10 h-10 bg-gray-300 dark:bg-gray-500 rounded-full shadow-md flex items-center justify-center cursor-pointer"
+              onClick={() => setShouldScrollToBottom(true)}
+            >
+              <ChevronDownIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </div>
+          )}
           <div ref={messagesEndRef} />
         </div>
 
-        <ReplyPreview 
+        <ReplyPreview
           replyToMessage={replyToMessage}
           setReplyToMessage={setReplyToMessage}
         />
@@ -524,14 +643,26 @@ function Chat() {
           keyboardHeight={keyboardHeight}
           replyToMessage={replyToMessage}
           setReplyToMessage={setReplyToMessage}
+          editingMessageId={editingMessageId}
         />
 
-        <ReactionMenu handleAddReaction={handleAddReaction} handleReplyToMessage={handleReplyToMessage} selectedMessage={selectedMessage} isReactionOpen={isReactionOpen} setIsReactionOpen={setIsReactionOpen} setIsShareOpen={setIsShareOpen}/>
-        <ShareModal isShareOpen={isShareOpen} setIsShareOpen={setIsShareOpen} contacts={contacts}/>
+        <ReactionMenu
+          handleAddReaction={handleAddReaction}
+          handleReplyToMessage={handleReplyToMessage}
+          selectedMessage={selectedMessage}
+          isReactionOpen={isReactionOpen}
+          setIsReactionOpen={setIsReactionOpen}
+          setIsShareOpen={setIsShareOpen}
+          onEdit={handleEdit}
+        />
+        <ShareModal
+          isShareOpen={isShareOpen}
+          setIsShareOpen={setIsShareOpen}
+          contacts={contacts}
+        />
       </div>
     </>
   );
-
 }
 
 export default Chat;

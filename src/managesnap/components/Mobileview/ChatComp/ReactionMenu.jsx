@@ -6,6 +6,7 @@ import {
   SaveIcon,
 } from '@heroicons/react/outline';
 import { FaPlus } from 'react-icons/fa';
+import { Edit, ForwardIcon } from 'lucide-react';
 
 const ReactionMenu = ({
   isReactionOpen,
@@ -14,8 +15,9 @@ const ReactionMenu = ({
   handleAddReaction,
   handleReplyToMessage,
   selectedMessage,
+  onEdit,
+  message
 }) => {
-  console.log(selectedMessage);
   const reactionMenuRef = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,11 +71,11 @@ const ReactionMenu = ({
             <span className="text-sm">Reply</span>
           </button>
           <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out" onClick={() => setIsShareOpen(true)}>
-            <FastForwardIcon className="w-6 h-6" />
+            <ForwardIcon className="w-6 h-6" />
             <span className="text-sm">Forward</span>
           </button>
-          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out">
-            <SaveIcon className="w-6 h-6 " />
+          <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out" onClick={() => onEdit(selectedMessage.id, selectedMessage.content)}>
+            <Edit className="w-6 h-6 " />
             <span className="text-sm">Save</span>
           </button>
         </div>

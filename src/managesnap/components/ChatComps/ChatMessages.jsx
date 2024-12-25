@@ -295,37 +295,40 @@ export default function ChatMessage({
             onClose={() => setForwardOpen(false)}
           />
 
-<div
-  className={`absolute top-0 ${isCurrentUser ? "right-72" : "left-0"} z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border`}
-  style={{
-    transform: isCurrentUser ? "translateY(-100%) translateX(100%)" : "translateY(-100%)",
-  }}
->
-  <div className="border-r border-gray-500">
-    <ReactionPicker onReact={handleReaction} />
-  </div>
-  <ReplyIcon
-    className="cursor-pointer w-5 h-5"
-    onClick={(e) => {
-      e.preventDefault();
-      onReply(message);
-    }}
-  />
-  <ForwardIcon
-    className="ml-2 cursor-pointer w-5 h-5"
-    onClick={() => setForwardOpen(true)}
-  />
-  <MessageOptions
-    message={message}
-    onReply={onReply}
-    onDelete={onDelete}
-    onEdit={onEdit}
-    onPin={onPin}
-    isCurrentUser={isCurrentUser}
-    forwardOpen={forwardOpen}
-  />
-</div>
-
+          <div
+            className={`absolute top-0 ${
+              isCurrentUser ? "right-72" : "left-0"
+            } z-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 mb-1 rounded-full bg-white dark:bg-gray-800 shadow-lg border`}
+            style={{
+              transform: isCurrentUser
+                ? "translateY(-100%) translateX(100%)"
+                : "translateY(-100%)",
+            }}
+          >
+            <div className="border-r border-gray-500">
+              <ReactionPicker onReact={handleReaction} />
+            </div>
+            <ReplyIcon
+              className="cursor-pointer w-5 h-5"
+              onClick={(e) => {
+                e.preventDefault();
+                onReply(message);
+              }}
+            />
+            <ForwardIcon
+              className="ml-2 cursor-pointer w-5 h-5"
+              onClick={() => setForwardOpen(true)}
+            />
+            <MessageOptions
+              message={message}
+              onReply={onReply}
+              onDelete={onDelete}
+              onEdit={onEdit}
+              onPin={onPin}
+              isCurrentUser={isCurrentUser}
+              forwardOpen={forwardOpen}
+            />
+          </div>
         </div>
       </div>
     </div>

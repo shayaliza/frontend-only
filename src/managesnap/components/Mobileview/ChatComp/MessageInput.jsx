@@ -26,6 +26,8 @@ const MessageInput = ({
   handleInputFocus,
   handleInputBlur,
   keyboardHeight,
+  editingMessageId,
+  messages,
   replyToMessage,
   setReplyToMessage,
 }) => {
@@ -72,7 +74,9 @@ const MessageInput = ({
           ref={textareaRef}
           id="message-textarea"
           className="flex-grow outline-none p-1 rounded-sm text-sm border border-gray-500 resize-none overflow-y-auto bg-transparent"
-          placeholder="Type a message"
+          placeholder={
+            editingMessageId ? "Edit your message..." : "Type your message..."
+          }
           value={newMessage}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
@@ -81,7 +85,7 @@ const MessageInput = ({
             minHeight: "1px",
             maxHeight: "100px",
             overflowY: "auto",
-            paddingBottom: keyboardHeight,
+            // paddingBottom: keyboardHeight,
           }}
           onInput={(e) => {
             e.target.style.height = "auto";

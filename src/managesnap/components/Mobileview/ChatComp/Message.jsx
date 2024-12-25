@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Share2, Reply, Forward } from "lucide-react";
+import { MessageSquare, X, Share2, Reply, Forward, Eye } from "lucide-react";
 import ReactionMenu from "./ReactionMenu";
+import img1 from "../../../assets/man1.jpg";
 
 const Message = ({
   message,
   handleToggleReactions,
   messageReactions,
+  setMessageReactions,
   setIsShareOpen,
   type,
   handleReplyToMessage,
+  isLastMessage,
 }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
@@ -113,20 +116,17 @@ const Message = ({
 
   return (
     <div
-      className={`flex flex-col space-y-1 ${
+      className={`flex flex-col space-y-1 overflow-x-hidden ${
         isOwnMessage && type === "dm" ? "items-end" : "items-start"
       }`}
     >
-      {!isOwnMessage && type === "channel" && (
+      {type === "channel" && (
+      <div className="flex space-x-2 items-center">
+      <img src={img1} className="w-8 h-8 rounded-full"/>
         <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
           {message.sender}
         </span>
-      )}
-
-      {isOwnMessage && type === "channel" && (
-        <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
-          {message.sender}
-        </span>
+        </div>
       )}
 
       <div className="relative max-w-[85%]">
@@ -134,7 +134,7 @@ const Message = ({
           <div
             className={`rounded-t-lg px-2  py-1 -mb-1 text-sm ${
               isOwnMessage
-                ? "bg-green-700 text-white"
+                ? "bg-green-700 text-white mr-6"
                 : "bg-gray-200 dark:bg-gray-700"
             }`}
           >
@@ -147,128 +147,135 @@ const Message = ({
         )}
 
         <div className="flex space-x-2 items-center">
-        <div
-          ref={messageRef}
-          className={`relative p-2 rounded-lg ${
-            messageReactions[message.id] ? "mb-9" : ""
-          } ${message.replyTo ? "rounded-t-none" : ""} ${
-            isOwnMessage
-              ? "bg-green-600 text-white"
-              : "bg-gray-100 dark:bg-gray-700"
-          }`}
-          style={{
-            transform: `translateX(${swipeDistance}px)`,
-            willChange: "transform",
-            touchAction: "pan-y",
-            transition:
-              swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
           <div
-            className="absolute left-0 top-1/2 pointer-events-none"
+            ref={messageRef}
+            className={`w-full relative p-2 mb-1 rounded-lg ${
+              messageReactions[message.id] ? "mb-9" : ""
+            } ${message.replyTo ? "rounded-t-none" : ""} ${
+              isOwnMessage
+                ? "bg-green-600 text-white mr-6 rounded-br-none"
+                : "bg-gray-100 dark:bg-gray-700 rounded-bl-none"
+            }
+            ${type==="channel" ? "ml-10" : ""}
+           `}
             style={{
-              transform: `translate(-${24 + swipeDistance * 0.1}px, -50%)`,
-              opacity: Math.min(swipeDistance / REPLY_TRIGGER_THRESHOLD, 1),
-              visibility: swipeDistance > 0 ? "visible" : "hidden",
+              transform: `translateX(${swipeDistance}px)`,
+              willChange: "transform",
+              touchAction: "pan-y",
+              transition:
+                swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
             }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
-            <Reply
-              className="w-5 h-5 text-gray-700"
-              style={{
-                transform: `scale(${Math.min(
-                  swipeDistance / REPLY_TRIGGER_THRESHOLD,
-                  1
-                )})`,
-                transition:
-                  swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
-              }}
-            />
-          </div>
-
-          <div className="relative">
-            <p className="mb-1 break-words whitespace-pre-wrap">
-              {message.content}
-            </p>
-
-            {message.imageUrl && (
-              <img
-                src={message.imageUrl}
-                alt="Message attachment"
-                className="max-w-full rounded-lg mt-2"
-                loading="lazy"
-              />
-            )}
-
-            {message.url && (
-              <a
-                href={message.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline break-all"
-              >
-                {message.url}
-              </a>
-            )}
-
-            <div className="flex items-center justify-end space-x-1 mt-1">
-              <span className="text-xs opacity-60">
-                {getMessageTime(message.timestamp)}
-              </span>
-              {isOwnMessage && <span className="text-xs opacity-60">✓✓</span>}
-            </div>
-          </div>
-
-          {messageReactions[message.id] && (
             <div
-              className={`absolute bottom-[-25px] ${
-                message.sender === "You" ? "right-0" : "left-0"
-              } flex flex-shrink-0 space-x-1 z-10 bg-white dark:bg-gray-700 p-1 rounded-full pb-2 shadow-md`}
+              className="absolute left-0 top-1/2 pointer-events-none"
               style={{
-                bottom:
-                  messageReactions[message.id].length > 0 ? "-35px" : "auto",
+                transform: `translate(-${24 + swipeDistance * 0.1}px, -50%)`,
+                opacity: Math.min(swipeDistance / REPLY_TRIGGER_THRESHOLD, 1),
+                visibility: swipeDistance > 0 ? "visible" : "hidden",
               }}
             >
-              {messageReactions[message.id].map((reaction, index) => (
-                <span
-                  key={index}
-                  className="text-lg cursor-pointer hover:scale-125 transition-transform"
-                  onClick={() => {
-                    setMessageReactions((prev) => {
-                      const currentReactions = prev[message.id] || [];
-                      const updatedReactions = currentReactions.filter(
-                        (r) => r !== reaction
-                      );
-
-                      return {
-                        ...prev,
-                        [message.id]:
-                          updatedReactions.length > 0
-                            ? updatedReactions
-                            : undefined,
-                      };
-                    });
-                  }}
-                >
-                  {reaction}
-                </span>
-              ))}
+              <Reply
+                className="w-5 h-5 text-gray-700"
+                style={{
+                  transform: `scale(${Math.min(
+                    swipeDistance / REPLY_TRIGGER_THRESHOLD,
+                    1
+                  )})`,
+                  transition:
+                    swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
+                }}
+              />
             </div>
+
+            <div className="relative">
+              <p className="mb-1 break-words whitespace-pre-wrap">
+                {message.content}
+              </p>
+
+              {message.imageUrl && (
+                <img
+                  src={message.imageUrl}
+                  alt="Message attachment"
+                  className="max-w-full rounded-lg mt-2"
+                  loading="lazy"
+                />
+              )}
+
+              {message.url && (
+                <a
+                  href={message.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline break-all"
+                >
+                  {message.url}
+                </a>
+              )}
+
+              <div className="flex items-center justify-end space-x-1 mt-1">
+              {message.edited && (
+                <p className="text-xs break-words whitespace-pre-wrap opacity-60">edited</p>
+              )}
+                <span className="text-xs opacity-60">
+                  {getMessageTime(message.timestamp)}
+                </span>
+              </div>
+            </div>
+
+            {messageReactions[message.id] && (
+              <div
+                className={`absolute ${
+                  message.sender === "You" ? "right-0" : "left-0"
+                } flex flex-shrink-0 z-10 bg-gray-50 dark:bg-gray-700 p-1 rounded-full shadow-md`}
+                style={{
+                  bottom:
+                    messageReactions[message.id].length > 0 ? "-30px" : "auto",
+                }}
+              >
+                {messageReactions[message.id].map((reaction, index) => (
+                  <span
+                    key={index}
+                    className="text-lg cursor-pointer hover:scale-125 transition-transform"
+                    onClick={() => {
+                      setMessageReactions((prev) => {
+                        const currentReactions = prev[message.id] || [];
+                        const updatedReactions = currentReactions.filter(
+                          (r) => r !== reaction
+                        );
+
+                        return {
+                          ...prev,
+                          [message.id]:
+                            updatedReactions.length > 0
+                              ? updatedReactions
+                              : undefined,
+                        };
+                      });
+                    }}
+                  >
+                    {reaction}
+                  </span>
+                ))}
+              </div>
+            )}
+            {isOwnMessage && isLastMessage && type === "dm" && (
+              <Eye className="absolute -right-6 bottom-0 w-4 h-4 text-black" />
+            )}
+          </div>
+          {!isOwnMessage && message.imageUrl && (
+            <Forward className="w-6 h-6" onClick={() => setIsShareOpen(true)} />
           )}
         </div>
-        {!isOwnMessage && message.imageUrl && (
-        <Forward className="w-6 h-6" onClick={() => setIsShareOpen(true)} />
-      )}
-        </div>
 
-        <button
+        {/* <button
           className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
           onClick={() => setIsShareOpen(true)}
         >
           <Share2 className="w-4 h-4 text-gray-500" />
-        </button>
+        </button> */}
       </div>
     </div>
   );
