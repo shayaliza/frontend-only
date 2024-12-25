@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Camera, Contact, FileIcon, Image, Plus, Sticker } from "lucide-react";
 import { FaPoll } from "react-icons/fa";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const MessageInput = ({
   newMessage,
@@ -32,14 +32,23 @@ const MessageInput = ({
   setReplyToMessage,
 }) => {
   const fileInputRef = useRef(null);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    const checkIsIOS = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+    setIsIOS(checkIsIOS());
+  }, []);
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         handleSendMessage();
       }}
-      className="flex items-center bg-white dark:bg-black pt-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background"
-      style={{ paddingBottom: keyboardHeight + 8 }}
+      className={`flex items-center bg-white dark:bg-black pt-3 ${isIOS ? "pb-6" : "pb-2"} fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
+      // style={{ paddingBottom: keyboardHeight + 8 }}
     >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

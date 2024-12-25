@@ -614,7 +614,7 @@ function Home() {
             ))}
           </div>
 
-          <div className="sticky -top-[0px] lg:relative flex space-x-1 overflow-x-auto p-2 lg:py-4 px-8 bg-gray-50 dark:bg-black">
+          <div className="sticky top-[64px] lg:relative flex space-x-1 overflow-x-auto p-2 lg:py-4 px-8 bg-gray-50 dark:bg-black">
             {tabs.map((tab) => (
               <Tab
                 key={tab.id}

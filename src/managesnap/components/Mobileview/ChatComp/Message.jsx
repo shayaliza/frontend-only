@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Share2, Reply, Forward, Eye } from "lucide-react";
+import { MessageSquare, X, Share2, Reply, Forward, Eye, Clock } from "lucide-react";
 import ReactionMenu from "./ReactionMenu";
 import img1 from "../../../assets/man1.jpg";
 
@@ -15,6 +15,7 @@ const Message = ({
 }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
+  const [showingTime, setShowingTime] = useState(false);
   const [startX, setStartX] = useState(0);
   const [swipeDistance, setSwipeDistance] = useState(0);
   const messageRef = useRef(null);
@@ -25,16 +26,18 @@ const Message = ({
   const MIN_SWIPE_DISTANCE = 35;
   const MAX_SWIPE_DISTANCE = 100;
   const REPLY_TRIGGER_THRESHOLD = 45;
+  const TIME_TRIGGER_THRESHOLD = 45;
 
   const calculateSwipeDistance = (deltaX) => {
-    if (deltaX <= MIN_SWIPE_DISTANCE) {
+    const absDeltaX = Math.abs(deltaX);
+    if (absDeltaX <= MIN_SWIPE_DISTANCE) {
       return deltaX * 0.95;
-    } else if (deltaX <= REPLY_TRIGGER_THRESHOLD) {
-      const excess = deltaX - MIN_SWIPE_DISTANCE;
-      return MIN_SWIPE_DISTANCE + excess * 0.7;
+    } else if (absDeltaX <= (deltaX > 0 ? REPLY_TRIGGER_THRESHOLD : TIME_TRIGGER_THRESHOLD)) {
+      const excess = absDeltaX - MIN_SWIPE_DISTANCE;
+      return Math.sign(deltaX) * (MIN_SWIPE_DISTANCE + excess * 0.7);
     } else {
-      const excess = deltaX - REPLY_TRIGGER_THRESHOLD;
-      return REPLY_TRIGGER_THRESHOLD + excess * 0.3;
+      const excess = absDeltaX - (deltaX > 0 ? REPLY_TRIGGER_THRESHOLD : TIME_TRIGGER_THRESHOLD);
+      return Math.sign(deltaX) * ((deltaX > 0 ? REPLY_TRIGGER_THRESHOLD : TIME_TRIGGER_THRESHOLD) + excess * 0.3);
     }
   };
 
@@ -49,6 +52,7 @@ const Message = ({
     longPressTimer.current = setTimeout(() => {
       handleToggleReactions(message);
       setIsReplying(false);
+      setShowingTime(false);
       setSwipeDistance(0);
     }, LONG_PRESS_DURATION);
   };
@@ -59,23 +63,25 @@ const Message = ({
     const touch = e.touches[0];
     const deltaX = touch.clientX - startX;
 
-    if (message.sender && deltaX > 0) {
-      const dampedDelta = calculateSwipeDistance(deltaX);
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-
-      animationFrameRef.current = requestAnimationFrame(() => {
-        setSwipeDistance(Math.min(dampedDelta, MAX_SWIPE_DISTANCE));
-
-        if (dampedDelta > REPLY_TRIGGER_THRESHOLD && !isReplying) {
-          setIsReplying(true);
-          navigator.vibrate?.(1);
-          handleReplyToMessage(message);
-        }
-      });
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
     }
+
+    animationFrameRef.current = requestAnimationFrame(() => {
+      const dampedDelta = calculateSwipeDistance(deltaX);
+      setSwipeDistance(Math.min(Math.max(dampedDelta, -MAX_SWIPE_DISTANCE), MAX_SWIPE_DISTANCE));
+
+      if (deltaX > 0 && dampedDelta > REPLY_TRIGGER_THRESHOLD && !isReplying) {
+        setIsReplying(true);
+        setShowingTime(false);
+        navigator.vibrate?.(1);
+        handleReplyToMessage(message);
+      } else if (deltaX < 0 && Math.abs(dampedDelta) > TIME_TRIGGER_THRESHOLD && !showingTime) {
+        setShowingTime(true);
+        setIsReplying(false);
+        navigator.vibrate?.(1);
+      }
+    });
 
     if (Math.abs(deltaX) > 5) {
       clearTimeout(longPressTimer.current);
@@ -85,10 +91,11 @@ const Message = ({
   const handleTouchEnd = () => {
     clearTimeout(longPressTimer.current);
 
-    if (swipeDistance > 0) {
+    if (swipeDistance !== 0) {
       requestAnimationFrame(() => {
         setSwipeDistance(0);
-        if (swipeDistance <= REPLY_TRIGGER_THRESHOLD) {
+        if (Math.abs(swipeDistance) <= TIME_TRIGGER_THRESHOLD) {
+          setShowingTime(false);
           setIsReplying(false);
         }
       });
@@ -98,8 +105,7 @@ const Message = ({
   useEffect(() => {
     return () => {
       if (longPressTimer.current) clearTimeout(longPressTimer.current);
-      if (animationFrameRef.current)
-        cancelAnimationFrame(animationFrameRef.current);
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
@@ -121,18 +127,18 @@ const Message = ({
       }`}
     >
       {type === "channel" && (
-      <div className="flex space-x-2 items-center">
-      <img src={img1} className="w-8 h-8 rounded-full"/>
-        <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
-          {message.sender}
-        </span>
+        <div className="flex space-x-2 items-center">
+          <img src={img1} className="w-8 h-8 rounded-full" alt="Profile" />
+          <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
+            {message.sender}
+          </span>
         </div>
       )}
 
       <div className="relative max-w-[85%]">
         {message.replyTo && (
           <div
-            className={`rounded-t-lg px-2  py-1 -mb-1 text-sm ${
+            className={`rounded-t-lg px-2 py-1 -mb-1 text-sm ${
               isOwnMessage
                 ? "bg-green-700 text-white mr-6"
                 : "bg-gray-200 dark:bg-gray-700"
@@ -156,14 +162,13 @@ const Message = ({
                 ? "bg-green-600 text-white mr-6 rounded-br-none"
                 : "bg-gray-100 dark:bg-gray-700 rounded-bl-none"
             }
-            ${type==="channel" ? "ml-10" : ""}
+            ${type === "channel" ? "ml-10" : ""}
            `}
             style={{
               transform: `translateX(${swipeDistance}px)`,
               willChange: "transform",
               touchAction: "pan-y",
-              transition:
-                swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
+              transition: swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
             }}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -178,16 +183,43 @@ const Message = ({
               }}
             >
               <Reply
-                className="w-5 h-5 text-gray-700"
+                className="w-5 h-5 text-gray-500"
                 style={{
                   transform: `scale(${Math.min(
                     swipeDistance / REPLY_TRIGGER_THRESHOLD,
                     1
                   )})`,
-                  transition:
-                    swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
+                  transition: swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
                 }}
               />
+            </div>
+            <div
+              className="absolute -right-12 top-1/2 flex space-x-2 items-center pointer-events-none"
+              style={{
+                transform: `translate(${24 - swipeDistance * 0.1}px, -50%)`,
+                opacity: Math.min(Math.abs(swipeDistance) / TIME_TRIGGER_THRESHOLD, 1),
+                visibility: swipeDistance < 0 ? "visible" : "hidden",
+              }}
+            >
+              <Clock
+                className="w-5 h-5 text-gray-700 dark:text-gray-200"
+                style={{
+                  transform: `scale(${Math.min(
+                    Math.abs(swipeDistance) / TIME_TRIGGER_THRESHOLD,
+                    1
+                  )})`,
+                  transition: swipeDistance === 0 ? "transform 0.2s ease-out" : "none",
+                }}
+              />
+              <span 
+                  className="text-xs opacity-60 text-gray-700 dark:text-gray-200"
+                  style={{
+                    opacity: showingTime ? 1 : 0,
+                    transition: "opacity 0.2s ease-out"
+                  }}
+                >
+                  {getMessageTime(message.timestamp)}
+                </span>
             </div>
 
             <div className="relative">
@@ -216,12 +248,11 @@ const Message = ({
               )}
 
               <div className="flex items-center justify-end space-x-1 mt-1">
-              {message.edited && (
-                <p className="text-xs break-words whitespace-pre-wrap opacity-60">edited</p>
-              )}
-                <span className="text-xs opacity-60">
-                  {getMessageTime(message.timestamp)}
-                </span>
+                {message.edited && (
+                  <p className="text-xs break-words whitespace-pre-wrap opacity-60">
+                    edited
+                  </p>
+                )}
               </div>
             </div>
 
@@ -231,8 +262,7 @@ const Message = ({
                   message.sender === "You" ? "right-0" : "left-0"
                 } flex flex-shrink-0 z-10 bg-gray-50 dark:bg-gray-700 p-1 rounded-full shadow-md`}
                 style={{
-                  bottom:
-                    messageReactions[message.id].length > 0 ? "-30px" : "auto",
+                  bottom: messageReactions[message.id].length > 0 ? "-30px" : "auto",
                 }}
               >
                 {messageReactions[message.id].map((reaction, index) => (
@@ -262,20 +292,13 @@ const Message = ({
               </div>
             )}
             {isOwnMessage && isLastMessage && type === "dm" && (
-              <Eye className="absolute -right-5 bottom-0 w-4 h-4 text-black" />
+              <Eye className="absolute -right-5 bottom-0 w-3 h-3 text-black dark:text-white mr-1" />
             )}
           </div>
           {!isOwnMessage && message.imageUrl && (
             <Forward className="w-6 h-6" onClick={() => setIsShareOpen(true)} />
           )}
         </div>
-
-        {/* <button
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-          onClick={() => setIsShareOpen(true)}
-        >
-          <Share2 className="w-4 h-4 text-gray-500" />
-        </button> */}
       </div>
     </div>
   );

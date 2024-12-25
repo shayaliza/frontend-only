@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
 
 import DataSnapLayout from "@/datasnap/components/Layout";
+import BBLayout from "../datasnap/components/BBLayout";
 import BlogHome from "@/datasnap/components/Home";
 import BlogExplore from "@/datasnap/components/Explore";
 import BlogDrafts from "@/datasnap/components/Drafts";
@@ -22,27 +23,62 @@ import Privacy from "../datasnap/components/Settings/Privacy";
 import Preferences from "../datasnap/components/Settings/Preferences";
 import Notify from "../datasnap/components/Settings/Notify";
 export default function DataSnapRoutes() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <Routes>
-      <Route path="/datasnap" element={<DataSnapLayout />}>
-        <Route index element={<Navigate to="home" replace />} />
-        <Route path="home" element={<BlogHome />} />
-        <Route path="explore" element={<BlogExplore />} />
-        <Route path="drafts" element={<BlogDrafts />} />
-        <Route path="published" element={<BlogPublised />} />
-        <Route path="bookmarks" element={<BlogBookmarks />} />
-        <Route path="notifications" element={<BlogNotifications />} />
-        <Route path="details" element={<BlogDetails />} />
-        <Route path="settings" element={<BlogSettings />}>
-        <Route index element={<Navigate to="account" replace />} />
-          <Route path="account" element={<Account />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="privacy" element={<Privacy />} />
-          <Route path="preferences" element={<Preferences />} />
-          <Route path="notifications" element={<Notify />} />
+      {isMobile ? (
+        <Route path="/datasnap" element={<BBLayout />}>
+          <Route index element={<Navigate to="home" replace />} />
+          <Route path="home" element={<BlogHome />} />
+          <Route path="explore" element={<BlogExplore />} />
+          <Route path="drafts" element={<BlogDrafts />} />
+          <Route path="published" element={<BlogPublised />} />
+          <Route path="bookmarks" element={<BlogBookmarks />} />
+          <Route path="notifications" element={<BlogNotifications />} />
+          <Route path="details" element={<BlogDetails />} />
+          <Route path="settings" element={<BlogSettings />}>
+            <Route index element={<Navigate to="account" replace />} />
+            <Route path="account" element={<Account />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="preferences" element={<Preferences />} />
+            <Route path="notifications" element={<Notify />} />
+          </Route>
+          <Route path="/datasnap/:id" element={<BlogComments />} />
         </Route>
-        <Route path="/datasnap/:id" element={<BlogComments />} />
-      </Route>
+      ) : (
+        <Route path="/datasnap" element={<DataSnapLayout />}>
+          <Route index element={<Navigate to="home" replace />} />
+          <Route path="home" element={<BlogHome />} />
+          <Route path="explore" element={<BlogExplore />} />
+          <Route path="drafts" element={<BlogDrafts />} />
+          <Route path="published" element={<BlogPublised />} />
+          <Route path="bookmarks" element={<BlogBookmarks />} />
+          <Route path="notifications" element={<BlogNotifications />} />
+          <Route path="details" element={<BlogDetails />} />
+          <Route path="settings" element={<BlogSettings />}>
+            <Route index element={<Navigate to="account" replace />} />
+            <Route path="account" element={<Account />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="privacy" element={<Privacy />} />
+            <Route path="preferences" element={<Preferences />} />
+            <Route path="notifications" element={<Notify />} />
+          </Route>
+          <Route path="/datasnap/:id" element={<BlogComments />} />
+        </Route>
+      )}
+
       <Route path="ds/create" element={<BlogCreate />} />
       <Route path="/ds/edit/:id" element={<BlogEdit />} />
       <Route path="ds/search" element={<BlogSearch />} />

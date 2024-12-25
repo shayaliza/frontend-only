@@ -488,7 +488,7 @@ function Chat() {
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
     }
   };
 
@@ -583,7 +583,7 @@ function Chat() {
         className={`flex flex-col text-gray-800 dark:text-gray-200 ${
           isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
         } min-h-screen pb-20 pt-4`}
-        style={{paddingBottom: keyboardHeight + 80}}
+        style={{paddingBottom: keyboardHeight + 88}}
       >
         <ChatHeader
           type={type}

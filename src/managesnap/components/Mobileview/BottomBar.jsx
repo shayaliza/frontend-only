@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { HomeIcon, BellIcon, CogIcon, CalendarIcon } from "@heroicons/react/outline";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../../../DarkMode/ThemeProvider";
@@ -8,6 +8,15 @@ function BottomBar() {
   const location = useLocation();
   const currentPath = location.pathname.split('/')[1];
   const {theme} = useTheme();
+  const [isIOS, setIsIOS] = useState(false);
+  
+    useEffect(() => {
+      const checkIsIOS = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+      };
+      setIsIOS(checkIsIOS());
+    }, []);
   const tabs = [
     { name: "channels", icon: HomeIcon, label: "Channels" },
     {
@@ -41,7 +50,7 @@ function BottomBar() {
   };
 
   return (
-    <div className={`fixed bottom-0 w-full border-t border-gray-400 ${theme == 'dark' ? "bg-black text-gray-200" : "bg-white text-gray-700"} z-30 shadow-lg flex justify-around items-center px-4 pb-2 safe-bottom`}>
+    <div className={`fixed bottom-0 w-full border-t border-gray-400 ${theme == 'dark' ? "bg-black text-gray-200" : "bg-white text-gray-700"} z-30 shadow-lg flex justify-around items-center px-4 ${isIOS ? "pb-8" : "pb-2"} safe-bottom`}>
       {tabs.map((tab) => (
         <div
           key={tab.name}

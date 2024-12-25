@@ -131,7 +131,7 @@ function Header({ toggleSidebar }) {
   return (
     <>
       <div
-        className={`flex justify-between items-center border-b py-2 px-4 lg:px-8 bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100`}
+        className={`fixed top-0 right-0 left-0 flex z-[999] justify-between items-center border-b py-2 px-4 lg:px-8 bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100`}
       >
         <div className="flex items-center space-x-2">
           <img

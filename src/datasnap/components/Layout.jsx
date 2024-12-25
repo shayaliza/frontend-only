@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Notification from "./Notification";
@@ -15,6 +15,15 @@ const Layout = () => {
 
   const isDetailPage = currentPath.includes("detail");
   const isSettingsPage = currentPath.includes("settings");
+  const [isIOS, setIsIOS] = useState(false);
+  
+    useEffect(() => {
+      const checkIsIOS = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+      };
+      setIsIOS(checkIsIOS());
+    }, []);
 
   return (
     <div className="flex flex-col h-screen max-h-screen">
@@ -23,11 +32,11 @@ const Layout = () => {
         {!isDetailPage && (
           <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         )}
-        <div className="flex flex-1 overflow-y-auto bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100">
+        <div className={`flex flex-1 overflow-y-auto bg-gray-50 text-gray-700 dark:bg-black dark:text-gray-100`}>
           <main
             className={`${
               isDetailPage || isSettingsPage ? "w-screen" : "w-full lg:w-2/3"
-            }`}
+            } ${isIOS ? "mb-20": "mb-16"}`}
           >
             <Outlet />
           </main>
@@ -40,9 +49,6 @@ const Layout = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 lg:hidden h-16 w-full">
-        <BottomBar />
-      </div>
     </div>
   );
 };

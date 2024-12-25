@@ -76,7 +76,7 @@ const ReactionMenu = ({
           </button>
           <button className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 ease-in-out" onClick={() => onEdit(selectedMessage.id, selectedMessage.content)}>
             <Edit className="w-6 h-6 " />
-            <span className="text-sm">Save</span>
+            <span className="text-sm">Edit</span>
           </button>
         </div>
       </div>

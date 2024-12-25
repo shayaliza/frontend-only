@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import img from "../assets/rsc/feed.png";
 import img2 from "../assets/rsc/draft.png";
 import img3 from "../assets/rsc/bookmark.png";
@@ -11,6 +11,15 @@ function BottomBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname.split('/').pop(); 
+  const [isIOS, setIsIOS] = useState(false);
+  
+    useEffect(() => {
+      const checkIsIOS = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+      };
+      setIsIOS(checkIsIOS());
+    }, []);
 
   const tabs = [
     { name: "home", icon: img, label: "Home" },
@@ -26,7 +35,7 @@ function BottomBar() {
 
 
   return (
-    <div className={`w-full bg-background border-t border-gray-300 z-30 shadow-lg bg-gray-50 text-gray-800 dark:text-gray-100 dark:bg-black flex justify-around items-center px-4 pb-2 safe-bottom`}>
+    <div className={`w-full bg-background fixed bottom-0 left-0 right-0 border-t border-gray-300 z-30 shadow-lg bg-gray-50 text-gray-800 dark:text-gray-100 dark:bg-black flex justify-around items-center px-4 ${isIOS ? "pb-8" : ""}`}>
       {tabs.map((tab) => {
         const isActive = currentPath === tab.name;
 

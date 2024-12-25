@@ -15,11 +15,10 @@ const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
           <div className="ml-2 cursor-pointer" onClick={() => setMessageSearch(false)}>
             <ArrowLeftIcon className="w-6 h-6 transition" />
           </div>
-          <div className="flex items-center space-x-4 text-black dark:text-white">
-            <Search className='w-6 h-6'/>
-          <input type="text" name="" id="" className='focus:outline-none bg-transparent max-w-[200px]' placeholder='search for messages..' />
+          <div className="flex-1 mx-4">
+          <input type="text" name="" id="" className='focus:outline-none bg-gray-200 dark:bg-zinc-800 rounded-lg w-full py-1 px-2' placeholder='search for messages..' />
           </div>
-          <div className="flex space-x-4 items-center">
+          <div className="flex space-x-6 items-center mr-2">
             <ChevronUp/>
             <ChevronDown/>
           </div>
