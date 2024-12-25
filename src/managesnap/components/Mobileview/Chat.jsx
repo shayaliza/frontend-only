@@ -583,6 +583,7 @@ function Chat() {
         className={`flex flex-col text-gray-800 dark:text-gray-200 ${
           isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
         } min-h-screen pb-20 pt-4`}
+        style={{paddingBottom: keyboardHeight + 80}}
       >
         <ChatHeader
           type={type}
@@ -594,7 +595,7 @@ function Chat() {
         <div
           className={`flex-grow ${
             isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-          } px-4 pt-10 mt-4`}
+          } pl-4 pt-10 mt-4`}
           ref={chatContainerRef}
         >
           {messages.map((message, index) => (

@@ -262,7 +262,7 @@ const Message = ({
               </div>
             )}
             {isOwnMessage && isLastMessage && type === "dm" && (
-              <Eye className="absolute -right-6 bottom-0 w-4 h-4 text-black" />
+              <Eye className="absolute -right-5 bottom-0 w-4 h-4 text-black" />
             )}
           </div>
           {!isOwnMessage && message.imageUrl && (

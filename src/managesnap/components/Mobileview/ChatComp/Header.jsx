@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { ArrowLeftIcon, SearchIcon, DocumentTextIcon, VolumeUpIcon } from "@heroicons/react/outline";
-import { ChevronDown, ChevronUp, Search } from 'lucide-react';
+import { ChevronDown, ChevronUp, PinIcon, Search } from 'lucide-react';
 
 const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
   const [messageSearch, setMessageSearch] = useState(false)
@@ -55,7 +55,7 @@ const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
         <div className="flex space-x-4 items-center">
           <SearchIcon className="w-6 h-6 hover:text-gray-400 transition" onClick={() => handleSearch()} />
           <DocumentTextIcon className="w-6 h-6 hover:text-gray-400 transition" />
-          <VolumeUpIcon className="w-6 h-6 hover:text-gray-400 transition" />
+          <PinIcon className="w-6 h-6 hover:text-gray-400 transition" />
         </div>
         </>
         )}
