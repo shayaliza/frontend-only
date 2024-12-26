@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Share2, Reply, Forward, Eye, Clock } from "lucide-react";
+import { MessageSquare, X, Share2, Reply, Forward, Eye, Clock, PinIcon } from "lucide-react";
 import ReactionMenu from "./ReactionMenu";
 import img1 from "../../../assets/man1.jpg";
 
 const Message = ({
+  id,
   message,
   handleToggleReactions,
   messageReactions,
@@ -12,6 +13,7 @@ const Message = ({
   type,
   handleReplyToMessage,
   isLastMessage,
+  isHighlighted,
 }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
@@ -124,7 +126,9 @@ const Message = ({
     <div
       className={`flex flex-col space-y-1 overflow-x-hidden ${
         isOwnMessage && type === "dm" ? "items-end" : "items-start"
-      }`}
+      }
+      `}
+      id={id}
     >
       {type === "channel" && (
         <div className="flex space-x-2 items-center">
@@ -158,7 +162,11 @@ const Message = ({
             ref={messageRef}
             className={`w-full relative p-2 mb-1 rounded-lg ${
               messageReactions[message.id] ? "mb-9" : ""
-            } ${message.replyTo ? "rounded-t-none" : ""} ${
+            } ${message.replyTo ? "rounded-t-none" : ""} 
+            ${
+              isHighlighted ? 'bg-zinc-600/80 text-white dark:bg-blue-900/30' : ''
+            }
+            ${
               isOwnMessage
                 ? "bg-green-600 text-white mr-6 rounded-br-none"
                 : "bg-gray-100 dark:bg-gray-700 rounded-bl-none"
@@ -249,6 +257,9 @@ const Message = ({
               )}
 
               <div className="flex items-center justify-end space-x-1 mt-1">
+              {message.isPinned && (
+                  <PinIcon className="w-3 h-3 opacity-90"/>
+                )}
                 {message.edited && (
                   <p className="text-xs break-words whitespace-pre-wrap opacity-60">
                     edited

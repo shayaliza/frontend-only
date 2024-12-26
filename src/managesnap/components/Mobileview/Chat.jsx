@@ -13,6 +13,7 @@ import img2 from "../../assets/man2.jpg";
 import img3 from "../../assets/man3.jpg";
 import img4 from "../../assets/women1.jpg";
 import { ChevronDownIcon } from "lucide-react";
+import PinHeader from "./ChatComp/PinHeader";
 
 const contacts = [
   {
@@ -179,112 +180,153 @@ const contacts = [
 
 const dummyMessages = [
   {
+    id: 1,
     sender: "Saketh",
     content: "Hello everyone!",
     timestamp: "2024-08-17T10:00:00Z",
+    isPinned : false
   },
   {
+    id: 2,
     sender: "Yaswanth",
     content: "Hi there!",
     timestamp: "2024-08-17T10:01:00Z",
+    isPinned : false
   },
   {
+    id: 3,
     sender: "You",
     content: "Good morning!",
     timestamp: "2024-08-17T10:02:00Z",
+    isPinned : false
   },
   {
+    id: 4,
     sender: "Tanvi",
     content: "How's everyone doing?",
     timestamp: "2024-08-17T10:03:00Z",
+    isPinned : false
   },
   {
+    id: 5,
     sender: "Saketh",
     content: "Check out this cool website: https://www.example.com",
     timestamp: "2024-08-17T10:05:00Z",
+    isPinned : false
   },
   {
+    id: 6,
     sender: "Yaswanth",
     content: "Here's a picture of my cat!",
     timestamp: "2024-08-17T10:06:00Z",
     imageUrl:
       "https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg",
+      isPinned : false
   },
   {
+    id: 7,
     sender: "You",
     content:
       "This is a really long message that just keeps going and going. I wanted to share all of my thoughts on this topic, so I decided to write a longer message to make sure everything is covered. What do you guys think about this idea?",
     timestamp: "2024-08-17T10:07:00Z",
+    isPinned : false
   },
   {
+    id: 8,
     sender: "Tanvi",
     content: "Sounds good!",
     timestamp: "2024-08-17T10:08:00Z",
+    isPinned : false
   },
   {
+    id: 9,
     sender: "Saketh",
     content:
       "Here's a quick update on the project: We're almost done with the first phase, and we'll be moving on to the next steps soon. I'll keep you all posted on any further developments. Thanks for your hard work!",
     timestamp: "2024-08-17T10:09:00Z",
+    isPinned : false
   },
-  { sender: "Yaswanth", content: "Got it!", timestamp: "2024-08-17T10:10:00Z" },
+  { id: 10, sender: "Yaswanth", content: "Got it!", timestamp: "2024-08-17T10:10:00Z",
+    isPinned : false
+   },
   {
+    id: 11,
     sender: "You",
     content: "Here's an interesting article I found:",
     timestamp: "2024-08-17T10:11:00Z",
     url: "https://www.technews.com/insights",
+    isPinned : false
   },
   {
+    id: 12,
     sender: "Tanvi",
     content: "Look at this amazing sunset I captured yesterday!",
     timestamp: "2024-08-17T10:12:00Z",
     imageUrl: "https://example.com/sunset.jpg",
+    isPinned : false
   },
   {
+    id: 13,
     sender: "Saketh",
     content: "Can anyone share the meeting notes?",
     timestamp: "2024-08-17T10:13:00Z",
+    isPinned : false
   },
   {
+    id: 14,
     sender: "Yaswanth",
     content: "Sure, I'll send them over in a bit.",
     timestamp: "2024-08-17T10:14:00Z",
+    isPinned : false
   },
   {
+    id: 15,
     sender: "You",
     content: "Thanks, Yaswanth!",
     timestamp: "2024-08-17T10:15:00Z",
+    isPinned : false
   },
   {
+    id: 16,
     sender: "Tanvi",
     content:
       "Here's a quick recap of today's discussion: We covered the project's progress, upcoming tasks, and assigned responsibilities. We'll meet again next week to review the next steps and ensure we're on track.",
     timestamp: "2024-08-17T10:16:00Z",
+    isPinned : false
   },
   {
+    id: 17,
     sender: "Saketh",
     content: "I found this really helpful tutorial on React. Check it out",
     timestamp: "2024-08-17T10:17:00Z",
     url: "https://react-tutorial.com",
+    isPinned : false
   },
   {
+    id: 18,
     sender: "Yaswanth",
     content: "Here's the file you requested.",
     timestamp: "2024-08-17T10:18:00Z",
     imageUrl: "https://example.com/file.png",
+    isPinned : false
   },
   {
+    id: 19,
     sender: "You",
     content: "Awesome, thanks!",
     timestamp: "2024-08-17T10:19:00Z",
+    isPinned : false
   },
   {
+    id: 20,
     sender: "Yaswanth",
     content: "ok! Good night.",
     timestamp: "2024-08-17T10:18:00Z",
     imageUrl: "https://example.com/file.png",
+    isPinned : false
   },
 ];
+
 
 function Chat() {
   const { type, id } = useParams();
@@ -306,20 +348,40 @@ function Chat() {
   const [scrollButton, setScrollButton] = useState(false);
   const [editingMessageId, setEditingMessageId] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
-  const [searchMessages, setSearchMessages] = useState([]);
+  const [searchMessages, setSearchMessages] = useState(0);
+  const [pinnedMessages, setPinnedMessages] = useState(0);
+  const [highlightDuration, setHighlightDuration] = useState(0)
 
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  const handleMessageSearch = (messageIds) => {
-    console.log("Received messageIds:", messageIds);
-    if (Array.isArray(messageIds)) {
-      setSearchMessages(messageIds);
-    } else {
-      setSearchMessages([messageIds]);
-    }
-    console.log("Updated searchMessages:", searchMessages);
+  const handleMessageSearch = (messageId) => {
+    setSearchMessages(messageId); 
+    setTimeout(() => {
+      const element = document.getElementById(`message-${messageId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "auto", block: "center" });
+        setSearchMessages(messageId);
+      }
+    }, 0);
+    setTimeout(() => {
+      setSearchMessages(null);
+    }, 5000);
+  };
+
+  const handlePinnedMessages = (messageId) => {
+    setPinnedMessages(messageId); 
+    setTimeout(() => {
+      const element = document.getElementById(`message-${messageId}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "auto", block: "center" });
+        setPinnedMessages(messageId);
+      }
+    }, 0);
+    setTimeout(() => {
+      setPinnedMessages(null);
+    }, 5000);
   };
   
   const handleAddReaction = (reaction) => {
@@ -409,21 +471,6 @@ function Chat() {
     navigate(type === "channel" ? "/managesnap/channels" : "/managesnap/dms");
   };
 
-  const handleFocusMessage = (messageId) => {
-    setSelectedMessageId(messageId);
-    setTimeout(() => {
-      const element = document.getElementById(`message-${messageId}`);
-      if (element) {
-        element.scrollIntoView({ behavior: "auto", block: "center" });
-      }
-    }, 0);
-    setHighlightDuration(3);
-
-    setTimeout(() => {
-      setSelectedMessageId(null);
-    }, 3000);
-  };
-
   const handleSendMessage = () => {
     setShouldScrollToBottom(true);
 
@@ -453,9 +500,9 @@ function Chat() {
 
     // Handle new message
     if (!newMessage.trim() && selectedFiles.length === 0) return;
-
+    const newMessageId = Date.now();
     const newMessageObj = {
-      id: messages.length + 1,
+      id: newMessageId,
       content: newMessage,
       sender: "You",
       timestamp: new Date().toISOString(),
@@ -500,6 +547,20 @@ function Chat() {
     }
   };
 
+  const handlePin = (messageId) => {
+    setMessages((prevMessages) => {
+      const updatedMessages = prevMessages.map((message) =>
+        message.id === messageId
+          ? { ...message, isPinned: !message.isPinned }
+          : message
+      );
+      return updatedMessages;
+      
+    });
+    setIsReactionOpen(false);
+  }
+  
+  
   const handleToggleReactions = useCallback((message) => {
     setSelectedMessage(message);
     setIsReactionOpen(true);
@@ -606,8 +667,8 @@ function Chat() {
       <div
         className={`flex flex-col text-gray-800 dark:text-gray-200 ${
           isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-        } min-h-screen pb-20 pt-4`}
-        style={{ paddingBottom: keyboardHeight + 64 }}
+        } min-h-screen  pt-4`}
+        style={{ paddingBottom: keyboardHeight + 80 }}
       >
         <ChatHeader
           type={type}
@@ -617,20 +678,24 @@ function Chat() {
           messages={messages}
           onSendData={handleMessageSearch}
         />
+        <PinHeader messages={messages} onSendData={handlePinnedMessages} /> 
 
         <div
           className={`flex-grow ${
             isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-          } pl-4 pt-10 ${isIOS ? "pb-10" : "pb-2"} mt-4`}
+          } pl-4 pt-20 ${isIOS ? "pb-10" : "pb-2"} mt-4`}
           ref={chatContainerRef}
         >
           {messages.map((message, index) => (
             <Message
               key={message.id}
+              id={`message-${message.id}`}
               type={type}
               message={message}
               handleReplyToMessage={handleReplyToMessage}
               isLastMessage={lastMessage?.id === message.id}
+              isHighlighted={parseInt(searchMessages) === message.id}
+              isPinHighlighted={parseInt(pinnedMessages) === message.id}
               messageReactions={messageReactions}
               setMessageReactions={setMessageReactions}
               setIsReactionOpen={setIsReactionOpen}
@@ -682,6 +747,7 @@ function Chat() {
           setIsReactionOpen={setIsReactionOpen}
           setIsShareOpen={setIsShareOpen}
           onEdit={handleEdit}
+          onPinned={handlePin}
         />
         <ShareModal
           isShareOpen={isShareOpen}
