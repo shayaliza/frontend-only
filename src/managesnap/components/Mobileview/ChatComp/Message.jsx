@@ -14,6 +14,7 @@ const Message = ({
   handleReplyToMessage,
   isLastMessage,
   isHighlighted,
+  isPinHighlighted
 }) => {
   const [showReactions, setShowReactions] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
@@ -164,7 +165,10 @@ const Message = ({
               messageReactions[message.id] ? "mb-9" : ""
             } ${message.replyTo ? "rounded-t-none" : ""} 
             ${
-              isHighlighted ? 'bg-zinc-600/80 text-white dark:bg-blue-900/30' : ''
+              isHighlighted && 'bg-zinc-600/80 text-white dark:bg-yellow-600/80' 
+            }
+            ${
+              isPinHighlighted && 'bg-zinc-600/80 text-white dark:bg-yellow-600/80' 
             }
             ${
               isOwnMessage

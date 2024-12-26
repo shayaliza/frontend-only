@@ -351,6 +351,8 @@ function Chat() {
   const [searchMessages, setSearchMessages] = useState(0);
   const [pinnedMessages, setPinnedMessages] = useState(0);
   const [highlightDuration, setHighlightDuration] = useState(0)
+  const [messageSearch, setMessageSearch] = useState(false);
+  const [pinnedItems, setPinnedItems] = useState([]);
 
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -370,6 +372,8 @@ function Chat() {
     }, 5000);
   };
 
+  const pinMessagesLength = messages.filter((message) => message.isPinned).length;
+
   const handlePinnedMessages = (messageId) => {
     setPinnedMessages(messageId); 
     setTimeout(() => {
@@ -381,7 +385,7 @@ function Chat() {
     }, 0);
     setTimeout(() => {
       setPinnedMessages(null);
-    }, 5000);
+    }, 10000);
   };
   
   const handleAddReaction = (reaction) => {
@@ -626,9 +630,9 @@ function Chat() {
     }
   }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [messages]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -668,7 +672,7 @@ function Chat() {
         className={`flex flex-col text-gray-800 dark:text-gray-200 ${
           isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
         } min-h-screen  pt-4`}
-        style={{ paddingBottom: keyboardHeight + 80 }}
+        style={{ paddingBottom: keyboardHeight + 80, userSelect: "none" }}
       >
         <ChatHeader
           type={type}
@@ -677,13 +681,15 @@ function Chat() {
           navigate={navigate}
           messages={messages}
           onSendData={handleMessageSearch}
+          messageSearch={messageSearch}
+          setMessageSearch={setMessageSearch}
         />
         <PinHeader messages={messages} onSendData={handlePinnedMessages} /> 
 
         <div
           className={`flex-grow ${
             isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-          } pl-4 pt-20 ${isIOS ? "pb-10" : "pb-2"} mt-4`}
+          } pl-4 ${pinMessagesLength > 0 ? "pt-20" : "pt-10"} ${isIOS ? "pb-10" : "pb-2"} mt-4`}
           ref={chatContainerRef}
         >
           {messages.map((message, index) => (
@@ -724,6 +730,7 @@ function Chat() {
           setReplyToMessage={setReplyToMessage}
         />
 
+        {!messageSearch && (
         <MessageInput
           newMessage={newMessage}
           setNewMessage={setNewMessage}
@@ -738,6 +745,7 @@ function Chat() {
           setReplyToMessage={setReplyToMessage}
           editingMessageId={editingMessageId}
         />
+        )}
 
         <ReactionMenu
           handleAddReaction={handleAddReaction}

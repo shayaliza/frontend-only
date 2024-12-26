@@ -14,8 +14,10 @@ const ChatHeader = ({
   navigate,
   onSendData,
   messages,
+  messageSearch,
+  setMessageSearch,
 }) => {
-  const [messageSearch, setMessageSearch] = useState(false);
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [filteredMessageIds, setFilteredMessageIds] = useState([]);
