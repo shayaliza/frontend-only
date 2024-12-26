@@ -306,12 +306,22 @@ function Chat() {
   const [scrollButton, setScrollButton] = useState(false);
   const [editingMessageId, setEditingMessageId] = useState(false);
   const [selectedMessageId, setSelectedMessageId] = useState(null);
-  const [ourMessages, setOurMessages] = useState([]);
+  const [searchMessages, setSearchMessages] = useState([]);
 
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
+  const handleMessageSearch = (messageIds) => {
+    console.log("Received messageIds:", messageIds);
+    if (Array.isArray(messageIds)) {
+      setSearchMessages(messageIds);
+    } else {
+      setSearchMessages([messageIds]);
+    }
+    console.log("Updated searchMessages:", searchMessages);
+  };
+  
   const handleAddReaction = (reaction) => {
     if (selectedMessage) {
       setMessageReactions((prev) => {
@@ -418,18 +428,20 @@ function Chat() {
     setShouldScrollToBottom(true);
 
     if (editingMessageId) {
-      setMessages(messages.map(msg => {
-        if (msg.id === editingMessageId) {
-          return {
-            ...msg,
-            content: newMessage,
-            timestamp:new Date().toISOString(),
-            edited: true
-          };
-        }
-        return msg;
-      }));
-      
+      setMessages(
+        messages.map((msg) => {
+          if (msg.id === editingMessageId) {
+            return {
+              ...msg,
+              content: newMessage,
+              timestamp: new Date().toISOString(),
+              edited: true,
+            };
+          }
+          return msg;
+        })
+      );
+
       // Reset editing state
       setEditingMessageId(null);
       setNewMessage("");
@@ -438,34 +450,46 @@ function Chat() {
       }
       return;
     }
-  
+
     // Handle new message
     if (!newMessage.trim() && selectedFiles.length === 0) return;
-  
+
     const newMessageObj = {
       id: messages.length + 1,
       content: newMessage,
       sender: "You",
       timestamp: new Date().toISOString(),
-      isPinned:false,
-      replyTo: replyToMessage ? {
-        id: replyToMessage.id,
-        sender: replyToMessage.sender,
-        content: replyToMessage.content,
-        imageUrl: replyToMessage.imageUrl,
-        timestamp: replyToMessage.timestamp,
-      } : null,
+      isPinned: false,
+      replyTo: replyToMessage
+        ? {
+            id: replyToMessage.id,
+            sender: replyToMessage.sender,
+            content: replyToMessage.content,
+            imageUrl: replyToMessage.imageUrl,
+            timestamp: replyToMessage.timestamp,
+          }
+        : null,
     };
-  
+
     setMessages([...messages, newMessageObj]);
     setNewMessage("");
     setIsActive(false);
     setReplyToMessage(null);
-    
+
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
   };
+
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    const checkIsIOS = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+    setIsIOS(checkIsIOS());
+  }, []);
 
   const handleEdit = (messageId, content) => {
     setEditingMessageId(messageId);
@@ -547,7 +571,7 @@ function Chat() {
 
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setNewMessage(value); 
+    setNewMessage(value);
     setIsActive(value.trim() !== "");
     e.target.style.height = "auto";
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -583,19 +607,21 @@ function Chat() {
         className={`flex flex-col text-gray-800 dark:text-gray-200 ${
           isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
         } min-h-screen pb-20 pt-4`}
-        style={{paddingBottom: keyboardHeight + 88}}
+        style={{ paddingBottom: keyboardHeight + 64 }}
       >
         <ChatHeader
           type={type}
           chatInfo={chatInfo}
           handleNavigationBack={handleNavigationBack}
           navigate={navigate}
+          messages={messages}
+          onSendData={handleMessageSearch}
         />
 
         <div
           className={`flex-grow ${
             isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-          } pl-4 pt-10 mt-4`}
+          } pl-4 pt-10 ${isIOS ? "pb-10" : "pb-2"} mt-4`}
           ref={chatContainerRef}
         >
           {messages.map((message, index) => (
@@ -635,6 +661,7 @@ function Chat() {
 
         <MessageInput
           newMessage={newMessage}
+          setNewMessage={setNewMessage}
           handleInputChange={handleInputChange}
           handleSendMessage={handleSendMessage}
           isActive={isActive}

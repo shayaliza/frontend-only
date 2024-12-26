@@ -1,12 +1,21 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import { ReplyIcon } from "@heroicons/react/outline";
 import { FaTimes } from "react-icons/fa";
 
 const ReplyPreview = ({ replyToMessage, setReplyToMessage }) => {
   if (!replyToMessage) return null;
+  const [isIOS, setIsIOS] = useState(false);
+    
+      useEffect(() => {
+        const checkIsIOS = () => {
+          const userAgent = window.navigator.userAgent.toLowerCase();
+          return /iphone|ipad|ipod/.test(userAgent);
+        };
+        setIsIOS(checkIsIOS());
+      }, []);
   
   return (
-    <div className="fixed bottom-16 left-0 right-0 bg-gray-200 dark:bg-zinc-800 p-2 flex justify-between items-center z-40">
+    <div className={`fixed ${isIOS ? "bottom-20" : "bottom-14"} left-0 right-0 bg-gray-200 dark:bg-zinc-800 p-2 flex justify-between items-center z-40`}>
       <div className="flex items-center space-x-2">
         <ReplyIcon className="w-5 h-5" />
         <div>

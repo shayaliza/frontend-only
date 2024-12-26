@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { ArrowLeftIcon, SearchIcon, DocumentTextIcon, VolumeUpIcon } from "@heroicons/react/outline";
-import { ChevronDown, ChevronUp, PinIcon, Search } from 'lucide-react';
+import { ChevronDown, ChevronUp, MessageCircleIcon, PinIcon, Search } from 'lucide-react';
 
-const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
+const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate, onSendData, messages }) => {
   const [messageSearch, setMessageSearch] = useState(false)
   const handleSearch = () => {
     setMessageSearch(true);
@@ -12,17 +12,32 @@ const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
       <div className="pt-4 px-4 pb-2 flex justify-between items-center bg-background border-gray-500">
         {messageSearch ? (
           <div className="w-full flex items-center justify-between pt-1.5">
-          <div className="ml-2 cursor-pointer" onClick={() => setMessageSearch(false)}>
-            <ArrowLeftIcon className="w-6 h-6 transition" />
+            <div className="ml-2 cursor-pointer" onClick={() => setMessageSearch(false)}>
+              <ArrowLeftIcon className="w-6 h-6 transition" />
+            </div>
+            <div className="flex-1 mx-4">
+              <input
+                type="text"
+                name=""
+                id=""
+                className="focus:outline-none bg-gray-200 dark:bg-zinc-800 rounded-lg w-full py-1 px-2"
+                placeholder="search for messages.."
+                onChange={(e) => {
+                  const searchTerm = e.target.value.toLowerCase();
+                  const filteredMessages = messages.filter((message) =>
+                    message.content.toLowerCase().startsWith(searchTerm)
+                  );
+                  const messageIds = filteredMessages.map((message) => message.id);
+                  onSendData(messageIds);
+                }}
+              />
+            </div>
+            <div className="flex space-x-6 items-center mr-2">
+              <ChevronUp />
+              <ChevronDown />
+            </div>
           </div>
-          <div className="flex-1 mx-4">
-          <input type="text" name="" id="" className='focus:outline-none bg-gray-200 dark:bg-zinc-800 rounded-lg w-full py-1 px-2' placeholder='search for messages..' />
-          </div>
-          <div className="flex space-x-6 items-center mr-2">
-            <ChevronUp/>
-            <ChevronDown/>
-          </div>
-        </div>
+          
         ) : (
           <>
         <div className="flex items-center">
@@ -53,7 +68,7 @@ const ChatHeader = ({ type, chatInfo, handleNavigationBack, navigate }) => {
       
         <div className="flex space-x-4 items-center">
           <SearchIcon className="w-6 h-6 hover:text-gray-400 transition" onClick={() => handleSearch()} />
-          <DocumentTextIcon className="w-6 h-6 hover:text-gray-400 transition" />
+          <MessageCircleIcon className="w-6 h-6 hover:text-gray-400 transition" />
           <PinIcon className="w-6 h-6 hover:text-gray-400 transition" />
         </div>
         </>

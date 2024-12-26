@@ -13,26 +13,31 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Camera, Contact, FileIcon, Image, Plus, Sticker } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Camera, Contact, FileIcon, Image, Plus, Smile, Sticker } from "lucide-react";
 import { FaPoll } from "react-icons/fa";
 import { useRef, useState, useEffect } from "react";
+import Emoji from "./MobileEmoji";
 
 const MessageInput = ({
   newMessage,
+  setNewMessage,
   handleInputChange,
   handleSendMessage,
   isActive,
   textareaRef,
   handleInputFocus,
   handleInputBlur,
-  keyboardHeight,
   editingMessageId,
-  messages,
-  replyToMessage,
-  setReplyToMessage,
+  keyboardHeight
 }) => {
   const fileInputRef = useRef(null);
   const [isIOS, setIsIOS] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
   useEffect(() => {
     const checkIsIOS = () => {
@@ -47,8 +52,8 @@ const MessageInput = ({
         e.preventDefault();
         handleSendMessage();
       }}
-      className={`flex items-center bg-white dark:bg-black pt-3 ${isIOS ? "pb-6" : "pb-2"} fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
-      // style={{ paddingBottom: keyboardHeight + 8 }}
+      className={`flex items-center bg-white dark:bg-black pt-3 ${isIOS ? "pb-10" : "pb-2"} fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 ${keyboardHeight ? `pb-${keyboardHeight}` : ""} bg-background`}
+      
     >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -82,10 +87,11 @@ const MessageInput = ({
         <textarea
           ref={textareaRef}
           id="message-textarea"
-          className="flex-grow outline-none p-1 rounded-sm text-sm border border-gray-500 resize-none overflow-y-auto bg-transparent"
+          className="flex-grow outline-none p-1 text-sm border border-gray-500 resize-none overflow-y-auto bg-transparent rounded-md"
           placeholder={
             editingMessageId ? "Edit your message..." : "Type your message..."
           }
+          rows={1}
           value={newMessage}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
@@ -114,12 +120,16 @@ const MessageInput = ({
           //   if (files) handleFileUpload(files);
           // }}
         />
-        <button
-          type="button"
-          className="p-2 rounded-full hover:bg-gray-600 transition duration-150 ease-in-out"
-        >
-          <EmojiHappyIcon className="w-5 h-5 hover:text-gray-900" />
-        </button>
+        <Popover open={showEmojiPicker} onOpenChange={setShowEmojiPicker}>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <Smile className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="mr-12 mb-6 w-[300px]">
+            <Emoji setNewMessage={setNewMessage}/>
+          </PopoverContent>
+        </Popover>
       </div>
 
       {!isActive && (

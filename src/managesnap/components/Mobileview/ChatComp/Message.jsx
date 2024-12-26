@@ -23,8 +23,8 @@ const Message = ({
   const animationFrameRef = useRef(null);
 
   const LONG_PRESS_DURATION = 500;
-  const MIN_SWIPE_DISTANCE = 35;
-  const MAX_SWIPE_DISTANCE = 100;
+  const MIN_SWIPE_DISTANCE = 85;
+  const MAX_SWIPE_DISTANCE = 120;
   const REPLY_TRIGGER_THRESHOLD = 45;
   const TIME_TRIGGER_THRESHOLD = 45;
 
@@ -142,7 +142,8 @@ const Message = ({
               isOwnMessage
                 ? "bg-green-700 text-white mr-6"
                 : "bg-gray-200 dark:bg-gray-700"
-            }`}
+            }
+            ${type === "channel" ? "ml-10" : ""}`}
           >
             <div className="relative flex items-center space-x-1">
               <div className="w-0.5 h-4 bg-green-400 mr-2" />
@@ -152,7 +153,7 @@ const Message = ({
           </div>
         )}
 
-        <div className="flex space-x-2 items-center">
+        <div className="w-full flex space-x-2 items-center">
           <div
             ref={messageRef}
             className={`w-full relative p-2 mb-1 rounded-lg ${
@@ -222,7 +223,7 @@ const Message = ({
                 </span>
             </div>
 
-            <div className="relative">
+            <div className="w-full relative">
               <p className="mb-1 break-words whitespace-pre-wrap">
                 {message.content}
               </p>

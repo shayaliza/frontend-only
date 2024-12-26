@@ -165,7 +165,7 @@ function Profile() {
           <Link
             to={item.link}
             key={index}
-            className="flex items-center justify-between py-2 px-4 hover:bg-gray-800 rounded-lg"
+            className="flex items-center justify-between py-2 px-2 mx-2 hover:bg-gray-300 dark:hover:bg-gray-700 rounded-lg"
           >
             <div className="flex items-center space-x-3">
               <div className={`p-2 ${item.customIconStyle} rounded-full`}>
@@ -225,7 +225,7 @@ function Profile() {
         {activeTab === 'Documents' && (
           <div className="flex flex-col gap-4">
             {documents.map((doc, index) => (
-              <div key={index} className="p-4 bg-gray-200 rounded-lg">
+              <div key={index} className="p-4 mx-2 bg-gray-300 dark:bg-gray-700 rounded-lg">
                 {doc}
               </div>
             ))}
@@ -239,7 +239,7 @@ function Profile() {
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 bg-gray-200 rounded-lg text-blue-600"
+                className="p-4 mx-2 bg-gray-300 dark:bg-gray-700 rounded-lg text-blue-600"
               >
                 {link}
               </a>
@@ -249,7 +249,7 @@ function Profile() {
         {activeTab === 'Snaplist' && (
           <div className="flex flex-col gap-4">
             {snaplist.map((snap, index) => (
-              <div key={index} className="p-4 bg-gray-200 rounded-lg">
+              <div key={index} className="p-4 mx-2 bg-gray-300 dark:bg-gray-700 rounded-lg">
                 {snap}
               </div>
             ))}
