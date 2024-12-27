@@ -16,6 +16,7 @@ const ChatHeader = ({
   messages,
   messageSearch,
   setMessageSearch,
+  setCurrentView
 }) => {
   
   const [searchTerm, setSearchTerm] = useState("");
@@ -150,7 +151,7 @@ const ChatHeader = ({
                 className="w-6 h-6 hover:text-gray-400 transition"
                 onClick={handleSearch}
               />
-              <MessageCircleIcon className="w-6 h-6 hover:text-gray-400 transition" />
+              <MessageCircleIcon className="w-6 h-6 hover:text-gray-400 transition" onClick={() => setCurrentView("messages")} />
               <PinIcon className="w-6 h-6 hover:text-gray-400 transition" />
             </div>
           </>

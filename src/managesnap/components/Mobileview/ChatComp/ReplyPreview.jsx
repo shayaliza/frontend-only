@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import { ReplyIcon } from "@heroicons/react/outline";
 import { FaTimes } from "react-icons/fa";
 
-const ReplyPreview = ({ replyToMessage, setReplyToMessage }) => {
+const ReplyPreview = ({ replyToMessage, setReplyToMessage, keyBoardHeight }) => {
   if (!replyToMessage) return null;
   const [isIOS, setIsIOS] = useState(false);
     
@@ -15,7 +15,8 @@ const ReplyPreview = ({ replyToMessage, setReplyToMessage }) => {
       }, []);
   
   return (
-    <div className={`fixed bottom-20 left-0 right-0 bg-gray-200 dark:bg-zinc-800 p-2 flex justify-between items-center z-40`}>
+    <div className={`fixed bottom-20 left-0 right-0 bg-gray-200 dark:bg-zinc-800 p-2 flex justify-between items-center z-40`}
+    style={{ paddingBottom: isIOS ? keyBoardHeight + 10 : keyBoardHeight }}>
       <div className="flex items-center space-x-2">
         <ReplyIcon className="w-5 h-5" />
         <div>

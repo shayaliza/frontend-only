@@ -52,8 +52,8 @@ const MessageInput = ({
         e.preventDefault();
         handleSendMessage();
       }}
-      className={`flex items-center bg-white dark:bg-black pt-3 ${isIOS ? "pb-10" : "pb-2"} fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
-      style={{paddingBottom: keyboardHeight + 20}}
+      className={`flex items-center bg-white dark:bg-black pt-3 fixed bottom-0 left-0 right-0 w-full border-t border-gray-300 bg-background`}
+      style={{paddingBottom: isIOS ? keyboardHeight + 40 : keyboardHeight + 20}}
     >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

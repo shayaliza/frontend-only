@@ -14,6 +14,7 @@ import img3 from "../../assets/man3.jpg";
 import img4 from "../../assets/women1.jpg";
 import { ChevronDownIcon } from "lucide-react";
 import PinHeader from "./ChatComp/PinHeader";
+import PinMessages from "./ChatComp/PinMessages";
 
 const contacts = [
   {
@@ -353,6 +354,7 @@ function Chat() {
   const [highlightDuration, setHighlightDuration] = useState(0)
   const [messageSearch, setMessageSearch] = useState(false);
   const [pinnedItems, setPinnedItems] = useState([]);
+  const [currentView, setCurrentView] = useState("messages");
 
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -472,7 +474,11 @@ function Chat() {
   }, [type, id, location.state]);
 
   const handleNavigationBack = () => {
+    if(currentView === "pinnedMessages") {
+      setCurrentView("messages");
+    } else {
     navigate(type === "channel" ? "/managesnap/channels" : "/managesnap/dms");
+    }
   };
 
   const handleSendMessage = () => {
@@ -683,36 +689,68 @@ function Chat() {
           onSendData={handleMessageSearch}
           messageSearch={messageSearch}
           setMessageSearch={setMessageSearch}
+          setCurrentView={setCurrentView}
         />
-        <PinHeader messages={messages} onSendData={handlePinnedMessages} /> 
+        <PinHeader messages={messages} onSendData={handlePinnedMessages} setCurrentView={setCurrentView} /> 
 
         <div
           className={`flex-grow ${
             isReactionOpen ? "overflow-hidden" : "overflow-y-auto"
-          } pl-4 ${pinMessagesLength > 0 ? "pt-20" : "pt-10"} ${isIOS ? "pb-10" : "pb-2"} mt-4`}
+          } pl-4 ${pinMessagesLength > 0 ? "pt-20" : "pt-10"} ${isIOS ? "pb-6" : "pb-2"} mt-4`}
           ref={chatContainerRef}
         >
-          {messages.map((message, index) => (
-            <Message
+
+          {currentView === "messages" && (
+            <>
+            {messages.map((message, index) => (
+              <Message
+                key={message.id}
+                id={`message-${message.id}`}
+                type={type}
+                message={message}
+                handleReplyToMessage={handleReplyToMessage}
+                isLastMessage={lastMessage?.id === message.id}
+                isHighlighted={parseInt(searchMessages) === message.id}
+                isPinHighlighted={parseInt(pinnedMessages) === message.id}
+                messageReactions={messageReactions}
+                setMessageReactions={setMessageReactions}
+                setIsReactionOpen={setIsReactionOpen}
+                setIsShareOpen={setIsShareOpen}
+                handleToggleReactions={handleToggleReactions}
+                longPressEvent={longPressEvent}
+                scrollToBottom={scrollToBottom}
+                handleAddReaction={handleAddReaction}
+                selectedMessage={selectedMessage}
+              />
+            
+            ))}
+            </>
+          ) }
+          {currentView === "pinnedMessages" && (
+            <>
+            {messages.filter(message => message.isPinned).map((message, index) => (
+              <PinMessages
               key={message.id}
-              id={`message-${message.id}`}
-              type={type}
-              message={message}
-              handleReplyToMessage={handleReplyToMessage}
-              isLastMessage={lastMessage?.id === message.id}
-              isHighlighted={parseInt(searchMessages) === message.id}
-              isPinHighlighted={parseInt(pinnedMessages) === message.id}
-              messageReactions={messageReactions}
-              setMessageReactions={setMessageReactions}
-              setIsReactionOpen={setIsReactionOpen}
-              setIsShareOpen={setIsShareOpen}
-              handleToggleReactions={handleToggleReactions}
-              longPressEvent={longPressEvent}
-              scrollToBottom={scrollToBottom}
-              handleAddReaction={handleAddReaction}
-              selectedMessage={selectedMessage}
-            />
-          ))}
+                id={`message-${message.id}`}
+                type={type}
+                message={message}
+                handleReplyToMessage={handleReplyToMessage}
+                isLastMessage={lastMessage?.id === message.id}
+                isHighlighted={parseInt(searchMessages) === message.id}
+                isPinHighlighted={parseInt(pinnedMessages) === message.id}
+                messageReactions={messageReactions}
+                setMessageReactions={setMessageReactions}
+                setIsReactionOpen={setIsReactionOpen}
+                setIsShareOpen={setIsShareOpen}
+                handleToggleReactions={handleToggleReactions}
+                longPressEvent={longPressEvent}
+                scrollToBottom={scrollToBottom}
+                handleAddReaction={handleAddReaction}
+                selectedMessage={selectedMessage}
+                />
+            ))}
+            </>
+          ) }
 
           {scrollButton && (
             <div
@@ -728,9 +766,10 @@ function Chat() {
         <ReplyPreview
           replyToMessage={replyToMessage}
           setReplyToMessage={setReplyToMessage}
+          keyboardHeight={keyboardHeight}
         />
 
-        {!messageSearch && (
+        {(!messageSearch && currentView !== "pinnedMessages") && (
         <MessageInput
           newMessage={newMessage}
           setNewMessage={setNewMessage}
